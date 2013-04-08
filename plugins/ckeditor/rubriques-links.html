@@ -1,0 +1,6 @@
+#CACHE{0}<? 
+$tab = 0 ;
+function tab($a) { $result = '' ; $cpt = 0 ; while ($cpt <= $a) { $result .= "&#160;&#160;" ; $cpt++ ; } return $result ; }
+?><BOUCLE_rubriques(RUBRIQUES) {racine} {par num titre, titre}>[(#TITRE|couper{80})]|[(#URL_PAGE{rubrique}|parametre_url{id_rubrique,#ID_RUBRIQUE}|url_absolue)]|#ID_RUBRIQUE
+<BOUCLE_sous_rubriques(RUBRIQUES) {id_parent=#ID_RUBRIQUE} {par num titre, titre}><? $tab++ ; ?><? echo tab($tab) ; ?>[(#TITRE|couper{80}|strip_tags)]|[(#URL_PAGE{rubrique}|parametre_url{rubrique,#ID_RUBRIQUE}|url_absolue)]|#ID_RUBRIQUE
+<BOUCLE_re(BOUCLE_sous_rubriques)></BOUCLE_re><? $tab-- ; ?></BOUCLE_sous_rubriques></BOUCLE_rubriques>

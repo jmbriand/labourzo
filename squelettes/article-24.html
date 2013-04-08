@@ -1,0 +1,115 @@
+[(#REM)
+	Squelette saisie - demandeurs - breton
+	Pas de mise en cache pour raffraichir auto les listes de fiches
+]#CACHE{0}
+<BOUCLE_principale(ARTICLES) {id_article}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+[<meta name="description" content="(#INTRODUCTION{150}|attribut_html)" />]
+<INCLURE{fond=inc-head}>
+</head>
+
+	[(#REM) onload et onunload définis dans fmajDemSa.php ]
+<body class="page_article"  onload="initialize()" onunload="GUnload()">
+<div id="page">
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc-entete}>
+
+	[(#REM) Contenu principal : contenu de l'article ]
+    <div class="hfeed" id="conteneur">
+    <div class="hentry" id="contenu">
+    
+        [(#REM) Fil d'Ariane ]
+        <div id="hierarchie"><a href="#URL_SITE_SPIP/?lang=#LANG"><:accueil_site:></a><BOUCLE_ariane(HIERARCHIE){id_article}{id_secteur !IN 1,25}> &gt; <a href="#URL_RUBRIQUE">[(#TITRE|couper{80})]</a></BOUCLE_ariane>[ &gt; <strong class="on">(#TITRE|couper{80})</strong>]</div>
+
+
+		<div id="principal">
+
+
+        <div class="cartouche">
+            <div class="surlignable">
+				[(#LOGO_ARTICLE||image_reduire{200,200})]
+				[<p class="#EDIT{surtitre} surtitre">(#SURTITRE)</p>]
+				<h1 class="#EDIT{titre} entry-title">#TITRE</h1>
+				[<p class="#EDIT{soustitre} soustitre">(#SOUSTITRE)</p>]
+            </div>
+
+            [(#REM) Inclure le modele des liens de traductions ]
+            #MODELE{article_traductions}
+        </div>
+		
+        <div class="surlignable">
+			[<div class="#EDIT{chapo} chapo">(#CHAPO|image_reduire{500,0})</div>]
+			[<div class="#EDIT{texte} texte entry-content">(#TEXTE|image_reduire{500,0})</div>]
+		</div>
+
+
+		[<p class="#EDIT{hyperlien} hyperlien"><:voir_en_ligne:> : <a href="(#URL_SITE)" class="spip_out">[(#NOM_SITE|sinon{[(#URL_SITE|couper{80})]})]</a></p>]
+        
+		[<div class="ps surlignable"><h2 class="pas_surlignable"><:info_ps:></h2><div class="#EDIT{ps}">(#PS|image_reduire{500,0})</div></div>]
+
+<?PHP include("squelettes/gestionphp/fmajDemSa.php"); ?> 
+
+        [(#REM) CVs actuellement disponibles pour le demandeur ]
+        <B_mescvs>
+        <div class="menu" id="documents_joints">
+            <h2>[(#ENV{OK,''}|?{'' , <:mes_cvs:>})]</h2>
+            <ul>
+                <BOUCLE_mescvs(XX_UPCURVIT) {up_idauteur = #SESSION{id_auteur}} {par up_date}>
+        [(#ENV{OK,''}|?{'', 
+                <li><a href="IMG/cvdemandr/#UP_CHEMIN">#UP_NOM&nbsp; ([(#UP_LANG)])</a>
+                <form action='#URL_ARTICLE' method='post' class="ajax">
+				  	 <INPUT TYPE="hidden" id="detcv" NAME="detcv" VALUE="#UP_ID">
+				  	 <INPUT TYPE="hidden" NAME='OK' VALUE='1'>
+                <input type='submit' value='<:detruire:>' onClick="javascript:return confirm('<:confirm_suppr:>')">
+                </form>
+                </li>
+        })]
+                </BOUCLE_mescvs>
+            </ul>
+        </div>
+        </B_mescvs>
+
+
+	</div> <!-- principal -->
+	
+
+
+    [(#REM) Menu de navigation laterale ]
+    <div id="sidebar">
+    
+        [(#REM) Menu de navigation par rubriques ]
+        <INCLURE{fond=inc-rubriques}{id_rubrique}>
+
+        [(#REM) Menu de navigation mots-cles ]
+        <B_mots>
+        <div class="menu">
+            <h2><:mots_clefs:></h2>
+            <ul>
+                <BOUCLE_mots(MOTS) {id_rubrique} {par titre}>
+                <li><a href="#URL_MOT" rel="tag">#TITRE</a></li>
+                </BOUCLE_mots>
+            </ul>
+        </div>
+        </B_mots>
+        
+    </div><!--#sidebar-->
+    <div class="nettoyeur"></div>
+
+
+
+		
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+
+
+	[(#REM) Pied de page ]
+	<INCLURE{fond=inc-pied}{skel=#SQUELETTE}>
+
+</div><!--#page-->
+</body>
+</html>
+</BOUCLE_principale>

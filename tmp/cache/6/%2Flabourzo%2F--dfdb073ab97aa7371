@@ -1,0 +1,64 @@
+a:9:{s:5:"texte";s:1455:"<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="br" lang="br" dir="ltr">
+<head>
+<title>Fazi 404 - LABOURZO</title>
+<?php
+	$contexte_inclus = array('fond' => 'inc-head',
+	'lang' => 'br');
+	include _DIR_RESTREINT . "public.php";
+?>
+<meta name="robots" content="none" />
+</head>
+<body class="page_404">
+	<div id="page">
+
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-entete',
+	'lang' => 'br');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+	<div id="conteneur">
+    <div id="contenu">
+        
+        <div id="hierarchie"><a href="http://labourzo.ubapar.org/?lang=br">Degemer al lec'hienn</a> &gt; <strong class="on">Fazi 404</strong></div>
+	
+	<div id="principal">
+
+        <div class="cartouche">
+        <h1>Fazi 404</h1>
+        <p>N’oc’h ket aotreet da vont war al lodenn-se eus al lec’hienn.</p>
+        </div>
+        
+	
+	</div><!--  principal -->
+
+	<div id="sidebar">
+
+        
+        <?php
+	$contexte_inclus = array('fond' => 'inc-rubriques',
+	'lang' => 'br');
+	include _DIR_RESTREINT . "public.php";
+?>
+		
+    </div><!--#sidebar-->
+    
+    <div class="nettoyeur"></div>
+		
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-pied',
+	'skel' => 'squelettes/404.html',
+	'lang' => 'br');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+	</div><!--#page-->
+</body>
+</html>
+";s:9:"squelette";s:37:"html_c107865794360a467495a7890c8e6bf7";s:6:"source";s:19:"squelettes/404.html";s:11:"process_ins";s:3:"php";s:11:"invalideurs";a:1:{s:5:"cache";s:35:"6/%2Flabourzo%2F--dfdb073ab97aa7371";}s:7:"entetes";a:3:{s:55:"Http/1.0 404 Not Found"); ?><?php Header("cache-Control";s:35:"no-store, no-cache, must-revalidate";s:6:"Pragma";s:8:"no-cache";s:12:"X-Spip-Cache";i:86400;}s:5:"duree";i:0;s:8:"contexte";a:4:{s:4:"date";s:19:"2013-04-06 16:11:32";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-06 16:11:32";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}

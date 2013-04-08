@@ -1,0 +1,45 @@
+<div id="pied">
+	<ul>
+	
+	<li class="UBAPAR">
+	<BOUCLE_article_ubapar(ARTICLES) {id_article IN 35,36} {lang}>
+		<h4>&nbsp;</h4>
+		#TEXTE
+	</BOUCLE_article_ubapar>
+	</li>
+	
+	<li class="contact-mentions">
+	<div>
+	<BOUCLE_article_contact(ARTICLES) {id_article IN 37,38} {lang}>
+		<h4>#TITRE</h4>
+		#TEXTE
+	</BOUCLE_article_contact>
+	</div>
+	
+	<div>
+		<h4><:filrss:></h4>
+		<p>Les fils RSS (non activés pour le moment)</p>
+	</div>
+	</li>
+	
+	<li class="rss-plan">
+		<h4><:mentions_titre:></h4>
+		<p><:mentions_contenu:></p>
+	
+	</li>
+	
+	<li class="acces-admin">
+	[(#SESSION{id_auteur}|?{' '})<a href="#URL_LOGOUT{spip.php?page=sommaire}" rel="nofollow"><:icone_deconnecter:></a>]
+	[(#SESSION{id_auteur}|?{'',' '}) <a href="[(#URL_PAGE{login}|parametre_url{url,#SELF})]" rel="nofollow" class='login_modal'><:lien_connecter:></a>
+	<br><a href="[(#URL_PAGE{login}|parametre_url{url,spip.php?rubrique30&lang=fr})]" rel="nofollow" class='login_modal'>ADMIN</a>]
+	</li>
+	
+	</ul>
+</div>
+[(#REM)
+	Cette balise permet de deporter les calculs lourds (indexation etc)
+	dans une image cachee, ce qui evite de ralentir l'affichage des pages.
+]
+<!--[if IE]> <script type="text/javascript"> Cufon.now(); </script> <![endif]-->
+
+#SPIP_CRON

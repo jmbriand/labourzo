@@ -1,0 +1,61 @@
+a:9:{s:5:"texte";s:1915:"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="br" lang="br" dir="ltr">
+<head>
+<title>LABOURZO</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="none" />
+<meta name="generator" content="SPIP 2.0.10 [14698]" />
+
+<link rel="stylesheet" href="prive/spip_style.css" type="text/css" />
+<link rel="stylesheet" href="prive/minipres.css" type="text/css" />
+
+<script src="prive/javascript/jquery.js" type="text/javascript"></script>
+
+<script src="prive/javascript/jquery.form.js" type="text/javascript"></script>
+
+<script src="prive/javascript/ajaxCallback.js" type="text/javascript"></script>
+
+<script type='text/javascript'><!--
+jQuery(function(){ jQuery('input#var_login').focus();
+jQuery('a#spip_pass').click(function(){window.open(this.href, 'spip_pass', 'scrollbars=yes, resizable=yes, width=480, height=330'); return false;});
+});
+// --></script>
+</head>
+<body class="page_login" >
+
+<div id="minipres">
+
+	<h1>LABOURZO</h1>
+	
+	
+	
+	
+	
+	
+	
+	<?php 
+$lang_select = lang_select("br");
+include_once(_DIR_RACINE . "ecrire/balise/menu_lang_ecrire.php");
+inclure_balise_dynamique(balise_MENU_LANG_ECRIRE_dyn(''),1, 33);
+if ($lang_select) lang_select();
+?>
+	
+	<?php 
+$lang_select = lang_select("br");
+include_once(_DIR_RACINE . "ecrire/balise/formulaire_.php");
+inclure_balise_dynamique(balise_FORMULAIRE__dyn('FORMULAIRE_LOGIN', '/labourzo/ecrire/'),1, 21);
+if ($lang_select) lang_select();
+?>
+	<p class="retour">
+		
+		&#91;<a href="http://labourzo.ubapar.org/">distrei&ntilde;&nbsp;d'al&nbsp;lodenn&nbsp;foran</a>&#93;
+	</p>
+	<p class="retour">
+		<a href="http://www.spip.net/" title="Lec'hienn bet savet gant SPIP"><img src="squelettes-dist/spip.png" alt="SPIP" width="48" height="16" /></a>
+	</p>
+	
+</div><!--#minipres-->
+
+</body>
+</html>";s:9:"squelette";s:37:"html_62bbcc138b9987df2823dedcbf7d6fbd";s:6:"source";s:16:"prive/login.html";s:11:"process_ins";s:3:"php";s:11:"invalideurs";a:1:{s:5:"cache";s:35:"4/log-log-%2Fla-br--f57dad86cd677cf";}s:7:"entetes";a:2:{s:12:"Content-Type";s:24:"text/html; charset=utf-8";s:12:"X-Spip-Cache";i:86400;}s:5:"duree";i:0;s:8:"contexte";a:7:{s:4:"page";s:5:"login";s:3:"url";s:17:"/labourzo/ecrire/";s:4:"lang";s:2:"br";s:4:"date";s:19:"2013-04-06 16:11:40";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-06 16:11:40";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}

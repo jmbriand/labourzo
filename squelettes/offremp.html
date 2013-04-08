@@ -1,0 +1,117 @@
+[(#REM)
+	Pas de mise en cache pour raffraichir auto les listes de fiches
+]#CACHE{0}
+<BOUCLE_principale(ARTICLES) {id_article}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+[<meta name="description" content="(#INTRODUCTION{150}|attribut_html)" />]
+<INCLURE{fond=inc-head}>
+</head>
+
+<body class="page_article">
+<div id="page">
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc-entete}>
+
+	[(#REM) Contenu principal : contenu de l'article ]
+    <div class="hfeed" id="conteneur">
+    <div class="hentry" id="contenu">
+    
+        [(#REM) Fil d'Ariane ]
+        <div id="hierarchie"><a href="#URL_SITE_SPIP/?lang=#LANG"><:accueil_site:></a><BOUCLE_ariane(HIERARCHIE){id_article}{id_secteur !IN 1,25}> &gt; <a href="#URL_RUBRIQUE">[(#TITRE|couper{80})]</a></BOUCLE_ariane>[ &gt; <strong class="on">(#TITRE|couper{80})</strong>]</div>
+
+        <div class="cartouche">
+            <div class="surlignable">
+				[(#LOGO_ARTICLE||image_reduire{200,200})]
+				[<p class="#EDIT{surtitre} surtitre">(#SURTITRE)</p>]
+				<h1 class="#EDIT{titre} entry-title">#TITRE</h1>
+				[<p class="#EDIT{soustitre} soustitre">(#SOUSTITRE)</p>]
+            </div>
+
+            [(#REM) Inclure le modele des liens de traductions ]
+            #MODELE{article_traductions}
+        </div>
+		
+        <div class="surlignable">
+			[<div class="#EDIT{chapo} chapo">(#CHAPO|image_reduire{500,0})</div>]
+			[<div class="#EDIT{texte} texte entry-content">(#TEXTE|image_reduire{500,0})</div>]
+		</div>
+		
+        [(#REM) Listes des fiches employeur Anim ]
+		<BOUCLE_anim(ARTICLES) {id_article} {id_article IN 7,8}>
+        <B_offresA>
+        <div class="menu" id="documents_joints">
+            <h2></h2>
+            <ul>
+                <BOUCLE_offresA(XX_EMPLOYR) {emp_domaines LIKE %CVL%} {par emp_datmodif}>
+                <li>#EMP_NOM&nbsp;//&nbsp;#EMP_VILLE&nbsp;//&nbsp;#EMP_POSTE&nbsp;//&nbsp;#EMP_DATMODIF&nbsp;//&nbsp;
+                </li>
+                </BOUCLE_offresA>
+            </ul>
+        </div>
+        </B_offresA>
+	        <h2><:aucune_offre:></h2>
+        <//B_offresA>
+		</BOUCLE_anim>
+
+        [(#REM) Listes des fiches employeur Ecoles, ensgmt ]
+		<BOUCLE_ecoles(ARTICLES) {id_article} {id_article IN 16,22}>
+        <B_offresB>
+        <div class="menu" id="documents_joints">
+            <h2></h2>
+            <ul>
+                <BOUCLE_offresB(XX_EMPLOYR) {emp_domaines LIKE %Ecoles%} {par emp_datmodif}>
+                <li>#EMP_NOM&nbsp;//&nbsp;#EMP_VILLE&nbsp;//&nbsp;#EMP_POSTE&nbsp;//&nbsp;#EMP_DATMODIF&nbsp;//&nbsp;
+                </li>
+                </BOUCLE_offresB>
+            </ul>
+        </div>
+        </B_offresB>
+	        <h2><:aucune_offre:></h2>
+        <//B_offresB>
+		</BOUCLE_ecoles>
+
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+
+
+    [(#REM) Menu de navigation laterale ]
+    <div id="navigation">
+
+        [(#REM) Menu de navigation par rubriques ]
+        <INCLURE{fond=inc-rubriques}{id_rubrique}>
+<!-- 	
+		#FORMULAIRE_RECHERCHE
+ -->
+    </div><!--#navigation-->
+<!--     
+    [(#REM) Menu de navigation laterale ]
+    <div id="extra">
+
+        [(#REM) Articles dans la meme rubrique ]
+        <B_articles_rubrique>
+        <div class="menu">
+            <h2><a href="#URL_RUBRIQUE"><:meme_rubrique:></a></h2>
+            <ul>
+                <BOUCLE_articles_rubrique(ARTICLES) {id_rubrique} {par date}{inverse} {0,10}>
+                <li><a href="#URL_ARTICLE"[ class="(#EXPOSE)"]>#TITRE</a></li>
+                </BOUCLE_articles_rubrique>
+            </ul>
+        </div>
+        </B_articles_rubrique>
+
+        [(#REM) Menu de navigation mots-cles ]
+        #MODELE{article_mots}
+        
+    </div><!--#extra-->
+ -->
+	[(#REM) Pied de page ]
+	<INCLURE{fond=inc-pied}{skel=#SQUELETTE}>
+
+</div><!--#page-->
+</body>
+</html>
+</BOUCLE_principale>

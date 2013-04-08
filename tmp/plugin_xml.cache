@@ -1,0 +1,235 @@
+a:8:{s:19:"acces_restreint_3_0";a:18:{s:3:"nom";s:77:"<multi>[fr]Acces Restreint[es]Acceso restringido[en]Restricted Access</multi>";s:7:"version";s:5:"3.0.0";s:6:"auteur";s:50:"[cedric.morin@yterium.com->http://www.yterium.net]";s:4:"icon";s:27:"img_pack/zones-acces-48.png";s:11:"description";s:882:"<multi>
+	[fr] Gestion de zones d'acces restreint.
+_ Chaque zone contient des rubriques.
+_ Les auteurs peuvent etre associes a des zones pour avoir le droit d'y acceder.
+_ Toutes les boucles natives de SPIP sont surchargees pour en filtrer les resultats en fonction des droits du visiteur.
+	[es] Gesti&oacute;n de zonas de acceso restringido.
+_ Cada zona contiene secciones.
+_ Los autores podr&aacute;n ser asociados a ciertas zonas restringidas para tener derechos de acceso a ellas.
+_ Todos los bucles nativos de SPIP quedan modificados para filtrar los resultados en funci&oacute;n de los derechos del visitante.
+	[en]Restricted access management.
+_ Each area contains sections.
+_ Authors can be associated with these areas to gain access to them.
+_ All SPIP's loops are loaded with the necessary tools to filter the results according to the visitors' access priviliges.
+	</multi>";s:4:"lien";s:46:"http://www.spip-contrib.net/Acces-restreint-V1";s:4:"etat";s:6:"stable";s:7:"options";a:1:{i:0;s:27:"acces_restreint_options.php";}s:7:"licence";s:16:"GPL © 2007-2008";s:7:"install";a:1:{i:0;s:32:"base/acces_restreint_install.php";}s:9:"fonctions";a:3:{i:0;s:29:"acces_restreint_fonctions.php";i:1;s:26:"public/acces_restreint.php";i:2;s:23:"inc/acces_restreint.php";}s:6:"prefix";s:14:"accesrestreint";s:8:"pipeline";a:9:{i:0;a:2:{s:3:"nom";s:26:"declarer_tables_interfaces";s:7:"inclure";s:24:"base/acces_restreint.php";}i:1;a:2:{s:3:"nom";s:27:"declarer_tables_principales";s:7:"inclure";s:24:"base/acces_restreint.php";}i:2;a:2:{s:3:"nom";s:27:"declarer_tables_auxiliaires";s:7:"inclure";s:24:"base/acces_restreint.php";}i:3;a:2:{s:3:"nom";s:10:"pre_boucle";s:7:"inclure";s:26:"public/acces_restreint.php";}i:4;a:3:{s:3:"nom";s:37:"accesrestreint_liste_zones_autorisees";s:6:"action";s:22:"liste_zones_autorisees";s:7:"inclure";s:23:"inc/acces_restreint.php";}i:5;a:2:{s:3:"nom";s:15:"ajouter_boutons";s:7:"inclure";s:29:"acces_restreint_pipelines.php";}i:6;a:2:{s:3:"nom";s:14:"affiche_milieu";s:7:"inclure";s:29:"acces_restreint_pipelines.php";}i:7;a:2:{s:3:"nom";s:17:"page_indisponible";s:7:"inclure";s:29:"acces_restreint_pipelines.php";}i:8;a:2:{s:3:"nom";s:9:"autoriser";s:7:"inclure";s:33:"inc/acces_restreint_autoriser.php";}}s:12:"version_base";s:7:"0.3.0.2";s:9:"necessite";a:2:{i:0;a:2:{s:2:"id";s:4:"SPIP";s:7:"version";s:8:"[2.0.0;]";}i:1;a:2:{s:2:"id";s:10:"spip_bonux";s:7:"version";s:6:"[1.0;]";}}s:7:"utilise";a:0:{}s:4:"path";a:1:{i:0;a:1:{s:3:"dir";s:0:"";}}s:9:"filemtime";i:1265360893;}s:3:"cfg";a:16:{s:3:"nom";s:90:"<multi>
+    [fr]cfg: moteur de configuration
+    [de]cfg: Konfigurationsmotor
+    </multi>";s:7:"version";s:6:"1.14.2";s:6:"auteur";s:58:"bertrand Gugger [->http://toggg.com/], Matthieu Marcillaud";s:4:"icon";s:17:"
+    cfg.png
+    ";s:11:"description";s:576:"<multi>
+[fr]Ce plugin permet de gérer très simplement des interfaces de configuration pour différents modules.
+
+Il est utilisé par de nombreux plugins, mais il peut aussi avoir d'autres usages comme le paramétrage de squelettes.
+[en]This plugin manage some configuration graphic user interfaces for some modules.
+[de]Dieses Plugin ermöglicht es, in sehr einfacher Weise die Konfigurationsschnittstellen verschiedener Module zu verwalten.
+
+Es wird von vielen Plugins verwendet, kann aber auch anderen Nutzen finden wie die Parametereinstellung von Skeletten.
+    </multi>";s:4:"lien";s:40:"http://www.spip-contrib.net/?rubrique575";s:4:"etat";s:6:"stable";s:7:"options";a:1:{i:0;s:15:"cfg_options.php";}s:7:"licence";s:18:"© 2009 - GNU/LGPL";s:9:"fonctions";a:1:{i:0;s:17:"cfg_fonctions.php";}s:6:"prefix";s:3:"cfg";s:8:"pipeline";a:8:{i:0;a:2:{s:3:"nom";s:15:"ajouter_boutons";s:7:"inclure";s:16:"cfg_pipeline.php";}i:1;a:2:{s:3:"nom";s:14:"affiche_gauche";s:7:"inclure";s:16:"cfg_pipeline.php";}i:2;a:2:{s:3:"nom";s:12:"header_prive";s:7:"inclure";s:16:"cfg_pipeline.php";}i:3;a:2:{s:3:"nom";s:11:"insert_head";s:7:"inclure";s:16:"cfg_pipeline.php";}i:4;a:2:{s:3:"nom";s:18:"formulaire_charger";s:7:"inclure";s:16:"cfg_pipeline.php";}i:5;a:2:{s:3:"nom";s:19:"formulaire_verifier";s:7:"inclure";s:16:"cfg_pipeline.php";}i:6;a:2:{s:3:"nom";s:18:"formulaire_traiter";s:7:"inclure";s:16:"cfg_pipeline.php";}i:7;a:2:{s:3:"nom";s:29:"editer_contenu_formulaire_cfg";s:7:"inclure";s:16:"cfg_pipeline.php";}}s:9:"necessite";a:1:{i:0;a:2:{s:2:"id";s:4:"SPIP";s:7:"version";s:8:"[1.9.0;]";}}s:7:"utilise";a:0:{}s:4:"path";a:1:{i:0;a:1:{s:3:"dir";s:0:"";}}s:9:"filemtime";i:1265360889;}s:8:"ckeditor";a:12:{s:3:"nom";s:18:"CKEditor pour Spip";s:7:"version";s:3:"0.2";s:6:"auteur";s:47:"[Frédéric Bonnaud->mailto:fred@lea-linux.org]";s:4:"icon";s:17:"logo-ckeditor.png";s:11:"description";s:713:"
+		<h3>Intégration de l'éditeur WYSIWYG CKEditor à SPIP 2.0.9+</h3>
+
+		Cette intégration de l'éditeur CKEditor est non invasive (ie: elle ne modifie pas le code de SPIP). Elle utilise le méchanisme des pipelines (ici, on utilise le pipeline : <code>editer_contenu_objet</code>). La version de CKeditor utilisée est la {{3.0 SVN 4310}} ou plus ;) . 
+
+
+		On peut configurer la façon dont s'affiche l'éditeur avec <a href='?exec=cfg&cfg=ckeditor'>CFG</a>.
+
+
+		Le mode d'édition de SPIP reste disponible, et on peut configurer le plugin pour que ce mode soit le mode d'édition par défaut.
+
+		Nécessite : spip-bonux et CFG
+	
+		{{Licence :}} [GPLv2->http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+	";s:4:"etat";s:4:"test";s:6:"prefix";s:8:"ckeditor";s:8:"pipeline";a:6:{i:0;a:2:{s:3:"nom";s:11:"pre_edition";s:7:"inclure";s:22:"ckeditor_fonctions.php";}i:1;a:2:{s:3:"nom";s:20:"editer_contenu_objet";s:7:"inclure";s:22:"ckeditor_fonctions.php";}i:2;a:2:{s:3:"nom";s:12:"header_prive";s:7:"inclure";s:22:"ckeditor_fonctions.php";}i:3;a:2:{s:3:"nom";s:11:"insert_head";s:7:"inclure";s:22:"ckeditor_fonctions.php";}i:4;a:2:{s:3:"nom";s:20:"editer_contenu_objet";s:7:"inclure";s:22:"ckeditor_fonctions.php";}i:5;a:2:{s:3:"nom";s:9:"pre_liens";s:7:"inclure";s:22:"ckeditor_fonctions.php";}}s:9:"necessite";a:4:{i:0;a:2:{s:2:"id";s:4:"SPIP";s:7:"version";s:8:"[2.0.9;]";}i:1;a:2:{s:2:"id";s:3:"cfg";s:7:"version";s:9:"[1.10.0;]";}i:2;a:2:{s:2:"id";s:10:"spip_bonux";s:7:"version";s:8:"[1.8.2;]";}i:3;a:2:{s:2:"id";s:12:"lib:ckeditor";s:3:"src";s:78:"http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.0/ckeditor_3.0.zip";}}s:7:"utilise";a:0:{}s:4:"path";a:1:{i:0;a:1:{s:3:"dir";s:0:"";}}s:9:"filemtime";i:1265360886;}s:14:"couteau_suisse";a:16:{s:3:"nom";s:422:"<multi>Swiss Knife[fr]Le Couteau Suisse[ca]El Ganivet Su&#237;s[ar]&#1587;&#1603;&#1610;&#1606; &#1575;&#1604;&#1580;&#1610;&#1576;[nl]Het Zwitserland Mes[gl]A navalla su&#237;za[es]La Navaja Suiza[de]Schweizer Taschenmesser[tr]&#304;svi&#231;re &#199;ak&#305;s&#305;[br]Ar Gontell Suis[pt_br]Canivete Su&#237;&#231;o[ast]La Navaya Suiza[gl]A navalla su&#237;za[ro]Cu&#355;itul Elve&#355;ian[it]Coltellino Svizzero</multi>";s:7:"version";s:9:"1.8.13.08";s:6:"auteur";s:69:"Patrice Vanneufville
+_ © 2007-2009 - Distribué sous licence GPL
+	";s:4:"icon";s:18:"img/couteau-50.gif";s:11:"description";s:13337:"<multi>
+Gathers together in one plugin many small, useful tools to improve the management of your SPIP site.
+
+Each tool can be ativated individually by the the user from the [plugin's admin page->./?exec=admin_couteau_suisse]. To set some options, click on {{Configuration}}, then choose the {{Swiss Knife}} tab.
+
+Available categories are: Administration, Typographical improvements, Typographical shortcuts, Display on the public site, Tags, Filters, Criteria..
+
+Find your favourite tools in this plugin: {Superscript}, {Curly inverted commas}, {Beautiful bullets}, {A summary for your articles}, {Smileys}, {Delete the number}, {Fine URLs}, {SPIP and external links}, {No anonymous forums}, {Division in pages and tab}, etc., etc.
+
+See the documentation articles at: [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibility: SPIP v1.92x/v2.0.x
+[fr]Réunit en un seul plugin une liste de petites fonctionnalités nouvelles et utiles améliorant la gestion de votre site SPIP.
+
+Chacun de ces outils peut être activé ou non par l'utilisateur sur [la page d'administration du plugin->./?exec=admin_couteau_suisse] et gérer un certain nombre de variables : cliquer sur {{Configuration}}, puis choisir l'onglet {{Le Couteau Suisse}}.
+
+Les catégories disponibles sont : Administration, Améliorations typographiques, Raccourcis typographiques, Affichage public, Balises, filtres, critères.
+
+Découvrez dans ce plugin vos outils favoris : {Supprime le numéro}, {Format des URLs}, {Exposants typographiques}, {Guillemets typographiques}, {Belles puces}, {Lutte contre le SPAM}, {Mailcrypt}, {Belles URLs}, {SPIP et les liens... externes}, {Smileys}, {Un sommaire pour vos articles}, {Découpe en pages et onglets}, etc., etc.
+
+N'hésitez pas à consulter les articles de documentation du plugin publiés sur : [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibilité : SPIP v1.92x et v2.0.x
+[nl]In slechts én plugin verenigt een lijst van kleine nieuwe en nuttige functies die het beleid verbeteren, van uw site SPIP.
+
+Elk van deze werktuigen kan of niet door de gebruiker op geactiveerd worden [de bladzijde van bestuur van plugin->./?exec=admin_couteau_suisse] en een aantal variabele beheren: op {{Configuratie}} klikken, vervolgens de tab kiezen {{Le Couteau Suisse}}.
+
+De beschikbare categorieën zijn: Bestuur, typografische Verbeteringen, typografische Kortere wegen, openbare Display, Bakens, filters, criteria.
+
+Ontdekt in dit plugin uw lievelingswerktuigen: {Typografische Inzenders}, {typografische Aanhalingstekens}, {Mooi chips}, {schaft een overzicht voor uw artikelen}, {Smileys}, {het nummer}, {Mooi URLs}, {SPIP en de band af externe}, {Niet van onbekende forums}, {Découpe in bladzijdes en tabben}, etc., etc.
+
+Aarzelt niet om de gepubliceerde artikelen van documentatie van plugin over te raadplegen : [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+De verenigbaarheid: SPIP 1.92x/2.0.x
+[ca]Reuneix en un sol plugin una llista de petites noves funcionalitats i utilitats que milloren la gestió del vostre lloc SPIP.
+
+L'usuari pot activar, o no, cadascuna d'aquestes utilitats [la pàgina d'administració del plugin->./?exec=admin_couteau_suisse] i gestoinar un cert nombre de variables: fer un clic a {{Configuració}}, després escollir la pestanya {{El Ganivet Suís}}.
+
+Les categories disponibles són: Administració, Millores tipogràfiques, Dreceres tipogràfiques, Presentació pública, Etiquetes, Filtres, Criteris.
+
+Descobriu en aquest plugin les vostres utilitats favorites: {Expositors tipogràfics}, {Cometes tipogràfiques}, {Bonics símbols}, {Un sumari pels vostres articles}, {Emoticones}, {Suprimir el número}, {Bonics URLs}, {SPIP i els enllaços... externs}, {No Fòrums anòmins}, {Divisió en pàgines i pestanyes}, etc., etc.
+
+No dubteu a consultar els articles de la documentació del plugin publicats a: [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibilitat: SPIP 1.92x/2.0.x
+[de]Zusammenfassung einiger Zusatzfunktionen für eine bessere Verwaltung Ihrer SPIP Website.
+
+Jedes dieser Werkzeuge kann vom Administrator auf der |Seite zur Verwaltung des Plugins->./?exec=admin_couteau_suisse] aktiviert oder abgeschaltet und konfiguriert werden: Klicken Sie auf {{Konfiguration}}, und wählen Sie dann {{Le Couteau Suisse}}.
+
+Sie können folgende Einstellungen vornehmen: Verwaltung, typografische Verbesserungen, typografische Kürzel, Anzeigeoptionen der Website, SPIP-Tags, Filter, Kriterien.
+
+Wählen Sie die für Sie wichtigsten Funktionen: {Typografische Hervorhebungen}, {typografische Anführungszeichen}, {schöne Listen-Punkte}, {Inhaltsverzeichnis für Artikel}, {Smileys}, {Nummern entferneno}, {ästhetische URLs}, {SPIP und externe Links}, {keine anonymen Foren}, {Aufteilung in Seiten und Reiter}, etc., etc.
+
+Bitte lesen Sie auch die Artikel auf : [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Kompatibel mit: SPIP 1.92x/2.0.x
+[es]Reúne en un solo plugin une liste de pequeñas características nuevas y útiles para mejorar la gestión de tu sitio SPIP.
+
+Cada herramienta puede activarse o no por el usuario en [la página de administración del plugin->./?exec=admin_couteau_suisse] y manejar cierto número de variables: pulsa en {{Configuración}}, y selecciona la pestaña {{La Navaja Suiza}}.
+
+Las categorías disponibles son: Administración, Mejoras tipográficas, Atajos tipográficos, Publicación, Balizas, filtros, criterios.
+
+Encuentra en este plugin tus herramientas favoritas: {Exponentes tipográficos}, {Comillas tipográficas}, {Marcas bonitas}, {Un sumario para tus artículos}, {Smileys}, {Suprimir el número}, {URLs elegantes}, {SPIP y los enlaces... externos}, {Foros no anónimos}, {Dividir en páginas y pestañas}, etc., etc.
+
+No dudes en consultar los artículos de documentación del plugin publicados en: [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibilidad: SPIP 1.92x/2.0.x
+[ar]يجمع في ملحق واحد وظائف جديدة ومفيدة تهدف الى تحسين ادارة الموقع.
+
+
+ويمكن تفعيل اي من هذه الوظائف او ايقافها في [صفحة ادارة الملحق ->  ./?exec=admin_couteau_suisse] والتحكم بعد من المتغيرات: انقر على {{إعداد الموقع}} ثم اختر رابط {{سكين الجيب}}.
+
+
+اصناف الوظائف المتوافرة هي:الادارة، تحسين الكتابة، اختصارات الكتابة، عرض الموقع العمومي، العلامات، المرشحات، المعاير.
+
+في هذا الملحق يمكنك اختيار ادواتك المفضلة: {الاس}، {علامات الاقتباس}، {لائحة محتويات المقالات}، {ازالة ارقام العناصر}، {عناوين URL النظيفة}، {منع المشاركات المغفلة}، الخ.
+
+
+لا ترد في قراءة مقالات توثيق هذا الملحق على العنوان:[spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+يتوافق مع كل اصدارات 1.92x/2.0.x من SPIP
+[gl]Reúne nun só módulo unha lista de pequenas funcionalidades novas e útiles que melloran a xestión do seu web SPIP.
+
+Cada unha destas ferramentas pode ser activada ou non polo usuario en  [páxina de administración do módulo->./?exec=admin_couteau_suisse] e xestionar un certo número de variables : Premer en {{Configuración}}, logo escoller a pestana {{A Navalla Suíza}}.
+
+As categorías dispoñibles son : administración, melloras tipográficas, atallos tipográficos, presentación pública, balizas, filtros, criterios.
+
+Descubra neste módulos as súas ferramentas favoritas : {Superíndices  tipográficos}, {Vírgulas tipográficas}, {Viñetas fermosas}, {Un sumario para os seus artigos}, {Risoños}, {Suprimir o número}, {URL fermosos}, {SPIP e as ligazóns... externas}, {Ningún foro anónimo}, {Partir en páxinas e pestanas}, etc., etc.
+
+Non dubide en consultar os artigos de documentación do módulo publicados en  : [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibilidade : SPIP 1.92x/2.0.x
+[br]Bodet e vez amañ ul listennad servijoù nevez ha talbvoudus evit gwellaat mont en-dro ho lec'hienn SPIP.
+
+Pep hini ouzh ar binviji-mañ a c'hell bezañ implijet pe get gant an implijer war [bajenn-merañ ar plugin->./?exec=admin_couteau_suisse] ha merañ un nebeud roadoù : klikit war {{Ardremmeziñ}}, ha dibabit an ivinenn {{Ar Gontell Suis}}.
+
+Setu ar rannoù kinniget : Merañ, Gwellaat ar skritur, berradennoù skritur, diskwel foran, balizennoù, siloù, kriterioù.
+
+Kavit en astenn-mañ un nebeud binviji :  {gallouterien}, {klochedigoù}, {c'hwen vrav}, {ur roll evit ho pennadoù}, {skeudennigoù-imor}, {dilemel an niverenn}, {chomlec'hioù brav}, {SPIP hag al liammoù diavaez}, {foromoù dianv ebet}, {didroc'hañ e pajennoù hag e ivinelloù}, hag all. 
+
+Gallout a rit teurel ur sell war ar pennadoù-titouriñ diwar-benn an astennoù war : [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Heglot gant SPIP 1.92x/2.0.x
+[ast]Xunta n'un solu plugin una llista de pequeñes funciones nueves y ferramientes pa meyorar la xestión del to sitiu SPIP.
+
+Cauna d'estes ferramientes puede activase o non pol usuariu so [la páxina d'alministración del plugin->./?exec=admin_couteau_suisse] y manexar ciertu númberu de variables : picar en {{Afitamientu}}, llueu escoyer la pestaña {{La Navaya Suiza}}.
+
+Les categoríes disponibles son: Alministración, Meyores tipográfiques, Atayos tipográficos, Aspeutu públicu, Balices, filtros, criterios.
+
+Descubre nesti plugin les tos ferramientes favorites: {Esponentes tipográficos}, {Comilles tipográfiques}, {Marques de llista guapes}, {Un sumariu pa los tos artículos}, {Caruques}, {Suprimir el númberu}, {URLs guapes}, {SPIP y los enllaces... esternos}, {Ensin foros anónimos}, {Divide en páxines y pestañes}, etc., etc.
+
+Si quies consultar los artículos de la documentación del plugin, tan espublizaos en: [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibilidá: SPIP 1.92x/2.0.x
+[ro]Reuneşte într-un singur plugin o listă de mici funcţionalităţi noi şi utile care ameliorează gestiunea site-ului dumneavoastră SPIP.
+
+Fiecare dintre aceste utilităţi poate fi activată de către utilizator în [pagina de administrare a plug-in-ului->./?exec=admin_couteau_suisse] şi poate gestiona un anumit număr de variabile: faceţi Clic pe {{Configurare}}, după aceea alegeţi pagina {{Cuţitul Elveţian}}.
+
+Categoriile disponibile sunt: Administrare, Ameliorări tipografice, Scurtături tipografice, Afişaj public, Balize, filtre, criterii.
+
+Descoperiţi în aces plug-in tool-urile dumneavoastră favorite: {Ghilimele tipografice}, {Fonturi drăguţe}, etc., etc.
+
+Nu ezitaţi să consultaţi articolele de documentaţie publicate la : [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibilitate : SPIP 1.92x/2.0.x
+[pt_br]Reúne, em um único plugin, diversas pequenas e úteis funcionalidades, que melhoram o gerenciamento do seu site SPIP.
+
+Cada uma destas ferramentas pode ser ativada ou desativada pelo usuário na [página de administração do plugin->./?exec=admin_couteau_suisse] e gerar um certo número de variáveis: clique em {{Configuration}}, e depois escolha a guia {{Le Couteau Suisse}}.
+
+As categorias disponíveis são: Administração, Melhoramentos tipográficos, Atalhos tipográficos, Exibição pública, Tags, filtros, critérios.
+
+Descobra neste plugin as suas ferramentas favoritas: {Sobrescritos}, {Aspas tipográficas}, {Bullets melhorados}, {Um índice para os seus artigos}, {Smileys}, {Excluir o número}, {URLs melhorados}, {SPIP e links externos}, {Sem fóruns anônimos}, {Dividir em páginas e guias}, etc., etc.
+
+Não deixe de consultar os artigos de documentação do plugin, publicados em: [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibilidade: SPIP 1.92x/2.0.x
+[it]Raccoglie in un solo plugin una serie di piccole funzioni nuove ed utili a migliorare la gestione del tuo sito SPIP.
+
+Ciascuna di queste funzioni può essere attivata o meno dall'utente sulla [pagina di amministrazione dei plugin->./?exec=admin_couteau_suisse] ed impostata con un certo numero di variabili: clicca su {{Configurazione}}, poi scegli la scheda {{Coltellino Svizzero}}.
+
+Le categorie disponibili sono:Amministrazione, Miglioramenti tipografici, Scorciatoie tipografiche, Visualizzazione del sito pubblico, Segnaposti, filtri, criteri.
+
+Scopri in questo plugin le tue funzioni preferite: {Sopprimi il numero}, {Formato degli URL}, {Evidenziatori tipografici}, {Virgolette tipografiche}, {Simboli di spunta}, {Lotta contro lo SPAM}, {Mailcrypt}, {Belle URL}, {SPIP e i link... esterni}, {Smileys}, {Un sommario per i tuoi articoli}, {Dividi in pagine e schede}, ecc., ecc.
+
+Non esitare a leggere gli articoli di documentazione del plugin pubblicati su: [spip-contrib.net->http://www.spip-contrib.net/Le-Couteau-Suisse].
+
+Compatibilità : SPIP v1.92x e v2.0.x
+	</multi>";s:4:"lien";s:49:"[->http://www.spip-contrib.net/Le-Couteau-Suisse]";s:4:"etat";s:6:"stable";s:7:"options";a:1:{i:0;s:23:" 
+	cout_options.php
+	";}s:7:"install";a:1:{i:0;s:18:"cout_pipelines.php";}s:9:"fonctions";a:1:{i:0;s:25:" 
+	cout_fonctions.php
+	";}s:6:"prefix";s:14:"couteau_suisse";s:8:"pipeline";a:23:{i:0;a:2:{s:3:"nom";s:15:"affichage_final";s:7:"inclure";s:18:"cout_pipelines.php";}i:1;a:2:{s:3:"nom";s:11:"insert_head";s:7:"inclure";s:18:"cout_pipelines.php";}i:2;a:2:{s:3:"nom";s:15:"ajouter_onglets";s:7:"inclure";s:18:"cout_pipelines.php";}i:3;a:2:{s:3:"nom";s:12:"header_prive";s:7:"inclure";s:18:"cout_pipelines.php";}i:4;a:2:{s:3:"nom";s:11:"boite_infos";s:7:"inclure";s:18:"cout_pipelines.php";}i:5;a:2:{s:3:"nom";s:14:"affiche_gauche";s:7:"inclure";s:18:"cout_pipelines.php";}i:6;a:2:{s:3:"nom";s:14:"affiche_droite";s:7:"inclure";s:18:"cout_pipelines.php";}i:7;a:2:{s:3:"nom";s:14:"affiche_milieu";s:7:"inclure";s:18:"cout_pipelines.php";}i:8;a:2:{s:3:"nom";s:24:"nettoyer_raccourcis_typo";s:7:"inclure";s:18:"cout_pipelines.php";}i:9;a:2:{s:3:"nom";s:10:"pre_propre";s:7:"inclure";s:18:"cout_pipelines.php";}i:10;a:2:{s:3:"nom";s:8:"pre_typo";s:7:"inclure";s:18:"cout_pipelines.php";}i:11;a:2:{s:3:"nom";s:11:"post_propre";s:7:"inclure";s:18:"cout_pipelines.php";}i:12;a:2:{s:3:"nom";s:9:"post_typo";s:7:"inclure";s:18:"cout_pipelines.php";}i:13;a:2:{s:3:"nom";s:11:"pre_edition";s:7:"inclure";s:18:"cout_pipelines.php";}i:14;a:2:{s:3:"nom";s:12:"post_edition";s:7:"inclure";s:18:"cout_pipelines.php";}i:15;a:2:{s:3:"nom";s:10:"bt_gadgets";s:7:"inclure";s:18:"cout_pipelines.php";}i:16;a:2:{s:3:"nom";s:10:"pre_boucle";s:7:"inclure";s:18:"cout_pipelines.php";}i:17;a:2:{s:3:"nom";s:10:"bt_toolbox";s:7:"inclure";s:18:"cout_pipelines.php";}i:18;a:2:{s:3:"nom";s:16:"creer_chaine_url";s:7:"inclure";s:18:"cout_pipelines.php";}i:19;a:2:{s:3:"nom";s:29:"porte_plume_barre_pre_charger";s:7:"inclure";s:18:"cout_pipelines.php";}i:20;a:2:{s:3:"nom";s:34:"porte_plume_lien_classe_vers_icone";s:7:"inclure";s:18:"cout_pipelines.php";}i:21;a:2:{s:3:"nom";s:21:"pre_description_outil";s:7:"inclure";s:18:"cout_pipelines.php";}i:22;a:2:{s:3:"nom";s:26:"porte_plume_cs_pre_charger";s:7:"inclure";s:18:"cout_pipelines.php";}}s:9:"necessite";a:1:{i:0;a:2:{s:2:"id";s:4:"SPIP";s:7:"version";s:8:"[1.9.2;]";}}s:7:"utilise";a:0:{}s:4:"path";a:1:{i:0;a:1:{s:3:"dir";s:0:"";}}s:9:"filemtime";i:1265360883;}s:10:"spip-bonux";a:15:{s:3:"nom";s:10:"SPIP Bonux";s:7:"version";s:5:"1.8.9";s:6:"auteur";s:49:"Cedric Morin, Matthieu Marcillaud, romy.tetue.net";s:4:"icon";s:23:"img_pack/spip-bonux.png";s:11:"description";s:143:"Le plugin qui lave plus SPIP que SPIP, avec des chouettes cadeaux dedans ! Interface douce, boucles POUR et CONDITION, tableaux, compteur, etc.";s:4:"lien";s:38:"http://www.spip-contrib.net/SPIP-Bonux";s:4:"etat";s:6:"stable";s:7:"licence";s:17:"(c) 2008-2009 GPL";s:9:"fonctions";a:3:{i:0;s:30:"public/spip_bonux_criteres.php";i:1;s:29:"public/spip_bonux_balises.php";i:2;s:24:"spip_bonux_fonctions.php";}s:6:"prefix";s:10:"spip_bonux";s:8:"pipeline";a:0:{}s:9:"necessite";a:1:{i:0;a:2:{s:2:"id";s:4:"SPIP";s:7:"version";s:8:"[2.0.0;]";}}s:7:"utilise";a:0:{}s:4:"path";a:1:{i:0;a:1:{s:3:"dir";s:0:"";}}s:9:"filemtime";i:1265364401;}s:13:"contact100312";a:16:{s:3:"nom";s:245:"<multi>[fr]Formulaire de contact avanc&eacute;
+	[en]Advanced Contact Form
+	[ar]&#1573;&#1587;&#1578;&#1605;&#1575;&#1585;&#1577; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1575;&#1604;&#1605;&#1578;&#1602;&#1583;&#1605;&#1577;
+	</multi>";s:7:"version";s:4:"0.62";s:6:"auteur";s:51:"Pierre Fiches, RastaPopoulos, Superyms (traduction)";s:4:"icon";s:22:"images/contact-128.png";s:11:"description";s:269:"<multi>[fr]Cette extension propose un formulaire de contact avec de multiples options.
+	[en]This extension provides a contact form with multiple options.
+	[ar]هذا التمديد يوفر شكل من أشكال الاتصال مع خيارات متعددة.
+	</multi>";s:4:"lien";s:56:"http://www.spip-contrib.net/Formulaire-de-contact-avance";s:4:"etat";s:6:"stable";s:7:"options";a:1:{i:0;s:19:"contact_options.php";}s:7:"licence";s:6:"GPL v3";s:7:"install";a:1:{i:0;s:29:"base/contact_installation.php";}s:6:"prefix";s:7:"contact";s:8:"pipeline";a:5:{i:0;a:2:{s:3:"nom";s:12:"header_prive";s:7:"inclure";s:21:"contact_pipelines.php";}i:1;a:2:{s:3:"nom";s:15:"ajouter_boutons";s:7:"inclure";s:21:"contact_pipelines.php";}i:2;a:2:{s:3:"nom";s:27:"declarer_tables_principales";s:7:"inclure";s:23:"base/contact_tables.php";}i:3;a:2:{s:3:"nom";s:27:"declarer_tables_auxiliaires";s:7:"inclure";s:23:"base/contact_tables.php";}i:4;a:2:{s:3:"nom";s:26:"declarer_tables_interfaces";s:7:"inclure";s:23:"base/contact_tables.php";}}s:9:"necessite";a:3:{i:0;a:2:{s:2:"id";s:4:"SPIP";s:7:"version";s:8:"[2.0.0;]";}i:1;a:2:{s:2:"id";s:3:"cfg";s:7:"version";s:9:"[1.10.5;]";}i:2;a:2:{s:2:"id";s:10:"spip_bonux";s:7:"version";s:6:"[1.2;]";}}s:7:"utilise";a:1:{i:0;a:1:{s:2:"id";s:7:"facteur";}}s:4:"path";a:1:{i:0;a:1:{s:3:"dir";s:0:"";}}s:9:"filemtime";i:1268479596;}s:16:"tabledata-v2-2-1";a:13:{s:3:"nom";s:28:"<multi>[fr]TableDATA</multi>";s:7:"version";s:5:"2.2.1";s:6:"auteur";s:63:"	
+ 	Christophe Boutin - christophe (at)  cboutin . net -
+    ";s:4:"icon";s:22:"img_pack/tabledata.gif";s:11:"description";s:382:"<multi>
+	[fr] Gestion des tables extra (tables SQL que vous avez ajoutes  SPIP).
+_ Liste les tables 'extra' et permet le choix
+_ Liste les enregistrement d'une table.
+_ Ajouter/supprimer/editer des enregistrements dans une table.
+_ Les pages sont dynamiques, elles s'adaptent  la structure de la table.
+_ Compatible fonctions sql portables MySQL, PostGreSQL, SQLite
+	</multi>";s:4:"etat";s:6:"stable";s:7:"licence";s:43:"_ © 2009 - [fr]Distribué sous licence GPL";s:6:"prefix";s:9:"tabledata";s:8:"pipeline";a:1:{i:0;a:3:{s:3:"nom";s:15:"ajouter_boutons";s:6:"action";s:14:"ajouterBoutons";s:7:"inclure";s:23:"tabledata_pipelines.php";}}s:9:"necessite";a:0:{}s:7:"utilise";a:0:{}s:4:"path";a:1:{i:0;a:1:{s:3:"dir";s:0:"";}}s:9:"filemtime";i:1269368591;}s:12:"saveauto_2_0";a:13:{s:3:"nom";s:75:"<multi>
+[fr]Sauvegarde automatique
+[it]Salvataggio automatico
+		</multi>";s:7:"version";s:5:"0.5.3";s:6:"auteur";s:179:"<multi>
+[fr]cy_altern, _Eric_ d'après une contrib de Silicium (silicium@japanim.net)
+[it]cy_altern, _Eric_ - basato su un contrib di Silicium (silicium@japanim.net)
+		</multi>";s:4:"icon";s:24:"img_pack/saveauto-24.png";s:11:"description";s:1268:"<multi>
+[fr]Permet de réaliser une sauvegarde de toute la base de données utilisée par SPIP.
+Le fichier .gz obtenu est stocké dans un répertoire (par défaut /tmp, configurable)
+et peut être envoyé par mail.
+
+La sauvegarde est déclenchée lors d'une visite dans l'espace privé si le délais
+depuis la dernière sauvegarde est supérieur à celui configuré comme fréquence.
+Les sauvegardes stockées considérées comme obsolètes (en fonction du paramètre de config correspondant)
+sont automatiquement détruites.
+
+{{Attention !}} cette version de {{Sauvegarde automatique}}, compatible avec SPIP 2.0, nécessite le plugin {{CFG}} pour fonctionner !
+
+[it]Consente di effettuare un salvataggio di tutta la base dati utilizzata da SPIP.
+Il file .gz o .sql ottenuto è memorizzato all'interno di una cartella (in maniera predefinita /tmp, configurabile)
+e pu&ograve; essere inviato per posta elettronica.
+
+Il salvataggio è effettuato al momento della visita della redazione se l'ultimo salvataggio è
+pi&ugrave; vecchio della frequenza di salvataggio specificata nella configurazione.
+I salvataggi memorizzati considerati obsoleti (in funzione del parametro di configurazione corrispondente)
+vengono automaticamente cancellati.
+		</multi>";s:4:"lien";s:61:"[->http://www.spip-contrib.net/Le-plugin-saveauto-sauvegarde]";s:4:"etat";s:6:"stable";s:6:"prefix";s:8:"saveauto";s:8:"pipeline";a:2:{i:0;a:2:{s:3:"nom";s:21:"mes_fichiers_a_sauver";s:7:"inclure";s:22:"saveauto_pipelines.php";}i:1;a:2:{s:3:"nom";s:10:"body_prive";s:7:"inclure";s:22:"saveauto_pipelines.php";}}s:9:"necessite";a:2:{i:0;a:2:{s:2:"id";s:4:"SPIP";s:7:"version";s:8:"[2.0.0;]";}i:1;a:2:{s:2:"id";s:3:"cfg";s:7:"version";s:8:"[1.0.0;]";}}s:7:"utilise";a:0:{}s:4:"path";a:1:{i:0;a:2:{s:3:"dir";s:0:"";s:4:"type";s:5:"prive";}}s:9:"filemtime";i:1271180121;}}

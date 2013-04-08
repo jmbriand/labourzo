@@ -1,0 +1,155 @@
+[(#REM) descriptif=
+<h4>Configuration du plugin CKeditor</h4>
+<p>Ici vous pouvez configurer le fonctionnement de CKeditor.</p>
+<p>En particulier, vous pouvez :</p>
+<ul>
+	<li>modifier les barres d'outils</li>
+	<li>activer la correction orthographique</li>
+	<li>permettre l'utilisation de certaines balises SPIP</li>
+<ul>
+]
+
+[(#REM) titre=CKeditor]
+[(#REM) icone=ckeditor-24.png]
+
+#CACHE{0}
+<form method="post" action="#self"><div>[(#ENV{_cfg_}|form_hidden)]
+<fieldset>
+	<legend>Configuration de base</legend>
+	<div style='margin-bottom:15px;clear:none;'>
+		<label for="editmode">Mode d'édition par défaut : </label>
+		<select name="editmode">
+			<option value="spip" [(#ENV{editmode}|=={'spip'}|?{'selected'})]>spip</option>
+			<option value="ckeditor" [(#ENV{editmode}|=={'ckeditor'}|?{'selected'})]>CKeditor</option>
+		</select>
+		<br/>
+		<input type="checkbox" name="editexclu" [(#ENV{editexclu}|?{'checked'})] style="margin-left:20px;">&nbsp;uniquement ce mode (pour n'activer que le mode SPIP, il vaut mieux désactiver le plugin).</input>
+	</div>
+	<div style='margin-bottom:15px; clear:both;'>
+		<label for="taille">Hauteur de l'éditeur : </label>
+		<input type="text" name="taille" value="[(#ENV{taille}|>0|?{#ENV{taille}, '500'})]" size='5'/>&nbsp;pixels
+	</div>
+	<div style='margin-bottom:15px; clear:both;'>
+		<input type="checkbox" name="startspellcheck" [(#ENV{startspellcheck}|?{'checked'})]>Démarrer la correction orthographique en :</input>
+		<select name="spellchecklang">
+			<?php
+				$langs = array(
+					"pt_BR"=>"Português do Brasil",
+					"en_GB"=>"British English",
+					"da_DK"=>"Dansk",
+					"nl_NL"=>"Nederlandse",
+					"en_US"=>"English",
+					"en_CA"=>"English Canadian",
+					"fi_FI"=>"Suomen",
+				 	"fr_FR"=>"Français",
+					"fr_CA"=>"Français Canadien",
+					"de_DE"=>"Deutsch",
+					"el_GR"=>"Ελληνικά",
+					"it_IT"=>"Italiano",
+					"nb_NO"=>"Norsk",
+					"pt_PT"=>"Português",
+					"es_ES"=>"Español",
+					"sv_SE"=>"Svenska"
+					) ;
+	foreach($langs as $lang => $langname) {
+		echo "<option value=\"$lang\"" ;
+		if (lire_config("ckeditor/spellchecklang") == $lang) {
+			echo " selected" ;
+		}
+		echo ">$langname</option>\n" ;
+	}
+?>
+		</select>
+	</div>
+</fieldset>
+<fieldset>
+	<legend>Configuration des barres d'outils</legend>
+	<div style='margin-bottom:15px; clear:both;'>
+	<script type='text/javascript'>
+function selectAllTools(select) {
+	var retnode = [];
+	var myclass = new RegExp('\\btoolbar_tool\\b');
+	var elem = document.getElementsByTagName('*');
+	for (var i = 0; i < elem.length; i++) {
+			  var classes = elem[i].className;
+			  if (myclass.test(classes)) retnode.push(elem[i]);
+	}
+
+	for(i=0;i<retnode.length;i++) {
+		if (select == 'inverse') {
+			retnode[i].checked = ! retnode[i].checked ;
+		} else {
+			retnode[i].checked = select ;
+		}
+	}
+	return false;
+}
+
+	</script>
+	<center>
+	<a href="#" onclick="javascript:return selectAllTools(true);">Tout sélectionner</a> |
+	<a href="#" onclick="javascript:return selectAllTools(false);">Tout désélectionner</a> |
+	<a href="#" onclick="javascript:return selectAllTools('inverse');">Inverser la  sélection</a>
+	</center>
+	<?php
+	global $toolbars ;
+	include_spip("toolbars") ;
+	foreach($toolbars	as $toolbar) {
+		echo "<p style=\"border:1px solid #bbb; padding:3px; margin:3px;\">" ;
+		$cp=0;
+		foreach($toolbar as $tool) {
+			$cp++;
+			echo "<input type=\"checkbox\" name=\"tool_$tool\"" ;
+			if (lire_config("ckeditor/tool_$tool")) {
+				echo " checked" ;
+			}
+			echo " class=\"toolbar_tool\">$tool</input>\n" ;
+			if (($cp % 5)==0) { echo "<br/>\n" ; }
+		}
+		echo "</p>\n" ;
+	}
+?>
+	</div>
+</fieldset>
+<fieldset>
+	<legend>Configuration avancée</legend>
+	<div style='margin-bottom:15px; clear:both;'>
+		<label for="protectedtags"><strong>Balises SPIP à autoriser dans CKeditor :</strong></label>
+		<input type="text" name="protectedtags" value="[(#ENV{protectedtags}?{#ENV{protectedtags}, 'embXX ; imgXX ; docXX'})]" size="55%"/>
+		<blockquote style="margin-top:0px;">Entrez les balises séparées par des «&nbsp;;&nbsp;», pour spécifier une balise contenant un numéro, tapez&nbsp;: <code>baliseXX</code><br/><strong>Exemple&nbsp;: </strong>pour autoriser des balises du type&nbsp;: &lt;embXX|param1&gt; et &lt;docXX|param1&gt;, spécifez&nbsp;: <code>docXX ; embXX</code></blockquote>
+		<input type="checkbox" name="spiplinks" [(#ENV{spiplinks}|?{'checked'})]>&nbsp;Autoriser les liens/ancres de type spip.</input><br/>
+		<input type="checkbox" name="insertall" [(#ENV{insertall}|?{'checked'})]>&nbsp;Autoriser l'insertion des documents de n'importe quel article.</input><br/>
+
+	</div>
+	<div style='margin-bottom:15px; clear:both;'>
+		<label for='cklanguage'>Langue de CKeditor :</label>
+		<select name='cklanguage'>
+<?php
+$cklangs = array(
+'auto'=>'Auto détection',
+'af'=>'Afrikaans','ar'=>'Arabic','bg'=>'Bulgarian','bn'=>'Bengali/Bangla','bs'=>'Bosnian','ca'=>'Catalan','cs'=>'Czech','da'=>'Danish','de'=>'German','el'=>'Greek','en'=>'English','en-au'=>'English (Australia)','en-ca'=>'English (Canadian)','en-uk'=>'English (United Kingdom)','eo'=>'Esperanto','es'=>'Spanish','et'=>'Estonian','eu'=>'Basque','fa'=>'Persian','fi'=>'Finnish','fo'=>'Faroese','fr'=>'French','fr-ca'=>'French (Canada)','gl'=>'Galician','gu'=>'Gujarati','he'=>'Hebrew','hi'=>'Hindi','hr'=>'Croatian','hu'=>'Hungarian','is'=>'Icelandic','it'=>'Italian','ja'=>'Japanese','km'=>'Khmer','ko'=>'Korean','lt'=>'Lithuanian','lv'=>'Latvian','mn'=>'Mongolian','ms'=>'Malay','nb'=>'Norwegian Bokmal','nl'=>'Dutch','no'=>'Norwegian','pl'=>'Polish','pt'=>'Portuguese (Portugal)','pt-br'=>'Portuguese (Brazil)','ro'=>'Romanian','ru'=>'Russian','sk'=>'Slovak','sl'=>'Slovenian','sr'=>'Serbian (Cyrillic)','sr-latn'=>'Serbian (Latin)','sv'=>'Swedish','th'=>'Thai','tr'=>'Turkish','uk'=>'Ukrainian','vi'=>'Vietnamese','zh'=>'Chinese Traditional','zh-cn'=>'Chinese Simplified'
+	) ;
+	foreach($cklangs as $lang => $langname) {
+		echo "<option value='$lang'" ;
+		if (lire_config("ckeditor/cklanguage") == $lang) {
+			echo " selected" ;
+		}
+		echo ">$langname</option>\n" ;
+	}
+
+?>
+		</select>
+		<blockquote style="margin-top:0px;">Langue autodétectée : <strong><?php echo $cklangs[lire_meta("langue_site")] ; ?></strong></blockquote>
+	</div>
+	<div style='margin-bottom:15px; clear:both;'>
+		<label for='siteurl'><strong>URL du site :</strong></label><br/>
+		<input type="text" value="<?php $siteurl = (lire_config("ckeditor/siteurl")?lire_config("ckeditor/siteurl"):lire_meta("adresse_site")) ; echo $siteurl ;?>" size="<?php echo strlen($siteurl) ; ?>"/><br/>
+		<blockquote style="margin-top:0px;">Normalement cette valeur est autodétectée.</blockquote>
+	</div>
+</fieldset>
+	<div style='margin-bottom:15px;'>
+		<input type="submit" name="_cfg_ok" value="<:OK:>" />
+		<input type="submit" name="_cfg_delete" value="<:Supprimer:>" />
+	</div>
+
+</form>

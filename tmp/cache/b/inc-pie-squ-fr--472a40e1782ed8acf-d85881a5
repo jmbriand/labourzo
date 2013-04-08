@@ -1,0 +1,52 @@
+a:9:{s:5:"texte";s:1986:"<div id="pied">
+	<ul>
+	
+	<li class="UBAPAR">
+	
+		<h4>&nbsp;</h4>
+		<p><span class='csfoo htmla'></span><span class='spip_document_4 spip_documents spip_documents_left' style='float:left; width:75px;'>
+<img src='IMG/png/UBAPAR-Logo.png' width="75" height="80" alt="" /></span><span class='csfoo htmlb'></span>L’UBAPAR (Union Bretonne pour l&#8217;Animation des PAys Ruraux) est un réseau associatif en Bretagne au service de l&#8217;animation et du développement. L’un de nos axes de travail est la promotion de l’utilisation du breton et du gallo dans les activités de loisirs éducatifs à destination des enfants et des adultes.</p>
+	
+	</li>
+	
+	<li class="contact-mentions">
+	<div>
+	
+		<h4>Contact</h4>
+		<p>UBAPAR
+<br />9 allée JF Broussais
+<br />56000 Gwened
+<br /><a href='http://www.ubapar.org' class='spip_out'>www.ubapar.org</a>
+<br />Administration du site&nbsp;: <a href='spip.php?auteur2' class='spip_out'>Katell Chantreau</a></p>
+	
+	</div>
+	
+	<div>
+		<h4>filrss</h4>
+		<p>Les fils RSS (non activés pour le moment)</p>
+	</div>
+	</li>
+	
+	<li class="rss-plan">
+		<h4>Mentions légales</h4>
+		<p>Site réalisé par Jean-Marc Briand et Fabrice Véronneau pour l’<a href="http://www.ubapar.org" title="consulter le site UBAPAR">Ubapar</a>, propulsé par <a href="http://www.spip.net/" title="Consulter le site Spip">Spip<spip:></a>, hébergé par <a href="http://www.ovh.com/fr/espaceclients/documents_legaux/" title="Consulter le site OVH">OVH</a></p>
+	
+	</li>
+	
+	<li class="acces-admin">
+	 <a href="<?php 
+$lang_select = lang_select("fr");
+include_once(_DIR_RACINE . "ecrire/balise/url_logout.php");
+inclure_balise_dynamique(balise_URL_LOGOUT_dyn('spip.php?page=sommaire'),1, 32);
+if ($lang_select) lang_select();
+?>" rel="nofollow">Se d&eacute;connecter</a>
+	
+	</li>
+	
+	</ul>
+</div>
+
+<!--[if IE]> <script type="text/javascript"> Cufon.now(); </script> <![endif]-->
+
+<!-- SPIP-CRON --><div style="background-image: url('http://ubajm/spip.php?action=cron');"></div>
+";s:9:"squelette";s:37:"html_f830a6639ae7531b76f93d2fd8fe0af8";s:6:"source";s:24:"squelettes/inc-pied.html";s:11:"process_ins";s:3:"php";s:11:"invalideurs";a:2:{s:5:"cache";s:35:"b/inc-pie-squ-fr--472a40e1782ed8acf";s:7:"session";s:8:"d85881a5";}s:7:"entetes";a:1:{s:12:"X-Spip-Cache";i:86400;}s:5:"duree";i:0;s:8:"contexte";a:6:{s:4:"skel";s:25:"squelettes/voirFiche.html";s:4:"lang";s:2:"fr";s:4:"date";s:19:"2013-04-08 19:15:36";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-08 19:15:36";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}

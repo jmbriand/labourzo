@@ -1,0 +1,121 @@
+a:9:{s:5:"texte";s:2833:"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
+<head>
+<title>Gestion des offres - LABOURZO</title>
+<meta name="description" content="Pour publier plusieurs offres d&#39;emploi, vous pouvez utiliser une fiche d&#233;j&#224; publi&#233;e par vous comme si c&#39;&#233;tait un gabarit et ne modifier que les champs (...)" />
+<?php
+	$contexte_inclus = array('fond' => 'inc-head',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+</head>
+
+<body class="page_article">
+<div id="page">
+
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-entete',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+	
+    <div class="hfeed" id="conteneur">
+    <div class="hentry" id="contenu">
+    
+        
+        <div id="hierarchie"><a href="http://ubajm/labourzogit/?lang=fr">Accueil du site</a> &gt; <strong class="on">Gestion des offres</strong></div>
+
+		<div id="principal">
+
+        <div class="cartouche">
+            <div class="surlignable">
+				
+				
+				<h1 class="entry-title">Gestion des offres</h1>
+				
+            </div>
+
+            
+            <p class="traductions">
+	Toutes les versions de cet article&nbsp;:
+	 
+	<span lang="br" xml:lang="br" dir="ltr">&#91;<a href="spip.php?article13" rel="alternate" hreflang="br" title="Merañ ar c&#39;hinnigoù">brezhoneg</a>&#93;</span>
+	 
+	<span lang="fr" xml:lang="fr" dir="ltr" class="on">&#91;fran&#231;ais&#93;</span>
+	
+</p></div>
+		
+        <div class="surlignable">
+			<div class="chapo"><p>Pour publier plusieurs offres d&#8217;emploi, vous pouvez utiliser une fiche déjà publiée par vous comme si c&#8217;était un gabarit et ne modifier que les champs à modifier. Enregistrer la nouvelle offre en cliquant sur "ajouter" en bas de la page.</p></div>
+			
+		</div>
+
+        
+        
+
+		
+        
+		
+
+<?PHP require ("squelettes/local_fr.php"); echo _T('espace') ;  ?>
+<?PHP include("squelettes/gestionphp/fmajEmpSa.php");  ?>
+		
+		
+		
+
+
+		
+
+        
+
+		
+		<a href="#forum" name="forum" id="forum"></a>
+		<?php
+	$contexte_inclus = array('fond' => 'inc-forum',
+	'id_article' => '19',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+		 
+
+
+
+	</div> <!-- principal -->
+
+    
+    <div id="sidebar">
+    
+        
+        <?php
+	$contexte_inclus = array('fond' => 'inc-rubriques',
+	'id_rubrique' => '26',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+        
+        
+        
+    </div><!--#sidebar-->
+    <div class="nettoyeur"></div>
+
+
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+
+
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-pied',
+	'skel' => 'squelettes/article-26.html',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+</div><!--#page-->
+</body>
+</html>
+";s:9:"squelette";s:37:"html_08030b16f22cf5426cc001d212ee0ce0";s:6:"source";s:26:"squelettes/article-26.html";s:11:"process_ins";s:3:"php";s:11:"invalideurs";a:2:{s:5:"cache";s:35:"e/%2Flabourzogit%2Fspip---8978c686a";s:7:"session";s:8:"d85881a5";}s:7:"entetes";a:3:{s:12:"X-Spip-Cache";s:1:"0";s:13:"Cache-Control";s:35:"no-store, no-cache, must-revalidate";s:6:"Pragma";s:8:"no-cache";}s:5:"duree";i:0;s:8:"contexte";a:6:{s:9:"article19";s:0:"";s:10:"id_article";s:2:"19";s:4:"date";s:19:"2013-04-08 19:15:13";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-08 19:15:13";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}

@@ -1,0 +1,154 @@
+a:9:{s:5:"texte";s:3633:"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
+<head>
+<title>Offre d'emploi (Animation) - LABOURZO</title>
+
+<?php
+	$contexte_inclus = array('fond' => 'inc-head',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+</head>
+
+<body class="page_fiche">
+<div id="page">
+
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-entete',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+	
+    <div class="hfeed" id="conteneur">
+    <div class="hentry" id="contenu">
+   
+        
+        <div id="hierarchie"><a href="http://ubajm/labourzogit/?lang=fr">Accueil du site</a> &gt; <a href="spip.php?rubrique7">Animation</a> &gt; <strong class="on">Offre d’emploi (Animation)</strong></div>
+
+		<div id="principal">
+
+        <div class="cartouche">
+            <div class="surlignable">
+				
+				
+				<h1 class="entry-title">Offre d&#8217;emploi (Animation)</h1>
+				
+            </div>
+
+            
+				
+				<ul id="menu_langue">
+            
+					
+						
+							 
+							<li lang="br" xml:lang="br" dir="ltr"><a href="spip.php?page=voirFiche&id_article=8&emp_id=353" rel="alternate"  class="br" hreflang="br" title="Kinnig labour (Buheziñ)"><em>brezhoneg</em></a></li>
+							 
+							<li lang="fr" xml:lang="fr" dir="ltr" class="off">fran&#231;ais</li>
+							
+						
+					
+            
+					
+					</ul>
+				
+        </div>
+		
+        <div class="surlignable">
+			
+			
+		</div>
+		
+        
+     
+     <div class="voire_fiche demandeur">
+         <h2></h2>
+       
+	     
+	     
+			
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=7&emp_id=350'>Fiche suivante</a></div>
+				
+			
+			
+			
+			
+			
+			
+			
+			
+         <ul class="top">
+             <li><small>Poste &nbsp;</small><strong>Buhezourien</strong></li>
+             <li><small>P&eacute;riode &nbsp;</small><strong>Hañv 2013</strong></li>
+             <li><small>Lieu &nbsp;</small><strong>Treglonou</strong></li>
+             <li><small>Employeur &nbsp;</small><strong>An Oaled</strong></li>
+   
+         </ul>
+         <ul>
+             <li><small>Mission &nbsp;</small><strong>Buheziñ ur c'hamp vakañsoù.
+Labourat gant ur skipailh</strong></li>
+             <li><small>Profil &nbsp;</small><strong>DABU</strong></li>
+             <li><small>Type de contrat &nbsp;</small><strong>Indemnit&eacute;
+						</strong></li>
+             <li><small>R&eacute;mun&eacute;ration &nbsp;</small><strong>Kevrat CEE</strong></li>
+             
+             <li><small>Contact &nbsp;</small><strong>Le Mével Stéphanie
+14, straed an Ti-Kêr
+29870 TREGLONOU
+anoaled@orange.fr
+02 98 04 07 04</strong></li>
+             <li class="info_date"><small>Fiche modifi&eacute;e le </small><strong>2013-03-28 16:59:53</strong></li>
+         </ul>
+       
+     </div>
+     
+
+        
+     
+
+
+	</div> <!-- principal -->
+	
+
+
+    
+    <div id="sidebar">
+    
+        
+        <?php
+	$contexte_inclus = array('fond' => 'inc-rubriques',
+	'id_rubrique' => '7',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+       
+    </div><!--#sidebar-->
+    <div class="nettoyeur"></div>
+
+
+
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+
+
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-pied',
+	'skel' => 'squelettes/voirFiche.html',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+</div><!--#page-->
+</body>
+</html>
+";s:9:"squelette";s:37:"html_9e7d0b12076b4ae53c285189ef936584";s:6:"source";s:25:"squelettes/voirFiche.html";s:11:"process_ins";s:3:"php";s:11:"invalideurs";a:1:{s:5:"cache";s:35:"7/voi-voi-7-353--177cf0db99d2a07624";}s:7:"entetes";a:3:{s:12:"X-Spip-Cache";s:1:"0";s:13:"Cache-Control";s:35:"no-store, no-cache, must-revalidate";s:6:"Pragma";s:8:"no-cache";}s:5:"duree";i:0;s:8:"contexte";a:7:{s:4:"page";s:9:"voirFiche";s:10:"id_article";i:7;s:6:"emp_id";s:3:"353";s:4:"date";s:19:"2013-04-08 19:15:36";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-08 19:15:36";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}

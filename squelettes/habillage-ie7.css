@@ -1,0 +1,12 @@
+hr {display:none;}
+
+.themes li a big {font-weight: bold; font-size: 15px}
+.themes li a small {font-size: 11px}
+
+.entrees li a big {font-size: 12px}
+.entrees li a small {font-size: 11px}
+
+.page_fiche #principal .top small,
+.page_fiche #principal .top strong {float: left}
+
+.page_fiche #principal .top small {margin-top: 5px;}

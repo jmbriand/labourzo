@@ -1,0 +1,11 @@
+<B_art_traduits>    
+	<ul id="menu_langue">
+	<BOUCLE_art_traduits(ARTICLES) {id_trad > 0} {id_rubrique} {par lang}>
+		<BOUCLE_trad(ARTICLES) {traduction} {exclus}>
+			<BOUCLE_rub(RUBRIQUES) {id_rubrique} {doublons}>
+				<li><a  class="#LANG" href="#URL_RUBRIQUE"><em>[(#LANG|traduire_nom_langue)]</em></a></li>
+			</BOUCLE_rub>
+		</BOUCLE_trad>
+	</BOUCLE_art_traduits>   
+	</ul>
+</B_art_traduits>

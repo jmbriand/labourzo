@@ -1,0 +1,51 @@
+<plugin>
+	<nom>CKEditor pour Spip</nom>
+	<auteur>[Frédéric Bonnaud->mailto:fred@lea-linux.org]</auteur>
+	<version>0.2</version>
+	<etat>test</etat>
+	<description>
+		<h3>Intégration de l'éditeur WYSIWYG CKEditor à SPIP 2.0.9+</h3>
+
+		Cette intégration de l'éditeur CKEditor est non invasive (ie: elle ne modifie pas le code de SPIP). Elle utilise le méchanisme des pipelines (ici, on utilise le pipeline : <code>editer_contenu_objet</code>). La version de CKeditor utilisée est la {{3.0 SVN 4310}} ou plus ;) . 
+
+
+		On peut configurer la façon dont s'affiche l'éditeur avec <a href='?exec=cfg&cfg=ckeditor'>CFG</a>.
+
+
+		Le mode d'édition de SPIP reste disponible, et on peut configurer le plugin pour que ce mode soit le mode d'édition par défaut.
+
+		Nécessite : spip-bonux et CFG
+	
+		{{Licence :}} [GPLv2->http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+	</description>
+	<prefix>ckeditor</prefix>
+	<pipeline>
+		<nom>pre_edition</nom>
+		<inclure>ckeditor_fonctions.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>editer_contenu_objet</nom>
+		<inclure>ckeditor_fonctions.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>header_prive</nom>
+		<inclure>ckeditor_fonctions.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>insert_head</nom>
+		<inclure>ckeditor_fonctions.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>editer_contenu_objet</nom>
+		<inclure>ckeditor_fonctions.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>pre_liens</nom>
+		<inclure>ckeditor_fonctions.php</inclure>
+	</pipeline>
+	<icon>logo-ckeditor.png</icon>
+	<necessite id='SPIP' version='[2.0.9;]' />
+	<necessite id='cfg' version='[1.10.0;]' />
+	<necessite id='spip_bonux' version='[1.8.2;]' />
+	<necessite id='lib:ckeditor' src='http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.0/ckeditor_3.0.zip' />
+</plugin>

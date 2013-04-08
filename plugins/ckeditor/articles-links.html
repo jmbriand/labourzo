@@ -1,0 +1,4 @@
+#CACHE{0}
+<BOUCLE_articles(ARTICLES) {id_rubrique=#ENV{id_rubrique}} {par num titre, titre}{inverse}>[(#TITRE|strip_tags)]|[(#URL_PAGE{article}|parametre_url{id_article,#ID_ARTICLE}|url_absolue)]|#ID_ARTICLE
+</BOUCLE_articles>
+

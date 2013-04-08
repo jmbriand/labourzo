@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<title>Sélection d'une image</title>
+		<script type='text/javascript'>
+
+function getUrlParam( name ) {
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  if( results == null )
+    return "";
+  else
+    return results[1];
+}
+
+function SelectFile( name ) {
+	window.top.opener.CKEDITOR.tools.callFunction(CKEditorFuncNum, name);
+	window.close() ;
+}
+
+CKEditorFuncNum=getUrlParam('CKEditorFuncNum');
+
+		</script>
+		<style type="text/css">
+body { background-color : #ebebeb ; margin : 0; padding : 0 ; }
+.spip-admin-boutons { display: none ; }
+		</style>
+	</head>
+<body>
+#CACHE{0}
+<BOUCLE_t1(CONDITION){si #ENV{type}|=={tout}}>
+	<B_alldoc>
+	<div><a href='[(#URL_PAGE{select_images}|parametre_url{article,#ENV{article}}|parametre_url{CKEditor,#ENV{CKEditor}}|parametre_url{CKEditorFuncNum,#ENV{CKEditorFuncNum}}|parametre_url{langCode,#ENV{langCode}}|parametre_url{connect,''})]'>article</a> [| (#PAGINATION)]</div>
+	<BOUCLE_alldoc(DOCUMENTS){tout}{extension==jpg|png|gif}{pagination 16}>
+		<div style='float:left; border:1px dashed gray;margin:2px;padding:2px'>
+				  <div style='width:150px;height:50px;text-align:center;'><a onclick="SelectFile('[(#URL_DOCUMENT|url_absolue)]');">[(#FICHIER|copie_locale|image_reduire{150,50})]</a></div><div style='width:150px;height:25px;text-align:center;'>[(#TITRE|sinon{[(#FICHIER|basename)]})]</div>
+		</div>
+	</BOUCLE_alldoc>
+	<div><a href='[(#URL_PAGE{select_images}|parametre_url{article,#ENV{article}}|parametre_url{CKEditor,#ENV{CKEditor}}|parametre_url{CKEditorFuncNum,#ENV{CKEditorFuncNum}}|parametre_url{langCode,#ENV{langCode}}|parametre_url{connect,''})]'>article</a></div>
+	#MODELE{inc-aucune-image}
+	<//B_alldoc>
+</BOUCLE_t1>
+	<B_doc>
+	<div>[(#CONFIG{ckeditor/insertall}|oui)<a href='[(#URL_PAGE{select_images}|parametre_url{article,#ENV{article}}|parametre_url{CKEditor,#ENV{CKEditor}}|parametre_url{CKEditorFuncNum,#ENV{CKEditorFuncNum}}|parametre_url{langCode,#ENV{langCode}}|parametre_url{type,tout})]'>toutes</a>] [[(#CONFIG{ckeditor/insertall}|oui)|] (#PAGINATION)]</div>
+	<BOUCLE_doc(DOCUMENTS){id_article=#ENV{article}}{tout}{extension==jpg|png|gif}{pagination 16}>
+		<div style='float:left; border:1px dashed gray;margin:2px;padding:2px'>
+				  <div style='width:150px;height:50px;text-align:center;'><a onclick="SelectFile('[(#URL_DOCUMENT|url_absolue)]');">[(#FICHIER|copie_locale|image_reduire{150,50})]</a></div><div style='width:150px;height:25px;text-align:center;'>[(#TITRE|sinon{[(#FICHIER|basename)]})]</div>
+		</div>
+	</BOUCLE_doc>
+	[(#CONFIG{ckeditor/insertall}|oui)<div><a href='#URL_SITE_SPIP/spip.php?page=select_images&article=#ENV{article}&CKEditor=#ENV{CKEditor}&CKEditorFuncNum=#ENV{CKEditorFuncNum}&langCode=#ENV{langCode}&type=tout'>toutes</a></div>]
+	#MODELE{inc-aucune-image}
+	<//B_doc>
+<//B_t1>
+</body>
+</html>

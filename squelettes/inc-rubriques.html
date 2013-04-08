@@ -1,0 +1,34 @@
+[(#REM)
+	Barre de navigation, ouverte sur la hierarchie courante
+
+	On fait un plan, et, quand on avance vers une rubrique,
+	on l'affiche si son parent est expose ou est la racine du site. ]
+
+<B_rubriques>
+<div class="menu rubriques">
+	<ul>
+	<BOUCLE_rubriques(RUBRIQUES) {racine}{tout} {par num titre, titre} {lang}{id_secteur !IN 1,25}>
+		<li class="section#ID_RUBRIQUE[ (#EXPOSE)]">
+			<a href="#URL_RUBRIQUE">[(#LOGO_RUBRIQUE||image_reduire{75})] <big>[(#TITRE)]</big> <small>[(#DESCRIPTIF|supprimer_tags)]</small></a>
+		</li>
+	</BOUCLE_rubriques>
+
+	</ul>
+</div>
+</B_rubriques>
+
+[(#REM) ENTREES DEMANDEUR ou EMPLOYEUR ]
+<div class="entrees">
+	<ul>
+		<li>
+			<a href="spip.php?page=accesEmp&id_article=[(#LANG|=={br}|?{'14','18'})]">
+			<img class="spip_logos" src="./squelettes/img/demande.png" width="75" alt="demandes"><:entree_offre:>
+			</a>
+		</li>		
+		<li>
+			<a href="spip.php?page=accesDem&id_article=[(#LANG|=={br}|?{'11','17'})]">
+			<img class="spip_logos" src="./squelettes/img/offre.png" width="75" alt="offres"><:entree_demande:></a>
+		</li>
+	</ul>
+	<div class="nettoyeur"></div>			
+</div>

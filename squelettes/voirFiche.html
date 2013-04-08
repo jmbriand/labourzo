@@ -1,0 +1,261 @@
+[(#REM)
+	Pas de mise en cache pour raffraichir auto les listes de fiches
+]#CACHE{0}
+<BOUCLE_principale(ARTICLES) {id_article}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+[<meta name="description" content="(#INTRODUCTION{150}|attribut_html)" />]
+<INCLURE{fond=inc-head}>
+</head>
+
+<body class="page_fiche">
+<div id="page">
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc-entete}>
+
+	[(#REM) Contenu principal : contenu de l'article ]
+    <div class="hfeed" id="conteneur">
+    <div class="hentry" id="contenu">
+   
+        [(#REM) Fil d'Ariane ]
+        <div id="hierarchie"><a href="#URL_SITE_SPIP/?lang=#LANG"><:accueil_site:></a><BOUCLE_ariane(HIERARCHIE){id_article}{id_secteur !IN 1,25}> &gt; <a href="#URL_RUBRIQUE">[(#TITRE|couper{80})]</a></BOUCLE_ariane>[ &gt; <strong class="on">(#TITRE|couper{80})</strong>]</div>
+
+		<div id="principal">
+
+        <div class="cartouche">
+            <div class="surlignable">
+				[(#LOGO_ARTICLE||image_reduire{200,200})]
+				[<p class="#EDIT{surtitre} surtitre">(#SURTITRE)</p>]
+				<h1 class="#EDIT{titre} entry-title">#TITRE</h1>
+				[<p class="#EDIT{soustitre} soustitre">(#SOUSTITRE)</p>]
+            </div>
+
+            [(#REM) Inclure le modele des liens de traductions ]
+				<BOUCLE_article(ARTICLES){id_article}>
+				<ul id="menu_langue">
+            [(#REM) Pour une fiche employeur ]
+					<BOUCLE_offre(XX_EMPLOYR) {emp_id}{emp_id>0}>
+						<B_traductionsA>
+							<BOUCLE_traductionsA(ARTICLES) {traduction} {par lang}>[(#TOTAL_BOUCLE|>{1}|?{' '})
+							<li lang="#LANG" xml:lang="#LANG" dir="#LANG_DIR"[ class="(#EXPOSE{'off',''})"]>[(#EXPOSE{'',<a href="spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID" rel="alternate"  class="#LANG" hreflang="#LANG"[ title="(#TITRE|attribut_html|couper{80})"]><em>})][(#LANG|traduire_nom_langue)]#EXPOSE{'',</em></a>}</li>
+							]</BOUCLE_traductionsA>
+						</B_traductionsA>
+					</BOUCLE_offre>
+            [(#REM) Pour une fiche demandeur ]
+					<BOUCLE_dem(XX_DEMANDR) {dem_id}{dem_id>0}>
+						<B_traductionsB>
+							<BOUCLE_traductionsB(ARTICLES) {traduction} {par lang}>[(#TOTAL_BOUCLE|>{1}|?{' '})
+							<li lang="#LANG" xml:lang="#LANG" dir="#LANG_DIR"[ class="(#EXPOSE{'off',''})"]>[(#EXPOSE{'',<a href="spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID" rel="alternate" class="#LANG" hreflang="#LANG"[ title="(#TITRE|attribut_html|couper{80})"]><em>})][(#LANG|traduire_nom_langue)]#EXPOSE{'',</em></a>}</li>
+							]</BOUCLE_traductionsB>
+						</B_traductionsB>
+					</BOUCLE_dem>
+					</ul>
+				</BOUCLE_article>
+        </div>
+		
+        <div class="surlignable">
+			[<div class="#EDIT{chapo} chapo">(#CHAPO|image_reduire{500,0})</div>]
+			[<div class="#EDIT{texte} texte entry-content">(#TEXTE|image_reduire{500,0})</div>]
+		</div>
+		
+        [(#REM) Fiche employeur  ]
+     <B_offresA>
+     <div class="voire_fiche demandeur">
+         <h2></h2>
+       <BOUCLE_offresA(XX_EMPLOYR) {emp_id}>
+	     
+	     [(#REM) Navigation fiches suivantes / précédentes ]
+			<BOUCLE_animOf(ARTICLES) {id_article} {id_article IN 7,8}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOA(XX_EMPLOYR){emp_domaines LIKE %CVL%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOA>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOA(XX_EMPLOYR){emp_domaines LIKE %CVL%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOA>
+			</BOUCLE_animOf>
+			
+			<BOUCLE_petitenf(ARTICLES) {id_article} {id_article IN 31,32}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOPE(XX_EMPLOYR){emp_domaines LIKE %Petite%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOPE>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOPE(XX_EMPLOYR){emp_domaines LIKE %Petite%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOPE>
+			</BOUCLE_petitenf>
+			
+			<BOUCLE_ecolof(ARTICLES) {id_article} {id_article IN 16,22}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOE(XX_EMPLOYR){emp_domaines LIKE %Ecoles%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOE>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOE(XX_EMPLOYR){emp_domaines LIKE %Ecoles%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOE>
+			</BOUCLE_ecolof>
+			
+			<BOUCLE_actculof(ARTICLES) {id_article} {id_article IN 23,24}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOC(XX_EMPLOYR){emp_domaines LIKE %culturelle%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOC>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOC(XX_EMPLOYR){emp_domaines LIKE %culturelle%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOC>
+			</BOUCLE_actculof>
+			
+         <ul class="top">
+             [<li><small><:poste:>&nbsp;</small><strong>(#EMP_POSTE)</strong></li>]
+             [<li><small><:duree_dates:>&nbsp;</small><strong>(#EMP_DURDATES)</strong></li>]
+             [<li><small><:lieu:>&nbsp;</small><strong>(#EMP_LIEU)</strong></li>]
+             [<li><small><:nom_emp:>&nbsp;</small><strong>(#EMP_NOM)</strong></li>]
+   
+         </ul>
+         <ul>
+             [<li><small><:mission:>&nbsp;</small><strong>(#EMP_MISSION)</strong></li>]
+             [<li><small><:profil:>&nbsp;</small><strong>(#EMP_PROFIL)</strong></li>]
+             [<li><small><:type:>&nbsp;</small><strong>(#LANG|=={br}|?{
+							[(#EMP_TYPE|replace{'CDI','Kevrat didermen'}|replace{'CDD','Kevrat termenet'}|replace{'Benev.','A youl vat'}|replace{'Indemnite','Digoll'})],
+							[(#EMP_TYPE|replace{'Benev.','B&eacute;n&eacute;v.'}|replace{'Indemnite','Indemnit&eacute;'})]
+						})</strong></li>]
+             [<li><small><:remuneration:>&nbsp;</small><strong>(#EMP_REMU)</strong></li>]
+             [<li><small><:remarques:>&nbsp;</small><strong>(#EMP_REMQ)</strong></li>]
+             [<li><small><:contact:>&nbsp;</small><strong>(#EMP_CONTACT)</strong></li>]
+             [<li class="info_date"><small><:fiche_modif_le:></small><strong>(#EMP_DATMODIF)</strong></li>]
+         </ul>
+       </BOUCLE_offresA>
+     </div>
+     </B_offresA>
+
+        [(#REM) Fiche demandeur  ]
+     <B_demandeur>
+     <div class="voire_fiche demandeur">
+         <h2></h2>
+       <BOUCLE_demandeur(XX_DEMANDR) {dem_id}>
+
+	     [(#REM) Navigation fiches suivantes / précédentes ]
+			<BOUCLE_animDe(ARTICLES) {id_article} {id_article IN 25,26}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precDA(XX_DEMANDR){dem_domaines LIKE %C.V.L.%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precDA>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivDA(XX_DEMANDR){dem_domaines LIKE %C.V.L.%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivDA>
+			</BOUCLE_animDe>
+
+			<BOUCLE_ecoleDe(ARTICLES) {id_article} {id_article IN 27,28}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precDE(XX_DEMANDR){dem_domaines LIKE %Ecoles%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precDE>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivDE(XX_DEMANDR){dem_domaines LIKE %Ecoles%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivDE>
+			</BOUCLE_ecoleDe>
+
+			<BOUCLE_actculDe(ARTICLES) {id_article} {id_article IN 29,30}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precDC(XX_DEMANDR){dem_domaines LIKE %culturelle%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precDC>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivDC(XX_DEMANDR){dem_domaines LIKE %culturelle%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivDC>
+			</BOUCLE_actculDe>
+			
+         <ul class="top">
+             <li><strong>[(#DEM_PRENOM)] <span class="nom_famille">[(#DEM_NOM)]</span></strong></li>
+         </ul>
+         <ul>
+             [<li><small><:datnaiss:>&nbsp;</small><strong>(#DEM_DATNAIS|affdate|replace{'0000',''})</strong></li>]
+             [<li><small><:commune:>&nbsp;</small><strong>(#DEM_CP) [(#DEM_VILLE)]</strong></li>]
+             [<li><small><:domaine:>&nbsp;</small><strong>(#LANG|=={br}|?{
+							[(#DEM_DOMAINES|replace{',',', '}|replace{'C.V.L.','Buhezi&ntilde;'}|replace{'Baby sitting','Diwall bugale'}|replace{'Petite enfance','Bugale vihan'}|replace{'Ecoles','Skolioù'}|replace{'Action culturelle','Ober sevenadurel'})],
+							[(#DEM_DOMAINES|replace{',',', '}|replace{'C.V.L.','Animation'}|replace{'Ecoles','&Eacute;coles'})]
+						})</strong></li>]
+             [<li><small><:profil:>&nbsp;</small><strong>(#DEM_PROFPOST)</strong></li>]
+             [<li><small><:diplomes:>&nbsp;</small><strong>(#LANG|=={br}|?{
+							[(#DEM_DIPLOMES|replace{',',', '}|replace{'B.A.F.A.','DABU'}|replace{'Stagiaire BAFA','Stajiad DABU'}|replace{'B.A.F.D.','DARE'}|replace{'Stagiaire BAFD','Stajiad DARE'}|replace{'Surveillant de baignade','Evezhier kouronkañ'}|replace{'Premiers secours','Sikourioù kentañ'})],
+							[(#DEM_DIPLOMES|replace{',',', '})]
+						})</strong></li>]
+             [<li><small><:diplodivers:>&nbsp;</small><strong>(#DEM_DIPLODIVERS)</strong></li>]
+             [<li><small><:disponibilite:>&nbsp;</small><strong>(#DEM_DISPO)</strong></li>]
+             [<li><small><:remarques:>&nbsp;</small><strong>(#DEM_REMQ)</strong></li>]
+             [<li class="info_date"><small><:fiche_modif_le:></small><strong>(#DEM_DATMODIF|affdate_jourcourt)</strong></li>]
+         </ul>
+         
+	     <B_emp>
+	       <BOUCLE_emp(ZONES_AUTEURS) {id_auteur = #SESSION{id_auteur}}{id_zone=2}>
+	       <div align="right"><a href="spip.php?page=contactVisit&id_auteur=#DEM_IDAUTEUR&lang=#LANG"><em><:envoyer_message:></em></a></div>
+	       	<B_cvs>
+         <h2><:curriculum:></h2>
+		         <ul id="cv">
+		       <BOUCLE_cvs(XX_UPCURVIT) {up_demid = #DEM_ID} {par up_date}>
+		             <li class="#UP_LANG"><a href="IMG/cvdemandr/#UP_CHEMIN"><em>#UP_NOM</em></a></li>
+		       </BOUCLE_cvs>
+		         </ul>
+	       	</B_cvs>
+	       </BOUCLE_emp>
+	     </B_emp>
+	       	<B_cvsano>
+         <h2><:curriculum:></h2>
+         <p><:telechargmt_auth:></p>
+		         <ul id="cv">
+		       <BOUCLE_cvsano(XX_UPCURVIT) {up_demid = #DEM_ID} {par up_date}>
+		             <li class="#UP_LANG"><a href="#"><em>#UP_NOM</em></a></li>
+		       </BOUCLE_cvsano>
+		         </ul>
+	       	</B_cvsano>
+	     <//B_emp>
+	     
+       </BOUCLE_demandeur>
+     </div>
+     </B_demandeur>
+
+
+	</div> <!-- principal -->
+	
+
+
+    [(#REM) Menu de navigation laterale ]
+    <div id="sidebar">
+    
+        [(#REM) Menu de navigation par rubriques ]
+        <INCLURE{fond=inc-rubriques}{id_rubrique}>
+
+       
+    </div><!--#sidebar-->
+    <div class="nettoyeur"></div>
+
+
+
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+
+
+	[(#REM) Pied de page ]
+	<INCLURE{fond=inc-pied}{skel=#SQUELETTE}>
+
+</div><!--#page-->
+</body>
+</html>
+</BOUCLE_principale>

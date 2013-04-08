@@ -1,0 +1,85 @@
+a:9:{s:5:"texte";s:2621:"
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+<meta name="generator" content="SPIP 2.0.10 [14698]" />
+
+
+<!-- <link rel="alternate" type="application/rss+xml" title="Syndiquer tout le site" href="http://ubajm/labourzogit/spip.php?page=backend" /> -->
+
+
+<link rel="stylesheet" href="prive/spip_style.css" type="text/css" media="all" />
+
+
+<link rel="stylesheet" href="squelettes-dist/spip_formulaires.css" type="text/css" media="projection, screen, tv" />
+
+
+<link rel="stylesheet" href="squelettes/habillage.css" type="text/css" media="projection, screen, tv" />
+
+
+<link rel="stylesheet" href="squelettes-dist/impression.css" type="text/css" media="print" />
+
+
+
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="squelettes/habillage-ie6.css" type="text/css" media="all" />
+<![endif]-->
+
+
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="squelettes/habillage-ie7.css" type="text/css" media="all" />
+<![endif]-->
+
+
+
+
+
+<script type="text/javascript" src="squelettes/cufon-yui.js"></script>
+<script type="text/javascript" src="squelettes/cufon.Zag_Regular_400-Zag_Bold_700.font.js"></script>
+	
+    <script type="text/javascript">
+       Cufon.replace('.sommaire big');
+       Cufon.replace('h1');
+       Cufon.replace('#sidebar li a big');
+       Cufon.replace('#pied ul li h4');
+       
+    </script>
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32007776-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+<script src="prive/javascript/jquery.js" type="text/javascript"></script>
+
+<script src="prive/javascript/jquery.form.js" type="text/javascript"></script>
+
+<script src="prive/javascript/ajaxCallback.js" type="text/javascript"></script>
+<!-- insert_head --><link rel="stylesheet" href="http://ubajm/labourzogit/spip.php?page=cfg.css" type="text/css" media="all" />
+<!-- Debut header du Couteau Suisse -->
+<script type="text/javascript"><!--
+var cs_prive=window.location.pathname.match(/\/ecrire\/$/)!=null;
+jQuery.fn.cs_todo=function(){return this.not('.cs_done').addClass('cs_done');};
+if(window.jQuery){
+var cs_sel_jQuery=typeof jQuery(document).selector=='undefined'?'@':'';
+var cs_CookiePlugin="http://labourzo.ubapar.org/prive/javascript/jquery.cookie.js"}
+
+// --></script>
+<!-- Fin header du Couteau Suisse -->
+
+
+";s:9:"squelette";s:37:"html_8e8c6cf714ff617b10b52bab4d40d5a4";s:6:"source";s:24:"squelettes/inc-head.html";s:11:"process_ins";s:4:"html";s:11:"invalideurs";a:1:{s:5:"cache";s:35:"e/inc-head-fr--0a866faea4d41fdbe7e6";}s:7:"entetes";a:1:{s:12:"X-Spip-Cache";i:86400;}s:5:"duree";i:0;s:8:"contexte";a:5:{s:4:"lang";s:2:"fr";s:4:"date";s:19:"2013-04-08 19:13:51";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-08 19:13:51";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}

@@ -1,0 +1,1 @@
+a:1:{s:4:"pour";a:6:{s:5:"field";a:2:{s:3:"cle";s:4:"text";s:6:"valeur";s:4:"text";}s:3:"key";a:1:{s:11:"PRIMARY KEY";s:3:"cle";}s:5:"table";s:4:"pour";s:8:"id_table";s:4:"pour";s:9:"connexion";s:4:"pour";s:5:"titre";s:0:"";}}

@@ -1,0 +1,244 @@
+[(#REM)
+	Un cache nul pour recalculer les dernières fiches immediatement
+]#CACHE{0}
+
+  [(#REM) Listes des fiches Anim ]
+<BOUCLE_anim(RUBRIQUES) {id_rubrique} {id_rubrique IN 6,7}>
+<div class="liste offre">
+ <B_offresA>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresA(XX_EMPLOYR) {emp_domaines LIKE %CVL%} {par emp_datmodif}{inverse}>
+          <li>
+	          <a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'8','7'})]&emp_id=#EMP_ID" title="Consulter cette offre">
+	          <small>#EMP_NOM</small> <big>#EMP_POSTE </big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresA>
+      </ul>
+  </B_offresA>
+     <h2><:aucune_offre:></h2>
+  <//B_offresA>
+</div>
+  
+<div class="liste demande">
+  <B_demandesA>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesA(XX_DEMANDR) {dem_domaines LIKE %C.V.L.%} {par dem_datmodif}{inverse}>
+          <li>
+	          <a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'25','26'})]&dem_id=#DEM_ID" title="Consulter cette demande">
+	          <big>#DEM_PRENOM&nbsp;#DEM_NOM</big> <small>[(#LANG|=={br}|?{
+							[(#DEM_DIPLOMES|replace{',',', '}|replace{'B.A.F.A.','DABU'}|replace{'Stagiaire BAFA','Stajiad DABU'}|replace{'B.A.F.D.','DARE'}|replace{'Stagiaire BAFD','Stajiad DARE'}|replace{'Surveillant de baignade','Evezhier kouronkañ'}|replace{'Premiers secours','Sikourioù kentañ'})],
+							[(#DEM_DIPLOMES|replace{',',', '})]
+						})]</small>
+	          </a>
+          </li>
+          </BOUCLE_demandesA>
+      </ul>
+  </B_demandesA>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesA>
+</div>
+</BOUCLE_anim>
+
+  [(#REM) Carte Baby sitters]
+<BOUCLE_baby(RUBRIQUES) {id_rubrique} {id_rubrique IN 2,4}>
+	<INCLURE{fond=inc-gmkey}>
+ <script type="text/javascript">
+//<![CDATA[
+
+    function load() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map_canvas"));
+        map.addControl(new GSmallMapControl());
+        map.addControl(new GMapTypeControl());
+        map.setCenter(new GLatLng(48, -2.6), 7);
+
+        GDownloadUrl("squelettes/gestionphp/phpsqlajax_genxml2.php", function(data) {
+          var xml = GXml.parse(data);
+          var markers = xml.documentElement.getElementsByTagName("marker");
+          for (var i = 0; i < markers.length; i++) {
+            var idaut = markers[i].getAttribute("idaut");
+            var prenom = markers[i].getAttribute("prenom");
+            var nom = markers[i].getAttribute("nom");
+            var cp = markers[i].getAttribute("cp");
+            var commune = markers[i].getAttribute("commune");
+            var point = new GLatLng(parseFloat(markers[i].getAttribute("lat")),
+                                    parseFloat(markers[i].getAttribute("lng")));
+            var marker = createMarker(point, prenom, nom, cp, commune, idaut);
+            map.addOverlay(marker);
+          }
+        });
+      } else {
+alert("Sorry, the Google Maps API is not compatible with this browser.");
+}
+    }
+
+    function createMarker(point, prenom, nom, cp, commune, idaut) {
+      var marker = new GMarker(point);
+      var html = "<b>" + prenom + "  " + nom + "</b> <br/>" + cp + "  " + commune + "<br/>" + 
+				      "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
+      GEvent.addListener(marker, 'click', function() {
+        marker.openInfoWindowHtml(html);
+      });
+      return marker;
+    }
+//]]>
+  </script>
+  
+     <h2><:demandes_en_cours:></h2>
+	<div id="map_canvas" style="width: 530px; height: 400px"></div>
+
+</BOUCLE_baby>
+
+  [(#REM) Liste offres et Carte demandes Petite enfance ]
+<BOUCLE_petitenf(RUBRIQUES) {id_rubrique} {id_rubrique IN 3,10}>
+	<INCLURE{fond=inc-gmkey}>
+ <script type="text/javascript">
+//<![CDATA[
+
+    function load() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map_canvas"));
+        map.addControl(new GSmallMapControl());
+        map.addControl(new GMapTypeControl());
+        map.setCenter(new GLatLng(48, -2.6), 7);
+
+        GDownloadUrl("squelettes/gestionphp/phpsqlajax_genxml2PE.php", function(data) {
+          var xml = GXml.parse(data);
+          var markers = xml.documentElement.getElementsByTagName("marker");
+          for (var i = 0; i < markers.length; i++) {
+            var idaut = markers[i].getAttribute("idaut");
+            var prenom = markers[i].getAttribute("prenom");
+            var nom = markers[i].getAttribute("nom");
+            var cp = markers[i].getAttribute("cp");
+            var commune = markers[i].getAttribute("commune");
+            var point = new GLatLng(parseFloat(markers[i].getAttribute("lat")),
+                                    parseFloat(markers[i].getAttribute("lng")));
+            var marker = createMarker(point, prenom, nom, cp, commune, idaut);
+            map.addOverlay(marker);
+          }
+        });
+      } else {
+alert("Sorry, the Google Maps API is not compatible with this browser.");
+}
+    }
+
+    function createMarker(point, prenom, nom, cp, commune, idaut) {
+      var marker = new GMarker(point);
+      var html = "<b>" + prenom + "  " + nom + "</b> <br/>" + cp + "  " + commune + "<br/>" + 
+				      "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
+      GEvent.addListener(marker, 'click', function() {
+        marker.openInfoWindowHtml(html);
+      });
+      return marker;
+    }
+//]]>
+  </script>
+
+<div class="liste demande">
+      <h2><:demandes_en_cours:></h2>
+	<div id="map_canvas" style="width: 530px; height: 250px"></div>
+</div>
+  <div class="nettoyeur"></div>
+  
+<div class="liste offre petite_enfance">
+  <B_offresD>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresD(XX_EMPLOYR) {emp_domaines LIKE %Petite%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'32','31'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresD>
+      </ul>
+
+  </B_offresD>
+     <h2><:aucune_offre:></h2>
+  <//B_offresD>
+  </div>
+
+
+</BOUCLE_petitenf>
+
+  [(#REM) Listes des fiches Ecoles, ensgmt ]
+<BOUCLE_ecoles(RUBRIQUES) {id_rubrique} {id_rubrique IN 5,11}>
+<div class="liste offre">
+  <B_offresB>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresB(XX_EMPLOYR) {emp_domaines LIKE %Ecoles%} {par emp_datmodif}{inverse}>
+          <li>
+	          <a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'22','16'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresB>
+      </ul>
+  </B_offresB>
+     <h2><:aucune_offre:></h2>
+  <//B_offresB>
+</div>
+
+
+<div class="liste demande">
+ <B_demandesB>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesB(XX_DEMANDR) {dem_domaines LIKE %Ecoles%} {par dem_datmodif}{inverse}>
+          <li>
+			<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'27','28'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesB>
+      </ul>
+  </B_demandesB>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesB>
+</div>
+</BOUCLE_ecoles>
+
+
+
+  [(#REM) Listes des fiches Action culturelle ]
+<BOUCLE_actcult(RUBRIQUES) {id_rubrique} {id_rubrique IN 12,13}>
+<div class="liste offre">
+  <B_offresC>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresC(XX_EMPLOYR) {emp_domaines LIKE %culturelle%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'24','23'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresC>
+      </ul>
+
+  </B_offresC>
+     <h2><:aucune_offre:></h2>
+  <//B_offresC>
+  </div>
+
+
+  <div class="liste demande">
+  <B_demandesC>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesC(XX_DEMANDR) {dem_domaines LIKE %culturelle%} {par dem_datmodif}{inverse}>
+          <li>
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'29','30'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesC>
+      </ul>
+  </B_demandesC>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesC>
+  </div>
+</BOUCLE_actcult>

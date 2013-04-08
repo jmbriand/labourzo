@@ -1,0 +1,47 @@
+a:9:{s:5:"texte";s:1892:"
+
+
+<div class="menu rubriques">
+	<ul>
+	
+		<li class="section6">
+			<a href="spip.php?rubrique6"><img src="IMG/rubon6.png" alt="" width='75' height='75' class="spip_logos" style='height:75px;width:75px;' /> <big>Buheziñ</big> <small>kampoù vakañsoù, kreizennoù dudi…</small></a>
+		</li>
+	
+		<li class="section2">
+			<a href="spip.php?rubrique2"><img src="IMG/rubon2.png" alt="" width='75' height='75' class="spip_logos" style='height:75px;width:75px;' /> <big>Diwall bugale</big> <small>baby-sitters hag a oar brezhoneg</small></a>
+		</li>
+	
+		<li class="section3">
+			<a href="spip.php?rubrique3"><img src="IMG/rubon3.png" alt="" width='75' height='75' class="spip_logos" style='height:75px;width:75px;' /> <big>Bugale vihan</big> <small>skoazellerezed-mamm, magourioù</small></a>
+		</li>
+	
+		<li class="section5">
+			<a href="spip.php?rubrique5"><img src="IMG/rubon5.png" alt="" width='75' height='75' class="spip_logos" style='height:75px;width:75px;' /> <big>Skolioù</big> <small>skolaerien, Atsem, kelennerien, kasourien…</small></a>
+		</li>
+	
+		<li class="section12">
+			<a href="spip.php?rubrique12"><img src="IMG/rubon12.png" alt="" width='75' height='75' class="spip_logos" style='height:75px;width:75px;' /> <big>Sevenadur</big> <small></small></a>
+		</li>
+	
+
+	</ul>
+</div>
+
+
+
+<div class="entrees">
+	<ul>
+		<li>
+			<a href="spip.php?page=accesEmp&id_article=14">
+			<img class="spip_logos" src="./squelettes/img/demande.png" width="75" alt="demandes"><big>KINNIG A RAN LABOUR </big> <small style="width:90%">Embann, cheñch, lemel ma c’hinnig.</small>
+			</a>
+		</li>		
+		<li>
+			<a href="spip.php?page=accesDem&id_article=11">
+			<img class="spip_logos" src="./squelettes/img/offre.png" width="75" alt="offres"><big>KLASK A RAN LABOUR</big> <small style="width:90%">Embann, cheñch, lemel ma goulenn.</small></a>
+		</li>
+	</ul>
+	<div class="nettoyeur"></div>			
+</div>
+";s:9:"squelette";s:37:"html_6d83ea25376e1b5a7c47d59d54c96448";s:6:"source";s:29:"squelettes/inc-rubriques.html";s:11:"process_ins";s:4:"html";s:11:"invalideurs";a:1:{s:5:"cache";s:35:"d/inc-rubriques-br--90266a3884bdcf1";}s:7:"entetes";a:1:{s:12:"X-Spip-Cache";i:86400;}s:5:"duree";i:0;s:8:"contexte";a:5:{s:4:"lang";s:2:"br";s:4:"date";s:19:"2013-04-06 16:11:32";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-06 16:11:32";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}

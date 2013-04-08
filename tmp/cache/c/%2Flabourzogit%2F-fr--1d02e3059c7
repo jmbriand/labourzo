@@ -1,0 +1,125 @@
+a:9:{s:5:"texte";s:3411:"<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
+<head>
+<title>LABOURZO</title>
+
+<?php
+	$contexte_inclus = array('fond' => 'inc-head',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+</head>
+
+<body class="page_sommaire">
+<div id="page">
+
+
+
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-entete-sommaire',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+
+
+	
+	<div class="hfeed" id="conteneur">
+	<div id="contenu">
+	
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-menu-lang',
+	'skel' => 'squelettes/sommaire.html',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+	
+
+		<div class="sommaire">
+		
+		
+		
+		<div class="themes">
+			<ul>
+			
+				<li class="section7">
+					<a href="spip.php?rubrique7"><img src="IMG/rubon7.png" alt="" width="100" height="100" class="spip_logos" /> <big>Animation</big> <small>séjours de vacances, accueil de loisirs…</small></a>
+				</li>
+			
+				<li class="section4">
+					<a href="spip.php?rubrique4"><img src="IMG/rubon4.png" alt="" width="100" height="100" class="spip_logos" /> <big>Baby-sitting</big> <small>baby-sitters bretonnants</small></a>
+				</li>
+			
+			
+			
+				<li class="presentation">Le site Labourzo a pour but de faciliter la mise en relation des employeurs qui proposent des postes de travail en breton et des bretonnants qui cherchent du travail. Pour le moment, les postes ici proposés concernent essentiellement l’éducation des enfants.</li>
+			
+				
+			
+				<li class="section10">
+					<a href="spip.php?rubrique10"><img src="IMG/rubon10.png" alt="" width="100" height="100" class="spip_logos" /> <big>Petite enfance</big> <small>assistantes maternelles, crèches</small></a>
+				</li>
+			
+				<li class="section11">
+					<a href="spip.php?rubrique11"><img src="IMG/rubon11.png" alt="" width="100" height="100" class="spip_logos" /> <big>Écoles</big> <small>enseignants, animateurs, Atsem…</small></a>
+				</li>
+			
+				<li class="section13">
+					<a href="spip.php?rubrique13"><img src="IMG/rubon13.png" alt="" width="100" height="100" class="spip_logos" /> <big>Action culturelle</big> <small></small></a>
+				</li>
+			
+			</ul>
+			<div class="nettoyeur"></div>	
+		</div>
+	
+		
+
+
+	
+		
+		<div class="entrees">
+			<ul>
+			<li><a href="spip.php?page=accesEmp&id_article=18"><img class="spip_logos" src="./squelettes/img/demande.png" alt="demandes"><big>J’AI UNE OFFRE D’EMPLOI</big> <small>Proposer, modifier, supprimer une offre.</small></a></li>		
+			<li><a href="spip.php?page=accesDem&id_article=17"><img class="spip_logos" src="./squelettes/img/offre.png" alt="offres"><big>JE CHERCHE UN EMPLOI</big> <small>Déposer, modifier, supprimer vos demandes.</small></a></li>
+			</ul>
+		<div class="nettoyeur"></div>			
+		</div>
+	
+		</div>
+	
+	
+	
+		
+		<div id="sidebar">
+		
+			
+			<?php
+	$contexte_inclus = array('fond' => 'inc-derniers-articles',
+	'skel' => 'squelettes/sommaire.html',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+
+	
+		</div><!--#extra-->
+	
+		<div class="nettoyeur"></div>	
+
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+	
+
+	
+	
+	<?php
+	$contexte_inclus = array('fond' => 'inc-pied',
+	'skel' => 'squelettes/sommaire.html',
+	'lang' => 'fr');
+	include _DIR_RESTREINT . "public.php";
+?>
+	
+</div><!--#page-->
+</body>
+</html>";s:9:"squelette";s:37:"html_d3135576b1e1eae4241edc0e24a2b047";s:6:"source";s:24:"squelettes/sommaire.html";s:11:"process_ins";s:3:"php";s:11:"invalideurs";a:1:{s:5:"cache";s:35:"c/%2Flabourzogit%2F-fr--1d02e3059c7";}s:7:"entetes";a:1:{s:12:"X-Spip-Cache";s:4:"3600";}s:5:"duree";i:3600;s:8:"contexte";a:5:{s:4:"lang";s:2:"fr";s:4:"date";s:19:"2013-04-08 19:13:51";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-08 19:13:51";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}
