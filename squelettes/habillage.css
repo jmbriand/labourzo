@@ -593,39 +593,36 @@ background-repeat: no-repeat;
 	margin-bottom: 15px;
 	background: transparent url(./img/fond-transp.png) repeat center center; 
 }
-.page_fiche #principal .top li {margin-bottom: 5px}
+.page_fiche #principal .top li {margin-bottom: 5px; float: none}
 .page_fiche #principal li.top {margin-bottom: 5px;}
 .page_fiche #principal .top small {border-bottom: none; display: inline-table; width: 130px; text-align: right}
-.page_fiche #principal .top strong { font: normal 18px Georgia, serif;}
+.page_fiche #principal .top strong { font: normal 18px Georgia, serif; float: none}
 
 .page_fiche #principal ul li small 
 {
 	display: block;
 	text-transform: uppercase;
 	color: #333;
-	xpadding: 3px;
 	border-bottom: 1px dotted #999;
-	xbackground: #ddd;
-	xdisplay: inline-table;
-	xwidth: 120px;
 	font-size: 11px;
-	xtext-align: right;
+	float: left;
+	width: 140px;
+	margin-right: 1em;
 }
 
 .page_fiche #principal ul li strong 
 {
-	xdisplay: block;
 	font-size: 13px;
 	font-weight: normal;
-	xmargin-top: 3px;
-	color: #000
+	color: #000;
+	float: right;
 }
 
 .page_fiche #principal ul li.info_date {text-align: right;}
 .page_fiche #principal ul li.info_date strong,
 .page_fiche #principal ul li.info_date small {display: inline; float: none; text-transform:none; border-bottom: none;color: #666; font-size: 10px;}
 
-.page_fiche #principal ul li {margin-bottom: 10px}
+.page_fiche #principal ul li {margin-bottom: 1em; float: left}
 
 .page_fiche .nom_famille {text-transform: uppercase}
 
@@ -794,6 +791,13 @@ form#modif ul li textarea,
 @media (min-width: 980px) {
 	.sommaire {width: 740px;}
 	#contenu {width: 925px} 
+	
+	.page_fiche #principal {width: 640px}
+	.page_fiche #sidebar {width: 250px}
+	
+	.page_fiche #principal ul li small {font-size: 1.2em;}
+	.page_fiche #principal ul li strong {font-size: 1.4em}
+	
 }
 
 
