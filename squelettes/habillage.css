@@ -393,10 +393,6 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 ---------------------------------------------- */
 .section6, .section7 { background-image: url(./img/fond-animation.gif); }
 
-/* BABY-SITTING
----------------------------------------------- */
-.section2, .section4 { background-image: url(./img/fond-babysitting.gif); }
-
 /* PETITE ENFANCE
 ---------------------------------------------- */
 .section3, .section10 { background-image: url(./img/fond-petiteEnfance.gif); }
@@ -405,9 +401,97 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 ---------------------------------------------- */
 .section5, .section11 { background-image: url(./img/fond-ecole.gif); }
 
-/* ACTIONS CULTURELLES
+/* ATSEM ACCOMPAGNEMENTS
 ---------------------------------------------- */
-.section12, .section13 { background-image: url(./img/fond-actionCulturelle.gif); }
+.section32, .section31 {
+background: #7db9e8;
+background: -moz-linear-gradient(top,  #7db9e8 0%, #386599 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7db9e8), color-stop(100%,#386599));
+background: -webkit-linear-gradient(top,  #7db9e8 0%,#386599 100%);
+background: -o-linear-gradient(top,  #7db9e8 0%,#386599 100%);
+background: -ms-linear-gradient(top,  #7db9e8 0%,#386599 100%);
+background: linear-gradient(to bottom,  #7db9e8 0%,#386599 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', endColorstr='#386599',GradientType=0 );
+
+}
+
+/* COMMERCE, AGRICULTURE
+---------------------------------------------- */
+.section34, .section33 {
+background: #b25e5e;
+background: -moz-linear-gradient(top,  #b25e5e 0%, #6d0001 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b25e5e), color-stop(100%,#6d0001));
+background: -webkit-linear-gradient(top,  #b25e5e 0%,#6d0001 100%);
+background: -o-linear-gradient(top,  #b25e5e 0%,#6d0001 100%);
+background: -ms-linear-gradient(top,  #b25e5e 0%,#6d0001 100%);
+background: linear-gradient(to bottom,  #b25e5e 0%,#6d0001 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b25e5e', endColorstr='#6d0001',GradientType=0 );
+}
+
+/* SANTE
+---------------------------------------------- */
+.section36, .section35 {
+background: #cccabf;
+background: -moz-linear-gradient(top,  #cccabf 0%, #8b8c7f 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccabf), color-stop(100%,#8b8c7f));
+background: -webkit-linear-gradient(top,  #cccabf 0%,#8b8c7f 100%);
+background: -o-linear-gradient(top,  #cccabf 0%,#8b8c7f 100%);
+background: -ms-linear-gradient(top,  #cccabf 0%,#8b8c7f 100%);
+background: linear-gradient(to bottom,  #cccabf 0%,#8b8c7f 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccabf', endColorstr='#8b8c7f',GradientType=0 );
+
+}
+
+/* MEDIAS
+---------------------------------------------- */
+.section38, .section37 {
+background: #dd3042;
+background: -moz-linear-gradient(top,  #dd3042 0%, #db002b 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dd3042), color-stop(100%,#db002b));
+background: -webkit-linear-gradient(top,  #dd3042 0%,#db002b 100%);
+background: -o-linear-gradient(top,  #dd3042 0%,#db002b 100%);
+background: -ms-linear-gradient(top,  #dd3042 0%,#db002b 100%);
+background: linear-gradient(to bottom,  #dd3042 0%,#db002b 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dd3042', endColorstr='#db002b',GradientType=0 );
+
+}
+
+/* TRADUCTIONS
+---------------------------------------------- */
+.section40, .section39 { 
+background: #9ddd6e;
+background: -moz-linear-gradient(top,  #9ddd6e 0%, #50c100 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#9ddd6e), color-stop(100%,#50c100));
+background: -webkit-linear-gradient(top,  #9ddd6e 0%,#50c100 100%);
+background: -o-linear-gradient(top,  #9ddd6e 0%,#50c100 100%);
+background: -ms-linear-gradient(top,  #9ddd6e 0%,#50c100 100%);
+background: linear-gradient(to bottom,  #9ddd6e 0%,#50c100 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ddd6e', endColorstr='#50c100',GradientType=0 );
+
+}
+
+/* ADMINISTRATIONS
+---------------------------------------------- */
+.section42, .section41 { background-image: url(./img/fond-babysitting.gif); }
+
+/* ARTS
+---------------------------------------------- */
+.section44, .section43 { 
+background: #fc8a8a;
+background: -moz-linear-gradient(top,  #fc8a8a 0%, #e85555 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fc8a8a), color-stop(100%,#e85555));
+background: -webkit-linear-gradient(top,  #fc8a8a 0%,#e85555 100%);
+background: -o-linear-gradient(top,  #fc8a8a 0%,#e85555 100%);
+background: -ms-linear-gradient(top,  #fc8a8a 0%,#e85555 100%);
+background: linear-gradient(to bottom,  #fc8a8a 0%,#e85555 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8a8a', endColorstr='#e85555',GradientType=0 );
+
+}
+
+/* DIVERS
+---------------------------------------------- */
+.section46, .section45 { background-image: url(./img/fond-actionCulturelle.gif); }
+
 
 
 
