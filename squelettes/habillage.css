@@ -787,52 +787,63 @@ form#modif ul li textarea,
 #pied ul li.acces-admin a:hover {text-decoration: underline;}
 
 
+
+/*	ECRAN LARGE 980px
+	-----------------*/
+
 @media (min-width: 980px) {
-
-.sommaire {width: 740px;}
-#contenu {width: 925px} 
-
+	.sommaire {width: 740px;}
+	#contenu {width: 925px} 
 }
 
 
-
+/*	ECRAN MOYEN 640px
+	-----------------*/
 @media (max-width: 640px) {
 
-#entete {height: 80px}
-#contenu,
-#pied ul { width: 625px}
-.sommaire {width: 380px; padding-left: 40px}
-#sidebar {width: 180px;margin-right:20px}
-.contact-mentions, .rss-plan, .acces-admin {width: 160px}
-.entrees li {width: 350px}
+	#menu_langue {left:250px; top: -120px}
+
+	#contenu,
+	#pied ul { width: 625px}
+	.sommaire {width: 380px; padding-left: 40px}
+	#sidebar {width: 180px;margin-right:20px}
+	.contact-mentions, .rss-plan, .acces-admin {width: 160px}
+	.entrees li {width: 350px}
 }
 
+
+
+/*	ECRAN PETIT 360px
+	-----------------*/
+
 @media (max-width: 360px) {
-body {font-size: 1.1em; line-height: 1.3em}
-#entete {height: 40px}
-#contenu,
-#pied ul,
-.sommaire { width: 335px}
-#sidebar,
-.entrees li {width: 265px;}
 
-.entrees li {height: 80px}
+	body {font-size: 1.1em; line-height: 1.3em}
+	
+	#menu_langue {left:100px; top: -120px}
+	
+	#contenu,
+	#pied ul,
+	.sommaire { width: 335px}
+	#sidebar,
+	.entrees li {width: 265px;}
+	
+	.entrees li {height: 80px}
+	
+	.themes li {width: 265px}
+	
+	.page_sommaire #sidebar {margin-right: 30px; margin-top: 20px}
+	
+	.entrees li small {font-size: 1em}
+	.contact-mentions, .rss-plan, .acces-admin {width: 160px}
+	
+	.sommaire li a small {line-height:1.3em; font-size: 0.8em}
+	.sommaire .presentation {font-size: 0.8em; line-height: 1.2em;}
+	.sommaire .presentation p {padding: 0 20px}
+	#pied ul li {padding: 20px}
+	
+	.derniers_articles ul li * {font-size: 0.9em}
 
-.themes li {width: 265px}
-
-.page_sommaire #sidebar {margin-right: 30px; margin-top: 20px}
-
-.entrees li small {font-size: 1em}
-.contact-mentions, .rss-plan, .acces-admin {width: 160px}
-
-.sommaire li a small {line-height:1.3em; font-size: 0.8em}
-.sommaire .presentation {font-size: 0.8em; line-height: 1em;}
-.sommaire .presentation p {padding: 0 20px}
-#pied ul li {padding: 20px}
-
-.derniers_articles ul li * {font-size: 0.9em}
-
-#menu_langue {left:40px; top:40px}
 }
 
 
