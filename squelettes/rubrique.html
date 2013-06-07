@@ -42,13 +42,19 @@
  
         [(#REM) Affichage des listes d'offres et de demandes
         			rubs	6, 7 --> Animation Bz, Fr
-        			rubs	5, 11 --> Ecoles Bz, Fr
-        			rubs	12, 13 --> Action Culturelle Bz, Fr
-        			rubs  2, 4 --> Baby Sitting Bz, Fr
-        			rubs  3, 10 --> Petite enfance Bz, Fr
+        			rubs  3, 10 --> Garde d'enfants Bz, Fr
+        			rubs	5, 11 --> Enseignement Bz, Fr
+        			rubs	32, 31 --> Accompagnement scolaire Bz, Fr
+        			rubs  34, 33 --> Commerce Bz, Fr
+        			rubs  36, 35 --> Santé Bz, Fr
+        			rubs  38, 37 --> Communication Bz, Fr
+        			rubs  40, 39 --> Linguistes Bz, Fr
+        			rubs  42, 41 --> Administration Bz, Fr
+        			rubs  44, 43 --> Arts Bz, Fr
+        			rubs  46, 45 --> Divers Bz, Fr
         ]
         <B_rubsect>
-	        <BOUCLE_rubsect(RUBRIQUES) {id_rubrique} {id_rubrique IN 3,10,2,4,6,7,5,11,12,13}>
+	        <BOUCLE_rubsect(RUBRIQUES) {id_rubrique} {id_rubrique IN 6,7,3,10,5,11,32,31,34,33,36,35,38,37,40,39,42,41,44,43,46,45}>
 		        <INCLURE{fond=inc-listes-offres-demdes}{id_rubrique}{lang}>
 	        </BOUCLE_rubsect>
         </B_rubsect>

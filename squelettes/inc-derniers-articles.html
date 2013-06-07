@@ -5,19 +5,40 @@
 			<B_offres>
 			<h2><:dernieres_offres:></h2>
 			<ul id="dernieres_offres">
-					<BOUCLE_offres(XX_EMPLOYR) {par emp_datmodif}{inverse} {0,5}>
+					<BOUCLE_offres(xx_employr) {par emp_datmodif}{inverse} {0,5}>
 					<li class="hentry">
 					<h3 class="entry-title">
 					<a href="spip.php?page=voirFiche&id_article=
-						[(#EMP_DOMAINES|=={CVL}|?{
+						[(#EMP_DOMAINES|=={anim}|?{
 							[(#LANG|=={br}|?{'8','7'})],
-							[(#EMP_DOMAINES|=={Petite enf.}|?{
+							[(#EMP_DOMAINES|=={gardenf}|?{
 								[(#LANG|=={br}|?{'32','31'})],
-								[(#EMP_DOMAINES|=={Ecoles}|?{
+								[(#EMP_DOMAINES|=={enseignmt}|?{
 									[(#LANG|=={br}|?{'22','16'})],
-									[(#EMP_DOMAINES|=={Action culturelle}|?{
-										[(#LANG|=={br}|?{'24','23'})],
+								[(#EMP_DOMAINES|=={accompscol}|?{
+									[(#LANG|=={br}|?{'44','41'})],
+								[(#EMP_DOMAINES|=={commarti}|?{
+									[(#LANG|=={br}|?{'48','46'})],
+								[(#EMP_DOMAINES|=={sante}|?{
+									[(#LANG|=={br}|?{'53','50'})],
+								[(#EMP_DOMAINES|=={commedia}|?{
+									[(#LANG|=={br}|?{'55','54'})],
+								[(#EMP_DOMAINES|=={linguis}|?{
+									[(#LANG|=={br}|?{'58','59'})],
+								[(#EMP_DOMAINES|=={admin}|?{
+									[(#LANG|=={br}|?{'62','63'})],
+								[(#EMP_DOMAINES|=={arts}|?{
+									[(#LANG|=={br}|?{'66','67'})],
+									[(#EMP_DOMAINES|=={divers}|?{
+										[(#LANG|=={br}|?{'70','71'})],
 										'7'
+									})]
+									})]
+									})]
+									})]
+									})]
+									})]
+									})]
 									})]
 								})]
 							})]
@@ -34,14 +55,14 @@
 			<B_demandes>
 			<h2><:dernieres_demandes:></h2>
 			<ul id="dernieres_demandes">
-					<BOUCLE_demandes(XX_DEMANDR) {par dem_datmodif}{inverse} {0,5}>
+					<BOUCLE_demandes(xx_demandr) {par dem_datmodif}{inverse} {0,5}>
 						<li class="hentry">
 						<h3 class="entry-title">
 						<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'34','33'})]&dem_id=#DEM_ID">
 						<small><strong>#DEM_PRENOM #DEM_NOM</strong> <abbr class="published">[(#DEM_DATMODIF|affdate_jourcourt)]</abbr><hr /></small> 
 						<em>[(#LANG|=={br}|?{
-							[(#DEM_DOMAINES|replace{',',', '}|replace{'C.V.L.','Buhezi&ntilde;'}|replace{'Baby sitting','Diwall bugale'}|replace{'Petite enfance','Bugale vihan'}|replace{'Ecoles','Skolioù'}|replace{'Action culturelle','Ober sevenadurel'})],
-							[(#DEM_DOMAINES|replace{',',', '}|replace{'C.V.L.','Animation'}|replace{'Ecoles','&Eacute;coles'})]
+							[(#DEM_DOMAINES|replace{',',', '}|replace{'anim','Buhezi&ntilde;'}|replace{'gardenf','Diwall bugale'}|replace{'enseignmt','Kelenn'}|replace{'accompscol','Skoazellerien er skolioù'}|replace{'commarti','Kenwerzh'}|replace{'sante','Yec’hed'}|replace{'commedia','Kehentiñ'}|replace{'linguis','Yezhourien'}|replace{'admin','Melestradur'}|replace{'arts','Arzoù'}|replace{'divers','A bep seurt'})],
+							[(#DEM_DOMAINES|replace{',',', '}|replace{'anim','Animation'}|replace{'gardenf','Garde enfants'}|replace{'enseignmt','Enseignement'}|replace{'accompscol','Accompagnement scolaire'}|replace{'commarti','Commerce'}|replace{'sante','Santé'}|replace{'commedia','Communication'}|replace{'linguis','Linguistes'}|replace{'admin','Administration'}|replace{'arts','Arts'}|replace{'divers','Divers'})]
 						})]</em></a></h3>
 						</li>
 					</BOUCLE_demandes>

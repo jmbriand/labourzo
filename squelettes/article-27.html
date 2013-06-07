@@ -60,7 +60,7 @@
         <div class="menu" id="documents_joints">
             <h2>[(#ENV{OK,''}|?{'' , <:mes_cvs:>})]</h2>
             <ul>
-                <BOUCLE_mescvs(XX_UPCURVIT) {up_idauteur = #SESSION{id_auteur}} {par up_date}>
+                <BOUCLE_mescvs(xx_upcurvit) {up_idauteur = #SESSION{id_auteur}} {par up_date}>
         [(#ENV{OK,''}|?{'', 
                 <li><a href="IMG/cvdemandr/#UP_CHEMIN">#UP_NOM&nbsp; ([(#UP_LANG)])</a>
                 <form action='#URL_ARTICLE' method='post' class="ajax">

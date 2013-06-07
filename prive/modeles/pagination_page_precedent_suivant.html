@@ -2,69 +2,51 @@
 #SET{bornes,#ENV{page_courante}|bornes_pagination{#ENV{nombre_pages},10}}
 #SET{premiere, #GET{bornes}|reset}
 #SET{derniere, #GET{bornes}|end}
-#SET{separateur,#ENV{separateur,'|'}}
+#SET{pages,#GET{premiere}|range{#GET{derniere}}}
+#SET{sep,#ENV{separateur,' | '}}
+<B_pages>
+	[<span
+  class='label'>(#ENV{label,''})</span>][
 
-[<a href='[(#ENV{url}|parametre_url{#ENV{debut},''})]##ENV{ancre}' class='lien_pagination' rel='nofollow'>(#GET{premiere}|>{1}|?{'...',''})</a> #GET*{separateur}]
-#SET{i,#ENV{page_courante}|moins{1}}
-[(#GET{i}|>{0}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte='&lt;'}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#ENV{derniere}})]
-]
+	(#SET{item, #ENV{page_courante}|moins{2}|mult{#ENV{pas}} })
 
-#SET{i,#GET{premiere}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
-#SET{i,#GET{i}|plus{1}}
-[(#GET{i}|<={#GET{derniere}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=#GET{i}}{separateur=#GET*{separateur}}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#GET{derniere}})]
-]
+	][<span
+	class="prev[(#ENV{page_courante}|<={1}|oui)disabled]">(#ENV{url}
+	|parametre_url{#ENV{debut},#GET{item}|?{#GET{item}}}
+	|ancre_url{#ENV{ancre}}
+	|lien_ou_expose{#ENV{label_precedent,<:public:page_precedente:>},#ENV{page_courante}|<={1},'lien_pagination','',nofollow}
+	|inserer_attribut{rel,prev}
+	)[<span
+	class='sep'>(#GET*{sep})</span>]</span>]<span
+	class="pages">[<a
+	href='[(#ENV{url}|parametre_url{#ENV{debut},''})]##ENV{ancre}'
+	class='lien_pagination'
+	rel='nofollow'>(#GET{premiere}|>{1}|?{1})</a><span
+	class="tbc">[<span
+	class='sep'>(#GET*{sep})</span>]...[<span
+	class='sep'>(#GET*{sep})</span>]</span
 
-#SET{i,#ENV{page_courante}|plus{1}}
-[(#GET{i}|<{#ENV{nombre_pages}}|?{' ',''})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][#GET*{separateur} (#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte='&gt;'}{separateur=''}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#ENV{derniere}})]
-]
-[#GET*{separateur} <a href='[(#ENV{url}|parametre_url{#ENV{debut},#ENV{nombre_pages}|moins{1}|mult{#ENV{pas}}})]##ENV{ancre}' class='lien_pagination' rel='nofollow'>(#GET{derniere}|<{#ENV{nombre_pages}}|?{'...',''})</a>]
+		>]<BOUCLE_pages(POUR){tableau #GET{pages}}>[
+		(#SET{item, #VALEUR|moins{1}|mult{#ENV{pas}} })
+		][(#ENV{url}
+		|parametre_url{#ENV{debut},#GET{item}|?{#GET{item}}}
+		|ancre_url{#ENV{ancre}}
+		|lien_ou_expose{#VALEUR,#VALEUR|=={#ENV{page_courante}},lien_pagination,'',nofollow})][<span
+		class='sep'>(#VALEUR|<{#GET{derniere}}|?{#GET{sep}})</span
+		>]</BOUCLE_pages>[<span
+
+	class="tbc">[<span
+	class='sep'>(#GET*{sep})</span>]...[<span
+	class='sep'>(#GET*{sep})</span>]</span><a
+	href='[(#ENV{url}|parametre_url{#ENV{debut},#ENV{nombre_pages}|moins{1}|mult{#ENV{pas}}})]##ENV{ancre}'
+	class='lien_pagination'
+	rel='nofollow'>(#GET{derniere}|<{#ENV{nombre_pages}}|?{#ENV{nombre_pages}})</a>]</span>[
+	(#SET{item, #ENV{page_courante}|mult{#ENV{pas}} })
+	][<span
+	class="next[(#ENV{page_courante}|>={#ENV{nombre_pages}}|oui)disabled]">[<span class='sep'>(#GET*{sep})</span>](#ENV{url}
+	|parametre_url{#ENV{debut},#GET{item}|?{#GET{item}}}
+	|ancre_url{#ENV{ancre}}
+	|lien_ou_expose{#ENV{label_suivant,<:public:page_suivante:>},#ENV{page_courante}|>={#ENV{nombre_pages}},'lien_pagination','',nofollow}
+	|inserer_attribut{rel,next}
+	)</span>]
+</B_pages>

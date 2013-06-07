@@ -50,7 +50,7 @@
         <div class="menu" id="documents_joints">
             <h2>[(#ENV{OK,''}|?{<:operation_succes:>, <:mes_offres:>})]</h2>
             <ul>
-                <BOUCLE_mesoffres(XX_EMPLOYR) {emp_idauteur = #SESSION{id_auteur}} {par emp_datmodif}>
+                <BOUCLE_mesoffres(xx_employr) {emp_idauteur = #SESSION{id_auteur}} {par emp_datmodif}>
         [(#ENV{OK,''}|?{'', 
                 <li>#EMP_POSTE&nbsp;/&nbsp;#EMP_DOMAINES&nbsp;/&nbsp;#EMP_DURDATES&nbsp;
                 <form action='#URL_ARTICLE' method='post' class="ajax">
@@ -75,7 +75,6 @@
 			Le critere {env} permet de passer d'autres arguments de la page
 			par exemple l'id_document choisi pour un affichage complet
 		]
-		[(#INCLURE{fond=inc-documents}{id_article}{env})]
 
 
 		[(#REM) Petition :
@@ -86,9 +85,6 @@
         [<div class="notes surlignable"><h2 class="pas_surlignable"><:info_notes:></h2>(#NOTES)</div>]
 
 		[(#REM) Forum de l'article ]
-		<a href="#forum" name="forum" id="forum"></a>
-		<INCLURE{fond=inc-forum}{id_article} />
-		[<p class="repondre"><a href="(#PARAMETRES_FORUM|url_reponse_forum)" rel="noindex nofollow"><:repondre_article:></a></p>] 
 
 
 	</div> <!-- principal -->

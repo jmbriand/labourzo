@@ -2,16 +2,28 @@
 #SET{bornes,#ENV{page_courante}|bornes_pagination{#ENV{nombre_pages},10}}
 #SET{premiere, #GET{bornes}|reset}
 #SET{derniere, #GET{bornes}|end}
-#SET{separateur,#ENV{separateur,'|'}}
-#SET{i,#ENV{page_courante}|moins{1}}
-[(#GET{i}|>{0}|?{' '})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=<:public:page_precedente:>}{separateur=''}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#ENV{derniere}})]
-	#SET{i,#GET{i}|plus{2}}
-	[(#GET{i}|<={#ENV{nombre_pages}}|?{#GET{separateur}})]
-]
-#SET{i,#ENV{page_courante}|plus{1}}
-[(#GET{i}|<={#ENV{nombre_pages}}|?{' '})[
-	(#SET{item, #GET{i}|moins{1}|mult{#ENV{pas}} })
-	][(#INCLURE{fond=modeles/paginationitem}{num=#GET{i}}{texte=<:public:page_suivante:>}{separateur=''}{url=#ENV{url}|parametre_url{#ENV{debut},#GET{item}}|ancre_url{#ENV{ancre}}}{page_courante=#ENV{page_courante}}{derniere=#ENV{derniere}})]
-]
+#SET{sep,#ENV{separateur,' | '}}
+	[<span
+	class='label'>(#ENV{label,''})</span>][
+
+	(#SET{item, #ENV{page_courante}|moins{2}|mult{#ENV{pas}} })
+
+	][<span
+	class="prev[(#ENV{page_courante}|<={1}|oui)disabled]">(#ENV{url_precedent,#ENV{url}
+	|parametre_url{#ENV{debut},#GET{item}|?{#GET{item}}}}
+	|ancre_url{#ENV{ancre}}
+	|lien_ou_expose{#ENV{label_precedent,<:public:page_precedente:>},#ENV{page_courante}|<={1},'lien_pagination','',nofollow}
+	|inserer_attribut{rel,prev}
+	)[<span (#ENV{page_courante}|<{#ENV{nombre_pages}}|et{#GET*{sep}}|oui)
+	class='sep'>#GET*{sep}</span>]</span>][
+
+	(#SET{item, #ENV{page_courante}|mult{#ENV{pas}} })
+
+	][<span
+	class="next[(#ENV{page_courante}|>={#ENV{nombre_pages}}|oui)disabled]">[<span (#ENV{page_courante}|>={#ENV{nombre_pages}}|et{#GET*{sep}}|oui)
+		class='sep'>#GET*{sep}</span>](#ENV{url_suivant,#ENV{url}
+	|parametre_url{#ENV{debut},#GET{item}|?{#GET{item}}}}
+	|ancre_url{#ENV{ancre}}
+	|lien_ou_expose{#ENV{label_suivant,<:public:page_suivante:>},#ENV{page_courante}|>={#ENV{nombre_pages}},'lien_pagination','',nofollow}
+	|inserer_attribut{rel,next}
+	)</span>]

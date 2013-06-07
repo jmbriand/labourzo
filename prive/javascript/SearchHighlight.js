@@ -4,9 +4,9 @@
  * Thanks to Scott Yang <http://scott.yang.id.au/>
  * for the original idea and some code
  *    
- * @author Renato Formato <renatoformato@virgilio.it> 
+ * @author Renato Formato <rformato@gmail.com> 
  *  
- * @version 0.36 (9/1/2009)
+ * @version 0.37 (9/1/2009)
  *
  *  Options
  *  - exact (string, default:"exact") 
@@ -14,8 +14,11 @@
  *    "whole" : find partial matches but highlight whole words
  *    "partial": find and highlight partial matches
  *     
+ *  - tag_name (string, default:'span')
+ *    The tag that is used to wrap the matched words
+ *
  *  - style_name (string, default:'hilite')
- *    The class given to the span wrapping the matched words.
+ *    The class given to the tag wrapping the matched words.
  *     
  *  - style_name_suffix (boolean, default:true)
  *    If true a different number is added to style_name for every different matched word.
@@ -51,7 +54,7 @@ if (window.jQuery)
     var ref = options.debug_referrer || document.referrer;
     if(!ref && options.keys==undefined) return this;
     
-    SearchHighlight.options = $.extend({exact:"exact",style_name:'hilite',style_name_suffix:true},options);
+    SearchHighlight.options = $.extend({exact:"exact",tag_name:'span',style_name:'hilite',style_name_suffix:true},options);
     
     if(options.engines) SearchHighlight.engines.unshift(options.engines);  
     var q = SearchHighlight.splitKeywords(options.keys!=undefined?options.keys.toLowerCase():SearchHighlight.decodeURL(ref,SearchHighlight.engines));
@@ -106,13 +109,15 @@ if (window.jQuery)
     splitKeywords: function(query) {
       if(query) {
         //do not split keywords enclosed by "
-        var m = query.match(/"([^"]*)"/g); 
+        var m = query.match(/"([^"]*)"/g);
         if(m)
           for(var i=0, ml=m.length;i<ml;i++) {
-            var regex = new RegExp(m[i]);
-            query = query.replace(regex,'@@@'+i+'@@@');
+	          var i = query.indexOf(m[i]);
+	          query = query.substring(0,i)+'@@@'+i+'@@@'+query.substring(i+m[i].length)
+	          m[i] = decodeURI(m[i]);
+	          m[i] = m[i].split("+").join(' ');
           }
-        query = query.split(/[\s,\+\.]+/);
+        query = query.split(/[\s,\+]+/);
         if(m)
           for(var i=0,l = query.length;i<l;i++) {
             for(var j=0, ml=m.length;j<ml;j++) {
@@ -129,6 +134,7 @@ if (window.jQuery)
       [/[\xC7\u0106-\u010D]/ig,'c'],
       [/[\xC8-\xCB]/ig,'e'],
       [/[\xCC-\xCF]/ig,'i'],
+      [/[\u0141]/ig,'l'],
       [/\xD1/ig,'n'],
       [/[\xD2-\xD6\xD8]/ig,'o'],
       [/[\u015A-\u0161]/ig,'s'],
@@ -137,7 +143,7 @@ if (window.jQuery)
       [/\xFF/ig,'y'],
       [/[\x91\x92\u2018\u2019]/ig,'\'']
     ],
-    matchAccent : /[\x91\x92\xC0-\xC5\xC7-\xCF\xD1-\xD6\xD8-\xDC\xFF\u0100-\u010D\u015A-\u0167\u2018\u2019]/ig,  
+    matchAccent : /[\x91\x92\xC0-\xC5\xC7-\xCF\xD1-\xD6\xD8-\xDC\xFF\u0100-\u010D\u0141\u015A-\u0167\u2018\u2019]/ig,  
 		replaceAccent: function(q) {
 		  SearchHighlight.matchAccent.lastIndex = 0;
       if(SearchHighlight.matchAccent.test(q)) {
@@ -195,14 +201,14 @@ if (window.jQuery)
               var newtext="",match,index=0;
               SearchHighlight.regex.lastIndex = 0;
               while(match = SearchHighlight.regex.exec(textNoAcc)) {
-                newtext += SearchHighlight.fixTags(text.substr(index,match.index-index))+'<span class="'+
-                SearchHighlight.subs[match[matchIndex].toLowerCase()]+'">'+SearchHighlight.fixTags(text.substr(match.index,match[0].length))+"</span>";
+                newtext += SearchHighlight.fixTags(text.substr(index,match.index-index))+'<'+SearchHighlight.options.tag_name+' class="'+
+                SearchHighlight.subs[match[matchIndex].toLowerCase()]+'">'+SearchHighlight.fixTags(text.substr(match.index,match[0].length))+"</"+SearchHighlight.options.tag_name+">";
                 index = match.index+match[0].length;
               }
               if(newtext) {
                 //add the last part of the text
                 newtext += SearchHighlight.fixTags(text.substring(index));
-                var repl = $.merge([],$("<span>"+newtext+"</span>")[0].childNodes);
+                var repl = $.merge([],$("<"+SearchHighlight.options.tag_name+">"+newtext+"</"+SearchHighlight.options.tag_name+">")[0].childNodes);
                 endIndex += repl.length-1;
                 startIndex += repl.length-1;
                 $(item).before(repl).remove();

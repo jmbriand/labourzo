@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('inc/headers');
 include_spip('inc/texte'); //inclue inc/lang et inc/filtres
@@ -19,8 +19,16 @@ include_spip('inc/texte'); //inclue inc/lang et inc/filtres
 // Presentation des pages d'installation et d'erreurs
 //
 
-// http://doc.spip.org/@install_debut_html
-function install_debut_html($titre = 'AUTO', $onLoad = '') {
+/**
+ * http://doc.spip.org/@install_debut_html
+ *
+ * @param string $titre
+ * @param string $onLoad
+ * @param bool $all_inline
+ *   inliner les css et js dans la page (limiter le nombre de hits)
+ * @return string
+ */
+function install_debut_html($titre = 'AUTO', $onLoad = '', $all_inline = false) {
 	global $spip_lang_right,$spip_lang_left;
 	
 	utiliser_langue_visiteur();
@@ -35,18 +43,38 @@ function install_debut_html($titre = 'AUTO', $onLoad = '') {
 	if (!headers_sent())
 		header('Content-Type: text/html; charset=utf-8');
 
+	$css = "";
+	$files = array('reset.css','clear.css','minipres.css');
+	if ($all_inline){
+		// inliner les CSS (optimisation de la page minipres qui passe en un seul hit a la demande)
+		foreach ($files as $name){
+			$file = direction_css(find_in_theme($name));
+			if (function_exists("compacte"))
+				$file = compacte($file);
+			else
+				$file = url_absolue_css($file); // precaution
+			lire_fichier($file,$c);
+			$css .= $c;
+		}
+		$css = "<style type='text/css'>".$css."</style>";
+	}
+	else{
+		foreach ($files as $name){
+			$file = direction_css(find_in_theme($name));
+			$css .= "<link rel='stylesheet' href='$file' type='text/css' />\n";
+		}
+	}
+
 	// au cas ou minipres() est appele avant spip_initialisation_suite()
-	@define('_DOCTYPE_ECRIRE', '');
+	if (!defined('_DOCTYPE_ECRIRE')) define('_DOCTYPE_ECRIRE', '');
 	return  _DOCTYPE_ECRIRE.
 		html_lang_attributes().
 		"<head>\n".
 		"<title>".
 		textebrut($titre).
-		"</title>
-		<link rel='stylesheet' href='".direction_css(find_in_path('minipres.css')).
-		"' type='text/css' media='all' />\n" .
- // cet appel permet d'assurer un copier-coller du nom du repertoire a creer dans tmp (esj)
-		http_script('',  "spip_barre.js") .
+		"</title>\n".
+		"<meta name='viewport' content='width=device-width' />\n".
+		$css .
 "</head>
 <body".$onLoad." class='minipres'>
 	<div id='minipres'>
@@ -61,10 +89,23 @@ function install_fin_html() {
 	return "\n\t</div>\n\t</div>\n</body>\n</html>";
 }
 
-// http://doc.spip.org/@minipres
-function minipres($titre='', $corps="", $onload='')
+
+/**
+ * http://doc.spip.org/@minipres
+ *
+ * @param string $titre
+ *   titre de la page
+ * @param string $corps
+ *   corps de la page
+ * @param string $onload
+ *   attribut onload de <body>
+ * @param bool $all_inline
+ *   inliner les css et js dans la page (limiter le nombre de hits)
+ * @return string
+ */
+function minipres($titre='', $corps="", $onload='', $all_inline = false)
 {
-	@define('_AJAX',false); // par securite
+	if (!defined('_AJAX')) define('_AJAX', false); // par securite
 	if (!$titre) {
 		if (!_AJAX)
 			http_status(403);
@@ -78,20 +119,23 @@ function minipres($titre='', $corps="", $onload='')
 		$titre = ($titre == 'install')
 		  ?  _T('avis_espace_interdit')
 		  : $titre . '&nbsp;: '. _T('info_acces_interdit');
-		$corps = generer_form_ecrire('accueil', '','',_T('public:accueil_site'));
+		$corps = generer_form_ecrire('accueil', '','',
+						$GLOBALS['visiteur_session']['statut']?_T('public:accueil_site'):_T('public:lien_connecter')
+		);
 		spip_log($GLOBALS['visiteur_session']['nom'] . " $titre " . $_SERVER['REQUEST_URI']);
 	}
 
 	if (!_AJAX)
-		return install_debut_html($titre, $onload)
+		return install_debut_html($titre, $onload, $all_inline)
 		. $corps
 		. install_fin_html();
 	else {
 		include_spip('inc/headers');
+		include_spip('inc/actions');
 		$url = self('&',true);
 		foreach ($_POST as $v => $c)
 			$url = parametre_url($url, $v, $c, '&');
-		echo ajax_retour("<div>".$titre . redirige_formulaire($url)."</div>",false);
+		ajax_retour("<div>".$titre . redirige_formulaire($url)."</div>",false);
 	}
 }
 ?>

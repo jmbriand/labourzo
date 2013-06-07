@@ -8,6 +8,7 @@ if (!$connexion)
 
 if ( !mysql_select_db ($bbase, $connexion))
      { echo "Désolé, connexion à la base " . $bbase . " impossible\n" ; exit ; }
+mysql_set_charset('utf8', $connexion);
 return $connexion ;
 }
 

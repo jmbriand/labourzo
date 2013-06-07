@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // mise a jour des donnees si envoi via formulaire
 // http://doc.spip.org/@enregistre_modif_plugin
@@ -19,8 +19,13 @@ function enregistre_modif_plugin(){
   // recuperer les plugins dans l'ordre des $_POST
 	$test = array();
 	foreach(liste_plugin_files() as $file){
-	  $test['s'.substr(md5("statusplug_$file"),0,16)] = $file;
+	  $test['s'.substr(md5(_DIR_PLUGINS.$file),0,16)] = $file;
 	}
+	if (defined('_DIR_PLUGINS_SUPPL'))
+		foreach(liste_plugin_files(_DIR_PLUGINS_SUPPL) as $file){
+		  $test['s'.substr(md5(_DIR_PLUGINS_SUPPL.$file),0,16)] = $file;
+		}
+
 	$plugin=array();
 
 	foreach($_POST as $choix=>$val){
@@ -50,9 +55,9 @@ function enregistre_modif_plugin(){
 function action_activer_plugins_dist() {
 
 	$securiser_action = charger_fonction('securiser_action', 'inc');
-	$arg = $securiser_action();
+	$securiser_action();
 
-	if (!autoriser('configurer', 'plugins'))
+	if (!autoriser('configurer', '_plugins'))
 		die('erreur');
 	// forcer la maj des meta pour les cas de modif de numero de version base via phpmyadmin
 	lire_metas();

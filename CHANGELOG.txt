@@ -1,271 +1,680 @@
-2.0.9 -> 2.0.10 
-Revision: 14695 report de [14694]
-Revision: 14690 remplacement de la fonction ereg (obsolète à partir de php 5.3.0).
-Revision: 14680 correction inserer_attribut : support des tags fermés sans espace avant />
-Revision: 14678 Correction: les constantes {{{_INSTALL_USER_LDAP}}} et  {{{_INSTALL_PASS_LDAP}}} n'étaient jamais pris en compte à l'installation, et les messages signalant que l'étape courante a été franchie avec succès n'apparaissaient pas. Plus un Log oublié et un meilleur contrôle d'erreur.
-Revision: 14677 eviter les cookie enregistrant des forums vides, report de http://zone.spip.org/trac/spip-zone/changeset/32429
-Revision: 14676 [14673] avait introduit l'impossibilite de postdater avant publication, on retablit
-Revision: 14673 utiliser les api pour que les plugins puissent faire leur travail
-Revision: 14671 Heureusement que les utilisateurs de PHP complètent sa doc: la connexion LDAP cryptée sur un autre port que le 389 ne doit pas utiliser la fonction {{{ldap_start_tls}}}, mais utiliser l'écriture {{{ldaps://}}}{{serveur}}} comme premier argument de {{{ldap_connect}}}.
-Revision: 14670 Les bases externes ne pouvaient plus être déclarées car le paramètre {{{install}}} dans l'URL ne veut plus forcément dire qu'on est en train d'installer SPIP depuis le début depuis que ces déclarations de bases externes ne sont plus faites à l'installation initiale. Il faudrait terminer plus proprement la migration de ces scripts (Christian).
-Revision: 14669 eviter de faire des sql_delete a tout va sur un calcul de page (pour une meta qui ne sert a rien qui plus est) 
-Revision: 14668 report de [14666]
-Revision: 14663 report partiel mais suffisant de [14659]
-Revision: 14660 les messages d'erreur avant les input
-Revision: 14647 et les notes n'etaient pas echappees
-Revision: 14646 boucle infernale sur forum.spip.org, ou un article peut avoir qqs dizaines de milliers de forums ;-)
-Revision: 14645 La suppression de vignette de document ne marchait pas dans ce cas là : action pas comprise car avait un /$id_document en trop qui ne sert pas dans l'action
-Revision: 14640 Ce spip_log n'a plus de raison d'être il me semble
-Revision: 14635 reparer  <BOUCLE_art(ARTICLES){!id_mot IN (5,7)}>
-Revision: 14628 utiliser redbot.org comme interface de test des entetes : merci @karlpro
-Revision: 14626 permettre a un SSO de revenir sur le login avec un message d'erreur dans var_erreur
-Revision: 14622 La possibilité de surcharge des attributs à demander à LDAP, introduite par [14608], n'a pas de raison de se limiter à ce qui concerne la champ {{{login}}}, il faut pouvoir indiquer tous les champs à lui demander. Tant qu'à faire, on écrit un code prêt à recevoir cette indication via la déclaration faite à l'installation, mais pour l'instant ça ne sert pas encore, c'est toujours la globale qui est utilisée. Je reporte en stable pour que la globale introduite précédemment pour aider à résoudre [http://comments.gmane.org/gmane.comp.web.spip.user/149473 ce problème sur la liste spip-user] n'y perdure pas plus.
-Revision: 14614 Ok ([14605] et [14610]), pour chercher un mot dans plusieurs groupes, mais autant utiliser l'interface SPIP-SQL à fond, du moment qu'on sécurise en amont, sécurisation qui révèle une drôle de chose: si le mot est créé, c'est forcément dans le premier groupe donné. C'est bien l'intention ?
-Revision: 14612 gestion de la redirection lorsqu'on arrive sur le formulaire de login deja loge (ie retour d'une identification SSO) deleguer a traiter() le soin de calculer la redirection et appliquer eventuellement
-Revision: 14608 Plutôt que de dupliquer une fonction ([14601]), généraliser une fonction existante pour éviter que les éventuelles surcharges ne voient plus rien passer. Je profite de cette occasion d'intervention sur l'authentification LDAP pour passer en globale le tableau des noms des attributs potentiellement porteurs du login afin de répondre à [http://comments.gmane.org/gmane.comp.web.spip.user/149473 ce message de la liste spip-user], et reporte en stable pour qu'ils puissent résoudre leur problème. Mais revoir le formulaire de déclaration du LDAP pour y indiquer les correspondances entre champs du LDAP et champs de la table auteurs sera à faire tôt ou tard.
-Revision: 14605 accepter plusieurs groupes possibles de recherche de mots-cles (avec les remerciements du selecteur generique)
-Revision: 14599 La clause GROUP BY pléthorique de cette requête avait été introduite manuellement par [9841] au début du portage PG, alors que depuis c'est fait automatiquement dans le fichier reg/pg.php. Retour au GROUP BY simple, beaucoup plus performant en MYSQL, et qui évite à Oracle de râler car on ne peut y faire de GROUP BY sur un BLOB. / J'en profite pour resyncrhoniser les 2 branches 2.0 et 2.1 sur ce fichier, différenciées superficiellement par [14576].
-Revision: 14592 le bidule d'ajax de config_fonctions provoquait une erreur 'config_fonctions n'existe pas'
-Revision: 14589 réparer la conversion des urls en urls absolues dans les fichiers css compactés.
-Revision: 14572 Correction: retour du login automatique en fin d'installation, flingué par l'introduction du répertoire {{{auth/}}} par [13435].
-Revision: 14567 Autre rel='nofollow' en complément de [14270] sur les calendriers.
-Revision: 14566 Première revision: [14487] avait remplacé une erreur SQL par une autre
-Revision: 14561 report de [14560]
-Revision: 14558 support des formatx open xml de cro$oft : renommer docx en doc n'etait pas satisfaisant car les vieilles version de word se plantaient dessus, et par ailleurs il manquait toutes les declinaisons et les mime type
-Revision: 14551 mise au carre des mots : il en manquait
-Revision: 14550 mise au carre des controles sur les mots-cles -- report (adapte pour la branche 2.0) de [14549]
-Revision: 14521 Erreurs SQL en multi-serveurs, suite: [14492] corrigeait dans la branche dev pendant que [14484] et [14489] corrigeaient dans la branche stable. Avec ça, la stable est bien corrigée pour MySQL et PG, mais dans la dev il y a de toutes façons le chantier en cours de l'abstraction des erreurs SQL, c'est encore incomplet.
-Revision: 14519 report de [14504]
-Revision: 14517 permettre la modification du choix d'apparaître dans la liste des connectés au seul concerné.
-Revision: 14508 ne pas divulguer le login et pass a la base de donnees aux non webmestre qui n'y ont a priori pas acces
-Revision: 14499 suite de [14495] concernant postgre
-Revision: 14498 eviter une erreur fatale pour cause de double inclusion de url/propres via qs ou propres2
-Revision: 14497 ajout d'un define pour indiquer à partir de quel nombre de mots-clefs on abandonne la sélection dans une liste au profit d'une recherche.
-Revision: 14495 complement a sql_delete : renvoyer le nombre de lignes affectees ou false en cas d'erreur.
-Revision: 14491 report de [14452] sur l'unzip des pages distantes, qu'on a vu planter aussi sur spip.net
-Revision: 14490 Correction de charger_fonction: ne pas ajouter de tiret si le dossier est vide, comme cela avait été fait pour la version de dev inopinément en [13645] (Rasta).
-Revision: 14489 Correction de la correction de [14484]: la globale décrivant la connexion n'est pas encore entièrement définie à l'étape 3 de l'installation.
-Revision: 14488 envoyer la date (de publication) avec le statut dans le pipeline notification lorsque l'on institue
-Revision: 14487 petite erreur sql dans le pipeline premiere_revision ; report de http://zone.spip.org/trac/spip-zone/changeset/31517
-Revision: 14484 bug dans l'API sql_* : le mysql_error() est en effet lie a la derniere connexion ouverte, il faut donc passer systematiquement la variable serveur si on veut pouvoir parler a deux connexions en meme temps (sinon, seule la derniere connexion ouverte parle) ; cf. http://php.net/mysql_error j'imagine qu'il va falloir etendre aux autres portages
-Revision: 14483 Profiter de la table PHP des titres aussi dans les URL arbos (Rastapapoulos).
-Revision: 14482 [14481] sans le commentaire !
-Revision: 14481 En attendant mieux ? on remet le find_in_path() sur connect/$serveur.php qui permet le hack des boucles POUR et consœurs.
-Revision: 14479 Correction: lorsqu'une surcharge de l'installation comporte un appel à un serveur externe, SPIP redonnait le serveur principal.
-Revision: 14476 Correction de la pagination modifiée par [13993]#file0 car il fallait comprendre que l'index indéfini était volontaire, charge étant donnée au filtre de pagination de gérer cet indéfini. On évite de ballader cet indéfini en confiant cette gestion au code compilé, mais ça ne fait que cacher un peu mieux l'entorse signalée: pourquoi les modèles ne fournissent pas les paramètres d'URL si c'est cela qu'on veut ? Par ailleurs, amélioration de #ANCRE_PAGINATION, qui doit tenir compte d'une éventuelle surcharge de la balise #PAGINATION.
-Revision: 14471 choix des statuts pour le menu 'afficher les visiteurs' (#1802, paladin) ; a noter en branche dev le code n'a plus grand chose a voir
-Revision: 14470 suppression des repertoires .plat, report de [14041] et resoud #1819
-Revision: 14462 c'était bien une fausse bonne idée. retour à l'état antérieur.
-Revision: 14459 corrige l'affichage systématique (même si l'on n'est pas loggué) des parties conditionnelles de la balise [aff_cond (#URL_LOGOUT) aff_cond] (mais ça me semble plus une rustine qu'une réparation véritable...)
-Revision: 14451 suppression de flag_gz, remplace par une detection 'just in time' de la fonction , cf http://forum.spip.org/fr_216909.html pour la motivation
-Revision: 14445 Correction du filtre {{{form_hidden}}} qui injectait le contexte d'URL trop systématiquement (report de [14444]).
-Revision: 14442 Report de [14113] et de [13716] mais surtout de [13570] qui rend le #MENU_LANG propre pour le xhtml strict
-Revision: 14433 une erreur dans ce test qui n'ajoutait jamais les [] lorsque l'élément à passer était un array...
-Revision: 14413 Correction de l'appel à la version PostGres de listdbs.
-Revision: 14409 Correction de la conversion en un entier de l'argument de sql_quote dans le critère de comparaison: ce bug provoquait une tentative incompréhensible de se connecter à i, serveur nommé ''int'' (Aurélien).
-Revision: 14400 prevoir le cas ou minipres() est appele avant spip_initialisation_suite()
-Revision: 14399 Cas rare ou $liste=array() affichait Array (Thomas Sutton)
-Revision: 14394 [14393] en mieux.
-Revision: 14393 Lors de la publication d'un article sur une branche de rubriques mettre à jour toutes les dates de la branche.
-Revision: 14392 report de [14096] a la demande generale de rastapopoulos
-Revision: 14368 [14367] mais sans bug
-Revision: 14367 charger mes_fonctions avant d'appliquer la table des traitements sur la previsu (patfr, report de http://zone.spip.org/trac/spip-zone/changeset/30736 )
+SPIP-Core spip-3.0.8 -> spip-3.0.9  24 mai 2013
+-------------------------------------------------------------
+r20427 | kent1     |  (jeu. 18 avril 2013) | report de c20426Du texte en dur dans le privé qui se transforme en chaînes de langue.
+r20428 | b_b       |  (jeu. 18 avril 2013) | une accolade de trop dans r20427
+r20430 | kent1     |  (sam. 20 avril 2013) | les link opensearch ne sont pas des feeds, ils ne fournissent rien donc évitons de les récupérer
+r20432 | kent1     |  (sam. 20 avril 2013) | Petit refactoring avant dispartion de ce fichier
+r20435 | kent1     |  (sam. 20 avril 2013) | Report de c20434Fichier devenu non nécessaire depuis longtemps => déplacé dans le plugin sites
+r20441 | kent1     |  (mer. 24 avril 2013) | Report de c20440On concatène les deux js obligatoires du login en 1 que l'on minifie pour éviter deux requètes
+r20443 | b_b       |  (jeu. 25 avril 2013) | report de r20442 / retour sur r18418 : SPIP 3 premium, le SPIP qui vous permet d'utiliser plus de 100 plugins !
+r20452 | marcimat  |  (sam. 27 avril 2013) | Report de r20451 : Proposer la clé 'texte_definir_comme_traduction_objet' dans la déclaration de l'objet éditorial pour définir la chaîne «Ce X est une traduction du X numéro :» qui pour l'instant s'affichait systématiquement avec le texte 'article' erroné. On mappe pour les articles la chaîne de langue déjà existante.Ainsi «tradrub» ou d'autres plugins ayant des objets éditoriaux avec traductions peuvent définir les bons textes (fa_b, denisb)
+r20456 | cedric    |  (dim. 28 avril 2013) | chargement non bloquant en utilisant getScript
+r20457 | cedric    |  (dim. 28 avril 2013) | Chargement non bloquant (utiliser getScript qui est asynchrone)
+r20458 | denisb    |  (lun. 29 avril 2013) | abstract_sql.php : report de r20438 (esj). éviter quelques logs d'erreur.
+r20460 | denisb    |  (lun. 29 avril 2013) | debusquer.php : évitons d'interpréter les critères de boucle<pre>(comme par exemple  : {"<br />"} )</pre>
+r20467 | cedric    |  (mer. 01 mai 2013) | quand on cree un objet, prendre le premier statut declare si dispo, sinon prepa (plus generique)
+r20468 | cedric    |  (ven. 03 mai 2013) | Optimiser #PRODUIRE :- on ne reecrit le fichier que quand il change effectivement en passant par un fichier intermediaire .last (evite le renouvellement inutile des timestamp, qui produisent des feuilles compilees inutilement)- quand on reecrit le fichier il faut appeler clearstatcache() sur ce fichier, sinon PHP ressert le vieux timestamp jusqu'a la fin du hit, et il faut recharger 2 fois la page pour avoir la mise a jour(realet,ne0futur)
+r20476 | cedric    |  (ven. 03 mai 2013) | Ferme #2960 : comparer le nom du cookie avant remplacement du prefixe pour determiner httponly
+r20477 | cedric    |  (ven. 03 mai 2013) | ferme #2877 : r19544 avait mal interprete le test sur le define, qui sert a interdire l'utilisation de CONVERT ou PBM, pas a l'autoriser
+r20478 | cedric    |  (ven. 03 mai 2013) | Ferme #2912 : ne pas casser un critere {annee=2013} sur une table avec un champ année+ notice PHP potentielle
+r20479 | rasta     |  (ven. 03 mai 2013) | L'icône d'un objet peut avoir été déclarée explicitement, donc c'est cette info qu'on utilise.
+r20481 | cedric    |  (ven. 03 mai 2013) | Ferme #2953 : puce dans le plan de site
+r20482 | cedric    |  (ven. 03 mai 2013) | Ferme #2949. Report de r20232 r20233 r20235 r20236 : support de IF NOT EXISTS en fonction de la bonne version de SQLite
+r20484 | denisb    |  (lun. 06 mai 2013) | chercher_rubrique.php : accessibilité ; ajouter un alt explicite sur la loupe qui affiche la liste des rubriques ; ajout de la chaîne de langue correspondante (résout #2990).
+r20486 | fil       |  (lun. 06 mai 2013) | profiler les boucles dans tmp/profiler.log si leur temps de calcul depasse un certain seuil (a fixer avec define('_BOUCLE_PROFILER', 5000); par exemple pour 5 secondes).report de http://zone.spip.org/trac/spip-zone/changeset/72578
+r20488 | fil       |  (lun. 06 mai 2013) | report de [20483] : si un login n'existe pas, plutot que de piocher les infos sur un autre login (au risque de fournir la photo d'un auteur sans lien lorsqu'on se trompe dans son email), inventer une reponse credible a base de secret_du_site(), de la date du jour, et du login
+r20489 | fil       |  (lun. 06 mai 2013) | ajouter un debug utile dans log/mysql-slow.log ; avec {{{define('_DEBUG_SLOW_QUERIES', true);}}} dans mes_optionsreport de [20487]
+r20490 | denisb    |  (mar. 07 mai 2013) | suite de r20484 : soyons plus générique, le sélecteur peut servir pour autre chose que des rubriques.
+r20494 | cedric    |  (mar. 07 mai 2013) | Articles virtuels : faire une redirection propre via la fonction redirige_par_entetes(), qui explicite le status 302 par defaut (il etait indetermine dans le code precedent).La constante _STATUS_REDIRECTION_VIRTUEL permet par ailleurs de personaliser ce status en le passant en 301 systématique par exemple.
+r20495 | denisb    |  (mar. 07 mai 2013) | inc/actions.php : Le paramètre optionnel "public", forçant la construction d'URL dans l'espace public, apparu dans generer_action_auteur lors de r12798 et r13014, doit être aussi proposé dans la redirige_action_auteur qui appelle celle-ci, autrement ça oblige à la réécrire à chaque fois.. report de r20462 (esj)
+r20497 | denisb    |  (mar. 07 mai 2013) | inc/actions.php : oupsss. report du oupsss  r20463 (esj)
+r20499 | b_b       |  (mer. 08 mai 2013) | report de r20498 : icône cfg en 24px, ferme #2992
+r20509 | cedric    |  (sam. 11 mai 2013) | ferme #2913 : zone clicable sur l'icone "Modifier ce.." lorsque la configuration des urls est activée
+r20512 | cedric    |  (sam. 11 mai 2013) | Ferme #2910 : quand l'url courante est profonde (url arbo) les redirections relatives étaient ambigues.Il se trouve que le Location était "souvent" bien interprété sur les forums mais c'était un coup de chance et foirait dans d'autres cas. Le lien http fournit dans le HTML était lui toujours mal interprété.On lève l'ambiguité en transformant en url absolue dès que la profondeur courante est supérieure à la normale et que l'url de redirection est relative. Il faudrait généraliser ce passage en absolu en branche 3.1
+r20515 | cedric    |  (dim. 12 mai 2013) | chaine de langue manquante sur l'upgrade des plugins
+r20516 | cedric    |  (dim. 12 mai 2013) | Ferme #2948 : quand une rubrique est selectionnée, il faut l'afficher dans le select, même si on a pas le droit d'y déplacer un article
+r20518 | denisb    |  (dim. 12 mai 2013) | typographie/fr.php : ne pas ajouter d'insécable devant : si ce : est suivi de : (cas des adresses ipv6). résout #2931
+r20519 | cedric    |  (dim. 12 mai 2013) | Ferme #2804 : les post AJAX sur un site iso-truc sont présumés en utf et importés dans le charset local par _request(). Mais ce n'est pas forcément le cas et le test de la preg n'est pas fiable, ce qui supprime des accents bien encodés a tort. On complète le test par un is_utf8() plus fiable ce qui résoud mon cas test sur edition d'un document, titre : "titre avé un accent"A noter que le bug n'était pas systématique sur un même site (certains post passant sans problème, d'autres non). Cela peut venir du type de formulaire qui est posté parfois par une iframe en cas d'upload.
+r20520 | cedric    |  (lun. 13 mai 2013) | #2999 et http://forum.spip.net/fr_247990.html : liste plus exhaustive et complete des UA des bots, car ceux qu'on laisse passer faussent les stats (surestimées)  Source : commentaires en bas de http://wanderr.com/jay/detect-crawlers-with-php-faster/2009/04/08/ (version optimisée/factorée, on ne garde que les UA qui ne matchent pas les mots-clés génériques en début de liste)
+r20521 | cedric    |  (lun. 13 mai 2013) | et incrémenter l'écran
+r20522 | ben       |  (mar. 14 mai 2013) |  ferme #3003
+r20523 | cedric    |  (mar. 14 mai 2013) | #2999 : la definition de _IS_BOT par le core est un fall-back si l'ecran de securite n'a pas ete appelé. C'est la definition de l'ecran, plus a jour, qui est prioritaire.
+r20525 | denisb    |  (ven. 17 mai 2013) | prive/formulaires/login.html : ajout de la variable lang dans le lien vers le formulaire de rappel du mot de passe. ferme #3005
+r20529 | denisb    |  (ven. 17 mai 2013) | prive/spip_pass.html : report de r20528 (suite de r20526)
+r20531 | denisb    |  (sam. 18 mai 2013) | prive/squelettes/inclure/head.html : report de r20530 - ne pas casser l'affichage du plan de site dans le privé.
+r20534 | cedric    |  (lun. 20 mai 2013) | Ferme #3002 : lorsque la table des rubriques est mal formée et contient une branche morte ou une reference circulaire dans les parents, la fonction propager_les_secteurs() tourne en boucle infinie.Correction :- proteger de ce risque par un maxiter initialisé par le nombre de rubriques de la table- revoir l'algo de mise a jour en procedant de proche en proche, par profondeur croissante et non pas "tant qu'il y a une rubrique mal rangee".Cela permet de plus de detecter le cas d'une table rubrique mal formee et de produire un log en consequence
+r20535 | cedric    |  (mar. 21 mai 2013) | complement a r20534 : optimiser les updates en les faisant par groupe de rubriques de meme secteur poser un id_secteur=0 sur toutes les rubriques hors hierarchie si il y en a (references circulaires, parents qui n'existent plus)
+r20536 | cedric    |  (mar. 21 mai 2013) | Ferme #3004 : se proteger des references circulaires dans la table des rubriques dans la boucle HIERARCHIEPlutot qu'un code specifique, on utilise la fonction generique calcul_hierarchie_in() que l'on modifie pour tenir compte de ce cas limite. Pour etre homogene, on inverse l'ordre des rubriques qu'elle renvoie.
+r20538 | ben       |  (mar. 21 mai 2013) | Langues (pre 3.0.9)
+r20539 | ben       |  (mar. 21 mai 2013) | preparation SPIP 3.0.9
+r20540 | cedric    |  (mer. 22 mai 2013) | Inscription d'un auteur : le commentaire dit "Si mode inconnu laisser faire, c'est une extension non std", mais passer quand meme par une autorisation, qui par défaut sera a false (puisque l'auteur est non connu, donc non identifié, il n'a aucun droit par defaut).Il suffit que autoriser("inscrireauteur","xxx") renvoie true pour permettre l'inscription d'un auteur avec le statut xxx
+r20544 | cedric    |  (mer. 22 mai 2013) | Revert de r20389 car TIMESTAMPDIFF pas supporte par Mysql 4.x, on garde l'optimisation dans la branche 3.1
+r20545 | cedric    |  (mer. 22 mai 2013) | si on utilise un plugin avec 'use strict mode;' $.ajax plante dedans car .caller n'est pas disponible. Proteger avec un try.catch
+r20547 | marcimat  |  (mer. 22 mai 2013) | Report de r20546 : La fonction «concat» de sql peut avoir plus de 2 arguments. Indiquons cela aussi à SQLite.
+r20562 | cedric    |  (ven. 24 mai 2013) | Report adapté de r20552, r20555 et r20560 : deleguer dans tous les cas l'autorisation de s'inscrire à autoriser("inscrireauteur",$mode,$id), Mais si aucun mode n'est fourni sur le #FORMULAIRE_INSCRIPTION, on choisit le meilleur possible parmi 1comite ou 6forum.
+r20568 | ben       |  (ven. 24 mai 2013) | report de lang
 
-2.0.8 -> 2.0.9 : changelog passé à la trappe 
-
-2.0.7 -> 2.0.8 (11 mai 2009)
-Revision: 13974 generer_action_auteur necessite au moins 2 arguments (eric)
-Revision: 13972 améliorations du débusqueur (report de [13917], [13941] et[13944] ) 
-Revision: 13971 ne pas confondre le parent de l'id que l'on demande a #EXPOSE avec le parent du principal qui lui est extrait du contexte de reference. Le premier est passe en parametre mais ne sert en fait a rien, le second doit du coup etre trouve par une requete sql. La confusion entrainait des trous dans la liste des objets a exposer si au premier calcul le parent n'etait pas le meme (tetue)
-Revision: 13970  mise à jour de jquery.form.js pour éviter un bug sur IE8 et les formulaires ajax. ([13955], [13966] et [13967])
-Revision: 13963 l'ecriture du tag en sortie des filtres images echouait si l'url initiale contenait des &. Un patch qui ne restera pas dans les annales mais fonctionne dans le cas des documents proteges
-Revision: 13962 copie_locale renvoie toujours un chemin relatif a la racine, pas au repertoire courant (cas des documents proteges)
-Revision: 13961 les filtres image appliques sur les images protegees par spip.php?action=acceder_document provoquent un appel a taille_image qui commet l'erreur de tronquer la chaine de get avant de faire copie_locale, et d'essayer vainement de copier spip.php en local. Si par malheur, la page d'accueil servie par spip.php dans ce cas contient une ou plusieurs images protegees retraitees, la boucle et bouclee, et le serveur par terre. Probablement donc, une cause serieuse de saturation serveur pour les utilisateurs du plugin acces_restreint
-Revision: 13959 Validité XHTML Un petit complément à [13957] pour parfaire la validité (Eric) 
-Revision: 13954 Import des sauvegardes partielles: si le document est déjà distant, ne pas ajouter le _DIR_IMG local, ça ne rime à rien. Par ailleurs, pas d'état d'âme avec les vieilles tables: on ne peut insérer que des sauvegardes partielles de même constitution que la base d'accueil.
-Revision: 13952 report de [13950] date en nepalais
-Revision: 13951 correction du passage de langue dans les formulaires CVT : un formulaire dans un article différent de la langue du site (<formulaire|toto>) n'avait pas les bonnes traductions des fonctions _T() dans les fonctions verifier() et traiter(). (cerdic)
-Revision: 13946 Correction de [13939]: se protéger du bloc de compatibilité des url_propres que le nouveau form_hidden interprète de travers: autant ne pas passer par generer_url_entite si on a déjà le paramètre page, typiquement dans le cas du formulaire de recherche std (Eric).
-Revision: 13943 Correction de l'erreur de syntaxe PHP du code compilé lorsque le critère {{{par}}} contient un appel de fonction SQL. Un peu à l'arrach', mais ça permet déjà de retrouver la compatibilité avec ce que savait faire la 1.9 (Mathieu). Test {{{<ul><BOUCLE_t(RUBRIQUES){tout} {par SUBSTRING_INDEX(titre,".",-1)}> <li>#TITRE</li></BOUCLE_t></ul>}}}
-Revision: 13942 Prendre en compte un nom et un mot de passe dans une URL de page distante à récupérer (Stéphane)
-Revision: 13940 Dans le squelette des pétitions, il faut afficher le moteur de recherche s'il vient d'y avoir une recherche, le nombre de signatures est faussement réduit dans ce cas. Et en profiter pour faire du XHTML strict.
-Revision: 13939 Compatibilité du filtre {{{form_hidden}}} avec les URL symboliques: il faut qu'il demande à generer_url_entite de lui fabriquer le contexte comme pour l'assemblage de la page.  La modif de urls/page.php n'était finalement pas indispensable, mais éviter de resynthètiser les 3 RegExp à chaque appel ne fait pas de mal.
-Revision: 13938 le pipeline "styliser" n'était pas déclaré dans la stable !
-Revision: 13936 permettre que le titre d'un document ait une extension differente de celle du fichier d'origine pour que le telechargement se fasse sous un nom&type different de celui sous lequel le fichier est heberge sur le serveur (ex envoyer en .php un fichier stocke en .txt pour raison de securite).
-Revision: 13931 etre un peu plus strict dans la verification du titre du document avant de s'en servir comme nom de fichier : - il faut qu'il ait la bonne extension - il faut qu'il ressemble a un nom de fichier (en particulier compose de caracteres licites) ( [13933] aussi) 
-Revision: 13930 retablir un content-type indument supprime par [13924]
-Revision: 13928 double echappement provoquait la mort definitive des sites suspendus : ils devenaient {{{'su}}} au lieu de {{{sus}}}
-Revision: 13927 Ce n'est pas parce que certains systèmes d'exploitation que je ne nommerai pas pataugent avec certains noms de fichiers qu'il faut considérer [11243] comme une {{fausse bonne idée}} comme le dit [13760]. Je filtre le cas du titre de document n'ayant pas d'extension qui ne doit en effet pas être utilisé comme nom de fichier du {{{Content-Disposition}}} (et encore, {{{Makefile}}} est notoirement recevable), mais autrement je restaure le comportement d'avant qui est une fausse {{fausse bonne idée}}}, autrement dit une vraie bonné idée. Par contrecoup, report du renforcement de sécurité su secret du site [13866] dans la branche 2.0.
-Revision: 13924 seuls les types de document qui ne peuvent etre inclus doivent etre envoyes en "Content-Disposition : attachment". Les clip flash et autre types embed n'etais pas visualisable lorsque la protection des documents etait activee
-Revision: 13912 #1744 memoriser le bouton sumblit clique ou le x/y du bouton image clique quand on post un formulaire en ajax pour pouvoir les poster si jamais on resubmit en post classique suite a une demande du serveur refuser_traiter_formulaire_ajax()
-Revision: 13911 enlever la securite dans le message_ok au retour des formulaires, car sinon il n'est pas possible de faire la redirection apres un post ajax dans l'espace prive
-Revision: 13909 permettre au filtre |match de retourner la valeur 0 (zero) si elle est explicitement recherchee
-Revision: 13908 #1732 : bug a la verification lors de la creation d'un auteur ( plus [13910]) 
-Revision: 13905 #1687 : ne pas perturber le filtre unique avec #INTRODUCTION
-Revision: 13901 corriger la recuperation d'arguments passes en url et le faux appel de syndic.html
-Revision: 13898 Oups. Faux départ de AS U ! (mea culpa) 
-Revision: 13897 Les URLs ne se recalculaient pas dans un cas précis : changement de la casse sur une table insensible à la casse. Pour éviter cela, on réécrit aussi, en plus de la date de mise à jour de l'url son titre. Si la casse change, il sera ainsi pris en compte. Correction aussi d'un bug U.type inexistant sur les url arborescentes...
-Revision: 13893 [12134] avait casse la relance des signatures en recalculant un hash au lieu de renvoyer l'existant
-Revision: 13892 amelioration de la strategie de purge : - si le cache est trop gros on redemande la main - mais si il n'y a plus assez de vieux fichiers a purger, on la rend Ainsi, meme avec un reglage trop bas du quota, le cache se stabilisera autour du volume necessaire pour stocker une heure de traffic 
-Revision: 13889 ne pas laisser le cache deborder lorsque les robots (ou les internautes) sont tres actifs - inc/invalideur renvoie le ratio taille cache/quota - le genie redemande la main lorsque le ratio est trop grand, sans attendre le prochain coup - les operations de vidange sont logees dans invalideur.log avec les details permettant de suivre les operations 
-
-2.0.6 -> 2.0.7 (13 avril 2009)
-
-Revision: 13887 Le datage des urls reecrites echouait pour cause de requette eronnee. Le suspens continue : y aura-t-il une version stable 2.0.x avec des urls reecrites non bugguees ?
-Revision: 13882 patch de vincent ramos pour #1703 + report des trucs modernes de inc/rechercher dans la branche 2.0
-Revision: 13881 pas de . en dehors de celui separant l'extension, sinon il est possible d'injecter du php dans un toto.php.txt, qu'apache peut vouloir traiter comme un .php normal (attaque dite 'de vlad' )
-Revision: 13880 session_set() lorsqu'on renseigne son email (suite de [13878])
-Revision: 13879 report [13878] afficher l'email de l'auteur connecte si on le connait (session)
-Revision: 13877 report et nettoyage de ecrire_fichier_securise()
-Revision: 13876 report de ecrire_fichier_securise [13867] pour mieux masquer le contenu de tmp/meta_cache.txt(.php) en cas d'ouverture inopinee de tmp/ aux regards curieux
-Revision: 13873 retour de la pagination dans le controle des petitions (bug introduit en [13320])
-Revision: 13872 Report de [13868] corrigeant l'aléa ancien.
-Revision: 13870 revert de [13846] qui casse le fonctionnement de la pagination AJAX
-Revision: 13865 il faut securiser les appels à propre et typo hors squelette (typiquement code php de l'espace privé), mais dans les squelettes, la sécurisation est intégrée, et il ne faut pas en rajouter. On utilise donc la presence du parametre connect pour distinguer les appels des squelettes qui le comportent tous, des appels historiques hors squelettes qui ne le mentionnent jamais. Corrolairement, en cas d'appel hors squelette avec un parametre connect, il convient d'appeler en plus interdire_script
-Revision: 13862 Nouvelle méthode pour l'authentification LDAP, qui devrait résoudre le bug dans certaines config d'Active Directory. Géraud Tardif remarque qu'il est idiot de risquer des bugs avec des champs absents pour trouver le login, puisqu'on l'a déjà. Il vaut donc mieux se rabattre sur lui, mais on modifie les signatures des fonctions auxilaires pour qu'il soit facile de surcharger {{{auth_ldap}}} de sorte qu'on réclame des champs supplémentaires et qu'on en tienne compte.
-Revision: 13859 Ignorer les lignes vides dans les CSV lorsque transformés en table HTML à la volée (Cyril).
-Revision: 13858 Ne pas utiliser intval quand on fabrique une requête SQL, celui-ci ayant des grands entiers en standard, contrairement à PHP (Camille). Vu son logo on aurait dû se méfier: un PHP, ça tronque énormément.
-Revision: 13857 Les distributions RedHat, Fedora et CentOS ont maintenant une installation d'Apache par défaut qui font que le AllowOverride est à None par défaut, avec comme conséquence que les {{{deny from all}}} installés par SPIP ne sont plus effectifs sur ces distributions non modifiées. En conséquence, report immédiat dans la branche stable de [13608], qui n'écrit plus dans tmp la valeur des aleas, qui sont des informations trop sensibles. A signaler à propos des aléas que l'alea_ancien n'est pas pris en compte pour les actions dont l'URL comporte ecrire/, il faut renoncer à ces URLs. Enfin, il faudrait insister dans la doc sur le fait que tmp/ et config/ doivent être interdits à la lecture publique, idéalement en les mettant à l'extérieur du DocumentRoot.
-Revision: 13856 Bug de puce 'meme-rubrique" des sites references
-Revision: 13853 un flag manquant pour preciser que l'on est dans l'espace prive
-Revision: 13852 pas d'exe´cution en public non plus !
-Revision: 13850 il est temps de suivre la prévision des oracles proteger l'espace privé, donc...
-Revision: 13848 eviter le die intempestif "spip_urls AS U insertion sans description" lors de la creation de nouvelles urls ... (bug introduit au detour de http://zone.spip.org/trac/spip/changeset/13838#file22)
-Revision: 13846 indentation + meilleure verification sr onAjaxLoad(), pour compat crayons++
-Revision: 13845 enieme correction des urls ... je vais peut-etre finir par y arriver
-Revision: 13844 report oublie de [13765] qui reparait les urls arbo avec types renommes
-Revision: 13843 permettre a la previsu de savoir ou elle se trouve (cf. http://www.spip-blog.net/forum-spip-org-comme-base-de.html )
-Revision: 13841 log plus explicite
-Revision: 13839 erreur sql sur date
-Revision: 13838 NOW() disparait au profit de la date php (a verifier svp)
-Revision: 13836 la date d'un article c'est celle du php, pas celle du SQL
+SPIP-plugins-dist spip-3.0.8 -> spip-3.0.9  24 mai 2013
+-------------------------------------------------------------
+r72198 | kent1     |  (sam. 20 avril 2013) | report de z72197Permettre à un plugin utilisant les révisions à spécifier les labels des champs sous révision via un nouveau pipeline "revisions_chercher_label"La valeur par défaut sera toujours la même qu'auparavantVersion 1.7.4
+r72205 | kent1     |  (sam. 20 avril 2013) | Report de z72204Déplacement du fichier depuis le core, il n'est utile que via ce plugin
+r72287 | suske     |  (mer. 24 avril 2013) | Aérer la navigation dans la thickbox (permet d'avoir plus de 100 images). Ferme http://core.spip.org/issues/2983 . Report de r72286
+r72335 | kent1     |  (jeu. 25 avril 2013) | Report de z72334Ajout de la prise en compte de l'extension ".tar"Version 2.7.45Version de schéma 1.2.4
+r72422 | cedric    |  (lun. 29 avril 2013) | eviter un notice/warning
+r72555 | cedric    |  (ven. 03 mai 2013) | Ferme http://core.spip.org/issues/2955 : certains criteres ne se compilent pas bien {logo}, {recherche}... les ajouters aux exceptions+ utiliser #CHAMP_SQL{} systématiquement pour eviter homonymie malheureuse
+r72557 | cedric    |  (ven. 03 mai 2013) | Ferme #2912 : ne pas casser un critere {annee=2013} sur une table avec un champ année
+r72562 | cedric    |  (ven. 03 mai 2013) | clear_stat_cache pour que le timestamp soit a jour dans la page construite dans ce hit
+r72609 | denisb    |  (mar. 07 mai 2013) | signature.html : permettre aux pétitions de bénéficier d'un permalink pour s'y retrouver malgré les paginations
+r72715 | cedric    |  (ven. 10 mai 2013) | Lisibilité et ergo des statistiques (Tetue)- echelle axe des Y à droite (près des mesures les plus récentes)- legende en dessous des graphes, en ligne- Titre en fer a gauche, regroupé avec les actions de pagination- graphe des mois depuis l'origine du site par defaut (graphe des jours inchangé sur 90jours)- axe des X : date humainement lisible (15 janvier au lieu de 15/01/2013)- eviter les effets de gradients sur les barres ça gene le lisibilité. On met en plein avec une très légere transparence pour ne presque pas distinguer border et background- le gris des weekend était a peine visible sur certains ecrans, on le fonce- la barre des changement d'année est de largeur 1 mois sur le graphe des mois- ne pas masquer l'explication car elle n'est pas visible- hierarchie de l'info dans le tableau des résumésUn peu de refactoring js en utilisant closest('.graphique') au lieu d'enchainer les .parent() qui rendent le code peu robuste
+r72716 | cedric    |  (ven. 10 mai 2013) | Lisibilité et ergo des statistiques- page des referers : reduire la largeur de la colonne gauche pour eviter cette impression de texte centré  (Tetue)- mettre la miniature en float:right, et reduire sa taille
+r72717 | cedric    |  (ven. 10 mai 2013) | Lisibilité et ergo des statistiques : reparer l'affichage de la repartition par rubrique qui etait tout cassé car construit avec des table dans des tables dans des tables... heritant toutes des styles par defaut (Tetue)
+r72733 | cedric    |  (sam. 11 mai 2013) | http://core.spip.org/issues/2889 :Certaines dates de flux ont formatees dans la langue du flux et non en anglais. On essaye de remplacer le nom des mois par le nom anglais pour interpreter la dateCertaines dates finissent par UT au lieu de UTC qui bloque la conversion par strtotime, on corrige si necessaireQuand on a pas reussi a lire la date, il faut forcer a la date du jour et pas laisser 1970
+r72744 | cedric    |  (sam. 11 mai 2013) | Reparer la largeur totale de la barre dans les sous rubriques : elle reprend la largeur correspondant au nombre de visites de la branche parente+ ajustements de style sur la page
+r72763 | cedric    |  (dim. 12 mai 2013) | mise a jour de la librairie Minify_HTML
+r72767 | cedric    |  (dim. 12 mai 2013) | Ferme https://core.spip.org/issues/2787 : la librairie Minify_HTML note en TODO qu'elle doit prendre en compte les attributs avec multiples retour ligne. En attendant une solution générale, on echappe les <input> pour ne pas fausser ce qui est posté en hidden lors de la previsu
+r72774 | denisb    |  (dim. 12 mai 2013) | textwheel : ne pas ajouter d'insécable devant : si ce : est suivi de : (cas des adresses ipv6).
+r72909 | kent1     |  (mar. 21 mai 2013) | Indentation
+r72917 | cedric    |  (mar. 21 mai 2013) | http://core.spip.org/issues/3004 : se proteger des references circulaires dans les rubriques lorsqu'on stylise (et on protege avec une profondeur maxi de 10000 dans tous les cas)
+r72918 | cedric    |  (mar. 21 mai 2013) | nettoyer_raccourcis_typo() supprime les raccourcis d'ancres
+r72925 | ben       |  (mar. 21 mai 2013) | Langues (pre 3.0.9)
+r72967 | b_b       |  (jeu. 23 mai 2013) | report de r72966 : déjà retrouve ses accents
+r72978 | cedric    |  (ven. 24 mai 2013) | Comme pour apple-touch-icon, pousser dans le cache stocké au format texte du binaire issu d'un fichier image est perilleux et casse parfois. On remplace par un readfile PHP.
+r72982 | cedric    |  (ven. 24 mai 2013) | Report adapté de r20552, r20555 et r20560 : deleguer dans tous les cas l'autorisation de s'inscrire à autoriser("inscrireauteur",$mode,$id), Mais si aucun mode n'est fourni sur le #FORMULAIRE_INSCRIPTION, on choisit le meilleur possible parmi 1comite ou 6forum.Complément à http://core.spip.org/projects/spip/repository/revisions/20562
+r72983 | cedric    |  (ven. 24 mai 2013) | oups erreur dans r72982, je revert a la version precedente
+r72987 | ben       |  (ven. 24 mai 2013) | report de lang
 
 
-2.0.5 -> 2.0.6 (16 mars 2009)
+SPIP-Core spip-3.0.7 -> spip-3.0.8  17 avril 2013
+-------------------------------------------------------------
+r20355 | cedric    |  (sam. 23 mars 2013)  | 1sReport oublie et tardif de r15574 : nettoyer_uri() cache son resultat dans une static. On introduit un argument permettant de la reseter a une valeur fournieurl_de_base() cache son resultat dans un tableau static, indexe en fonction de la globale profondeur_url :on introduit un argument  qui permet :- en passant une valeur entiere, de calculer l'url pour cette profondeur- en passant un array(), de reinitialiser la static en cache a cette valeur- en passant false, de recuperer la staticsi aucune valeur n'est fournie, c'est la globale profondeur_url qui est utilisee, comme auparavant.Ces deux modifications permettent de sauvegarder/restaurer le contexte de l'url dans laquelle une page est calculee (pour un calcul differe)+ PHPDoc sur les deux fonctions
+r20359 | suske     |  (mer. 27 mars 2013)  | report de 20358 - le rédac ne peut plus mettre une redirection quand l'article est publié
+r20361 | suske     |  (mer. 27 mars 2013)  | report de 20360
+r20363 | suske     |  (mer. 27 mars 2013)  | report de 20362 - pfff
+r20365 | b_b       |  (mer. 27 mars 2013)  | report de r20364 : indentation
+r20367 | guytarr   |  (mer. 27 mars 2013)  | report de r20366 (chankalan)
+r20369 | kent1     |  (mer. 27 mars 2013)  | report de r20368On met à jour, on n'installe pas si on a déjà une meta du même nomC'est un peu moins ambigue du genre "Installation réussie" pour un plugin qui est là depuis 2 ans alors qu'il est juste mis à jour
+r20378 | cedric    |  (ven. 29 mars 2013)  | optimisation des ecritures disque : pour les bots on utilise tous les caches disponibles même si périmés, et quand il faut calculer un cache on ne l'écrit pas sur le disque (cela évite de générer un flux d'écriture pour des caches qui ne servent pas aux vrais visiteurs, et cela évite aussi de faire gonfler les caches de manière deraisonable)
+r20388 | cedric    |  (ven. 29 mars 2013)  | Suport SQLite de la fonction mysql TIMESTAMPDIFFhttps://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_timestampdiff
+r20389 | cedric    |  (ven. 29 mars 2013)  | Optimisation du critere {age} : utiliser la fonction SQL TIMESTAMPDIFF plutot qu'une expression compliquee. On doit pouvoir optimiser aussi les xxx_relatifs mais c'est à creuser
+r20390 | marcimat  |  (ven. 29 mars 2013)  | Autoriser `#_contenu_article:LESAUTEURS` lorsqu'on demande les auteurs d'une boucle parente.
+r20392 | kent1     |  (ven. 29 mars 2013)  | On est en 3.0.7 maintenantDéclaration du pipeline traduire appelé dans le formulaire prive/traduire.php (http://core.spip.org/projects/spip/repository/entry/branches/spip-3.0/prive/formulaires/traduire.php#L73)Du coup encore une raison de logguer moins ;)
+r20397 | denisb    |  (lun. 01 avril 2013) | debusquer.php : ôter le tableau des erreurs par un clic sur sa barre de titre. résout #2968.
+r20400 | cedric    |  (mar. 02 avril 2013) | simplification de jour_relatif : la fonction SQL TO_DAYS donne exactement le bon resultat, inutile d'y ajouter un calcul basé sur le mois et l'année qui donne un résultat approximatif dès que les dates sont à cheval sur des mois différents.
+r20401 | denisb    |  (mer. 03 avril 2013) | debusquer.php : cosmétique (apparition du 'toogle-bug') ; r20397 cassait la navigation du var_profile : on répare.
+r20402 | denisb    |  (mer. 03 avril 2013) | tracer.php, spip_admin.css : suite (indispensable) de r20401.
+r20404 | denisb    |  (jeu. 04 avril 2013) | debusquer.php :- on revient sur l'utilisation de jQuery qui n'est pas toujours fonctionnelle.- highlight_string ne pose plus de tags obsolètes en PHP5.- un peu de cosmétique.
+r20406 | denisb    |  (lun. 08 avril 2013) | ecrire/inc/filtres.php : on ajoute subrepticement un troisième argument à la fonction appliquer_filtre. si ce troisième argument est fourni et que la fonction ne trouve pas le filtre demandé, elle renvoit quand même la balise non filtrée.si ce troisième argument n'est pas fourni (par défaut) et que la fonction ne trouve pas le filtre demandé, elle ne renvoit rien (compatibilité avec l'utilisation actuelle).
+r20408 | b_b       |  (mar. 09 avril 2013) | report des commentaires de r20243
+r20410 | marcimat  |  (mar. 09 avril 2013) | Coquille dans r18955 : créer un index nécessite le mot clé 'INDEX', pas seulement 'ADD'.
+r20416 | suske     |  (dim. 14 avril 2013) | report de 18952 - il y a environ un an: Pouvoir appeler la fonction Bouton_spip_rss en lui précisant l'info-bulle
+r20419 | ben       |  (mer. 17 avril 2013) | report de langues Pre 3.0.8
 
-Revision: 13834 report http://trac.rezo.net/trac/spip/changeset/13833 ajout d'un index sur spip_documents_liens
-Revision: 13830 passer l'id_auteur et l'id_article au squelette du forumlaire ecrire_auteur l'id etait calculé mais pas passé, on l'ajoute donc aussi
-Revision: 13828 report de http://trac.rezo.net/trac/spip/changeset/13827 redirections anciennes urls
-Revision: 13826 report discret de exec=fond introduit dans http://trac.rezo.net/trac/spip/changeset/13800 afin de pouvoir utiliser un meme plugin en version stable et dev etant un ajout de fonctionnalité, cela ne devrait pas poser de problème...
-Revision: 13824 report de http://trac.rezo.net/trac/spip/changeset/13822 et http://trac.rezo.net/trac/spip/changeset/13823 -- correction erreur 404 sur les urls de type spip.php  
-Revision: 13820 donner une PRIMARY KEY quand il n'y a rien (VIEW MySQL)
-Revision: 13818 toujours proteger les file_exists()
-Revision: 13812 ajout discret du pipeline styliser pour le futur 2.0.6, afin que les plugins comme SPIP Clear puissent s'appuyer dessus sans surcharger le fichier.
-Revision: 13809 coquille css (pi_r)
-Revision: 13808 Report de http://trac.rezo.net/trac/spip/changeset/13807 -- ne pas empecher le changement de mode image/document sur les images de rubriques... 
-Revision: 13801 manque de quotes (denisb)
-Revision: 13798 un lien du type {{{ [->http://www.favicon.cc/?action=icon&file_id=29805] }}} doit se transformer proprement avec un {{{ &amp; }}}
-Revision: 13797 Report de http://trac.rezo.net/trac/spip/changeset/10796 : #CHAPO doit enlever les redirections, mais pas  #CHAPO* qui doit les laisser.
-Revision: 13795 report de http://trac.rezo.net/trac/spip/changeset/13794 : charger les autorisations au moment du traitement de #FORMULAIRE_EDITER_AUTEUR appellé depuis le public
-Revision: 13793 Le début des vertèbres n'est pas la vertèbre nommée début [http://archives.rezo.net/spip-dev.mbox/200902.mbox/raw/%3C49A3FF0F.8070102@yahoo.fr%3E/ YannX].
-Revision: 13792 Ne pas tenter de réparer l'irréparable quand il faut prendre de la distance.
-Revision: 13791 Fallait savoir que {{{$x[$y]}}} convertit la chaîne {{{$y}}} en nombre quand elle est interprétable ainsi. PHP, le langage dont vous nous ne découvrirez jamais tous les pièges. Super argument publicitaire.
+SPIP-plugins-dist spip-3.0.7 -> spip-3.0.8  17 avril 2013
+-------------------------------------------------------------
+r71097 | guytarr   |  (mar. 26 mars 2013)  | report de r71094 et r71096 (Suske, denisb)
+r71135 | kent1     |  (mer. 27 mars 2013)  | Report de r71134Ne pas pouvoir ajouter des libs dans _DIR_LIB si on n'est pas autorisé à "plugins_ajouter"Bien éviter l'affichage des boutons d'ajouts dans le formulaireVersion 0.80.13 (par contre)
+r71263 | guytarr   |  (ven. 29 mars 2013)  | include manquant (_Eric_)
+r71267 | guytarr   |  (ven. 29 mars 2013)  | collecter_request vidait $c, du coup on avait plus d'objet pour forum_insert_statut et seule la configuration globale du site était prise en compte, ce qui ennuyait Suske.
+r71270 | guytarr   |  (ven. 29 mars 2013)  | r71263 n'est pas utile et ne resout rien, on vire (bis)
+r71272 | rasta     |  (ven. 29 mars 2013)  | Tester si le parent a bien une URL non-vide avant de concaténer, sinon on se retrouve avec une URL ayant un "/" *devant*. Ce qui produit des bugs sur les installations en sous-dossier.Par contre je n'ai pas compris pourquoi il y a un traitement différent entre parent "null" et parent "0".
+r71391 | kent1     |  (lun. 01 avril 2013) | Report de r71390Evitera de faire parler les logs
+r71394 | kent1     |  (lun. 01 avril 2013) | Report de r71392Evitera de faire parler les logs
+r71396 | kent1     |  (lun. 01 avril 2013) | Report de r71395Donner une action vide aux pipelines internes du pluginEvitera de faire parler les logsversion 0.4.11
+r71398 | kent1     |  (lun. 01 avril 2013) | Report de r71397Donner une action vide aux pipelines internes du pluginEvitera de faire parler les logs
+r71408 | teddy     |  (lun. 01 avril 2013) | Report de c68328
+r71453 | kent1     |  (mar. 02 avril 2013) | Report de z71452Si c'est une lib ce n'est pas _DIR_PLUGINS_AUTO mais _DIR_LIB et avoir un plugin non activable à cause d'une lib mise à jour et plugin mis à jour autrement que via svp c'est un peu nulversion 0.80.14
+r71578 | denisb    |  (jeu. 04 avril 2013) | controler_forum.html, controler_petition.html : le filtre 'minifier' est une fonction fournie par le plugin 'compresseur' (qui n'est pas en necessite) ; s'il n'est pas disponible, on s'en passe. résout #2971
+r71579 | denisb    |  (jeu. 04 avril 2013) | petitions : ajout (et utilisation) d'un item de langue.
+r71661 | b_b       |  (ven. 05 avril 2013) | report de r65256 : ft_tu n'est pas une langue (taffit)
+r71662 | b_b       |  (ven. 05 avril 2013) | report de r65257 : ft_tu n'est pas une langue (taffit)
+r71704 | denisb    |  (sam. 06 avril 2013) | medias,portfolio-documents.html : cette action (définitive) mérite bien une confirmation !  (http://forum.spip.net/fr_251453.html)
+r71757 | kent1     |  (lun. 08 avril 2013) | Pourquoi imposer un mode document ou choix pour l'upload ftp alors que l'on veut juste ne pas le montrer lorsque le mode est image ou vignette.En gros ce commit permet d'avoir la partie ftp pour des modes pas forcément par défaut dans SPIP (conversions ...)
+r71758 | kent1     |  (lun. 08 avril 2013) | Indentation et utilisation similaire un peu partout des {} (ok on n'a pas de conventions de code mais bon)
+r71768 | kent1     |  (lun. 08 avril 2013) | Indentation et espaces
+r71771 | kent1     |  (lun. 08 avril 2013) | Répertoire vide
+r71772 | kent1     |  (lun. 08 avril 2013) | Répertoires vides
+r71775 | kent1     |  (lun. 08 avril 2013) | Répertoires vides finalisés (David Prévot)
+r71777 | kent1     |  (lun. 08 avril 2013) | Pas nécessaire
+r71779 | kent1     |  (lun. 08 avril 2013) | Un petit incrément du coup
+r71782 | kent1     |  (lun. 08 avril 2013) | On a déjà du mal avec nos propres tests... on va pas se tapper ceux des autres
+r71783 | denisb    |  (lun. 08 avril 2013) | controler_forum, controler_petition : prise en compte de la nouvelle écriture de appliquer_filtre (http://core.spip.org/projects/spip/repository/revisions/20406). résout (enfin) http://core.spip.org/issues/2972.
+r71789 | kent1     |  (lun. 08 avril 2013) | ne pas utiliser / pour les délimiteurs pour éviter un bug sur les /
+r71848 | marcimat  |  (mar. 09 avril 2013) | Sur les traces de http://core.spip.org/projects/spip/repository/revisions/20410 , ajouter un index nécessite ADD INDEX, pas seulement ADD.
+r72003 | b_b       |  (sam. 13 avril 2013) | report de r72002 : afficher le nom du jour dans le title des barres du graph de visites par jour
+r72031 | b_b       |  (dim. 14 avril 2013) | report de r72030 : #2963 toujours, fermer la balise rss pour avoir un flux valide
+r72033 | b_b       |  (dim. 14 avril 2013) | report de r72032 : http://core.spip.org/issues/2963 jointure sur la table auteurs pour bien renseigner dc:creator dans le flux
+r72035 | b_b       |  (dim. 14 avril 2013) | report de r72034 : http://core.spip.org/issues/2976 un rédacteur ne doit pas pouvroi créer d'annonce
+r72067 | marcimat  |  (mar. 16 avril 2013) | Report de r72066. Nom incorrect du fichier d'un compagnon, et en plus un var_dump trainait dedans.
+r72121 | ben       |  (mer. 17 avril 2013) | report de langues Pre 3.0.8
+r72123 | b_b       |  (mer. 17 avril 2013) | report de r72040 : tentons de fixer  http://core.spip.org/issues/2977 : mapper sur la bonne autorisation pour la supression de message + fix du critère destinataire pour ne pas afficher les messages de l'auteur dans sa boite de réception
 
-2.0.4 -> 2.0.5
+SPIP-Core spip-3.0.6 -> spip-3.0.7  22 mars 2013
+-------------------------------------------------------------
 
-- report de [13778] : l'installation sur les serveurs mysql avec un sql_mode par defaut etait cassee repare les installations sous easyphp 3.0 par defaut (13788)
-- closedir(d); avant de l'effacer (13787)
-- report de [13785] reparer la 404 des urls propres, et le mode urls propres_qs (13786)
-- report de htaccess (robots.txt, favicon.ico, sitemap.xml), correction des urls selon rfc 1738. references : [13769] et de [13779] a [13783] (13784)
-- noindex au lieu de none pour site.html (cf. [13773]) ( 13776 )
+r20333 | cedric    |  (mar. 19 mars 2013) | oups, inclusion manquante dans certains cas (Nicolas H.)
+r20337 | marcimat  |  (mer. 20 mars 2013) | Coquille, qui devait je suppose empêchait un auteur de voir «Ses articles» en préparation sur cette page.
+r20340 | marcimat  |  (mer. 20 mars 2013) | Report de r20339 : recuperer_numero() peut retourner 0, si un titre a un zéro pointé devant lui (0. titre). Il faut donc l'afficher celui là. (Bertrandbbbb)
+r20344 | cedric    |  (jeu. 21 mars 2013) | Ferme #2962. Retour et complement de r20066 : il faut être un peu plus malin lors de la reinjection des where Lx.objet='truc' dans la sous requete.Pour cela on la construit une première fois pour tenir compte des simplifications, et on regarde ensuite seulement les jointures encore présentes. On y ajoute alors les clauses where complémentaires si nécessaire, et on reconstruit la sous requete si besoin.
+r20347 | ben       |  (jeu. 21 mars 2013) | Report de langues ... avec en particulier le polonais
+r20349 | ben       |  (ven. 22 mars 2013) | langues
+
+SPIP-plugins-dist spip-3.0.6 -> spip-3.0.7  22 mars 2013
+-------------------------------------------------------------
+
+r70982 | ben       |  (jeu. 21 mars 2013) | Hop les langues
+r70993 | marcimat  |  (ven. 22 mars 2013) | Fermeture de balise absente (freebsnet)
+r71001 | b_b       |  (ven. 22 mars 2013) | éviter qu'un titre de document trop long déborde de sa boîte
+r71003 | marcimat  |  (ven. 22 mars 2013) | Validité XHTML, suite de r70994  qui ne convenait pas ! (freebsnet)
+
+SPIP-Core spip-3.0.5 -> spip-3.0.6  18 mars 2013
+-------------------------------------------------------------
+
+r19904 | ben       |  (jeu. 13 sept. 2012) | préparons gentillement cette nouvelle version
+r19906 | ben       |  (jeu. 13 sept. 2012) | Pour l'instant on s'en sert pas mais prenons dès maintenant les bonnes habitudes (tonton)
+r19907 | cedric    |  (jeu. 13 sept. 2012) | Eviter un notice (ou warning sur certaines config ?) lors de l'inscription ou toute modif en base anonyme (LuisSpeciale)
+r19914 | b_b       |  (ven. 14 sept. 2012) | réparer l'ajout rapide dans le selecteur/navigateur de rubriques par report de http://zone.spip.org/trac/spip-zone/changeset/55785/ : spécifier le dataType pour la requête ajax (compat jquery 1.6)
+r19916 | cedric    |  (lun. 17 sept. 2012) | PHPDoc
+r19917 | cedric    |  (lun. 17 sept. 2012) | 2 pipelines image_ecrire_tag_preparer et image_ecrire_tag_finir appelés lors de l'écriture de la balise html <img.. /> après un filtre image.+ eviter d'introduire un attribut style='' verbeux dans les <img /> produits par les filtres images (consequence de la suppression de la taille forcee en css)
+r19918 | cedric    |  (lun. 17 sept. 2012) | oups : maj du paquet.xml manquant dans r19917
+r19923 | cedric    |  (mar. 18 sept. 2012) | Selecteur CSS a haute priorité pour les li.spip dans l'espace privé. Ferme #2864
+r19925 | cedric    |  (mar. 18 sept. 2012) | Lorsque charger_fonction est appelé avec un $nom incorrect mais $continue=true ne pas faire un die() (ex : appel de tester_url_ecrire('a-b'))
+r19928 | cedric    |  (mer. 19 sept. 2012) | PHPDoc
+r19929 | cedric    |  (jeu. 20 sept. 2012) | Correction de bug sur les redirections CVT ajax (post validation) dont seule l'ancre change, sous webkit : il faut prendre a.href pour avoir dans tous les navigateurs l'url absolue comparable avec celle de la redirection !
+r19933 | cedric    |  (mar. 25 sept. 2012) | utiliser id_table_objet() plutot qu'un "id_" en dur (genericité du code)
+r19934 | cedric    |  (mar. 25 sept. 2012) | coquille : #URL_TRUC* renvoyait du vide !
+r19935 | cedric    |  (mar. 25 sept. 2012) | Comme les autres #URL_XXX* #URL_ARTICLE* renvoie une URL sans &amp;
+r19936 | rasta     |  (mar. 25 sept. 2012) | Mettre des crochets sinon les espaces sont bouffés par le compilateur et les classes CSS collées.Perso je considère ça comme un bug de SPIP qui traine depuis longtemps, côté intégrateur de template ya aucune raison de se faire manger ses espaces comme ça. :)
+r19938 | cedric    |  (mar. 25 sept. 2012) | Attention : lors de l'ajax, on passe par le fond navigation/xxx pour afficher le contenu de xxx_editC'est un peu tordu, et ça prenait en defaut la detection et l'appel automatique des pipelines affiche_gauche/droite/milieu/hierarchie On se base sur type-page pour detecter la pertinence de l'appel aux pipelines, sachant que le exec passe en argument est bien le bon (repare le bug des documents qui n'apparaissaient pas sur l'edition ajax des objets)
+r19945 | cedric    |  (mer. 03 oct. 2012) | Ferme #2871 : attention a sys_getloadavg qui peut etre inhibée et renvoyer simplement false
+r19946 | cedric    |  (mer. 03 oct. 2012) | #2801 : si on est pas en UTF-8 on ne peut pas utiliser translitteration_rapide pour comparer les resultats avec la recherche
+r19947 | cedric    |  (mer. 03 oct. 2012) | #2801 : ne pas generer une erreur js quand l'url contient un caractere encode en iso-xxx. On se passe du decodage dans ce cas.
+r19948 | cedric    |  (mer. 03 oct. 2012) | L'ajout d'un timestamp ?date=1234 sur les reductions d'image dans l'espace prive est derogatoire est ne semble pas avoir sa place ici (devrait etre dans le squelette). A minima donnons lui le format simple ?1234 qui ne mets pas en defaut un filtre image a suivre
+r19950 | cedric    |  (mer. 03 oct. 2012) | lors de la creation d'une image par un filtre image, generer un log de debug qui permet de retrouver une image qui fait planter car trop grosse
+r19953 | kent1     |  (lun. 08 oct. 2012) | Prendre en compte un exec dans le contexte pour le pipeline afficher_bloc_ecrire, permet d'avoir les champs supplémentaires par exemple sur la page ?exec=infos_perso comme sur la page ?exec=auteur
+r19956 | cedric    |  (jeu. 11 oct. 2012) | le modele de pagination_precedent_suivant peut prendre en argument url_precedent et url_suivant, ce qui le rend completement parametrable et utilisable à la main, en dehors d'une balise #PAGINATION
+r19958 | marcimat  |  (sam. 13 oct. 2012) | Report de 19957 : correction de coquille.
+r19959 | cedric    |  (lun. 15 oct. 2012) | r19897 avait omis une exception des requetes HEAD : la page n'était pas calculée et provoquait toujours une réponse 404.On enleve cette exception, et on a bien cette fois une réponse aux requetes HEAD identique à celle d'un GET
+r19966 | kent1     |  (sam. 20 oct. 2012) | Report de r19965Pouvoir utiliser des déclarations de champs de date qui ne sont pas habituels pour les critères de dates (jour_relatif, age_relatif etc) en utilisant $GLOBALS['table_date'][$table['id_table']]
+r19977 | rasta     |  (jeu. 25 oct. 2012) | Lors d'une institution (changement de statut ou déplacement), il FAUT renseigner l'ancien parent dans les pipelines. Pour pre_edition c'est moins grave car l'objet n'a pas encore été modifié en base et donc on a toujours moyen de faire une requête pour connaître l'ancien parent. Mais pour post_edition c'est obligatoire sinon impossible de connaître l'ancien parent avant le déplacement. Je mets tout de suite "parent" plutôt que "rubrique" pour être plus générique.
+r19979 | cedric    |  (jeu. 25 oct. 2012) | Utiliser chercher_filtre pour charger la fonction bouton_action
+r19983 | cedric    |  (mar. 30 oct. 2012) | Repair : que le sql ait ou non une fonction repair, on appelle en complement maj_tables() qui ajoute les champs eventuellement manquants+ mise en forme des erreurs eventuelles du repair
+r19987 | cedric    |  (mar. 30 oct. 2012) | permettre a |puce_statut de supporter aussi les objets qui ne sont pas rangés dans les rubriques (puce de changement rapide)On laisse l'autorisation(publierdans,rubrique) historique pour eviter tout risque de regression quand un id_rubrique est fourni, mais on devrait basculer tous les objets sur autoriser(instituer,type)
+r19990 | eric      |  (sam. 03 nov. 2012) | On définit dans la librairie Pclzip comme dossier des fichier temporaires le tmp/ de SPIP dont on sait qu'il est toujours accessible en écriture.
+r19996 | eric      |  (mer. 07 nov. 2012) | Ne pas appliquer des trim quand on accole les morceaux de texte du contenu de la balise nom par exemple. Par contre appliquer le trim sur la chaine finale (esj)
+r20004 | cedric    |  (ven. 09 nov. 2012) | WebperfIssue. Quand #INSERT_HEAD_CSS n'etait pas explicités dans le squelette, l'insertion correspondante est faite par un fallback insert_head_css_conditionnel mais appelée trop tard : les css correspondantes n'étaient pas prises en compte par le compresseur + PHPDoc
+r20007 | cedric    |  (ven. 09 nov. 2012) | oups le "." manquant dans r20004
+r20013 | b_b       |  (sam. 17 nov. 2012) | report de r20012 : réparer le flux rss des signatures cassé depuis http://zone.spip.org/trac/spip-zone/changeset/44981
+r20014 | eric      |  (sam. 17 nov. 2012) | Un include de inc/filtres qui manque parfois dans la fonction de nettoyage des emails, la callback email_valide n'étant alors pas connue.
+r20018 | cedric    |  (mar. 20 nov. 2012) | Quand le logo n'est pas editable, et qu'il n'y a ni logo normal ni logo survol deja present, il est inutile d'afficher le formulaire qui est non informatif
+r20020 | cedric    |  (mer. 21 nov. 2012) | Bugfix : un statut '0' ne pouvait plus etre modifie par la faute d'un teste errone
+r20021 | cedric    |  (jeu. 22 nov. 2012) | retour sur r20020 : il faut tout de meme verifier l'existence d'un champ statut avant de prendre en compte un statut passe en modification. C'était le sens du code initial mais implementation etait erronée.+ ajout d'un argument $set dans objet_inserer qui permet d'initialiser certains champs a la creation (exemple d'une cle unique : on ne veut pas passer par une valeur vide car en cas d'insertions concourantes on risque l'echec, ce qui n'est pas le cas si on fournit directement la valeur lors de l'insertion).
+r20023 | cedric    |  (ven. 23 nov. 2012) | Avec mysql, les index de type unique sur une chaine portent une longeur : email(256)Il faut supprimer cette info de longeur quand on créé l'index sous SQLite
+r20025 | ben       |  (sam. 01 déc. 2012) | msie compat ne sert plus à rien ... on ne le distribue plus
+r20027 | ben       |  (sam. 01 déc. 2012) | msie_compat le retour sur la branche 3.0 version mineure donc pas de rupture de compat
+r20029 | kent1     |  (sam. 01 déc. 2012) | Report de r20028Meilleure gestion de _DIR_PLUGINS_SUPPL, incompatibilité avec ce qui se faisait auparavant :-* On ne peut gérer qu'un seul répertoire (on enlève la gestion des : pour séparer les répertoires);-* Le répertoire de plugins supplémentaires doit être défini comme _DIR_PLUGINS soit à partir de "ecrire/" soit define('_DIR_PLUGINS_SUPPL', _DIR_RACINE."chemin_vers/répertoire/plugins_suppl")Ça a le mérite de simplifier le code, d'enlever plusieurs cas spécifiques liés à ce define.On ajoute un define dans inc/utils _ROOT_PLUGINS_SUPPL si le define _DIR_PLUGINS_SUPPL existe afin de rendre le fonctionnement des plugins supplémentaires équivalent aux deux autres répertoires _DIR_PLUGINS et _DIR_PLUGINS_DIST
+r20030 | cedric    |  (lun. 03 déc. 2012) | le 4eme argument $options du #FORMULAIRE_DATER peut etre utilisé pour forcer la prise en compte ou non d'une date_redac
+r20031 | cedric    |  (lun. 03 déc. 2012) | Bugfixes sur generer_info_entite :- il faut utiliser table_objet_sql pour chercher dans $table_des_traitements comme cela est fait dans public/references.php#L463- a defaut de recuperer le vrai contexte, injectons au moins un contexte avec objet/id_objet plutot qu'un contexte vide
+r20032 | cedric    |  (lun. 03 déc. 2012) | Utiliser generer_info_entite pour afficher les titre des rubriques et etre sur que l'on passe bien par tous les traitements eventuellements personalisés dans la table_des_traitements
+r20033 | cedric    |  (mar. 04 déc. 2012) | #2914 : attention a ne pas confondre un fichier temporaire (d'ecriture atomique d'une session par un processus concourant) avec un vrai fichier de sessionAttention aussi : entre le preg et le moment ou l'on traite une session, celle-ci peut avoir disparue, ne pas la recréer (concurence)
+r20034 | rasta     |  (mer. 05 déc. 2012) | - Ne pas utiliser l'historique HTML5 car c'est un élément de formulaire, pas du contenu (à faire aussi pour tous les liens de navigation à l'intérieur)- Ne faire qu'une seule fois les deux find_all_in_path() par hit PHP- Ajouter un alt sur l'image et un title sur le lien de la croix de suppression- Ptit bug dans le js pour ne pas ajouter la croix pour rien- PHPDoc
+r20037 | cedric    |  (ven. 07 déc. 2012) | PHPDoc sur generer_url_entite pour documenter le cas derogatoire ou appellee par nettoyer_raccourcis_typo elle peut renvoyer un array() issu d'une fonction personalisee generer_url_xxx() au lieu d'une chaine.Depuis le calcul generique des urls privees sur les objets qui prend en charge tous les objets, il faut aussi definir une fonction generer_url_ecrire_xxx() pour prendre le raccourci en charge dans l'espace prive.
+r20038 | rasta     |  (ven. 07 déc. 2012) | Modifs ergo du navigateur/sélecteur générique qui simplifie l'interface (avant c'était surcharge cognitive, trop d'infos, trop d'images, trop de boutons).- Un seul panneau suffit, le chemin hiérarchique permet de revenir facilement en arrière (et c'est alors déjà préchargé donc très rapide).- On vire toutes les icônes d'objet, mais on les rajoute sur le *titre* du type d'objet des listes. Ainsi il n'y a pas de redondance, on ne voit qu'une fois cette icône devant "Rubriques" par exemple, pas à chaque ligne.- Chaque ligne est un "split button" comportant deux zones cliquables : une pour naviguer, une pour sélectionner, et *sans vide* dans une ligne, tout est cliquable.- La zone principale de clic est celle de *navigation* car c'est celle qui ne fait pas disparaitre le navigateur. De plus, quand on navigue dans un élément (ouvrir une rubrique par exemple) il est *toujours* possible de sélectionner cette élément à l'étape suivante. Une image de flèche est placé alignée tout à droite des textes.- La deuxième zone de clique, plus petite, est celle de sélection de l'objet sur cette ligne. Cette zone se trouvre *tout à droite*, donc à droite de la flèche. Ainsi il n'y a aucune confusion possible entre les deux images : seule la flèche est lié au texte, alors qu'avant on avait une image à gauche, une image à droite, ce qui faisait qu'on ne pouvait rendre le texte cliquable sans être confus (le texte pouvait être lié à l'une ou l'autre des deux images).- Un bouton de sélection propre à l'objet "en cours" (celui qui a le titre principale) se trouve toujours au début de chaque liste (donc même quand il n'y a pas d'enfants).- On vire tous les historiques ajax dans l'URL.- Au passage ça simplifie le code des squelettes aussi, car il y a moins de choses.Il reste que le mini formulaire "Ajout rapide" n'est pas encore générique, il ne reconnaît toujours que rubrique et article.
+r20039 | rasta     |  (ven. 07 déc. 2012) | Oups il manquait toutes les CSS utile au nouveau sélecteur générique (ça modife légèrement des trucs qu'il y a en commun avec l'aspect de l'ancien sélecteur, mais ça ne casse rien).
+r20040 | rasta     |  (ven. 07 déc. 2012) | On rend générique le mini formulaire d'ajout rapide, afin qu'il sache ajouter d'autres objets qu'article et rubrique. Bien sûr ça ne les ajoute que si tel type d'objet fait partie de la liste des objets sélectionnables par ce sélecteur.La fonction PHP est toujours commune avec l'ancien sélecteur, on la rend compatible avec les deux. Le JSON renvoyé est le même.En revanche, l'ancien mini formulaire est cassé mais ça ne vient pas de mes commits, c'était déjà cassé avant, il doit y avoir un problème dans le JS (car je n'ai pas touché à ces fichiers, le seul truc commun est la fonction PHP, or elle renvoie le bon JSON).Donc à priori c'est terminé, reste à l'implémenter pour les événements par exemple (et à l'améliorer si besoin).
+r20041 | rasta     |  (ven. 07 déc. 2012) | Oups coquille d'écriture. Et donc en fait tout marche aussi pour l'ancien sélecteur.
+r20042 | rasta     |  (ven. 07 déc. 2012) | Pas besoin de ce bouton en fait puisqu'on en a un permanent en dessous du titre, quelque soit la page.
+r20043 | rasta     |  (sam. 08 déc. 2012) | On inverse les séparateurs dedans/dehors la boucle chemin
+r20046 | rasta     |  (mar. 11 déc. 2012) | Relancer l'application du dateur sur les champs date après retour AJAX. Le script lui, a déjà été chargé en mémoire, mais c'est son application sur les champs qui n'est pas là.
+r20049 | marcimat  |  (jeu. 13 déc. 2012) | Report de r20048 : La correction r16827 empêchait la prise en compte par le phraseur {n-#ENV{nb},x}, alors que cette écriture fonctionnait en 2.0On permet donc également 'n-' comme texte de critère, en plus de 'n' seul et 'n-4' (n-nombre)
+r20050 | marcimat  |  (jeu. 13 déc. 2012) | Ferme #2921 en indiquant de content-type du fichier js+ il ne faut pas charger le dateur dans le onAjaxLoad dans que les fichiers du dateur ne sont pas chargés, sinon il y a risque d'appel trop tot de la fonction d'initialisation des dates.
+r20059 | cedric    |  (mar. 18 déc. 2012) | rajouter un title sur la puce statut pour permettre l'affichage en infobule de son sens (utile quand pas de changement rapide activé)
+r20061 | cedric    |  (mar. 18 déc. 2012) | classe manquante sur le h1
+r20062 | cedric    |  (mer. 19 déc. 2012) | Quand un objet n'est pas editable, il faut desactiver la puce de changement rapide de statut, et signaler au #FORMULAIRE_INSTITUER_OBJET qu'il n'est pas editable
+r20066 | cedric    |  (ven. 28 déc. 2012) | Ferme #2729 et #2862 : les critères de type {!id_mot=...} provoquaient une sous requete mal formée si la requete principale comportait plus d'une jointure.
+r20067 | cedric    |  (sam. 29 déc. 2012) | declaration manquante
+r20069 | cedric    |  (jeu. 03 janv. 2013) | Quand on utiliser pas #INSERT_HEAD_CSS et que SPIP l'inserer automatiquement, il faut placer avant le premier js externe si possible pour ne pas provoquer des chargement de css bloquant. (eric)
+r20070 | cedric    |  (lun. 07 janv. 2013) | Report de r15039 qui avait ete oublie : gestion de la page d'erreur 404 extensible par pipeline page_indisponible
+r20072 | rasta     |  (mar. 08 janv. 2013) | Manquait la lib pour autoriser()
+r20073 | rasta     |  (mar. 08 janv. 2013) | Manquait la lib autoriser() 2x
+r20075 | cedric    |  (mar. 08 janv. 2013) | Securisation des urls redirections en url absolues : accepter non seulement la meta adresse_site, mais aussi l'url de base du hit (cas des sites accessibles sur plusieurs urls) qui est celle prise en compte par generer_url_action() qui produit toujours des urls absolues.
+r20076 | cedric    |  (mer. 09 janv. 2013) | petouille CSS quand un picker est dans un fieldset
+r20100 | guytarr   |  (mer. 16 janv. 2013) | report de r20099
+r20101 | guytarr   |  (mer. 16 janv. 2013) | report de r20098
+r20106 | cedric    |  (dim. 20 janv. 2013) | en cas de previsu, il faut toujours envoyer les boutons d'admin, meme si pas de cookie, pour avoir la css qui prend en compte la banniere "PREVISU"
+r20107 | cedric    |  (dim. 20 janv. 2013) | la prise en compte de la previsu ne se fait plus dans le code genere, mais dans les fonctions quete_condition_statut et quete_condition_postdate. Corrolairement il n'est plus necessaire de recompiler les squelettes en previsu, mais seulement de les calculer sans cache (accélère la page de previsu)
+r20108 | cedric    |  (dim. 20 janv. 2013) | L'ajout de la banniere previsu doit plutot se faire dans le pipeline affichage_final car on y  trouve tout le HTML final et donc la balise </body>. Permet de faire une insertion propre HTML valide au lieu d'envoyer le HTML concerné en fin de page comme un malpropre
+r20113 | cedric    |  (mar. 22 janv. 2013) | Report ameliore de r20103 et r20104 et merge avec r19461 qui faisait ça en amont dans le seul cas de copie_locale()
+r20114 | marcimat  |  (mar. 22 janv. 2013) | Report de r20105 : Amélioration du critère {par x.y} qui ne se débrouillait pas de lui-même pour ajouter la jointure, si elle n'était pas déjà là au moment du calcul du critère.
+r20116 | kent1     |  (mer. 23 janv. 2013) | Permettre à la balise #LESAUTEURS d'être multi objet, si on est dans une boucle, on va chercher le type de la boucle pour savoir quel est le type d'objet et l'id_truc de la table que l'on passe en objet / id_objet au modèle.
+r20118 | marcimat  |  (mer. 23 janv. 2013) | On permet des déclarations de boucles ayant nommée avec un serveur particulier, comme pour les critères.On reprend d'ailleurs la même écriture pour retrouver la fonction que pour les critères, ce qui dispense de quelques tests 'function_exists' lorsque la bonne fonction est trouvée.
+r20120 | rasta     |  (mar. 05 févr. 2013) | Petites modifs du sélécteur générique, car le privé est thémable (on peut changer les images) mais ce sélecteur peut aussi être utilisé en dehors de l'admin, donc on fait les liens/boutons que en texte, et les images en CSS, pour que ce soit plus facilement personnalisable.
+r20121 | cedric    |  (mar. 05 févr. 2013) | La balise #PUBLIE repose sur la construction d'une boucle factice pour tester si un objet est publié ou non.Manque de chance, si var_mode=preview dans la page, elle utilise les conditions de previsu et réponds donc oui pour tous les objets de la page, ce qui est une erreur. On corrige en ajoutant un argument optionnel à la fonction instituer_boucle qui permet d'ignorer la previsu et de renvoyer le bon résultat pour #PUBLIE dans tous les cas.
+r20122 | cedric    |  (mar. 05 févr. 2013) | complement a r20121 : il faut aussi pouvoir ignorer le var_mode=previsu pour la prise en compte de la date de post-publi. Cela necessite donc de passer l'argument $ignore_previsu a quete_condition_post_date. On fait de meme sur quete_condition_statut par homogeneite
+r20123 | rasta     |  (mer. 06 févr. 2013) | Quand il n'y a absolument qu'un seul type d'objet affiché, alors on masque le titre indiquant le type d'objet, qui ne sert que s'il y en a plusieurs à différencier. Cela allège l'affichage dans les cas simples (à voir plus tard dans les utilisations réelles si on rencontre un cas où ça rend les choses confuses, et dans ce cas on le remettra).
+r20124 | rasta     |  (mer. 06 févr. 2013) | Toujours dans un soucis de réutilisation- h2/h3 c'était un peu exagéré, on descend à h3/h4- et surtout on met des classes dessus et on utilise ces classes pour les styles, afin d'être plus neutre vis à vis des balises
+r20125 | cedric    |  (ven. 08 févr. 2013) | eviter le lancement concurent de trop de cron sur les serveurs a fort traffic : on touch un fichier lock et on ne relance que lorsqu'il a plus d'une seconde
+r20126 | cedric    |  (ven. 08 févr. 2013) | coquille
+r20127 | cedric    |  (ven. 08 févr. 2013) | message correct, avec le bon repertoire en cas d'echec de creation
+r20133 | kent1     |  (mar. 12 févr. 2013) | report de r20132Vérifier que l'image temporaire existe bien (créée par GD) avant de faire un getimagesize qui risque de renvoyer un warningSi non, on renvoit false
+r20134 | cedric    |  (mer. 13 févr. 2013) | oups : probleme de priorité des opérateurs qui bloquait tout lancement de traitement de la queue
+r20135 | cedric    |  (mer. 13 févr. 2013) | Plusieurs bugs autour des tache cron qui doivent se relancer car non finies :queue_genie_replan_job :quand appele avec $time=0 passer tel quel l'argument pour ne pas reinserer si la meme tache est en coursne s'executer qu'une seule fois par hit pour une fonction donneedans genie_queue_watch : appeler la fonction queue_genie_replan_job avec $time=0 pour ne pas recreer une tache de priorité nulle si une autre est deja en cours d'execution (eventuellement de priorité non nulle)dans queue : les jobs en cours d'execution avaient une date nulle en raison d'une coquille, ce qui les faisait croire morts et ils etaient relancés avec une priorité nulle en cas de concurrence avec une autre fin de jobrelancer les jobs non finis au time() courant
+r20146 | cedric    |  (ven. 15 févr. 2013) | Report de r20115 r20137 r20138 : unification de inc/distant et copie locale de documents
+r20152 | marcimat  |  (ven. 15 févr. 2013) | Reports de r20140 et r20144 : Les liens de traductions doivent pouvoir être définis et enlevés même lorsque le menu de langue n'est pas activé.
+r20158 | cedric    |  (dim. 17 févr. 2013) | Faire apparaitre le bouton de changement de statut même si il etait du depart en display:none et pas seulement en visibility:hidden
+r20159 | cedric    |  (dim. 17 févr. 2013) | image utilise dans les input date
+r20160 | cedric    |  (lun. 18 févr. 2013) | mauvaise idée de relancer un cron automatiquement immediatement sans tenir compte du retour car cela provoque un appel continu toutes les secondes du genie optimiser qui fait plein de choses en BDD (load issue)
+r20166 | cedric    |  (mer. 20 févr. 2013) | decodage des urls : quand on appelle la fonction en dehor de assembler, il faut prendre en compte l'url fournir telle quelle et ne pas essayer de la decouper en fonction de la profondeur de l'url courante qui n'a rien a voir (cas des urls arbos).On vide et on fake la globale $profondeur_url le temps du decodage et on la retablit après.
+r20169 | cedric    |  (jeu. 21 févr. 2013) | Bug dans r20113 (marcimat) :copie_locale retournait false quand appele avec 'modif' et que le fichier en ligne n'avait pas ete modifie+ include conditionnel sur une globale non reconnue qui echoue (on supprime la condition et on inclue directement le bon)
+r20172 | gilles    |  (dim. 24 févr. 2013) | report de r20171
+r20179 | cedric    |  (lun. 25 févr. 2013) | Selecteur article, rubrique et mixte : faire apparaitre la flèche de descente dans la rubrique uniquement si elle a des enfants (retablit le fonctionnement originel avec un filtre qui optimise les requetes, en principe déclinable au selecteur générique)
+r20187 | cedric    |  (mar. 26 févr. 2013) | r20116 cassait la balise #LESAUTEURS pour ceux qui l'ont personalisée. On reinjecte la cle primaire de la table en plus de objet,id_objet, ce qui permet aux modèles existants de continuer à fonctionner comme avant.
+r20188 | cedric    |  (mar. 26 févr. 2013) | r20187 est insuffisant : il faut toujours envoyer id_article dans modeles/lesauteurs pour ne pas casser la compat anterieure et les modeles personalises.A noter que depuis http://zone.spip.org/trac/spip-zone/changeset/69241 et http://zone.spip.org/trac/spip-zone/changeset/69240 le modèle par défaut ne se comporte plus comme avant dans le cas suivant (non exhaustif)<BOUCLE_doc(DOCUMENTS){id_article}>#LESAUTEURS</BOUCLE_doc> puisqu'il affichait les auteurs de l'article auquel le document est lie et qu'il n'affiche plus rien maintenant.
+r20190 | rasta     |  (mar. 26 févr. 2013) | Parfois, pour d'autres objets que lister les rubriques, le "Racine du site" par défaut n'est pas du tout adapté. On permet donc de surcharger ce label.
+r20192 | rasta     |  (mar. 26 févr. 2013) | Oups oublié la liste des choses sélectionnées par défaut (avant JS).
+r20197 | cedric    |  (mer. 27 févr. 2013) | objet_dupliquer_liens prend 2 arguments optionnels supplementaires qui permet de lister les types des objets lies a prendre en compte ou a exclure. Par defaut il copie tous les liens, et l'on peut donc se limiter a certain types de liens ou au contraire exclure certains types de lien. La valeur null pour chacun des deux arguments supplementaires est ignorée.
+r20198 | cedric    |  (mer. 27 févr. 2013) | Ferme #2847 : quand on ecrit une traduction, les auteurs de l'article d'origine ne sont pas associés à la traduction (mais seulement le traducteur). Cela rétablit le fonctionnement de SPIP 2.x, a voir si cela mériterait une configuration pour choisir l'un ou l'autre de ces comportements qui peuvent tous deux être pertinent selon le contexte.utilise l'extension de l'API proposée par r20197
+r20212 | denisb    |  (jeu. 28 févr. 2013) | inc_version.php : on permet à un plugin de définir antérieurement la constante _LOG_FILTRE_GRAVITE. résout #2927.
+r20219 | denisb    |  (ven. 01 mars 2013) | inc/utils.php : report de r20217 (complément de r20212). ajout d'un test dans spip_log() au cas où un plugin fait un spip_log dans son fichier d'option alors que la constante n'est pas encore déclarée (marcimat).
+r20220 | marcimat  |  (ven. 01 mars 2013) | Report de r20213 : fermer #2939 en déclarant 2 fonctions d'autorisations pour les auteurs : 'creer' et 'menucreer', autorisant les admins (même restreints) à créer des auteurs (puisque c'est effectivement le cas). Ainsi les boutons de création apparaissent bien dans l'interface en tant qu'admin restreint là où ils manquaient.
+r20223 | cedric    |  (ven. 01 mars 2013) | BugFix : Les mails HTML n'étaient pas detectés et affectés du bon Content-Type lorsque le sujet était fourni
+r20225 | marcimat  |  (ven. 01 mars 2013) | Report de r20221 : permettre d'attraper la taille d'un `<media:content` dans un flux rss (en relation avec #2941)
+r20230 | cedric    |  (lun. 04 mars 2013) | genie/mail utilise notifications_envoyer_mails() plutot que directement envoyer_mail() :- asynchrone- detecte et gere automatiquement les mails HTMLSeul impact : l'envoi de headers spécifiques doit se faire via #HTTP_HEADER dans le squelette du mail, et pas texte brut entre le sujet et le corps du mail. Ne concerne que d'éventuels mails de nouveautés personalisés avec des headers spécifiques. Acceptable pour une version mineure ?
+r20231 | cedric    |  (mar. 05 mars 2013) | Oups, eviter une erreur sur le selecteur articles
+r20240 | cedric    |  (ven. 08 mars 2013) | 80legs est un bot (report de http://zone.spip.org/trac/spip-zone/changeset/70513)
+r20241 | cedric    |  (ven. 08 mars 2013) | Coherence : sur les objets generiques on prend _request(id_auteur) si il est posté pour associer a l'objet lors de la creation. Faisons pareil sur les articles. Dans les deux cas, eviter un notice si pas de session en cours (cas theorique)
+r20242 | eric      |  (sam. 09 mars 2013) | Utiliser apercite.fr pour remplacer thumbshots.com qui a sombré...
+r20245 | suske     |  (sam. 09 mars 2013) | report de http://core.spip.org/projects/spip/repository/revisions/20244Je ne résiste pas au plaisir de dupliquer le log.mettre à jour l'url sous "Voir le site public" quand on change l'url (YannX) - ferme http://core.spip.org/issues/2925(Ceci est la preuve que *tout* est possible par ici... Merci à Benny_b, b_b, tonton, cy_altern, papa, maman, _fil_, SPIP et toutes les autres). Mention spéciale à tetue:    :-* tetue !Non, je ne suis pas dev, juste geek à 38%.
+r20246 | suske     |  (sam. 09 mars 2013) | <del>oups</del> C'est l'émotion
+r20249 | denisb    |  (sam. 09 mars 2013) | report de r20229 : ne pas proposer la base courante dans la liste des bases externes ; faire retourner tous les arguments de l'appel de la fonction analyse_fichier_connection (inclu, donc, le prefixe de table).
+r20269 | marcimat  |  (lun. 11 mars 2013) | Report de r20268 :  Fermer #2916 et #2952 : la boucle Hiérarchie ne doit pas empêcher de traiter les critères autres que ce qui la concerne directement (id_x et id_rubrique).
+r20270 | cedric    |  (lun. 11 mars 2013) | Meilleur gestion des clauses DEFAULT.On n'ajoute plus uniquement la clause sur les champs de type text mais aussi :- sur les char|varchar- sur les date|datetime- sur les int, ce qui est un peu plus complique car par precaution il faut eviter de mettre un default 0 sur un primary key en autoincrement (je n'ai pas trouvé de ressources disant que ça pose problème cela dit)Devrait resoudre un certain nombre de cas de migration depuis mysql (laxiste sur le sujet), y compris quand la base contient des champs issus de vieux plugins qui ne supportaient pas SQLite.
+r20271 | ben       |  (lun. 11 mars 2013) | Associer vraiment l'auteur calculé juste au dessus
+r20272 | cedric    |  (lun. 11 mars 2013) | un modele pour le mail de rappel de mot de passe
+r20273 | cedric    |  (lun. 11 mars 2013) | pas de : dans le mail hard-codé actuel
+r20275 | cedric    |  (mar. 12 mars 2013) | suite de r20028 : prendre en compte la constante _DIR_PLUGINS_SUPPL (quand elle est definie) dans l'affichage de la liste des plugins, dans l'activation et la desinstallation.
+r20297 | ben       |  (mar. 12 mars 2013) | Ceci ressemble étrangement à un commit de préparation de SPIP 3.0.6 ... affaire à suivre
+r20298 | ben       |  (mer. 13 mars 2013) | report de lang : :~/svn/spip/ecrire/lang vers :~/svn/spip/branches/spip-3.0/ecrire:lang ... 3.0.6 en préparation
+r20299 | cedric    |  (mer. 13 mars 2013) | oups : en SQL LEFT('foobar',4) donne 'foob' et non 'ar' comme le faisait la fonction adaptée pour SQLite (https://dev.mysql.com/doc/refman/5.0/en/string-functions.html#function_left)
+r20300 | cedric    |  (mer. 13 mars 2013) | LEFT est un mot clé reservé (LEFT JOIN) du coup la définition d'une fonction LEFT(truc,x) n'est pas possible. On la nomme _LEFT et on remplace les LEFT( en _LEFT( lors de la traduction de la requete
+r20302 | eric      |  (mer. 13 mars 2013) | Une nouvelle fonction pour convertir un objet SimpleXML en un tableau PHP. COntribution issue de http://www.php.net/manual/pt_BR/book.simplexml.php#108688 et adaptée pour gérer les namespaces en option.
+r20305 | cedric    |  (ven. 15 mars 2013) | Regression fonctionnelle : dans SPIP < 3 une recherche sur un nombre entier produisait la liste des objets avec cet ID et pas une recherche sur le nombre. On rétablit (mathieu, habbon)
+r20310 | cedric    |  (sam. 16 mars 2013) | #2914 : @unlink superflu voir nefaste car @rename ecrase la cible si besoin
+r20311 | cedric    |  (sam. 16 mars 2013) | Reparer le decodage des urls ./?rubrique12 etc... et ne pas injecter type ou type-page dans form_hidden (répare les tests sur form_hidden)
+r20312 | cedric    |  (sam. 16 mars 2013) | eviter trouver_table() sur une table inconnue et une erreur SQL quand on fait objet_type(), table_objet(), table_objet_sql() ou id_table_objet().Reduire l'importance du log correspondant.Il semble y avoir de quoi optimiser tout cela en utilisant la liste des tables au lieu de passer par trouver_table. On touche a minima ici pour ne rien casser
+r20314 | eric      |  (dim. 17 mars 2013) | Point trop n'en faut des tests.
+r20316 | cedric    |  (lun. 18 mars 2013) | r20311 avait cassé le décodage des urls sur un nom de domaine homonyme (donc non nettoyé par les du dessus). On corrige pour rétblir le fonctionnement antérieur dans ce cas, même si il n'est probablement pas idéal (vu sur le décodage des urls de doc de contrib qui sont encore en http://www.spip-contrib.net/)
+r20317 | ben       |  (lun. 18 mars 2013) | Un ptit update de langue avant la sortie finale de la 3.0.6
+
+SPIP-plugins-dist spip-3.0.5 -> spip-3.0.6  18 mars 2013
+-------------------------------------------------------------
+
+r65793 | marcimat  |  (mer. 12 sept. 2012) | Report de r65971 (correction de noms de variables).Commande utiliséesvn merge -r 65790:HEAD plugins/grenier branches/spip-3.0/plugins/grenierCette commande est à préférer plutot que de supprimer la branche et copier le trunk (cédric).
+r65851 | cedric    |  (ven. 14 sept. 2012) | Ne pas confondre un simple "<" avec un raccourci ressource en embarquant par erreur la balise html qui suit(Ferme http://core.spip.org/issues/2854)
+r65852 | cedric    |  (ven. 14 sept. 2012) | Sans le var_dump dans le depot precedent
+r65911 | cedric    |  (dim. 16 sept. 2012) | Ferme http://core.spip.org/issues/2857 et enleve le debug qui etait resté d'un précédent bugfix
+r65914 | cedric    |  (dim. 16 sept. 2012) | Report de r65910
+r65951 | cedric    |  (lun. 17 sept. 2012) | Petit bug dans les urls de notification vers le forum des admins
+r66054 | cedric    |  (mer. 19 sept. 2012) | Utiliser la declaration des champs_editables pour permettre l'extension de la table par declaration (et il faudrait refactorer le code d'insertion/modification en base des forum sur le modele de l'api editer_objet)
+r66056 | cedric    |  (mer. 19 sept. 2012) | utiliser collecter_request (notamment ne pas prendre en compte les champs non postés=null)
+r66091 | cedric    |  (jeu. 20 sept. 2012) | Eviter un bug lors de la soumission ajax du formulaire (jQuery pas defini dans l'iframe du post)
+r66093 | cedric    |  (jeu. 20 sept. 2012) | Reparer l'alerte qui se declenchait a tort sous safari après post du message, et qui ne se déclenchait pas du tout sous Chrome
+r66239 | cedric    |  (mar. 25 sept. 2012) | On peut ajouter une liste de documents de la mediatheque par designation d'un intervale (243-245 ou doc243-doc243)On peut combiner valeurs uniques et intervales en une seule saisie:132,243-245,257-279,323
+r66277 | cedric    |  (mer. 26 sept. 2012) | 2 coquilles sur le formulaire de recherche :variable indefiniegarder la class search meme si on est pas en HTML5
+r66318 | real3t    |  (ven. 28 sept. 2012) | À la demande de Pascal23, la colonne de droite des stats ne doit pas exclure les éléments trouvés précédemment : ça n'a rien à voir.
+r66464 | cedric    |  (mer. 03 oct. 2012) | Post publication des articles : les documents ne prenaient pas le bon statut&date associes (Ferme https://core.spip.org/issues/2849)
+r66776 | cedric    |  (sam. 13 oct. 2012) | coquilles dans les declaration de chaine de langue !
+r66948 | kent1     |  (sam. 20 oct. 2012) | Report de r66947:inc/charsets et non inc/charset
+r66950 | kent1     |  (sam. 20 oct. 2012) | Report de r66949 : On corrige l'index id_objet qui était sur la colonne id_versionOn ajoute deux index sur id_version et objetOn passe en 1.7.2 et le shema en 1.1.3
+r66990 | kent1     |  (dim. 21 oct. 2012) | Vérifier si un fichier existe et n'est pas de taille 0 au début de l'ajout de document, avant la copie du fichier, évite d'avoir de mauvaises surprises avec des fichiers mal uploadés de taille 0.
+r66992 | tcharlss  |  (dim. 21 oct. 2012) | variable $L (luminosité) au lieu de $V (valeur).Ca provoquait une erreur avec une saturation égale à 0.
+r67127 | tcharlss  |  (jeu. 25 oct. 2012) | incrémentation suite au commit précédent.-> variable $L (luminosité) au lieu de $V (valeur)
+r67198 | b_b       |  (sam. 27 oct. 2012) | réparer generer_url_forum_dist() qui ne renvoyait rien vu qu'on ne lui passait pas le bon argument
+r67225 | tcharlss  |  (dim. 28 oct. 2012) | 1sAjout de quelques modes de fusion au filtre image_masque,  tirés des formules indiquées sur wikipedia : https://en.wikipedia.org/wiki/Blend_modesMême nomenclature et mêmes résultats que ceux de GIMP.- ecran: effet inverse de 'produit' -> l'image resultante est plus claire- superposer: combine les modes 'produit' et 'ecran' -> les parties claires sont eclaircies, les parties sombres assombries.- lumiere_dure: equivalent a 'superposer', sauf que l'image du bas et du haut sont inversees.- teinte: utilise la teinte du masque- saturation: utilise la saturation du masque- valeur: utilise la valeur du masqueComme ce n'est pas un ajout majeur, on incrémente que le dernier chiffre pour la version.
+r67235 | cedric    |  (lun. 29 oct. 2012) | Ajouter un DEFAULT sur 'permanent' et 'champs' car peut poser problème sur certains sites SQLite migrés depuis mySQL (qui ont attrapés au passage une clause NOT NULL)Gerer le 'permanent' dans le sens inverse : on tag 'non' quand c'est une revision fusionnable, et rien sinon (le cas le plus courant), et on teste l'absence de 'non' pour forcer la creation d'une nouvelle revision. Cela évite de peupler la base pour rien, et evite des bugs après réparation de base sur le permanent problematique
+r67345 | cedric    |  (mer. 31 oct. 2012) | Ne jamais appeler en direct generer_url_document_dist mais passer par un charger_fonction approprié
+r67424 | eric      |  (ven. 02 nov. 2012) | Corrige le ticket [SVP - Anomalie #2895].Il manquait un include_spip de la liste des langues.
+r67489 | eric      |  (lun. 05 nov. 2012) | Correction de la détermination des branches SPIP lorsque la borne max contient des étoiles.Ajout dans le dépot de test d'une archive de ce type.
+r67632 | cedric    |  (ven. 09 nov. 2012) | mode_force=image permet de forcer l'affichage comme si #MODE=imagemode_force=document permet de forcer l'affichage comme si #MODE=documentPermet par exemple a un squelette d'ignorer le mode=document d'une image sans forker les modeles, ce qui est mieux pour l'avenir et la maintenabilité(en attendant la refonte générique de ces modeles et leur insensibilité au mode)
+r67734 | cedric    |  (mer. 14 nov. 2012) | La suppression a tort du retour ligne qui suit les commentaires // provoque un bug quand celui ci est en fin d'une ligne sans point-virgule, ce qui est une pratique courante dans les js de Bootstrap (hugues)
+r67763 | kent1     |  (ven. 16 nov. 2012) | report de r67761:Un index sur id_groupe
+r67802 | kent1     |  (lun. 19 nov. 2012) | report de r67801On passe en version 2.7.37
+r68017 | bmarne    |  (jeu. 29 nov. 2012) | report de r68012 et r68016 depuis le trunk vers la branche 3.0
+r68051 | kent1     |  (sam. 01 déc. 2012) | report de r68050_DIR_PLUGINS_SUPPL et pas _DIR_PLUGINS_SUPP
+r68052 | kent1     |  (sam. 01 déc. 2012) | On n'a plus besoin de gérer ces problèmes de constantes, _DIR_PLUGINS_SUPPL est géré comme un répertoire normal de plugins
+r68053 | kent1     |  (sam. 01 déc. 2012) | Incrément de version 0.80.9, meilleure gestion de _DIR_PLUGINS_SUPPL
+r68054 | eric      |  (sam. 01 déc. 2012) | Création d'un autorisation "ajouter plugins" pour les pages ajouter plugins et ajouter dépôts. Par défaut cette autorisation correspond à autoriser webmestre comme actuellement.Il est donc possible pour un mutu, par exemple, de désactiver l'ajout des plugins dans les sites esclaves et de le réserver au site maitre.
+r68058 | eric      |  (dim. 02 déc. 2012) | On améliore le commit précédent sur l'autorisation en prenant en compte le define de feu STEP _AUTORISER_TELECHARGER_PLUGINS. Ainsi, il suffit de positionner ce define à false pour les sites esclaves d'une mutu et l'autorisation d'ajouter un plugin leur sera retirée correctement.
+r68060 | eric      |  (dim. 02 déc. 2012) | Oubli de l'incrément.
+r68096 | cedric    |  (lun. 03 déc. 2012) | Lorsqu'un zip ne contient aucun fichier uploadable (type acceptable) alors il faut simplement le charger en zip joint plutot qu'annoncer une erreur erronée de fichier non trouvé (equipement)
+r68098 | cedric    |  (lun. 03 déc. 2012) | revert de r66990 qui empêche tout upload de document sur les serveurs sécurisés par open_basedir (Il n'est pas possible de lire le fichier ni sa taille tant qu'on ne l'a pas déplacé via move_uploaded_file)
+r68123 | kent1     |  (mar. 04 déc. 2012) | On revient sur r66990 qui a été revert par r68098Après déplacement du fichier dans IMG/, on regarde si on peut récupérer une taille du fichier, si on ne peut pas, c'est qu'il fait 0 octets et donc corrompu (ou problématique et inutile)On ajoute cette vérification sur la génération du zip (au cas où)
+r68367 | marcimat  |  (mer. 12 déc. 2012) | Report de r68366 : Tolérer que certains commentaires HTML ne soient pas supprimés, s'ils commencent par <!--keepme:
+r68383 | marcimat  |  (jeu. 13 déc. 2012) | Lorsqu'on affiche l'agenda interne dans l'espace public, via :<INCLURE{fond=prive/squelettes/contenu/calendrier,env} />il est alors de bon ton d'afficher, comme dans le privé, ses propres rendez-vous ou annonces, si l'on est connecté. Pour ça, il faut s'appuyer sur l'id_auteur de la session et non sur cette globale ayant l'id_auteur uniquement dans l'espace privé.
+r68389 | marcimat  |  (ven. 14 déc. 2012) | On sépare l'algorythme de conversion des messages vers le format fullcalendar dans des fonctions spécifiques pour permettre des réutilisations par des plugins. Cela dit, les quetes ne retournent pas le même format de données, ce qui est déjà très perturbant, mais provient d'un code maintenant ancien qu'il faudra peut être un jour réuniformiser.
+r68412 | chankalan |  (dim. 16 déc. 2012) | résout #2920
+r68452 | cedric    |  (mar. 18 déc. 2012) | Report de r68451 qui merge et optimise r68412 et r63222
+r68472 | cedric    |  (mer. 19 déc. 2012) | Retours de message du formulaire d'inscription : quand c'est une erreur afficher un message d'erreur. Quand c'est un succes, fournir en retour l'id_auteur inscrit pour les pipelines/plugins
+r68480 | cedric    |  (mer. 19 déc. 2012) | ajouter une valeur par defaut pour chaque type de champ ainsi qu'un type de champ oui/non en checkbox
+r68491 | cedric    |  (mer. 19 déc. 2012) | eviter un warning (seds)
+r68636 | cedric    |  (sam. 29 déc. 2012) | le input.texte et le input.sumit sont séparés par un espace, ce qui n'était pas le cas en SPIP 2.x pour permettre un rendu collé au besoin. On rétablit a priori, mais vérifier que ça ne cause pas de soucis
+r68671 | cedric    |  (jeu. 03 janv. 2013) | #2531 : segmentation fault dans le traitement des listeson essaye de simplifier la regexpPar ailleurs petit bug possible : on passe toujours dans le close() il faut donc toujours passer dans le init() sinon on ne sait pas ce qui sera ferme. Corrolaire, on enleve le if_matchJ'ai tente sans effet :- la suppression des static et remplacement en globales- le dispatching des 3 etats du switch dans les 3 fonctions
+r68672 | cedric    |  (jeu. 03 janv. 2013) | #2531 : sur spip-contrib, avec un cas test de message de forum qui reproduit le segfault a chaque fois,le seul fix fiable qui marche est un appel a charger_fonction dans le init().Aucune explication a l'horizon en ce qui me concerne, a voir si cela regle le bug dans les autres cas decrits par #2531Commentaire de test utilise sur contrib :"En ce qui me concerne je n'ai effectivement pas le temps de faire la migration de ce plugin en SPIP 3, alors toute aide est la bienvenue!Quelques pistes:-* pour générer un paquet.xml remplaçant le plugin.xml le plus simple est d'utiliser le plugin Plugonet (http://plugins.spip.net/plugonet.html ou svn://zone.spip.org/spip-zone/_plugins_/plugonet)-* pour ce qui est des spécificités des plugins de SPIP 3 voir la doc rassemblée sur http://contrib.spip.net/Migrer-un-plugin-vers-spip-3-* pour ce qui est de la logistique de développement j'ai fait le passage en  branches sur la zone:-** la version pour SPIP 2.* est désormais dans svn://zone.spip.org/spip-zone/_plugins_/gallery2/branches/version_spip2-** tu peux donc bosser directement sur la version de dev: svn://zone.spip.org/spip-zone/_plugins_/gallery2/trunk"(Evidement ce meme message ne provoque par le bug sur un site standard en local)
+r68800 | cedric    |  (lun. 07 janv. 2013) | Suite a http://core.spip.org/projects/spip/repository/revisions/20070 qui est un report oublie d'une fonctionnalite de SPIP 2.1 il ne faut pas appeler la page 404 depuis les squelettes car cela empeche un plugin d'utiliser une 401 en cas de contenu interdit par exemple.Corrolairement on deplace le calcul des messages d'erreur par defaut dans la page 404
+r69009 | cedric    |  (mar. 15 janv. 2013) | versionner les wheels cachees pour eviter un bug en cas de modification sensible lors d'un upgrade (kent1)
+r69190 | cedric    |  (mar. 22 janv. 2013) | Report de la version _core_/plugins/compresseur @ 69181 par cp. Inclue notamment PHPDoc et r68095 qui prend en charge les directives @import lors de la compression CSS
+r69196 | rasta     |  (mar. 22 janv. 2013) | {tout} n'est pas un critère, du coup même avec {tout} il y avait toujours le filtrage par "mode". On rétablit le comportement attendu (et du coup on peut bien utiliser les modèles de documents, insertion, etc, avec des documents dont le mode n'est pas connu).
+r69229 | guytarr   |  (mer. 23 janv. 2013) | report de r69026 dans cette branche aussi
+r69232 | guytarr   |  (mer. 23 janv. 2013) | oups (cerdic)
+r69240 | kent1     |  (mer. 23 janv. 2013) | Suite de http://core.spip.org/projects/spip/repository/revisions/20116 On passe dorénavant objet/id_objet à ce modèleCe que je ne comprends pas c'est pourquoi ce modèle est dans le plugin dist car vraiment indispensable à une balise définie dans le core le plus nu de SPIP
+r69326 | jack31    |  (jeu. 24 janv. 2013) | Avant de tout casser un essai sur les brèves :remplacer Copyright (c) 2001-2012 par Copyright (c) 2001-2013
+r69327 | jack31    |  (jeu. 24 janv. 2013) | On est en 2013 !
+r69331 | marcimat  |  (jeu. 24 janv. 2013) | Correction d'une partie du bug de @import url(https://fonts.googleapis.com/css?family=Ubuntu);Le protocole peut ne pas être impliciteIl reste que le CSS de l'URL n'est pas recopié dans local car cette URL n'a pas de .css, entrainant encore une erreur de squelette.
+r69332 | marcimat  |  (jeu. 24 janv. 2013) | Correction du bug de @import url(https://fonts.googleapis.com/css?family=Ubuntu);Le protocole peut ne pas être implicite, d'une part, mais s'il est explicite, on considère qu'on ne peut pas décider de faire l'extraction des données par le serveur. Effectivement, dans ce cas, google retourne un CSS différent en fonction du navigateur, or ici, c'est le serveur qui intéroge l'url (cerdic).Chaque @import distant est replacé au début du contenu css. En espérant que cette correction est correcte :)
+r69333 | jack31    |  (jeu. 24 janv. 2013) | On est en 2013 (suite)+ http://trad.spip.net/ au lieu de http://trad.spip.org
+r69404 | guytarr   |  (sam. 26 janv. 2013) | tiens on l'avait oublie celui-la. report de r64678
+r69430 | gilles    |  (dim. 27 janv. 2013) | Nommer la cle pour que la table soit cree sous Postgres
+r69739 | cedric    |  (mar. 05 févr. 2013) | suite de r69332 : gestion des @import dans les css contaténéeLes @import avec url absolue ne sont pas touché lors du traitement de chaque feuille (on suppose que c'est une ressource externe, en general une css de font-face)On ajoute une callback finale sur la css concaténée qui se charge de remonter tous les @import en debut de CSS si il y a lieu (les @import doivent toujours être en debut de CSS)
+r69774 | cedric    |  (mer. 06 févr. 2013) | optimisation webperf du theme fancybox de la mediabox : utiliser des sprites pour limiter le nombre d'images chargees
+r69827 | marcimat  |  (sam. 09 févr. 2013) | Report de r69826 : Déclarer le pipeline `medias_documents_visibles` pour éviter un log (g0oZ)
+r69871 | cedric    |  (mer. 13 févr. 2013) | Les clauses DEFAULT sont trop souvent manquantes sur les champs extension, credits et statut de la base, car elles n'étaient pas initialement renseignées. On les remet d'applomb une bonne fois pour toute (http://forum.spip.net/fr_246338.html)
+r69920 | cedric    |  (ven. 15 févr. 2013) | Report de r66133 et resynchronisation de la version base avec branche dev
+r70000 | kent1     |  (mar. 19 févr. 2013) | fichier inutile
+r70024 | cedric    |  (mer. 20 févr. 2013) | decodage des urls arbo : quand il y a plusieurs objets concurents pour la meme url et que le contexte ne fournit pas de parent, il faut prendre par ordre de id_parent croissant pour favoriser celui dont le parent est nul qui a plus de chance de matcher (url d'une rubrique secteur qui arrive en premier troncon). Cela arrive dans le cas de collisions entre rubrique racine et sous rubrique de meme nom, et on pouvait se retrouver a renvoyer la sous rubrique au lieu de la racine en decodant le premier troncon de l'URL
+r70068 | marcimat  |  (jeu. 21 févr. 2013) | Message d'erreur correct lorsque c'est le XML qu'on arrive pas à télécharger, et non sa syntaxe qui est erronnée
+r70070 | marcimat  |  (jeu. 21 févr. 2013) | oups
+r70144 | b_b       |  (dim. 24 févr. 2013) | Pas besoin de marge sur ce bloc vu que l'icône "Modifier ce groupe de mots" est suivie d'un bloc nettoyeur. Du coup le fichier est vide => on le supprime.
+r70151 | b_b       |  (dim. 24 févr. 2013) | revert de r70144 : peut mieux faire...
+r70153 | b_b       |  (dim. 24 févr. 2013) | triple oups piqué (pfiou)
+r70155 | gilles    |  (dim. 24 févr. 2013) | Report de r70140
+r70244 | guytarr   |  (mer. 27 févr. 2013) | report de http://core.spip.org/projects/spip/repository/revisions/20200, .9 est un nombre, une cellule vide n'invalide pas la class numeric de la colonne
+r70268 | cedric    |  (jeu. 28 févr. 2013) | Prise en charge des apple-touch-icon.png dans toutes leurs variantes, calculees a partir du logo du site.On n'utilise pas |spip_file_get_contents car cela fait stocker du binaire dans un cache SPIP est pete aleatoirement ici (un coup de chance que ça ait marché sur favicon.ico ?)Regle htacces a ajouter à la main, à moins qu'on ne la mette par défaut ?
+r70269 | cedric    |  (jeu. 28 févr. 2013) | Rajouter un commentaire non teste au moment de commit... casse la featureOn deplace en commentaire PHP
+r70279 | guytarr   |  (jeu. 28 févr. 2013) | report de [r70263] les tableaux lisent mieux les nombres, merci a denisb et esj
+r70293 | denisb    |  (ven. 01 mars 2013) | forum : cliquer sur l'adresse mail dans l'en-tête d'un message de forum lance le courrielleur. résout http://core.spip.org/issues/2917 .
+r70298 | cedric    |  (ven. 01 mars 2013) | L'information d'auteur d'un message de forum etait assez peu comprehensible faute de chaine de langue, et meme dans le cas article on n'utilisait plus la chaine de langue faite pour ça car il restait une mention id_article qui n'existe plus.
+r70317 | marcimat  |  (ven. 01 mars 2013) | Report de r70316 : Fermer http://core.spip.org/issues/2941 : Prendre en compte les documents attachés qu'ils soient via enclosure, media:content ou les deux
+r70329 | marcimat  |  (sam. 02 mars 2013) | Report de r70328 - Fermer #2926 : les groupes de mots n'ont pas à être tous affichés dans le formulaire pour associer des mots : c'est en fonction de leur configuration et du statut de l'auteur.
+r70375 | rasta     |  (lun. 04 mars 2013) | warnings de clés de tableau qui n'existe pas forcément
+r70413 | cedric    |  (mar. 05 mars 2013) | chaine de langue pour les messages prives qui ne proviennent d'aucune source (forum interne ou form des admins)
+r70416 | pierre    |  (mar. 05 mars 2013) | Contrôle des forums privés : même type de cartouche pour les nouveaux objets éditoriaux que celui des objets historiques.Limite : il faut que l'OE ait un titre.
+r70466 | pierre    |  (mer. 06 mars 2013) | LISTE à la place de ARRAY c'est plus élégant (merci b_b).
+r70469 | pierre    |  (mer. 06 mars 2013) | Suite de http://zone.spip.org/trac/spip-zone/changeset/70416 : l'objet doit avoir un titre ou un nom
+r70540 | b_b       |  (sam. 09 mars 2013) | r70144 en mieux, appliquer une marge à l'icône "Modifier ce groupe de mots" uniquement sur exec=mots
+r70587 | cedric    |  (lun. 11 mars 2013) | espaces insécables
+r70608 | cedric    |  (lun. 11 mars 2013) | Utiliser le modeles/mail_oubli pour composer l'email de rappel de mot de passe, plutot que le composer en dur dans le code PHP
+r70632 | cedric    |  (mar. 12 mars 2013) | la class boxInline permet de demander l'option {inline:true} sans passer par le js
+r70657 | cedric    |  (mer. 13 mars 2013) | increment version suite a r70632
+r70666 | ben       |  (mer. 13 mars 2013) |  lang des plugins
+r70853 | cedric    |  (dim. 17 mars 2013) | Corriger le test consecutivement a r66992 (le test était buggué comme la fonction)
+r70865 | ben       |  (lun. 18 mars 2013) | Un ptit update de langue avant la sortie finale de la 3.0.6
 
 
-2.0.3 -> 2.0.4
+SPIP-core spip-3.0.4 -> spip-3.0.5
+--------------------------------- 
 
-- Remettre jQuery 1.2.6 pour ne pas créer de problème de comptabilité. Ceux qui le souhaitent pourront mettre jQuery 1.3.2 dans leur répertoire squelettes dans un fichier : « javascript/jquery.js » (13774)
-- Enlever tous les arobases des sélecteurs jQuery pour autoriser jQuery 1.3.x(13772)
-- report de [13755] et [13763] introduit les valuers date_default et date_redac_default dans le contexte quand SPIP ajoute la date d'office / accepter un tableau pour le filtre alterner (13770)
-- report de [13621]Ajout de jQuery 1.3 ... Attention aux extensions qui utilisent encore [@param=value] dans les sélecteurs jQuery à passer en [param=value] . (13768)
-- Ajout de image_joindre (13766) 
-- #1691 : une balise <a> etant absurde, il s'agit forcement du nom de la note (13761)
-- #1711 : annuler [11243] qui etait une fausse bonne idee ; en l'absence d'extension dans le titre, les navigateurs sont perdus (13760)
-- #1695 produire un aplat quand la production d'image echoue pour la css privee (13759)
-- #1704 : reduire la taille de la vignette, y compris dans la colonne documents (13758)
-- la fonctionnalite cachee dans la dist {article sans texte+un document joint} -> affichage du document inline provoquait le masquage de tous les documents joints lorsque le texte etait vide et plusieurs document joint. il faudrait au moins documenter le code pour eviter de reintroduire le bug (13757)
-- jQuery 1.3.2 http://docs.jquery.com/Release:jQuery_1.3.2 (13756)
-- Complément sur les urls arbo  (13753)
-- les balises CVT #FORMULAIRE_TRUC implementees par la balise generique #FORMULAIRE_ n'utilisent que le squelette formulaires/truc.html Inutile et trompeur de chercher a la racine le squelettre truc.html, donc (13751)
-- Bien tester tous les formulaires avant de les declarer inexistants * [13744] [13745] [13746] etaient incomplets on les fussionne (13749)
-- Complement a [13745] et [13746] * le findpath manquait de precision (13746)
-- report de [13744] #FORMULAIRE_INEXISTANT (13745)
-- report de [13741] gestion plus fine des urls (13742)
-- Amelioration traitement de l'arabe, notamment quand tiret a l'interieur d'un mot. (13739)
-- On place le contenu du js du login dans un cdata pour être valide ... On encapsule également la fonction jquery en passant... (13734)
-- report de [13732] bg d'affiche des sites syndiques dans l'espace prive (13733)
-- report de [13728] urls page (13729)
-- report de [13725] et [13726] (debug) (13727)
-- complement a [13720] :  les fonctions url_xx($id,$entite) renvoient toujours une url valide donc commencant par ../ si on est dans ecrire/ (c'etait le cas auparavant pour les documents mais pas pour les autres entites) Corrolairement #URL_ARTICLE pointe toujours sur l'article, que le squelette soit evalue dans l'espace public ou prive, et [(#URL_ARTICLE|url_absolue)] est toujours correcte.  Ceci est vrai pour toutes les entites (13722)
-- gerer les notes dans le suivi des forums  (13721)
-- report de [13719] nouvelle API d'URLs (13720)
-- ne pas surligner dans la page de recherche elle-meme (report de [13717]) (13718)
-- integration des #NOTES dans les forums (13710)
-- lorsque generer_url_entite doit generer une url publique depuis l'espace prive, il semble logique de prefixer de _DIR_RACINE pour que l'url soit valide repare le calcul des nouveautes et de [(#URL_ARTICLE|url_absolue)] evalue depuis le prive (13708)
-- eviter les @include qui masquent les erreurs (13707)
-- un <img > pas xhtml  (13706)
-- report de [13689] #URL_ARTICLE et consort designent toujours l'url publique de l'objet depuis la racine, meme utilisee dans l'espace prive il faut donc les prefixer de #EVAL{_DIR_RACINE} dans le cas ou l'on affiche cette url dans l'espace prive pour que le lien soit correct (13705)
-- report de [13696] ne pas coller les paragraphes en previsu des forums  (13701)
-- éviter d'avoir plusieurs id="nobot" sur la même page. Un div englobant le contenu du formulaire des signatures pour éviter des erreurs de validation (13699)
-- Le double clic du sélecteur d'auteur en Ajax ne fonctionnait pas. (13694)
-- puce_statut surchargeable (permet en particulier le plugin mots techniques) (13693)
-- fixer la taille des images pour que ca ne clignote pas (13692)
-- Complément de 13677 sur la mise à jour de la base lors d'un upgrade (13691)
-- prise en compte de Accept-Language pour tout le monde (pas seulement les personnes authentifiées) (13690)
-- Correction d'un bug sur la sauvegarde et la fusion (13661)
-- Meilleure gestion en cas de plantage de l'installation (13659)
-- Eviter un warning concernant les URL personnalisées (13654)
-- correctif version allemande (klaus) (13636)
-- la syntaxe recuperer_fond($fond,$contexte,array('ajax'=>true)) ne fonctionnait que si le fond etait defini dans le contexte (13615)
-- Il y a des versions de PHP où les imagegif etc sont absentes, on contrôle (13606)
-- Il est totalement inutile de compliquer les choses avec des {doublons}... {!id_groupe} enlève déjà le groupe en cours. (13604)
-- Gérer l'explicitation du nom des tables dans le critère Fusion (13603)
-- Respecter les 0 dans les urls propres (13602)
-- Les restaurations de DUMP anciens avec une version 10000 utilisée ne commençaient pas les mises à jour à la version qu'il faut (13598)
+r19786 | cedric    | 2012-08-02 14:35:20 | Complement a r19775 : explications et optimisation (il faut en fait doubler la condition objet='xxx' pour être exact et optimisé)
+r19794 | cedric    | 2012-08-05 00:02:49 | eviter une notice
+r19795 | cedric    | 2012-08-05 00:07:21 | r19756 en mieux : on ne modifie defaut que si on compose une expression, sinon on le renvoie tel quelMais dans tous les cas #RANG ne fonctionnera pas comme attendu si une boucle DATA est dans la pile. A revoir sans doute.
+r19796 | cedric    | 2012-08-05 11:25:51 | Les fonctions champ_sql et index_pile s'enrichissent d'un parametre supplementaire permettant de ne pas remonter dans la pile des boucles et de ne chercher que dans la premiere englobante. La valeur true par defaut ne change rien au comportement des fonctions.
+r19797 | cedric    | 2012-08-05 11:28:15 | Quand on cherche le champ SQL rang avant de le composer, on ne veut regarder que dans la premiere boucle englobante. Si pas de champ, on compose alors la valeur calculee (repare le champ #RANG dans une boucle englobée par une boucle DATA).Au besoin, une reference explicite #_autreboucle:RANG permet de cibler le vrai champ SQL (ou calculé) d'une boucle englobante superieure
+r19801 | kent1     | 2012-08-07 16:04:14 | correction du commentaire de code... le pipeline a changé de ajouter_boutons => ajouter_menus
+r19809 | b_b       | 2012-08-11 13:56:29 | report de r19808 : appliquer direction_css aux css des boutons d'admin (George)
+r19811 | b_b       | 2012-08-14 11:52:01 | report de r19810 ; ferme #2820 : fix pour les langues en RTL
+r19816 | kent1     | 2012-08-16 14:29:18 | report de r19815 :Paginer les listes de rubriques par 500 dans le privé.Evite que la page plante dans les cas où l'on a beaucoup de sous-rubriques d'une même rubrique (testé avec plus de 70000)
+r19818 | b_b       | 2012-08-16 19:09:38 | Report de r19817 : Réparer le message qui signale la dispo d'une nouvelle version de SPIP (tonton)
+r19827 | cedric    | 2012-08-20 11:22:08 | Report de r19825 : class grostitre manquante (arno)
+r19828 | cedric    | 2012-08-20 11:23:07 | Report de r19826 : Les submits en display:none sont ignorés par certains navigateurs (webkit) et non déclenchés par "Entrée" qui active alors le mauvais bouton (arno)
+r19833 | kent1     | 2012-08-22 13:29:46 | #GET{rubriques_branche} n'est jamais utilisé... On vire cette boucle qui peut prendre des plombes si on a beaucoup de rubriques
+r19848 | b_b       | 2012-08-26 12:27:37 | report de r19847 : orthographe (patv)
+r19857 | b_b       | 2012-09-04 10:25:35 | éviter un débordement du bloc ajax qui liste les articles d'une rubrique quand on est connecté en tant que rédacteur (touti)
+r19868 | cedric    | 2012-09-07 15:05:59 | Les bonnes URLS dans le RSS de l'espace privé (Ferme #2826)
+r19869 | cedric    | 2012-09-07 16:16:41 | Ferme #2793 : ne pas echapper les single quotes dans les flux RSS, certains outils de syndications echouent a comprendre cela
+r19870 | cedric    | 2012-09-07 16:58:16 | #2839 : la configuration Articles : Menu de langue [non] / Articles gérer les liens de traduction [oui] est licite et doit être possible
+r19871 | cedric    | 2012-09-07 17:12:08 | Ferme #2839 : Quand on a pas activé le menu de langue sur un objet mais la possibilité de le traduire, afficher quand même le formulaire_traduire mais sans permettre de changer de langue. La creation d'un article hérite alors automatiquement de la langue de la rubrique dans cette configuration
+r19872 | cedric    | 2012-09-07 17:21:39 | #2752 : Retablir le fonctionnement de #FORMULAIRE_INSCRIPTION
+r19873 | cedric    | 2012-09-07 17:25:14 | Le second argument focus a été supprimé dans SPIP 3, et PHPDOCFerme #2752
+r19878 | cedric    | 2012-09-07 17:39:30 | r18995 avait enlevé la suppression des articles à la poubelle, par erreur (b_b, MegaHell)
+r19880 | cedric    | 2012-09-07 20:57:53 | Ferme #2839, vraiment : r19871 avait bien retabli le choix de la configuration qui fait que article_inserer pose la langue de la rubrique lorsqu'on crée une traduction. Mais le #FORMULAIRE_ARTICLE poste un changer_lang en cas de trad, qui était ignoré dans SPIP 2.x sur les articles, mais plus ici en vertu de sa prise en charge générique.On l'annule donc dans le traiter du formulaire, ce qui a le moins d'impact possible, car la feature sert sur les autres objets.
+r19891 | marcimat  | 2012-09-10 21:27:52 | Report de r19890
+r19893 | marcimat  | 2012-09-10 21:34:47 | Tss ! Un rien trop vite dans r19890 (suppression par inadvertance du formulaire)
+r19894 | cedric    | 2012-09-11 09:43:31 | La fonction notifications_envoyer_mails est capable de prendre en charge un mail <html> dans $texte. Dans ce cas elle extrait le sujet (si besoin) de la balise <title>, et ajoute un headers Content-Type si besoin.+PHPDoc
+r19897 | cedric    | 2012-09-11 12:56:18 | Dans une requete HEAD renvoyer le vrai en-tête. Pour cela on est bien obligé de calculer toute la page, mais on coupe la connexion après les entête http.On perd donc la rapidité de calcul des requetes HEAD au profit de leur exactitude.Dans la mesure ou HEAD représente en général moins de 1% des requetes (voire de l'ordre de 2/1000 sur un echantillon de sites en production) la perte en performance serveur est négligeable (d'autant plus qu'une réponse 200 a toute les chances de générer une requete complète à suivre).A contrario, en cas de soucis, ou pour analyser une page ou le comportement de SPIP, avoir une réponse pertinente sur HEAD est plus utile. Et la page est en cache pour l'éventuelle requete complète qui suit.
+r19901 | marcimat  | 2012-09-12 11:15:21 | Report de r19900 : classes lat sur les colonnes des exec php
+
+plugins-dist spip-3.0.4 -> spip-3.0.5 
+--------------------------------- 
+
+r64570 | yffic     | 2012-08-07 19:46:04 | Petite précision sur le message d'erreur en cas de répertoire lib inexistant
+r64787 | kent1     | 2012-08-14 11:34:43 | un peu de documentation
+r64791 | kent1     | 2012-08-14 11:49:07 | Report de r64790Un petit peu de doc
+r64826 | kent1     | 2012-08-15 11:04:50 | Report de r64825 :Bonne déclaration des pipelines pour qu'ils n'affichent pas de message d'erreur dans les logsOn ajoute credits dans les champs versionnésSur la page d'édition d'un document, pouvoir délier/supprimer le document si on en a les droitsL'inclusion pour les listes des documents afin qu'ils apparaissent dans la recherche... c'est un peu chiant de rechercher un document avec la recherche standard du privé et de tomber sur une page videSi on a beaucoup de documents, pouvoir augmenter le nombre de documents visibles de la médiathèque par 10 | 50 | 100 | 500 en fonction du nombre de documents dans le siteNouvelle option de tri dans la médiathèque : filtrer les documents n'ayant pas de vignette personnalisée
+r64923 | kent1     | 2012-08-17 15:47:39 | Report de r64922Une chaine de langue manquante lorsque l'on souhaite revenir à une révision
+r65024 | cedric    | 2012-08-20 11:25:16 | Report de r65023 : Les submits en display:none sont ignorés par certains navigateurs (webkit) et non déclenchés par "Entrée" qui active alors le mauvais bouton (arno)
+r65460 | cedric    | 2012-09-03 11:33:48 | L'element <description> du <channel> atom est obligatoire, gardons le même si il est vide (Olivier G.)
+r65678 | cedric    | 2012-09-07 16:39:39 | Corrige http://core.spip.org/issues/2771 mais pas generique, a revoir
+r65711 | rasta     | 2012-09-10 16:03:13 | Bug sur l'accès aux documents protégés : suppression du test qui visait à optimiser, car on tombait alors paradoxalement sur le "deny from all" dès qu'un document n'était pas restreint (quand tout le monde pouvait le voir).
+r65718 | rasta     | 2012-09-10 16:58:38 | Il ne faut pas générer des entités dans l'URL, celle-ci n'étant pas forcément pour une utilisation dans du HTML
+r65739 | marcimat  | 2012-09-11 10:41:50 | Suppression du porte plume avant recopie du trunk
+r65740 | marcimat  | 2012-09-11 10:42:36 | Report du trunk de porte plume dans la branche
+r65741 | marcimat  | 2012-09-11 10:44:05 | Version de spip max est la 3.0
+r65742 | marcimat  | 2012-09-11 10:45:54 | Suppression de SVP avant recopie du trunk
+r65743 | marcimat  | 2012-09-11 10:46:42 | Report du trunk de SVP dans la branche
+r65786 | marcimat  | 2012-09-12 08:54:47 | Report de r65785 : Les très vieux appels à afficher_documents_colonne() n'affichaient plus la gestion des documents. On mappe la fonction sur l'inclusion du squelette qui va bien.
+r65787 | marcimat  | 2012-09-12 09:37:44 | Suppression du plugin grenier avant de rapatrier le trunk actuel (vieilles listes de mots et scripts utf en plus)
+r65788 | marcimat  | 2012-09-12 09:39:35 | Trunk de grenier dans la branche 3 : vieilles liste de mots et scripts utf8 en plus
+r65789 | cedric    | 2012-09-12 09:42:46 | Mise a jour de la librairie Colorbox en 1.3.20.1 patchée d'après https://github.com/Cerdic/colorbox
+r65793 | marcimat  | 2012-09-12 10:06:06 | Report de r65971 (correction de noms de variables).Commande utiliséesvn merge -r 65790:HEAD plugins/grenier branches/spip-3.0/plugins/grenierCette commande est à préférer plutot que de supprimer la branche et copier le trunk (cédric).
+
+SPIP spip-3.0.3 -> spip-3.0.4
+-----------------------------------------
+
+r19683 | denisb    | 2012-07-05 10:35:17 | debusqueur : cosmétique css
+r19684 | cedric    | 2012-07-05 16:35:17 | Ferme #2753
+r19685 | denisb    | 2012-07-06 14:47:06 | debusqueur : cosmétique suite (spéciale b_b et marcimat)
+r19686 | denisb    | 2012-07-07 19:12:18 | debusqueur : cosmétique suite (le retour)
+r19687 | marcimat  | 2012-07-08 16:10:37 | Figurez-vous que SQLite ne râlait pas toujours en présence d'une erreur de requête SQL sur une boucle.Avec MySQL la même erreur était bien présente avec un appel à erreur_squelette. Il se trouve que le retour de la fonction spip_sqlite_select() du gestionnaire SQL doit retourner le texte de la requête en cas d'erreur afin que sql_select() puisse afficher l'erreur de squelette. Ce n'était pas fait avec SQLite.En plus de cela, on simplifie d'affichage des erreurs et numéros d'erreur SQLite : Le numéro d'erreur en SQLite 3 est «HY000 / 1» par exemple ; le texte d'erreur n'a plus que le message (sans numéros inutiles en plus).Enfin, on affine ou crée quelques PHPdoc et on évite une notice de plus.
+r19688 | marcimat  | 2012-07-08 18:08:57 | 2 autres notices avec des plugin.xml sur les balises <chemin> et <install> + un peu de phpdoc.
+r19689 | marcimat  | 2012-07-08 18:11:37 | Coquille (denisb)
+r19690 | marcimat  | 2012-07-10 09:51:51 | 2 notices PHP en moins : - Sur les boucles récursives- Lors d'une erreur de vérification d'un formulaire d'objet+ PHP Doc
+r19691 | marcimat  | 2012-07-10 10:18:37 | Notice PHP en moins lors de la modification d'un contenu par l'API de modification.
+r19692 | marcimat  | 2012-07-10 17:52:40 | Notice sur les recherches sans résultat+ PHPDoc du critère branche
+r19694 | marcimat  | 2012-07-11 14:53:06 | PHPDoc sur quelques fonctions.Suppression du 2e paramètre de load_charset() inutilisé depuis r2509Par ailleurs certaines fonctions sont spécifiques au vieux plugin Ortho, supprimé en r16015 (doit-on les garder ??)
+r19695 | marcimat  | 2012-07-11 14:59:55 | Le type de retour est 'bool', pas false+ un autre phpdoc
+r19696 | marcimat  | 2012-07-11 15:27:25 | C'est un \ pour les package ! + autres fonctions en phpdoc
+r19697 | marcimat  | 2012-07-11 19:13:23 | Un autre petit phpdoc
+r19698 | marcimat  | 2012-07-11 22:26:13 | Du PHPDoc
+r19699 | marcimat  | 2012-07-11 23:01:29 | Correction / oubli de PhpDoc
+r19700 | marcimat  | 2012-07-12 11:14:19 | Autre PHPDoc sur des fonctions d'installation+ préfixage des packages par SPIP\
+r19701 | marcimat  | 2012-07-12 11:39:53 | PHPDoc de sql_showbase() et sql_alltable()
+r19702 | marcimat  | 2012-07-12 17:18:51 | Du phpdoc encore.
+r19703 | marcimat  | 2012-07-12 17:49:20 | Doc: suppression de phrase en doublon : déjà écrit au dessus, je n'avais pas bien lu.
+r19704 | marcimat  | 2012-07-12 19:31:51 | PHPDoc sur quelques fonctions de inc/lang
+r19705 | marcimat  | 2012-07-12 19:40:34 | On revient sur une partie de r19495 dans inc/lang car cela empêchait l'initialisation correcte de la globale spip_lang et créait des notices à d'autres endroits du coup.
+r19706 | marcimat  | 2012-07-13 12:10:34 | D'autres phpdoc sur les charsets.+ on enlève un «à» en fin de ligne d'un phpdoc qui crée un bug dans phpdocumentor actuellement (sera corrigé plus tard), qui vient en fait d'un bug de PREG en PHP qui considère qu'une partie de «à» suivi d'un retour chariot fait partie de \h (tout caractère d'espacement), ce qui est sommes toutes assez embêtant.
+r19708 | cedric    | 2012-07-13 12:48:47 | Report de r19707 : include manquant qui empeche l'autosave de fonctionner dans certains cas
+r19709 | marcimat  | 2012-07-13 13:16:56 | Notice PHP + 1 phpdoc
+r19710 | denisb    | 2012-07-13 14:14:37 | filtres_images_lib_mini.php : php-doc
+r19711 | marcimat  | 2012-07-13 17:01:42 | D'autres PHPDoc+ suppression de code inutile (dans une fonction totalement inutilisée qui plus est) revision_objet() car identique au début de la fonction objet_modifier()
+r19712 | marcimat  | 2012-07-13 17:05:27 | Pétouilles
+r19713 | marcimat  | 2012-07-13 17:31:03 | Commentaire pour décrire un problème à résoudre concernant collecter_requests() et objet_instituer(), en attendant...
+r19714 | marcimat  | 2012-07-13 18:23:51 | Aidons PHPDocumentor à trouver les marqueurs TODO :Il les cherche dans une ligne commençant par // TODO description ou// TODO: descriptionOn homogénéise donc. Et dans les docblock, on peut utiliser @todoOn ajoute un phpdoc sur inc/autoriser.
+r19715 | marcimat  | 2012-07-13 18:27:29 | Aidons PHPDocumentor à trouver les marqueurs FIXME (comme r19714)
+r19716 | marcimat  | 2012-07-14 22:12:25 | Quelques Php Doc
+r19717 | marcimat  | 2012-07-14 22:22:28 | Retour sur r19716 qui avait ajouté une correction de notice PHP au passage : un squelette appelant un <INCLURE> cherchait la globale spip_lang qui n'était pas encore définie. On inclut donc inc/lang lors du premier passage sur evaluer_page lorsqu'il s'agit de traiter un code de squelette qui a du PHP.
+r19718 | marcimat  | 2012-07-15 00:31:40 | Réorganisation et documentation du code du critère doublons pour mieux le comprendre (aucun changement fonctionnel dedans). Il reste une notice PHP dessus car $doublons[ x ] est demandé alors qu'il n'existe pas encore.
+r19719 | marcimat  | 2012-07-15 12:11:56 | Évacuation d'une notice PHP sur le critère {doublons}.Pas si simple : on initialise le tableau $doublons dans l'en-tête de la boucle
+r19720 | marcimat  | 2012-07-15 13:15:22 | D'autres PHP DocÀ noter que $p des balises n'est pas un array ! mais un objet Champ évidemment...
+r19721 | marcimat  | 2012-07-15 14:10:29 | D'autres PHP Doc
+r19722 | marcimat  | 2012-07-15 15:30:28 | PHP Doc- on met la classe Contexte en premier car elle devrait pouvoir servir de base pour Boucle, Champ et Idiome qui utilisent les mêmes propriétés.- on teste une documentation de quelques propriétés.
+r19723 | marcimat  | 2012-07-16 10:31:17 | PHP Doc sur les paramètres des objets décrivant l'AST. Il reste Boucle qui n'est pas fini (mais c'est épuisant à faire !). + on passe les "var" en "public" au passage, qui explicite plus la visibilité de la variable.
+r19724 | marcimat  | 2012-07-16 11:06:06 | Correction de notice PHP lors d'un critère {1/2}
+r19725 | marcimat  | 2012-07-16 12:42:59 | PhpDoc sur la balise dynamique de formulaires
+r19727 | rasta     | 2012-07-16 18:24:15 | Report de r19726À cet endroit du code, on *sait* quelle est le statut demandé, donc autant le passer à l'autorisation plutôt que "?", pour permettre plus de chose.
+r19728 | marcimat  | 2012-07-16 19:37:52 | PhpDoc sur quelques autorisations, l'édition de liens
+r19729 | marcimat  | 2012-07-16 23:03:46 | Notice PHP sur l'autorisation de modifier un auteur à la création d'un nouvel auteur.+ PhpDoc sur quelques autorisations de plus
+r19730 | salvatore | 2012-07-17 03:37:25 | langues (spip)
+r19731 | salvatore | 2012-07-17 03:37:54 | langues (ecrire)
+r19732 | salvatore | 2012-07-17 03:37:55 | langues (public)
+r19733 | marcimat  | 2012-07-17 10:53:13 | PhpDoc sur le reste des autorisations
+r19734 | marcimat  | 2012-07-17 11:08:38 | PhpDoc sur les autorisations : - homogénéisation des noms de variables- paramètres sur la fonction autoriser()
+r19736 | cedric    | 2012-07-17 14:02:41 | Report de r19735 : Ne pas cumuler les modifications de texte et sujet faites par le pipeline ! (davduf, denisb)
+r19737 | marcimat  | 2012-07-17 19:03:15 | PhpDoc des fonctions f_jQuery et f_jQuery_prive
+r19738 | marcimat  | 2012-07-17 21:00:18 | PhpDoc…
+r19740 | cedric    | 2012-07-17 21:17:57 | Le trunk se met en 4, beta
+r19752 | ben       | 2012-07-21 16:02:11 | demo.spip.org -> demo.spip.net
+r19757 | marcimat  | 2012-07-23 17:26:30 | Report de r19756 : éviter une erreur sur #RANG dans une balise DATA.
+r19760 | kent1     | 2012-07-25 12:22:52 | Sur le formulaire de traduction d'un article, on ne se retrouvait jamais avec la langue de la rubrique en herit car on passait id_parent=0, ce qui fait un unset de id_rubrique dans formulaires_editer_objet_charger().0n se retouvait avec $res['id_parent'] = 0 et pas de $res['id_rubrique'], et donc comme langue d'héritage la langue du site et non la langue de la rubrique ce qui peut amener à ne pas pouvoir modifier la langue d'un article car la fonction d'institution de traduction n'avait pas les mêmes strings à comparer (langue princpale du site pas forcément égal à la langue de la rubrique).J'espère que cela ne casse rien d'autre
+r19762 | kent1     | 2012-07-25 13:53:52 | on revient sur r19760 pour éviter une notice php (marcimat)
+r19768 | rasta     | 2012-07-27 21:19:35 | Mini amélioration du dateur : pouvoir passer un pas au timepicker car 30min par défaut ça ne convient pas à un paquet de sites à mon avis (tous ceux que je connais qui utilisent Agenda râlent de pas pouvoir caler l'heure d'un événement plus précisément).Tout est pareil par défaut, mais au moins ça se personnalise.
+r19773 | denisb    | 2012-07-30 12:31:23 | req/pg.php : appeler la fonction adéquate. corrige http://forum.spip.net/fr_245088.html  (report de r19772)
+r19775 | cedric    | 2012-08-01 00:29:34 | oups la clause "left join spip_xxx ON id_xxx=id_objet AND objet='xxx'" ne ramene pas toujours le résultat attendu. Résultat, la fonction d'optimisation pouvait supprimer des liens pour des objets existants (perte d'auteurs, de mots clés sur articles...)  (Merci à g0uz)
+r19776 | cedric    | 2012-08-01 00:34:00 | La suppression d'un lien est une information importante a loger (g0uz)
+
+Plugins-dist spip-3.0.3 -> spip-3.0.4
+-----------------------------------------
+
+r63245 | marcimat  | 2012-07-03 18:06:15 | Report de r63224 : Coquille dans r62928 (Yffic, qui aurait pu corriger !!)
+r63268 | real3     | 2012-07-04 17:47:16 | Report de [63015] :les liens dans la previsualisation du porte plume ouvrent un nouvel onglet (pour eviter de perdre la page et donc le texte en cours d'ecriture)
+r63296 | cedric    | 2012-07-05 17:43:51 | Permettre de specifier la longueur mini des messages de forum par un define('_FORUM_LONGUEUR_MINI',3); par exemple
+r63297 | cedric    | 2012-07-05 17:47:55 | Format de code, sans modif
+r63332 | denisb    | 2012-07-07 12:19:25 | dist/forum.html : coquille (seds)
+r63334 | kent1     | 2012-07-07 12:50:21 | Report de r63333 :Permettre de surcharger 3 autorisations supplémentairesun document non publie peut etre modifie par tout le monde mais il faut quand même être logué et avoir un id_auteur quand même?
+r63336 | kent1     | 2012-07-07 12:56:24 | Report de r63335indentation et phpdoc
+r63429 | cedric    | 2012-07-13 12:43:45 | Detection des liens dans les messages de forum : il faut passer par les traitements des champs sinon on rate les liens en raccourci SPIP qui sont aussi parfois du SPAM
+r63515 | cedric    | 2012-07-17 20:59:57 | 3 petits tours et puis s'en vont
+r63516 | cedric    | 2012-07-17 21:05:11 | le trunk se mets en 4 pour SPIP
+r63531 | marcimat  | 2012-07-18 09:45:35 | Reports de r63528 r63529 et r63530 : PHPDoc, code mort et surtout éviter un affichage de la liste des dernières révisions si aucun objet n'a de révisions activées
+r64086 | cedric    | 2012-07-27 12:09:32 | Report de http://core.spip.org/projects/spip/repository/revisions/19761 : extension aif synonyme de aiff
+r64089 | cedric    | 2012-07-27 12:19:22 | Report de http://core.spip.org/projects/spip/repository/revisions/19759 et http://core.spip.org/projects/spip/repository/revisions/19767
+r64252 | marcimat  | 2012-07-31 14:00:13 | Report de r64251 : l'affichage des erreurs XML ne doit pas être fait par echo.
 
 
-2.0.2 -> 2.0.3
 
-- pouvoir tenir compte du hreflang lors de la construction de l'URL par calculer_url via inc_lien_dist (13595)
-- les entitee &gt; et &lt; etaint changee en < > apres une surligne (13593)
-- Accepter les - dans le nom des bases SQL (13591)
-- Bug sur changement d'auteur si le nom de l'auteur était trop court  (13590)
-- Coquille dans les vieilles defs (manque un g pour generer !) (Charly Caulet) (13586)
-- Retour des recherches de mots associés aux documents (non utilisée dans le core)   (13584)
-- Bug si erreur de frappe #URL_ MOT (espace avant MOT) (13582)
-- Pour un raccourci "[->25]" la fonction nettoyer_raccourcis_typo renvoie "Array"... (Pat). (13573)
-- Le numéro du jour manquait sur le libellé du survol conduisant au calendrier du jour. Quant au libellé du mois, il n'emmenait pas sur le calendrier du mois. (13569)
-- Une fonctionnalité de la 1.9.2 perdue: si id_rubrique est fournie à la création d'une traduction, il faut créer dans cette rubrique, pas ailleurs.  (13560)
-- ne pas ecraser le hash de la boucle avec le critere {recherche} cela empeche tout plugin de l'utiliser (13555)
-- proteger la fonction recuperer_fond quand on ecrit recuperer_fond($fond,$_GET) dans les plugins meme si il semble que la variable soit protegee en amont dans tous les cas (13551)
-- Le cryptage du mot de passe avant envoi n'était plus assuré que si le cookie dession était toujours actif.  (13544)
-- Fatal error a la suppression d'un document avec vignette.  (13539)
-- Lorsqu'on pose ou retire les .htaccess des sous-répertoires de IMG, il ne faut pas oublier celui nommé "distant" qui ne figure pas dans la table des types de documents. (13538)
-- Deux balises A pour LOGO_DOCUMENT, c'est une de trop (Eric). (13536)
+SPIP 3.0.2 -> SPIP 3.0.3 (03 juillet 2012)
+---------------------------------------
 
 
-2.0.1 -> 2.0.2
+r19590 | cedric    | 2012-06-13 18:15:42|le decodage des urls se fait toujours par rapport au site public (cas où l'on fournissait une url absolue qui était mal coupées si on essayait de la décoder depuis l'espace privé)
+r19593 | kent1     | 2012-06-14 16:46:09|Un jquery-ui-1.8.custom pour éviter des intéractions malheureuse avec jQuery UI
+r19595 | cedric    | 2012-06-17 18:50:27|definir _PLUGINS_HASH le plus tot possible (avant les inclusions d'options des plugins, donc, et non apres)
+r19598 | cedric    | 2012-06-18 11:03:08|sutilisation erronée de sql_quote dans recuperer_infos_distantesun fichier nommé v0.6.3 est analysé comme ayant une extension '3'. Mais sql_quote appelé sans type croit alors qu'il ne faut pas echapper ce nombre, ce qui provoque la requete avec condition extenstion=3 qui ramène le type de document '3ga' alors qu'une condition extension='3' ne ramène rien, ce qui est correct.
+r19602 | cedric    | 2012-06-19 11:29:19|gerer les multiples occurences et appel du dateur :- ne lancer qu'une seule fois le chargement ajax du js- initialiser startDate et endDate a partir des attributs data-startData et data-endDate portés par le input.date dans le html, et non passés en arguments du dateur- n'initialiser qu'une seule fois chaque input, même en cas de multiples appel de la fonction d'initialisation(xdjuj, marcimat)
+r19604 | marcimat  | 2012-06-19 11:37:21|report de r19600 : Notice PHP fort justifiée, issue de r16981, qui pouvait tromper le message de log lorsque le connect.php n'est pas disponible.
+r19620 | cedric    | 2012-06-21 00:00:54|encore un bug avec le ajax redirect sur une meme page, car on ne prenait pas l'url absolue de la redirection
+r19621 | cedric    | 2012-06-21 09:45:00|Ferme #2316 : en cas d'auth PHP il ne faut pas changer l'alea a chaque hit car cela empeche la verification des actions securiseeOn ajoute un argument $phpauth aux fonctions d'auth, qui est a true quand la fonction est appelee depuis lire_php_authPas de rupture de compat car si la methode ignore cet argument c'est qu'elle n'en a pas besoin
+r19622 | cedric    | 2012-06-21 09:47:00|cartouche a jour
+r19625 | cedric    | 2012-06-21 10:07:55|Ferme #2637 : message plus explicite lors de la reinstallation
+r19631 | cedric    | 2012-06-21 15:52:56|sReport de r19629 : HTTP_X_REQUESTED_WITH ne semble plus envoyé dans les requetes ajax de jQueryon complète la detection par la presence de var_ajax (form et inclure ajax de SPIP)
+r19632 | cedric    | 2012-06-21 15:54:28|Report de r19630 : Lorsque la constante _SET_HTML_BASE n'est pas definie quand on arrive dans page_base_href, ne pas faire un define mais renseigner une static. Cela revient au même du point de vue de la fonction, mais permet à un plugin externe de savoir si cette constante est personalisée ou non
+r19635 | cedric    | 2012-06-21 17:57:16|Report de r19633 : n'appeller spip_barre.js que dans les minipres d'admin, qui demandent la creation d'un repertoire FTP
+r19636 | cedric    | 2012-06-21 17:57:46|Report de r19634 : La page minipres est capable de se jouer en un seul hit en embarquant les css inline. Pour cela on introduit un 4e argument $all_inline a false par defaut
+r19638 | cedric    | 2012-06-21 18:15:58|Report de r19637 : debug minipres en mobile itruc : la meta viewport manquait, mais sinon toute la css est deja responsive grace a tetue. On supprime les hachures en version petit ecran aussi
+r19644 | marcimat  | 2012-06-23 10:26:09|Report de r19643 : Lorsqu'on crée une table avec un outil externe à SPIP, les échappements des colonnes de tables ne sont pas forcément les même.
+r19651 | marcimat  | 2012-06-25 19:25:04|Reports de r19649 et r19650Standards stricts avec PHP 5.4
+r19658 | cedric    | 2012-06-28 16:56:06|Report de r19610 : ne pas raler fichier quand c'est pas grave
+r19659 | cedric    | 2012-06-28 17:06:04|Report de r19605 r19607 et r19658 : ne pas compter systematiquement le total d'une boucle, et compter plus vite sous sqlite
+r19660 | cedric    | 2012-06-29 16:42:04|inclusion manquante (Vince_)
+r19666 | denisb    | 2012-07-02 23:40:23|compiler.php : on nettoie $connect qui peut arriver par url (arnault pachot) ; report de r19665
+r19669 | cedric    | 2012-07-03 11:14:07|Ferme #2779 : la modification de l'email par un redacteur echouait car l'url de retour n'etait pas une url mais du javascript. On retablit l'url, et tant pis pour le retour tout ajax apres saisie
+r19671 | denisb    | 2012-07-03 14:21:28|ecrire/req : dans la tentative de retrouver des KEY éventuelles dans la description des tables, le requéteur prenait en compte un 'nom de champ' contenant littéralement 'KEY' . (report de r19663 et r19664)
+r19672 | denisb    | 2012-07-03 15:29:24|ecran_securite : éviter injection sur connect (Arnault Pachot)
 
-- deux bugs au login (13529)
-- refuser les urls avec le pseudo protocole data (13521) 
-- bonne année (13520) 
-- Unifier la mise en page dans les 3 onglets de gestion des langues (13519)
-- encore quelques retouches sur l'agenda de l'espace publique (13517) 
-- le champ type de la balise A d'un logo de document était toujours vide (13512)
-- la boucle DOCUMENTS ne donnait pas les documents attachés aux messages de forums (13511)
-- accepter les notes nommees <*> <+> <.> et autres caracteres significatifs (13510)
-- un peeling pour évacuer le point noir. (13508)
-- amélioration du calcul de popularité (13506)
-- lien incorrect dans le message à un visiteur venant de s'inscrire (13504)
-- support du png8 comme format de image_format (l'extension sera bien 'png') (13501)
-- authentification via LDAP/AD, lire le Samaccountname (13500)
-- proteger l'$id fournit a calcul_branche_in (13498)
+
+PLUGINS-DIST SPIP 3.0.2 -> SPIP 3.0.3 (03 juillet 2012)
+----------------------------------------------------
+r62619 | eric      | 2012-06-17 16:37:01 |Une regexp plus précise pour éviter de traiter la balise <archives>
+r62656 | cedric    | 2012-06-18 14:18:02 |on reinverse r59705 car cela semble contre-intuitif à l'usage :quand on veut activer un nouveau plugin, on cherche dans une liste dans laquelle sont mis en avant (blanc) les plugins déjà actif donc non selectionnable.Il est plus naturel que soient mis en avant tous les plugins activables. A confirmer à l'usage.
+r62710 | cedric    | 2012-06-19 11:41:33 |Ferme http://core.spip.org/issues/2765 : Coquille qui generait des urls page à la place des urls simples (Yffic)
+r62738 | cedric    | 2012-06-20 10:06:58 |l'action instituer_forum peut recevoir son $arg en argumentla fonction email_notification_forum accepte un contexte personalise en 3eme argument, qui sera passé au squelettes de calcul de l'email
+r62777 | rasta     | 2012-06-20 17:17:45 |Bug : le plugin ne prenait pas en compte sa propre config. On a le droit de modifier la date que si c'est enregistré comme ça dans la meta.
+r62866 | denisb    | 2012-06-22 20:26:18 |medias ajouter_documents : coquille malvenue résout http://core.spip.org/issues/2772
+r62877 | kent1     | 2012-06-23 13:02:06 |Pouvoir rediriger le formulaire #FORMULAIRE_ADMIN_PLUGIN autre part que sur ecrire/?exec=admin_plugin
+r62878 | kent1     | 2012-06-23 13:02:27 |Petit incrément
+r62881 | kent1     | 2012-06-23 13:13:19 |Report pour le phpdoc à jour
+r62929 | marcimat  | 2012-06-24 14:54:00 |Report de r62628 (sauf le numéro de version)
+r63008 | kent1     | 2012-06-26 11:06:54 |une class editer manquante et on utilise |oui |non
+r63013 | kent1     | 2012-06-26 14:18:03 |Des éléments non internationnalisés...Des restes de code de BoOz ça encore
+r63035 | cedric    | 2012-06-27 12:16:01 |Report de r63034
+r63055 | cedric    | 2012-06-28 11:55:54 |Upgrade de CSSTidy en v1.4 qui corrige divers bugs (format() sur @font-face, url sur @import...)
+r63058 | kent1     | 2012-06-28 12:36:28 |indentation
+r63078 | kent1     | 2012-06-28 23:06:58 |Deux nouveaux types de documents -* Lyx issus de http://www.lyx.org/-* y4m cf http://wiki.multimedia.cx/index.php?title=YUV4MPEG2Un peu d'indentation sur 2 fichiersOn incrémente le numéro de version à 2.7.29 et le schema de base à 1.2.1
+r63221 | kent1     | 2012-07-03 14:14:19 | Ajout de l'array champs_editables pour la description de l'objet document (du coup peut être complété par des plugins) et utilisation dans action/editer_documentOn utilise objet_info dans inc/renseigner_document pour récupérer ses metadatas lors de l'insertion en base de documentUn peu d'indentationPassage en version 2.7.30
 
 
-2.0.0 -> 2.0.1 rapport de police (13469 ->13495) 
 
-- réparation d'un bug sur les urls standard et autres anciennes implémentations (13489) 
-- problème de création du répertoire cache à l'install (13487) 
-- correction mineure sur le calcul des visites  (13485) 
-- Compilateur : défaut sur la prise en compte sur le champ statut dans le cas d'une requête sur une table principale (13484) 
-- correction pour IE6/7 sur les formulaires de l'espace privé (13481)
-- il était impossible de déplacer SPIP dans un sous répertoire (13478 )
 
+SPIP 3.0.0 -> SPIP 3.0.2 (12 juin 2012)
+---------------------------------------
+r19429 | cedric    | (sam. 19 mai 2012) | Eviter une réentrance infinie lors de l'upgrade depuis une SPIP 2.x qui n'a pas de table spip_jobs
+r19430 | cedric    | (dim. 20 mai 2012) | on complète r19429 en évitant de lancer les crons qui sont tous insérés d'un coup sur le premier hit lors de l'upgrade
+r19431 | cedric    | (dim. 20 mai 2012) | Ferme #2716 : ne pas appeller mysql_free sur un booleen lorsque la requete precedente a échoué
+r19436 | cedric    | (dim. 20 mai 2012) | Version 3.0.1
+r19438 | cedric    | (dim. 20 mai 2012) | masquer les erreurs sql sur la page des mises a jour, car proviennent justement de la base pas a jour !
+r19439 | cedric    | (dim. 20 mai 2012) | error_get_last n'est disponible qu'a partir de PHP 5.2.0 et on veut assurer le support de PHP 5.1.0
+r19440 | cedric    | (dim. 20 mai 2012) | error_get_last n'est disponible qu'a partir de PHP 5.2.0 et on veut assurer le support de PHP 5.1.0
+r19442 | cedric    | (dim. 20 mai 2012) | Eviter un warning lors de la connexion sur un serveur externe qui n'a pas de table spip_meta (dump sqlite par exemple) (cyaltern)
+r19443 | gilles    | (dim. 20 mai 2012) | Si PHP n'est pas dans la bonne version, est est inutile de tenter une installation de SPIP 3.0
+r19444 | gilles    | (dim. 20 mai 2012) | report de r19443 dans la branche de dev - et formatage
+r19456 | gilles    | (mar. 22 mai 2012) | Notice: Use of undefined constant intval - assumed 'intval' (PatV)
+r19457 | gilles    | (mar. 22 mai 2012) | Use of undefined constant _VAR_MODE - assumed '_VAR_MODE' (PatV)
+r19462 | cedric    | (jeu. 24 mai 2012) | Report de r19461 : gestion des erreurs de recuperation lors de copie_locale pour eviter le stockage de fichiers corrompus et inutilisables"
+r19464 | denisb    | (jeu. 24 mai 2012) | inc/chercher_rubrique.php : résout #2731 ; suppression de la ligne blanche qui affectait d'office la sous-rubrique à la racine
+r19465 | denisb    | (jeu. 24 mai 2012) | inc/rechercher.php : résout #2730 ; bug démonté par marcimat et corrigé par _fil_
+r19468 | cedric    | (jeu. 24 mai 2012) | Report de r19467 : appliquer texte_script sur le nom du site avant de l'injecter dans du JS...
+r19470 | marcimat  | (ven. 25 mai 2012) | Report de r19469#2705 : Purger les vieilles sessions en cron. Tous les 7 jours, ce devrait être largement suffisant.
+r19478 | denisb    | (lun. 28 mai 2012) | exceptions.css.html : affichage en rtl ; report de r19477
+r19485 | cedric    | (mar. 29 mai 2012) | Report de r19483 : css manquante sur <input type='reset' /> (Eric)
+r19486 | cedric    | (mar. 29 mai 2012) | Report de r19484 :Extraire la fonction cvtconf_formulaires_configurer_enregistre() du pipeline cvtconf_formulaire_traiter()La fonction cvtconf_formulaires_configurer_enregistre() peut etre appelée depuis la fonction traiter() d'un formulaire de configuration dont on veut personaliser le traitement sans reecrire le stockage
+r19488 | b_b       | (mer. 30 mai 2012) | report de r19487 : r19411 utilise autoriser voir auteur mais celle-ci était mal définie (il faut peut être créer une fonction spécifique pour ça ?)
+r19490 | denisb    | (jeu. 31 mai 2012) | ecrire_fr.php : "c'est toi le déchet !" report de r19489
+r19491 | cedric    | (ven. 01 juin 2012)| eviter une boucle infinie quand _DIR_SESSIONS n'existe pas encore (il semble qu'on ne récupère pas un false sur le readdir quand on l'appelle avec un false venant d'un opendir echoue)
+r19494 | denisb    | (ven. 01 juin 2012)| faire disparaître quelques warnings PHP ; report de r19493
+r19496 | denisb    | (ven. 01 juin 2012)| évacuation de quelques encombrants notice PHP ; report de r19495
+r19498 | cedric    | (ven. 01 juin 2012)| Report de r19497 :Reparer les criteres age, age_relatif, et (jour|mois|annee)_relatif qui se comparent tous a un entier et non une date (bug visible sous sqlite uniquement, mysql etant laxiste), suite a r19343Reparer le critere heure qui était cassé partout par la faute d'un echappement manquant
+r19501 | cedric    | (sam. 02 juin 2012)| Dans certains cas forcer_lang provoquait une redirection en GET sur un POST de formulaire : il ne faut pas, cela fait perdre la saisie !
+r19502 | cedric    | (sam. 02 juin 2012)| forcer le reload si redirection demandee par form ajax : si url differente c'est ignoré, mais si seul l'ancre change, ça force la mise a jour de la page
+r19505 | marcimat  | (lun. 04 juin 2012)| Report de r19504 : Erreurs de compilation possible avec le critère {si}
+r19507 | marcimat  | (lun. 04 juin 2012)| Reports de r19504 et r19506 : Corrections de quelques notices PHP
+r19524 | marcimat  | (mar. 05 juin 2012)| Report de r19253 : Ne pas se planter dans les parenthèses, ça évite d'avoir des boutons désordonnés !
+r19525 | cedric    | (mar. 05 juin 2012)| Ne forcer un reload que si c'est un changement d'ancre simple (sinon le reload se declenche parfois plus vite que le redirect et ça provoque un comportement indesirable)
+r19534 | cedric    | (mar. 05 juin 2012)| Report de r19527 + r19528 : l'usage d'un in minuscule dans {id_rubrique in 1,23} passe en mySQL mais pas en SQLite pour une sombre histoire de quote. Corrigeons
+r19535 | cedric    | (mar. 05 juin 2012)| Report de r19531: rotéger var_ajax_ancre à la reinjection dans le HTML (Boris - Avatam Studio)
+r19538 | cedric    | (mar. 05 juin 2012)| Report de tous les commits de spip/ecrire/lang de r19370 a r19533
+r19547 | cedric    | (jeu. 07 juin 2012)| Report de r19546 : pas de required sur input password : cela bloque la soumission dans certains navigateurs
+r19552 | cedric    | (ven. 08 juin 2012)| devrait résoudre #2732 : ne pas dupliquer le character set ou le collate quand on créé un champ qui en possède déjà un
+r19560 | denisb    | (ven. 08 juin 2012)| ne pas réinjecter dans le html de variable client non nettoyée (AS ASafety)
+r19564 | rasta     | (lun. 11 juin 2012)| Utiliser la pagination habituelle du privé.
+r19569 | denisb    | (lun. 11 juin 2012)| écran de sécu : filtrages modifiés et ajout de var_ajax_ancre (report de http://zone.spip.org/trac/spip-zone/changeset/62391)
+r19571 | marcimat  | (lun. 11 juin 2012)| Report de r19567 (Test de compatibilité des plugins en erreur dans le calcul de l'ordre des plugins)
+r19572 | cedric    | (mar. 12 juin 2012)| Report oublie de r15047 (Pascale LC)
+r19575 | cedric    | (mar. 12 juin 2012)| Report de r19574 : La globale ldap_attributes peut être personalisée dans mes_options.php : ne pas l'écraser dans ce cas
+r19576 | kent1     | (mar. 12 juin 2012)| Le navigateur de rubriques est issu de zone.spip.org/trac/spip-zone/browser/_plugins_/spip-bonux-2/formulaires/selecteur/navigateur.html mais avait perdu la fonctionnalité de {limite_branche}... N'étant plus dans spip-bonux_3, on réintroduite ce possible critère ici
+
+
+PLUGINS-DIST SPIP 3.0.0 -> SPIP 3.0.2 (12 juin 2012)
+----------------------------------------------------
+r61477 | marcimat  |  (lun. 21 mai 2012) | Report de r61476 : Les styles SPIP, ce n'est pas la même chose que la base CSS. On les déplace dans le point 2 (Tetue)
+r61600 | b_b       |  (mer. 23 mai 2012) | report de r61599 : évitons de perdre les visiteurs en classant les rubriques des menus de navigation par date
+r61643 | marcimat  |  (jeu. 24 mai 2012) | Report de r 61642 via la commande :svn merge -c 61642  svn://zone.spip.org/spip-zone/_core_/plugins/compresseurhttp://core.spip.org/issues/2733(Fermer #2733 en évitant que le compresseur HTML touche aux commentaires <!--extra--> que l'on sème à divers endroits.)
+r61682 | marcimat  |  (ven. 25 mai 2012) | Report de r61362 (redirection infinie en url arbo et article-page)
+r61687 | cedric    |  (ven. 25 mai 2012) | Correction et doc sur r59769 (fil)
+r61767 | denisb    |  (lun. 28 mai 2012) | style_prive_plugin_svp.html : affichage rtl ; report de http://zone.spip.org/trac/spip-zone/changeset/61766/
+r61784 | denisb    |  (mar. 29 mai 2012) | revisions - liste/versions.html : un rédacteur ne peut lire les révisions d'articles en cours de rédaction s'il n'en est pas auteur. inutile de les lui proposer dans la liste. report de r61783
+r61797 | denisb    |  (mar. 29 mai 2012) | revisions - liste/versions.html : manquer de crochet nuit gravement à la santé (tofulm)
+r61809 | rasta     |  (mar. 29 mai 2012) | Ça ne sert à rien d'encapsuler une unique fonction du core dans une fonction propre à ce plugin, si ce n'est pas possible de surcharger son résultat.On permet donc avec un pipeline de modifier les statuts qui ont le droit de recevoir des messages.
+r62008 | eric      |  (sam. 02 juin 2012)| Correction d'une erreur dans la regexp de détection d'une abréviation.
+r62013 | cedric    |  (sam. 02 juin 2012)| esReport de r62011 :Resout http://core.spip.org/issues/2740 en complement de http://zone.spip.org/trac/spip-zone/changeset/62009 :- accepter que les crochets contenus dans un lien contienent n'importe quoi sauf -> (raccourci abbr par exemple)- ne pas confondre un |{} d'un raccourci dans le lien, en acceptant uniquement des paires de crochet [] dans le libelle du lien :// accepte un niveau de paire de crochets dans le texte :// [texte[]|title{lang}->...]// mais refuse// [texte[|title{lang}->...]// pour ne pas confondre avec un autre raccourci
+r62025 | eric      |  (sam. 02 juin 2012)| Petite erreur inclusion du head (seds)
+r62032 | cedric    |  (sam. 02 juin 2012)| Notifier forumprive quand on insere un forum prive, et non forumposte
+r62092 | marcimat  |  (lun. 04 juin 2012)| Report de r62090 : Corrections de notices PHP
+r62094 | marcimat  |  (lun. 04 juin 2012)| Report de r62093 : Corrections de notices PHP
+r62159 | marcimat  |  (mar. 05 juin 2012)| Report de r62157 et r62158 : sinon() n'est pas toujours present (Oil) et évitons de charger inc/filtres pour si peu
+r62168 | cedric    |  (mar. 05 juin 2012)| Report de r61806 : Ne pas generer de balise script ou link vide si pas de js ou css a compacter
+r62169 | cedric    |  (mar. 05 juin 2012)| Report de r62154 : homogeneiser avec la moderation des forums : border 1px sur tout le bloc et 8px sur le haut
+r62173 | cedric    |  (mar. 05 juin 2012)| Reports des commits de salvatore compris entre r61274 et r62170
+r62221 | b_b       |  (jeu. 07 juin 2012)| report de r62220 : passer l'id_rubrique des breves et sites à la nav pour exposer la rubrique en cours (bug repéré par seds)
+r62241 | marcimat  |  (jeu. 07 juin 2012)| Report de r62240 : La coloration des week end tombait au milieu de la semaine ! (cerdic)
+r62243 | marcimat  |  (jeu. 07 juin 2012)| Report de r62242 : Le lien des réferers aujourd'hui doivent partir sur le jour d'aujourd'hui !
+r62245 | marcimat  |  (jeu. 07 juin 2012)| Report de r62244 : Coloration du début du mois au début du mois et non sur la veille (cerdic)
+r62247 | marcimat  |  (jeu. 07 juin 2012)| Report de r62246 : Version ++ suite au débug de coloriage
+r62322 | kent1     |  (ven. 08 juin 2012)| Report de http://zone.spip.org/trac/spip-zone/changeset/62321On ajoute une screenshot aussi pour le coup : http://photospip3.arscenic.org/sites/photospip3.arscenic.org/IMG/png/capture_doc2img_-_medias.png

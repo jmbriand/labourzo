@@ -1,3 +1,0 @@
-Apr 08 12:07:18 82.67.112.47 (pid 23036) Duplicate entry '2-35-article' for key 1 - INSERT INTO lbz_documents_liens (id_objet,objet,id_document,vu) VALUES (35,'article',2,'oui')
-Apr 08 12:10:36 82.67.112.47 (pid 25642) Duplicate entry '3-35-article' for key 1 - INSERT INTO lbz_documents_liens (id_objet,objet,id_document,vu) VALUES (35,'article',3,'oui')
-Apr 08 12:11:29 82.67.112.47 (pid 26408) Duplicate entry '4-35-article' for key 1 - INSERT INTO lbz_documents_liens (id_objet,objet,id_document,vu) VALUES (35,'article',4,'oui')

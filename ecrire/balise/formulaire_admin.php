@@ -3,17 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;	#securite
-
-include_spip('inc/autoriser');
-include_spip('base/abstract_sql');
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // http://doc.spip.org/@balise_FORMULAIRE_ADMIN
 function balise_FORMULAIRE_ADMIN ($p) {
@@ -23,7 +20,7 @@ function balise_FORMULAIRE_ADMIN ($p) {
 # on ne peut rien dire au moment de l'execution du squelette
 
 // http://doc.spip.org/@balise_FORMULAIRE_ADMIN_stat
-function balise_FORMULAIRE_ADMIN_stat($args, $filtres) {
+function balise_FORMULAIRE_ADMIN_stat($args, $context_compil) {
 	return $args;
 }
 
@@ -37,7 +34,7 @@ function balise_FORMULAIRE_ADMIN_stat($args, $filtres) {
 // http://doc.spip.org/@balise_FORMULAIRE_ADMIN_dyn
 function balise_FORMULAIRE_ADMIN_dyn($float='', $debug='') {
 
-	global $var_preview, $use_cache;
+	global $use_cache;
 	static $dejafait = false;
 
 	if (!@$_COOKIE['spip_admin'])
@@ -48,7 +45,7 @@ function balise_FORMULAIRE_ADMIN_dyn($float='', $debug='') {
 			return '';
 	} else {
 		if ($dejafait) {
-			$res = '';
+			if (empty($debug['sourcefile'])) return '';
 			foreach($debug['sourcefile'] as $k => $v) {
 				if (strpos($v,'administration.') !== false)
 					return $debug['resultat'][$k . 'tout'];
@@ -56,6 +53,10 @@ function balise_FORMULAIRE_ADMIN_dyn($float='', $debug='') {
 			return '';
 		}
 	}
+
+	include_spip('inc/autoriser');
+	include_spip('base/abstract_sql');
+
 
 	$dejafait = true;
 
@@ -70,8 +71,9 @@ function balise_FORMULAIRE_ADMIN_dyn($float='', $debug='') {
 	$env['divclass'] = $float;
 	$env['lang'] = admin_lang();
 	$env['calcul'] = (_request('var_mode') ? 'recalcul' : 'calcul');
-	$env['debug'] = $var_preview ? "" : admin_debug();		
+	$env['debug'] = ((defined('_VAR_PREVIEW') AND _VAR_PREVIEW) ? "" : admin_debug());
 	$env['analyser'] = (!$env['debug'] AND !$GLOBALS['xhtml']) ? '' : admin_valider();
+	$env['inclure'] = ((defined('_VAR_INCLURE') AND _VAR_INCLURE)?'inclure':'');
 
 	if (!$use_cache)
 		$env['use_cache'] = ' *';
@@ -79,6 +81,8 @@ function balise_FORMULAIRE_ADMIN_dyn($float='', $debug='') {
 	if (isset($debug['validation'])) {
 		$env['xhtml_error'] = $debug['validation'];
 	}
+	
+	$env['_pipelines']['formulaire_admin']=array();
 
 	return array('formulaires/administration', 0, $env);
 }
@@ -94,26 +98,31 @@ function admin_objet()
 	include_spip('inc/urls');
 	$env = array();
 
-	foreach (array('mot','auteur','rubrique','breve','article','syndic'=>'site')
-	as $id => $obj) {
-		if (is_int($id)) $id = $obj;
-		$_id_type = id_table_objet($id);
-		if ($id_type = $GLOBALS['contexte'][$_id_type]) {
-			$id_type = sql_getfetsel($_id_type, table_objet_sql($id), "$_id_type=".intval($id_type));
-			if ($id_type) {
-				$env[$_id_type] = $id_type;
-				$g = 'generer_url_ecrire_'.$obj;
-				$env['voir_'.$obj] = 
-				  str_replace('&amp;', '&', $g($id_type, '','', 'prop'));
-				if ($id == 'article' OR $id == 'breve') {
+	$trouver_table = charger_fonction('trouver_table','base');
+	$objets = urls_liste_objets(false);
+	$objets = array_diff($objets, array('rubrique'));
+	array_unshift($objets, 'rubrique');
+	foreach ($objets as $obj) {
+		$type = $obj;
+		if ($type==objet_type($type,false)
+			AND $_id_type = id_table_objet($type)
+			AND isset($GLOBALS['contexte'][$_id_type])
+			AND $id = $GLOBALS['contexte'][$_id_type]
+			AND !is_array($id)
+			AND $id=intval($id)) {
+			$id = sql_getfetsel($_id_type, table_objet_sql($type), "$_id_type=".intval($id));
+			if ($id) {
+				$env[$_id_type] = $id;
+				$env['objet'] = $type;
+				$env['id_objet'] = $id;
+				$env['voir_'.$obj] =
+				  str_replace('&amp;', '&', generer_url_entite($id,$obj,'','',false));
+				if ($desc = $trouver_table(table_objet_sql($type))
+					AND isset($desc['field']['id_rubrique'])
+					AND $type != 'rubrique') {
 					unset($env['id_rubrique']);
 					unset($env['voir_rubrique']);
-					if ($l = admin_stats($id, $id_type, $var_preview)) {
-						$env['visites'] = $l[0];
-						$env['popularite'] = $l[1];
-						$env['statistiques'] = $l[2];
-					}
-					if (admin_preview($id, $id_type))
+					if (admin_preview($type, $id, $desc))
 						$env['preview']=parametre_url(self(),'var_mode','preview','&');
 				}
 			}
@@ -124,15 +133,15 @@ function admin_objet()
 
 
 // http://doc.spip.org/@admin_preview
-function admin_preview($id, $id_type)
+function admin_preview($type, $id, $desc=null)
 {
-	if ($GLOBALS['var_preview']) return '';
+	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW) return '';
 
-	if (!($id == 'article'
-	OR $id == 'breve'
-	OR $id == 'rubrique'
-	OR $id == 'syndic'))
-
+	if (!$desc) {
+		$trouver_table = charger_fonction('trouver_table','base');
+		$desc = $trouver_table(table_objet_sql($type));
+	}
+	if (!$desc OR !isset($desc['field']['statut']))
 		return '';
 
 	include_spip('inc/autoriser');
@@ -140,10 +149,10 @@ function admin_preview($id, $id_type)
 
 	$notpub = sql_in("statut", array('prop', 'prive'));
 
-	if  ($id == 'article' AND $GLOBALS['meta']['post_dates'] != 'oui')
+	if  ($type == 'article' AND $GLOBALS['meta']['post_dates'] != 'oui')
 		$notpub .= " OR (statut='publie' AND date>".sql_quote(date('Y-m-d H:i:s')).")";
 
-	return sql_fetsel('1', table_objet_sql($id), id_table_objet($id)."=".$id_type." AND ($notpub)");
+	return sql_fetsel('1', table_objet_sql($type), id_table_objet($type)."=".$id." AND ($notpub)");
 }
 
 //
@@ -177,10 +186,11 @@ function admin_valider()
 // http://doc.spip.org/@admin_debug
 function admin_debug()
 {
-	return (($GLOBALS['forcer_debug']
-			OR $GLOBALS['bouton_admin_debug']
+	return ((
+			(isset($GLOBALS['forcer_debug']) AND $GLOBALS['forcer_debug'])
+			OR (isset($GLOBALS['bouton_admin_debug']) AND $GLOBALS['bouton_admin_debug'])
 			OR (
-				$GLOBALS['var_mode'] == 'debug'
+				defined('_VAR_MODE') AND _VAR_MODE == 'debug'
 				AND $_COOKIE['spip_debug']
 			)
 		) AND autoriser('debug')
@@ -188,22 +198,4 @@ function admin_debug()
 	  ? parametre_url(self(),'var_mode', 'debug', '&'): '';
 }
 
-// http://doc.spip.org/@admin_stats
-function admin_stats($id, $id_type, $var_preview)
-{
-	if ($GLOBALS['meta']["activer_statistiques"] != "non" 
-	AND $id = 'article'
-	AND !$var_preview
-	AND autoriser('voirstats')
-	) {
-		$row = sql_fetsel("visites, popularite", "spip_articles", "id_article=$id_type AND statut='publie'");
-
-		if ($row) {
-			return array(intval($row['visites']),
-			       ceil($row['popularite']),
-			       str_replace('&amp;', '&', generer_url_ecrire_statistiques($id_type)));
-		}
-	}
-	return false;
-}
 ?>

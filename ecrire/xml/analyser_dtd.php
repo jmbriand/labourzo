@@ -3,34 +3,58 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('xml/interfaces');
 
 // http://doc.spip.org/@charger_dtd
-function charger_dtd($grammaire, $avail)
+function charger_dtd($grammaire, $avail, $rotlvl)
 {
-	spip_timer('dtd');
-	$dtc = new DTC;
-	// L'analyseur retourne un booleen de reussite et modifie $dtc.
-	// Retourner vide en cas d'echec
-	if (!analyser_dtd($grammaire, $avail, $dtc)) return array();
+	static $dtd = array(); # cache bien utile pour le validateur en boucle
 
-	// tri final pour presenter les suggestions de corrections
-	foreach ($dtc->peres as $k => $v) {
-		asort($v);
-		$dtc->peres[$k] = $v;
-	  } 
-	  
-	spip_log("Analyser DTD $avail $grammaire (" . spip_timer('dtd') . ") " . count($dtc->macros)  . ' macros, ' . count($dtc->elements)  . ' elements, ' . count($dtc->attributs) . " listes d'attributs, " . count($dtc->entites) . " entites");
-#	$r = $dtc->regles; ksort($r);foreach($r as $l => $v) {$t=array_keys($dtc->attributs[$l]);echo "<b>$l</b> '$v' ", count($t), " attributs: ", join (', ',$t);$t=$dtc->peres[$l];echo "<br />",count($t), " peres: ", @join (', ',$t), "<br />\n";}exit;
+	if (isset($dtd[$grammaire]))
+		return $dtd[$grammaire];
+
+	if ($avail == 'SYSTEM') $grammaire = find_in_path($grammaire);
+
+	$file = _DIR_CACHE_XML . preg_replace('/[^\w.]/','_', $rotlvl) . '.gz';
+
+	if (lire_fichier($file, $r)) {
+		if (!$grammaire) return array();
+		if (($avail == 'SYSTEM') AND filemtime($file) < filemtime($grammaire))
+				$r = false;
+	}
+
+	if ($r) {
+		$dtc = unserialize($r);
+	} else {
+		spip_timer('dtd');
+		$dtc = new DTC;
+		// L'analyseur retourne un booleen de reussite et modifie $dtc.
+		// Retourner vide en cas d'echec
+		if (!analyser_dtd($grammaire, $avail, $dtc)) 
+			$dtc = array();
+		else {
+		// tri final pour presenter les suggestions de corrections
+			foreach ($dtc->peres as $k => $v) {
+				asort($v);
+				$dtc->peres[$k] = $v;
+			} 
+
+			spip_log("Analyser DTD $avail $grammaire (" . spip_timer('dtd') . ") " . count($dtc->macros)  . ' macros, ' . count($dtc->elements)  . ' elements, ' . count($dtc->attributs) . " listes d'attributs, " . count($dtc->entites) . " entites");
+			#	$r = $dtc->regles; ksort($r);foreach($r as $l => $v) {$t=array_keys($dtc->attributs[$l]);echo "<b>$l</b> '$v' ", count($t), " attributs: ", join (', ',$t);$t=$dtc->peres[$l];echo "<br />",count($t), " peres: ", @join (', ',$t), "<br />\n";}exit;
+			ecrire_fichier($file, serialize($dtc), true);
+		}
+		
+	}
+	$dtd[$grammaire] = $dtc;
 	return $dtc;
 }
 
@@ -47,9 +71,9 @@ function compilerRegle($val)
 {
 	$x = str_replace('()','',
 		preg_replace('/\s*,\s*/','',
-		preg_replace('/(\w+)\s*/','(\1 )',
+		preg_replace('/(\w+)\s*/','(?:\1 )',
 		preg_replace('/\s*\)/',')',
-		preg_replace('/\s*([(+*|])\s*/','\1',
+		preg_replace('/\s*([(+*|?])\s*/','\1',
 		preg_replace('/\s*#\w+\s*[,|]?\s*/','', $val))))));
 	return $x;
 }
@@ -58,10 +82,17 @@ function compilerRegle($val)
 // http://doc.spip.org/@analyser_dtd
 function analyser_dtd($loc, $avail, &$dtc)
 {
-	if ($avail == 'SYSTEM')
-	  $file = $loc;
+	// creer le repertoire de cache si ce n'est fait
+	// (utile aussi pour le resultat de la compil)
+	$file = sous_repertoire(_DIR_CACHE_XML);
+	// si DTD locale, ignorer ce repertoire pour le moment
+	if ($avail == 'SYSTEM'){
+		$file = $loc;
+		if (_DIR_RACINE AND strncmp($file,_DIR_RACINE,strlen(_DIR_RACINE))==0)
+			$file = substr($file,strlen(_DIR_RACINE));
+	  $file = find_in_path($file);
+	}
 	else {
-	  $file = sous_repertoire(_DIR_CACHE_XML);
 	  $file .= preg_replace('/[^\w.]/','_', $loc);
 	}
 
@@ -78,7 +109,7 @@ function analyser_dtd($loc, $avail, &$dtc)
 
 	$dtd = ltrim($dtd);
 	if (!$dtd) {
-		spip_log("DTD '$loc' inaccessible");
+		spip_log("DTD '$loc' ($file) inaccessible");
 		return false;
 	} else 	spip_log("analyse de la DTD $loc ");
 
@@ -226,7 +257,7 @@ function analyser_dtd_entity($dtd, &$dtc, $grammaire)
 // http://doc.spip.org/@analyser_dtd_element
 function analyser_dtd_element($dtd, &$dtc, $grammaire)
 {
-	if (!preg_match('/^<!ELEMENT\s+(\S+)\s+([^>]*)>\s*(.*)$/s', $dtd, $m))
+	if (!preg_match('/^<!ELEMENT\s+([^>\s]+)([^>]*)>\s*(.*)$/s', $dtd, $m))
 		return -3;
 
 	list(,$nom, $contenu, $dtd) = $m;
@@ -238,10 +269,10 @@ function analyser_dtd_element($dtd, &$dtc, $grammaire)
 	}
 	$filles = array();
 	$contenu = expanserEntite($contenu, $dtc->macros);
-	$val = compilerRegle($contenu);
-	if ($val == '(EMPTY )')
+	$val = $contenu ? compilerRegle($contenu) : '(?:EMPTY )';
+	if ($val == '(?:EMPTY )')
 		$dtc->regles[$nom] = 'EMPTY';
-	elseif  ($val == '(ANY )') 
+	elseif  ($val == '(?:ANY )')
 		$dtc->regles[$nom] = 'ANY';
 	else {
 		$last = substr($val,-1);
@@ -291,15 +322,27 @@ function analyser_dtd_attlist($dtd, &$dtc, $grammaire)
 }
 
 
+// Remplace dans la chaine $val les sous-chaines de forme "%NOM;"
+// par leur definition dans le tableau $macros
+// Si le premier argument n'est pas une chaine,
+// retourne les statistiques (pour debug de DTD, inutilise en mode normal)
+
 // http://doc.spip.org/@expanserEntite
-function expanserEntite($val, $macros)
+function expanserEntite($val, $macros=array())
 {
+	static $vu = array();
+	if (!is_string($val)) return $vu;
+
 	if (preg_match_all(_REGEXP_ENTITY_USE, $val, $r, PREG_SET_ORDER)){
 	  foreach($r as $m) {
 		$ent = $m[1];
 		  // il peut valoir ""
-		if (isset($macros[$ent]))
+		if (!isset($macros[$ent]))
+			spip_log("Entite $ent inconnu");
+		else {
+			@$vu[$ent]++;
 			$val = str_replace($m[0], $macros[$ent], $val);
+		}
 	  }
 	}
 

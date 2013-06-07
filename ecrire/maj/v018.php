@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 function maj_v018_dist($version_installee, $version_cible)
 {
@@ -55,10 +55,33 @@ function maj_v018_dist($version_installee, $version_cible)
 		maj_version(1.804);
 	}
 
+	//
+	// Recalculer tous les threads
+	// function du plugin forum recopiee ici pour assurer la montee de version dans tous les cas de figure
+	function maj_v018_calculer_threads() {
+		// fixer les id_thread des debuts de discussion
+		sql_update('spip_forum', array('id_thread'=>'id_forum'), "id_parent=0");
+		// reparer les messages qui n'ont pas l'id_secteur de leur parent
+		do {
+			$discussion = "0";
+			$precedent = 0;
+			$r = sql_select("fille.id_forum AS id,	maman.id_thread AS thread", 'spip_forum AS fille, spip_forum AS maman', "fille.id_parent = maman.id_forum AND fille.id_thread <> maman.id_thread",'', "thread");
+			while ($row = sql_fetch($r)) {
+				if ($row['thread'] == $precedent)
+					$discussion .= "," . $row['id'];
+				else {
+					if ($precedent)
+						sql_updateq("spip_forum", array("id_thread" => $precedent), "id_forum IN ($discussion)");
+					$precedent = $row['thread'];
+					$discussion = $row['id'];
+				}
+			}
+			sql_updateq("spip_forum", array("id_thread" => $precedent), "id_forum IN ($discussion)");
+		} while ($discussion != "0");
+	}
 	if (upgrade_vers(1.805, $version_installee, $version_cible)) {
 		spip_query("ALTER TABLE spip_forum ADD id_thread bigint(21) DEFAULT '0' NOT NULL");
-		include_spip('inc/forum');
-		calculer_threads();
+		maj_v018_calculer_threads();
 		maj_version(1.805);
 	}
 

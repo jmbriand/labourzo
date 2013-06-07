@@ -1,113 +1,121 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://www.spip.net/trad-lang/
+// extrait automatiquement de http://trad.spip.net/tradlang_module/public?lang_cible=oc_prv
 // ** ne pas modifier le fichier **
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
-// A
-'accueil_site' => 'Acuelh dau sit',
-'articles' => 'Articles',
-'articles_auteur' => 'Articles d\'aquel autor',
-'articles_populaires' => 'Leis articles mai populars',
-'articles_rubrique' => 'Articles d\'aquela rubrica',
-'aucun_article' => 'I a ges d\'article a aquela adrei&ccedil;a ',
-'aucun_auteur' => 'I a ges d\'autor a aquela adrei&ccedil;a ',
-'aucun_site' => 'I a ges de sit a aquela adrei&ccedil;a ',
-'aucune_breve' => 'I a ges de br&egrave;va a aquela adrei&ccedil;a ',
-'aucune_rubrique' => 'I a ges de rubrica a aquela adrei&ccedil;a ',
-'autres_breves' => 'Autrei br&egrave;vas',
-'autres_groupes_mots_clefs' => 'Autrei grops de mots claus',
-'autres_sites' => 'Autrei sits',
+	// A
+	'accueil_site' => 'Acuelh dau sit', # MODIF
+	'article' => 'Article', # NEW
+	'articles' => 'Articles',
+	'articles_auteur' => 'Articles d\'aquel autor',
+	'articles_populaires' => 'Leis articles mai populars',
+	'articles_rubrique' => 'Articles d\'aquela rubrica',
+	'aucun_article' => 'I a ges d\'article a aquela adreiça ',
+	'aucun_auteur' => 'I a ges d\'autor a aquela adreiça ',
+	'aucun_site' => 'I a ges de sit a aquela adreiça ',
+	'aucune_breve' => 'I a ges de brèva a aquela adreiça ',
+	'aucune_rubrique' => 'I a ges de rubrica a aquela adreiça ',
+	'auteur' => 'Auteur', # NEW
+	'autres' => 'Autres', # NEW
+	'autres_breves' => 'Autrei brèvas',
+	'autres_groupes_mots_clefs' => 'Autrei grops de mots claus',
+	'autres_sites' => 'Autrei sits',
 
-// B
-'bonjour' => 'Bonjorn',
-'breves' => 'Br&egrave;vas',
+	// B
+	'bonjour' => 'Bonjorn',
 
-// C
-'commenter_site' => 'Comentar aqueu sit',
+	// C
+	'commenter_site' => 'Comentar aqueu sit',
+	'contact' => 'Contact', # NEW
+	'copie_document_impossible' => 'Impossible de copier le document', # NEW
 
-// D
-'date' => 'Data',
-'dernier_ajout' => 'Darrier apondon',
-'dernieres_breves' => 'Darrierei br&egrave;vas',
-'derniers_articles' => 'Darriers articles',
-'derniers_commentaires' => 'Darriers comentaris',
-'derniers_messages_forum' => 'Darriers messatges publicats dins lei forums',
+	// D
+	'date' => 'Data',
+	'dernier_ajout' => 'Darrier apondon',
+	'dernieres_breves' => 'Darrierei brèvas',
+	'derniers_articles' => 'Darriers articles',
+	'derniers_commentaires' => 'Darriers comentaris',
+	'derniers_messages_forum' => 'Darriers messatges publicats dins lei forums',
 
-// E
-'edition_mode_texte' => 'Edicion en m&ograve;de t&egrave;xt de',
-'en_reponse' => 'En resp&ograve;nsa a:',
-'en_resume' => 'En resumit',
-'envoyer_message' => 'Mandar un messatge',
-'espace_prive' => 'Espaci privat',
+	// E
+	'edition_mode_texte' => 'Edicion en mòde tèxt de',
+	'en_reponse' => 'En respònsa a:',
+	'en_resume' => 'En resumit',
+	'envoyer_message' => 'Mandar un messatge',
+	'espace_prive' => 'Espaci privat',
 
-// F
-'forum' => 'Forum',
+	// F
+	'formats_acceptes' => 'Formats acceptés : @formats@.', # NEW
 
-// H
-'hierarchie_site' => 'Ierarquia dau sit',
+	// H
+	'hierarchie_site' => 'Ierarquia dau sit',
 
-// J
-'jours' => 'jorns',
+	// J
+	'jours' => 'jorns',
 
-// M
-'meme_auteur' => 'Dau meteis autor',
-'meme_rubrique' => 'Dins la meteissa rubrica',
-'memes_auteurs' => 'Dei meteis autors',
-'message' => 'Messatge',
-'messages_forum' => 'Messatges de forum',
-'messages_recents' => 'Lei messatges de forums mai recents',
-'mots_clefs' => 'Mots claus',
-'mots_clefs_meme_groupe' => 'Mots claus dins lo meteis grop',
+	// L
+	'lien_connecter' => 'Se connecter', # NEW
 
-// N
-'navigation' => 'Navigacion',
-'nom' => 'Nom',
-'nouveautes' => 'Lei novetats',
-'nouveautes_web' => 'Novetats subre lo web',
-'nouveaux_articles' => 'Articles n&ograve;us',
-'nouvelles_breves' => 'Br&egrave;vas n&ograve;vas',
+	// M
+	'meme_auteur' => 'Dau meteis autor',
+	'meme_rubrique' => 'Dins la meteissa rubrica',
+	'memes_auteurs' => 'Dei meteis autors',
+	'message' => 'Messatge',
+	'messages_forum' => 'Messatges de forum', # MODIF
+	'messages_recents' => 'Lei messatges de forums mai recents',
+	'mots_clef' => 'Mot-clé', # NEW
+	'mots_clefs' => 'Mots claus',
+	'mots_clefs_meme_groupe' => 'Mots claus dins lo meteis grop',
 
-// P
-'page_precedente' => 'pagina precedenta',
-'page_suivante' => 'pagina seguenta',
-'par_auteur' => 'per&nbsp;',
-'participer_site' => 'Pod&egrave;tz participar a la vida d\'aqueu sit e prepausar leis articles v&ograve;stres en vos inscrivent &ccedil;ai sota. Recebretz sus lo c&ograve;p un e-mail que vos indicar&agrave; v&ograve;strei c&ograve;des per accedir a l\'espaci privat dau sit.',
-'plan_site' => 'Plan dau sit',
-'popularite' => 'Popularitat',
-'poster_message' => 'Postar un messatge',
-'proposer_site' => 'Pod&egrave;tz prepausar un sit d\'apondre a aquesta rubrica:',
+	// N
+	'navigation' => 'Navigacion',
+	'nom' => 'Nom',
+	'nouveautes' => 'Lei novetats',
+	'nouveautes_web' => 'Novetats subre lo web',
+	'nouveaux_articles' => 'Articles nòus',
+	'nouvelles_breves' => 'Brèvas nòvas',
 
-// R
-'repondre_article' => 'Resp&ograve;ndre a aquel article',
-'repondre_breve' => 'Resp&ograve;ndre a aquela br&egrave;va',
-'repondre_message' => 'Resp&ograve;ndre a aqueu messatge',
-'resultats_recherche' => 'Resultats de la c&egrave;rca',
-'retour_debut_forums' => 'Retorn au comen&ccedil;ament dei forums',
-'rubrique' => 'Rubrica',
-'rubriques' => 'Rubricas',
+	// P
+	'page_precedente' => 'pagina precedenta',
+	'page_suivante' => 'pagina seguenta',
+	'par_auteur' => 'per ',
+	'participer_site' => 'Podètz participar a la vida d\'aqueu sit e prepausar leis articles vòstres en vos inscrivent çai sota. Recebretz sus lo còp un e-mail que vos indicarà vòstrei còdes per accedir a l\'espaci privat dau sit.',
+	'plan_site' => 'Plan dau sit',
+	'popularite' => 'Popularitat',
+	'poster_message' => 'Postar un messatge',
+	'proposer_site' => 'Podètz prepausar un sit d\'apondre a aquesta rubrica:',
 
-// S
-'signatures_petition' => 'Signaturas',
-'site_realise_avec_spip' => 'Sit realizat amb SPIP',
-'sites_web' => 'Sits web',
-'sous_rubriques' => 'Sosrubricas',
-'suite' => 'seguida',
-'sur_web' => 'Subre lo web',
-'syndiquer_rubrique' => 'Sindicar aquela rubrica',
-'syndiquer_site' => 'Sindicar tot lo sit',
+	// R
+	'repondre_article' => 'Respòndre a aquel article',
+	'repondre_breve' => 'Respòndre a aquela brèva',
+	'resultats_recherche' => 'Resultats de la cèrca',
+	'retour_debut_forums' => 'Retorn au començament dei forums',
+	'rubrique' => 'Rubrica',
+	'rubriques' => 'Rubricas',
 
-// T
-'texte_lettre_information' => 'Vaic&iacute; la letra d\'informacion dau sit',
-'texte_lettre_information_2' => 'Aquela letra recensa leis articles e br&egrave;vas publicats dempuei',
+	// S
+	'signatures_petition' => 'Signaturas',
+	'site_realise_avec_spip' => 'Sit realizat amb SPIP',
+	'sites_web' => 'Sits web',
+	'sous_rubriques' => 'Sosrubricas',
+	'spam' => 'Spam', # NEW
+	'suite' => 'seguida',
+	'sur_web' => 'Subre lo web',
+	'syndiquer_rubrique' => 'Sindicar aquela rubrica',
+	'syndiquer_site' => 'Sindicar tot lo sit',
 
-// V
-'ver_imprimer' => 'Version d\'estampar',
-'voir_en_ligne' => 'Vejatz en linha',
-'voir_squelette' => 'telecargar l\'esqueleta d\'aquela pagina'
+	// T
+	'texte_lettre_information' => 'Vaicí la letra d\'informacion dau sit',
+	'texte_lettre_information_2' => 'Aquela letra recensa leis articles e brèvas publicats dempuei', # MODIF
+
+	// V
+	'ver_imprimer' => 'Version d\'estampar',
+	'voir_en_ligne' => 'Vejatz en linha',
+	'voir_squelette' => 'telecargar l\'esqueleta d\'aquela pagina'
 );
 
 ?>

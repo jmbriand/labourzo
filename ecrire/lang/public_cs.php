@@ -1,113 +1,121 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://www.spip.net/trad-lang/
+// extrait automatiquement de http://trad.spip.net/tradlang_module/public?lang_cible=cs
 // ** ne pas modifier le fichier **
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
-// A
-'accueil_site' => 'Hlavn&iacute; strana',
-'articles' => '&#268;l&aacute;nky',
-'articles_auteur' => '&#268;l&aacute;nky tohoto autora',
-'articles_populaires' => 'Nej&#269;ten&#283;j&#353;&iacute; &#269;l&aacute;nky',
-'articles_rubrique' => '&#268;l&aacute;nky v t&eacute;to rubrice',
-'aucun_article' => 'Na t&eacute;to adrese nen&iacute; &#382;&aacute;dn&yacute; &#269;l&aacute;nek',
-'aucun_auteur' => 'Na t&eacute;to adrese nen&iacute; &#382;&aacute;dn&yacute; autor',
-'aucun_site' => 'Na t&eacute;to adrese nen&iacute; &#382;&aacute;dn&yacute; odkaz',
-'aucune_breve' => 'Na t&eacute;to adrese nen&iacute; &#382;&aacute;dn&aacute; novinka',
-'aucune_rubrique' => 'Na t&eacute;to adrese nen&iacute; &#382;&aacute;dn&aacute; rubrika',
-'autres_breves' => 'Dal&#353;&iacute; novinky',
-'autres_groupes_mots_clefs' => 'Dal&#353;&iacute; skupiny kl&iacute;&#269;ov&yacute;ch slov',
-'autres_sites' => 'Dal&#353;&iacute; odkazy',
+	// A
+	'accueil_site' => 'Hlavní strana', # MODIF
+	'article' => 'Article', # NEW
+	'articles' => 'Články',
+	'articles_auteur' => 'Články tohoto autora',
+	'articles_populaires' => 'Nejčtenější články',
+	'articles_rubrique' => 'Články v této rubrice',
+	'aucun_article' => 'Na této adrese není žádný článek',
+	'aucun_auteur' => 'Na této adrese není žádný autor',
+	'aucun_site' => 'Na této adrese není žádný odkaz',
+	'aucune_breve' => 'Na této adrese není žádná novinka',
+	'aucune_rubrique' => 'Na této adrese není žádná rubrika',
+	'auteur' => 'Auteur', # NEW
+	'autres' => 'Ostatní',
+	'autres_breves' => 'Další novinky',
+	'autres_groupes_mots_clefs' => 'Další skupiny klíčových slov',
+	'autres_sites' => 'Další odkazy',
 
-// B
-'bonjour' => 'Dobr&yacute; den',
-'breves' => 'Novinky',
+	// B
+	'bonjour' => 'Dobrý den',
 
-// C
-'commenter_site' => 'Koment&aacute;&#345; k tomuto odkazu',
+	// C
+	'commenter_site' => 'Komentář k tomuto odkazu',
+	'contact' => 'Contact', # NEW
+	'copie_document_impossible' => 'Dokument není možné kopírovat',
 
-// D
-'date' => 'Datum',
-'dernier_ajout' => 'Posledn&iacute; p&#345;&iacute;sp&#283;vky',
-'dernieres_breves' => 'Posledn&iacute; novinky',
-'derniers_articles' => 'Posledn&iacute; &#269;l&aacute;nky',
-'derniers_commentaires' => 'Posledn&iacute; koment&aacute;&#345;e',
-'derniers_messages_forum' => 'Posledn&iacute; p&#345;&iacute;sp&#283;vky v diskusn&iacute;ch f&oacute;rech',
+	// D
+	'date' => 'Datum',
+	'dernier_ajout' => 'Poslední příspěvky',
+	'dernieres_breves' => 'Poslední novinky',
+	'derniers_articles' => 'Poslední články',
+	'derniers_commentaires' => 'Poslední komentáře',
+	'derniers_messages_forum' => 'Poslední příspěvky v diskusních fórech',
 
-// E
-'edition_mode_texte' => 'Textov&yacute; re&#382;im',
-'en_reponse' => 'Odpov&#283;&#271; na:',
-'en_resume' => 'Shrnut&iacute;',
-'envoyer_message' => 'Odeslat zpr&aacute;vu',
-'espace_prive' => 'Vstup pro autory',
+	// E
+	'edition_mode_texte' => 'Textový režim',
+	'en_reponse' => 'Odpověď na:',
+	'en_resume' => 'Shrnutí',
+	'envoyer_message' => 'Odeslat zprávu',
+	'espace_prive' => 'Vstup pro autory',
 
-// F
-'forum' => 'F&oacute;rum',
+	// F
+	'formats_acceptes' => 'Povolené formáty: @formats@.',
 
-// H
-'hierarchie_site' => 'Struktura str&aacute;nek',
+	// H
+	'hierarchie_site' => 'Struktura stránek',
 
-// J
-'jours' => 'dn&#367;',
+	// J
+	'jours' => 'dnů',
 
-// M
-'meme_auteur' => 'Od stejn&eacute;ho autora',
-'meme_rubrique' => 'Ve stejn&eacute; rubrice',
-'memes_auteurs' => 'Od stejn&yacute;ch autor&#367;',
-'message' => 'Zpr&aacute;va',
-'messages_forum' => 'Zpr&aacute;vy v diskusn&iacute;m f&oacute;ru',
-'messages_recents' => 'Posledn&iacute; zpr&aacute;vy v diskusn&iacute;ch f&oacute;rech',
-'mots_clefs' => 'Kl&iacute;&#269;ov&aacute; slova',
-'mots_clefs_meme_groupe' => 'Kl&iacute;&#269;ov&aacute; slova ve stejn&eacute; skupin&#283;',
+	// L
+	'lien_connecter' => 'Přihlášení',
 
-// N
-'navigation' => 'Navigace',
-'nom' => 'Jm&eacute;no',
-'nouveautes' => 'Co je nov&eacute;ho',
-'nouveautes_web' => 'Novinky na webu',
-'nouveaux_articles' => 'Nov&eacute; &#269;l&aacute;nky',
-'nouvelles_breves' => 'Nov&eacute; novinky',
+	// M
+	'meme_auteur' => 'Od stejného autora',
+	'meme_rubrique' => 'Ve stejné rubrice',
+	'memes_auteurs' => 'Od stejných autorů',
+	'message' => 'Zpráva',
+	'messages_forum' => 'Zprávy v diskusním fóru', # MODIF
+	'messages_recents' => 'Poslední zprávy v diskusních fórech',
+	'mots_clef' => 'Mot-clé', # NEW
+	'mots_clefs' => 'Klíčová slova',
+	'mots_clefs_meme_groupe' => 'Klíčová slova ve stejné skupině',
 
-// P
-'page_precedente' => 'p&#345;edchoz&iacute; strana',
-'page_suivante' => 'dal&#353;&iacute; strana',
-'par_auteur' => 'napsal(a)',
-'participer_site' => 'M&#367;&#382;ete se aktivn&#283; zapojit a napsat n&#283;jak&yacute; &#269;l&aacute;nek pro tento web - zaregistrujte se n&iacute;&#382;e. Okam&#382;it&#283; obdr&#382;&iacute;te e-mail s p&#345;&iacute;stupov&yacute;mi k&oacute;dy do &#269;&aacute;sti pro autory.',
-'plan_site' => 'Mapa str&aacute;nek',
-'popularite' => 'Popularita',
-'poster_message' => 'Napsat zpr&aacute;vu',
-'proposer_site' => 'M&#367;&#382;ete navrhnout odkaz, kter&yacute; m&aacute; b&yacute;t za&#345;azen do t&eacute;to rubriky:',
+	// N
+	'navigation' => 'Navigace',
+	'nom' => 'Jméno',
+	'nouveautes' => 'Co je nového',
+	'nouveautes_web' => 'Novinky na webu',
+	'nouveaux_articles' => 'Nové články',
+	'nouvelles_breves' => 'Nové novinky',
 
-// R
-'repondre_article' => 'Reagovat na tento &#269;l&aacute;nek',
-'repondre_breve' => 'Reagovat na tuto novinku ',
-'repondre_message' => 'Reagovat na tuto zpr&aacute;vu',
-'resultats_recherche' => 'V&yacute;sledky hled&aacute;n&iacute;',
-'retour_debut_forums' => 'Zp&#283;t na za&#269;&aacute;tek diskusn&iacute;ch f&oacute;r',
-'rubrique' => 'Rubrika',
-'rubriques' => 'Rubriky',
+	// P
+	'page_precedente' => 'předchozí strana',
+	'page_suivante' => 'další strana',
+	'par_auteur' => 'napsal(a)',
+	'participer_site' => 'Můžete se aktivně zapojit a napsat nějaký článek pro tento web - zaregistrujte se níže. Okamžitě obdržíte e-mail s přístupovými kódy do části pro autory.',
+	'plan_site' => 'Mapa stránek',
+	'popularite' => 'Popularita',
+	'poster_message' => 'Napsat zprávu',
+	'proposer_site' => 'Můžete navrhnout odkaz, který má být zařazen do této rubriky:',
 
-// S
-'signatures_petition' => 'Podpisy',
-'site_realise_avec_spip' => 'Str&aacute;nky vytvo&#345;eny pomoc&iacute; SPIP',
-'sites_web' => 'Odkazy',
-'sous_rubriques' => 'Podrubriky',
-'suite' => 'pokra&#269;ov&aacute;n&iacute;',
-'sur_web' => 'Na webu',
-'syndiquer_rubrique' => 'Zahrnout tuto rubriku',
-'syndiquer_site' => 'Zahrnout cel&yacute; web',
+	// R
+	'repondre_article' => 'Reagovat na tento článek',
+	'repondre_breve' => 'Reagovat na tuto novinku ',
+	'resultats_recherche' => 'Výsledky hledání',
+	'retour_debut_forums' => 'Zpět na začátek diskusních fór',
+	'rubrique' => 'Rubrika',
+	'rubriques' => 'Rubriky',
 
-// T
-'texte_lettre_information' => 'Zde je zpravodaj tohoto webu',
-'texte_lettre_information_2' => 'Tento soupis sumarizuje &#269;l&aacute;nky a novinky publikovan&eacute; od ',
+	// S
+	'signatures_petition' => 'Podpisy',
+	'site_realise_avec_spip' => 'Stránky vytvořeny pomocí SPIP',
+	'sites_web' => 'Odkazy',
+	'sous_rubriques' => 'Podrubriky',
+	'spam' => 'Spam',
+	'suite' => 'pokračování',
+	'sur_web' => 'Na webu',
+	'syndiquer_rubrique' => 'Zahrnout tuto rubriku',
+	'syndiquer_site' => 'Zahrnout celý web',
 
-// V
-'ver_imprimer' => 'Verze pro tisk',
-'voir_en_ligne' => 'Pod&iacute;vejte se online',
-'voir_squelette' => 'Zobrazit &#353;ablonu t&eacute;to str&aacute;nky'
+	// T
+	'texte_lettre_information' => 'Zde je zpravodaj tohoto webu',
+	'texte_lettre_information_2' => 'Tento soupis sumarizuje články a novinky publikované od ', # MODIF
+
+	// V
+	'ver_imprimer' => 'Verze pro tisk',
+	'voir_en_ligne' => 'Podívejte se online',
+	'voir_squelette' => 'Zobrazit šablonu této stránky'
 );
 
 ?>

@@ -3,31 +3,55 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('base/abstract_sql');
 
 // http://doc.spip.org/@formulaires_editer_objet_traiter
 function formulaires_editer_objet_traiter($type, $id='new', $id_parent=0, $lier_trad=0, $retour='', $config_fonc='articles_edit_config', $row=array(), $hidden=''){
 
 	$res = array();
-	$action_editer = charger_fonction("editer_$type",'action');
-	list($id,$err) = $action_editer();
+	// eviter la redirection forcee par l'action...
+	set_request('redirect');
+	if ($action_editer = charger_fonction("editer_$type",'action',true)) {
+		list($id,$err) = $action_editer($id);
+	}
+	else {
+		$action_editer = charger_fonction("editer_objet",'action');
+		list($id,$err) = $action_editer($id,$type);
+	}
 	$id_table_objet = id_table_objet($type);
 	$res[$id_table_objet] = $id;
-	if ($err){
-		$res['message_erreur'] =$err;
+	if ($err OR !$id){
+		$res['message_erreur'] = ($err?$err:_T('erreur'));
 	}
 	else{
-		$res['message_ok'] = ""; // il faudrait faire mieux que cela !
-		if ($retour)
-			$res['redirect'] = parametre_url($retour,$id_table_objet,$id);
+		// Un lien de trad a prendre en compte
+		if ($lier_trad){
+			// referencer la traduction
+			$referencer_traduction = charger_fonction('referencer_traduction','action');
+			$referencer_traduction($type, $id, $lier_trad);
+			// dupliquer tous les liens sauf les auteurs : le nouvel auteur est celui qui traduit
+			// cf API editer_liens
+			include_spip('action/editer_liens');
+			objet_dupliquer_liens($type,$lier_trad,$id,null,array('auteur'));
+		}
+
+		$res['message_ok'] = _T('info_modification_enregistree');
+		if ($retour) {
+			if (strncmp($retour,'javascript:',11)==0){
+				$res['message_ok'] .= '<script type="text/javascript">/*<![CDATA[*/'.substr($retour,11).'/*]]>*/</script>';
+				$res['editable'] = true;
+			}
+			else
+				$res['redirect'] = parametre_url($retour,$id_table_objet,$id);
+		}
 	}
 	return $res;
 }
@@ -37,15 +61,18 @@ function formulaires_editer_objet_verifier($type,$id='new', $oblis = array()){
 	$erreurs = array();
 	if (intval($id)) {
 		$conflits = controler_contenu($type,$id);
-		if (count($conflits)) {
-			foreach($conflits as $champ=>$conflit){
+		if ($conflits AND count($conflits)) {
+			foreach($conflits as $champ=>$conflit) {
+				if (!isset($erreurs[$champ])) { $erreurs[$champ] = ''; }
 				$erreurs[$champ] .= _T("alerte_modif_info_concourante")."<br /><textarea readonly='readonly' class='forml'>".$conflit['base']."</textarea>";
 			}
 		}
 	}
-	foreach($oblis as $obli){
-		if (!_request($obli))
+	foreach($oblis as $obli) {
+		if (!_request($obli)) {
+			if (!isset($erreurs[$obli])) { $erreurs[$obli] = ''; }
 			$erreurs[$obli] .= _T("info_obligatoire");
+		}
 	}
 	return $erreurs;
 }
@@ -55,34 +82,21 @@ function formulaires_editer_objet_charger($type, $id='new', $id_parent=0, $lier_
 	$table_objet = table_objet($type);
 	$table_objet_sql = table_objet_sql($type);
 	$id_table_objet = id_table_objet($type);
-	$new = $id;
-
-	// nouveau ou pas ?
-	if (is_numeric($id))
-		$new = '';
-	else
-		$new = $id;
-
+	$new = !is_numeric($id);
 	// Appel direct dans un squelette
 	if (!$row) {
-		if ($select = charger_fonction($type."_select",'inc',true)){
-			$row = $select($id, $id_parent, $lier_trad);
+		if  (!$new OR $lier_trad) {
+			if ($select = charger_fonction("precharger_" . $type, 'inc', true))
+				$row = $select($id, $id_parent, $lier_trad);
+			else $row = sql_fetsel('*',$table_objet_sql,$id_table_objet."=".intval($id));
+			if (!$new)
+				$md5 = controles_md5($row);
 		}
-		else {
-			$row = sql_fetsel('*',$table_objet_sql,$id_table_objet."=".intval($id));
-		}
-		if ($new OR !$row) {
+		if (!$row) {
 			$trouver_table = charger_fonction('trouver_table','base');
 			if ($desc = $trouver_table($table_objet))
-				foreach($desc['field'] as $k=>$v)
-					if (!isset($row[$k]))
-						$row[$k]='';
+				foreach($desc['field'] as $k=>$v) $row[$k]='';
 		}
-
-		// Ajouter les controles md5 si l'article existe
-		// et n'a pas ete passe en valeur
-		if (!$new)
-			$md5 = controles_md5($row);
 	}
 
 	// Gaffe: sans ceci, on ecrase systematiquement l'article d'origine
@@ -93,16 +107,33 @@ function formulaires_editer_objet_charger($type, $id='new', $id_parent=0, $lier_
 	$row[$id_table_objet] = $id;
 
 	$contexte = $row;
-	if ($id_parent && (!isset($contexte['id_parent']) OR $new))
+	if (strlen($id_parent) && is_numeric($id_parent) && (!isset($contexte['id_parent']) OR $new)){
+		if (!isset($contexte['id_parent'])) unset($contexte['id_rubrique']);
 		$contexte['id_parent']=$id_parent;
+	}
+	elseif (!isset($contexte['id_parent'])){
+		// id_rubrique dans id_parent si possible
+		if (isset($contexte['id_rubrique'])) {
+			$contexte['id_parent'] = $contexte['id_rubrique'];
+			unset($contexte['id_rubrique']);
+		}
+		else{
+			$contexte['id_parent'] = '';
+		}
+		if (!$contexte['id_parent']
+			AND $preselectionner_parent_nouvel_objet = charger_fonction("preselectionner_parent_nouvel_objet","inc",true))
+			$contexte['id_parent'] = $preselectionner_parent_nouvel_objet($type,$row);
+	}
+
 	if ($config_fonc)
-		$contexte['config'] = $config = $config_fonc($row);
-	$att_text = " class='formo' "
-	. $GLOBALS['browser_caret']
+		$contexte['config'] = $config = $config_fonc($contexte);
+	if (!isset($config['lignes'])) $config['lignes'] = 0;
+	$att_text = " class='textarea' "
 	. " rows='"
 	. ($config['lignes'] +15)
 	. "' cols='40'";
-	list($contexte['texte'],$contexte['_texte_trop_long']) = editer_texte_recolle($contexte['texte'],$att_text);
+	if (isset($contexte['texte']))
+		list($contexte['texte'],$contexte['_texte_trop_long']) = editer_texte_recolle($contexte['texte'],$att_text);
 
 	// on veut conserver la langue de l'interface ;
 	// on passe cette donnee sous un autre nom, au cas ou le squelette
@@ -111,8 +142,6 @@ function formulaires_editer_objet_charger($type, $id='new', $id_parent=0, $lier_
 		$contexte['langue'] = $contexte['lang'];
 		unset($contexte['lang']);
 	}
-
-	$contexte['_browser_caret']=$GLOBALS['browser_caret'];
 
 	$contexte['_hidden'] = "<input type='hidden' name='editer_$type' value='oui' />\n" .
 		 (!$lier_trad ? '' :
@@ -123,14 +152,17 @@ function formulaires_editer_objet_charger($type, $id='new', $id_parent=0, $lier_
 		  $config['langue'] .
 		  "' />"))
 		  . $hidden
-		  . $md5;
+		  . (isset($md5) ? $md5 : '');
 
 
 	if (isset($contexte['extra']))
 		$contexte['extra'] = unserialize($contexte['extra']);
 	// preciser que le formulaire doit passer dans un pipeline
 	$contexte['_pipeline'] = array('editer_contenu_objet',array('type'=>$type,'id'=>$id));
+
 	// preciser que le formulaire doit etre securise auteur/action
+	// n'est plus utile lorsque l'action accepte l'id en argument direct
+	// on le garde pour compat 
 	$contexte['_action'] = array("editer_$type",$id);
 
 	return $contexte;
@@ -180,13 +212,36 @@ function editer_texte_recolle($texte, $att_text)
 	while (strlen($texte)>29*1024) {
 		$nombre ++;
 		list($texte1,$texte) = coupe_trop_long($texte);
-		$id = "document.getElementById('texte$nombre')";
-		$textes_supplement .= "<br />" . afficher_barre($id) .
+		$textes_supplement .= "<br />" .
 			"<textarea id='texte$nombre' name='texte_plus[$nombre]'$att_text>$texte1</textarea>\n";
 		}
 	return array($texte,$textes_supplement);
 }
 
+/**
+ * Determiner un titre automatique si non renseigne,
+ * a partir des champs textes de contenu
+ *
+ * @param string $champ_titre
+ *   nom du champ titre
+ * @param array $champs_contenu
+ *   liste des champs contenu textuels
+ * @param int $longueur
+ * @return void
+ */
+function titre_automatique($champ_titre,$champs_contenu,$longueur=50){
+	// auto-renseigner le titre si il n'existe pas
+	if (!_request($champ_titre)){
+		foreach($champs_contenu as $c){
+			if ($t = _request($c))
+				break;
+		}
+		if ($t){
+			include_spip('inc/texte_mini');
+			set_request($champ_titre,couper($t,$longueur,"..."));
+		}
+	}
+}
 
 // Produit la liste des md5 d'un tableau de donnees, sous forme
 // de inputs html
@@ -244,7 +299,7 @@ function controler_contenu($type, $id, $options=array(), $c=false, $serveur='') 
 	unset($c['id_secteur']);
 
 	// Gerer les champs non vides
-	if (is_array($options['nonvide']))
+	if (isset($options['nonvide']) AND is_array($options['nonvide']))
 	foreach ($options['nonvide'] as $champ => $sinon)
 		if ($c[$champ] === '')
 			$c[$champ] = $sinon;
@@ -269,17 +324,17 @@ function controler_contenu($type, $id, $options=array(), $c=false, $serveur='') 
 				'spip_table_objet' => $spip_table_objet,
 				'type' =>$type,
 				'id_objet' => $id,
-				'champs' => $options['champs'],
+				'champs' => isset($options['champs'])?$options['champs']:array(), // [doc] c'est quoi ?
 				'action' => 'controler'
 			),
 			'data' => $champs
 		)
 	);
 
-	if (!$champs) return array();
+	if (!$champs) return false;
 
 	// Verifier si les mises a jour sont pertinentes, datees, en conflit etc
-	$conflits = controler_md5($champs, $_POST, $type, $id, $serveur, $options['prefix']?$options['prefix']:'ctr_');
+	$conflits = controler_md5($champs, $_POST, $type, $id, $serveur, isset($options['prefix'])?$options['prefix']:'ctr_');
 
 	return $conflits;
 }
@@ -296,12 +351,12 @@ function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
 	// On elimine les donnees non modifiees par le formulaire (mais
 	// potentiellement modifiees entre temps par un autre utilisateur)
 	foreach ($champs as $key => $val) {
-		if ($m = $ctr[$prefix.$key]) {
+		if (isset($ctr[$prefix.$key]) AND $m = $ctr[$prefix.$key]) {
 			if ($m == md5($val))
 				unset ($champs[$key]);
 		}
 	}
-	if (!$champs) return array();
+	if (!$champs) return;
 
 	// On veut savoir si notre modif va avoir un impact
 	// par rapport aux donnees contenues dans la base
@@ -310,7 +365,7 @@ function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
 	$intact = true;
 	foreach ($champs as $ch => $val)
 		$intact &= ($s[$ch] == $val);
-	if ($intact) return array();
+	if ($intact) return;
 
 	// Detection de conflits :
 	// On verifie si notre modif ne provient pas d'un formulaire
@@ -319,7 +374,7 @@ function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
 	// de conflit.
 	$ctrh = $ctrq = $conflits = array();
 	foreach (array_keys($champs) as $key) {
-		if ($m = $ctr[$prefix.$key]) {
+		if (isset($ctr[$prefix.$key]) AND $m = $ctr[$prefix.$key]) {
 			$ctrh[$key] = $m;
 			$ctrq[] = $key;
 		}
@@ -353,21 +408,28 @@ function display_conflit_champ($x) {
 function signaler_conflits_edition($conflits, $redirect='') {
 	include_spip('inc/minipres');
 	include_spip('inc/revisions');
+	include_spip('afficher_diff/champ');
 	include_spip('inc/suivi_versions');
 	include_spip('inc/diff');
 	foreach ($conflits as $champ=>$a) {
+		// probleme de stockage ou conflit d'edition ?
+		$base = isset($a['save']) ? $a['save'] : $a['base'];
+
 		$diff = new Diff(new DiffTexte);
 		$n = preparer_diff($a['post']);
-		$o = preparer_diff($a['base']);
+		$o = preparer_diff($base);
 		$d = propre_diff(
 			afficher_para_modifies(afficher_diff($diff->comparer($n,$o))));
-		$diffs[] = "<h2>$champ</h2>\n"
+
+		$titre = isset($a['save']) ? _L('Echec lors de l\'enregistrement du champ @champ@', array('champ' => $champ)) : $champ;
+
+		$diffs[] = "<h2>$titre</h2>\n"
 			. "<h3>"._T('info_conflit_edition_differences')."</h3>\n"
 			. "<div style='max-height:8em; overflow: auto; width:99%;'>".$d."</div>\n"
 			. "<h4>"._T('info_conflit_edition_votre_version')."</h4>"
 			. display_conflit_champ($a['post'])
 			. "<h4>"._T('info_conflit_edition_version_enregistree')."</h4>"
-			. display_conflit_champ($a['base']);
+			. display_conflit_champ($base);
 	}
 
 	if ($redirect) {

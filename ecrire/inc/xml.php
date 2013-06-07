@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // http://doc.spip.org/@spip_xml_load
 function spip_xml_load($fichier, $strict=true, $clean=true, $taille_max = 1048576, $datas='', $profondeur = -1){
@@ -27,7 +27,7 @@ function spip_xml_load($fichier, $strict=true, $clean=true, $taille_max = 104857
 	return count($arbre)?$arbre:false;
 }
 
-@define ('_SPIP_XML_TAG_SPLIT',"{<([^:>][^>]*?)>}sS");
+if (!defined('_SPIP_XML_TAG_SPLIT')) define('_SPIP_XML_TAG_SPLIT', "{<([^:>][^>]*?)>}sS");
 // http://doc.spip.org/@spip_xml_parse
 function spip_xml_parse(&$texte, $strict=true, $clean=true, $profondeur = -1){
 	$out = array();
@@ -60,13 +60,13 @@ function spip_xml_parse(&$texte, $strict=true, $clean=true, $profondeur = -1){
 		$tag = rtrim($chars[1]);
 		$txt = $chars[2];
 		
-		if (strncmp($tag,'<![CDATA[',9)==0) return importer_charset($texte,$charset);//$texte;
+		if (strncmp($tag,'![CDATA[',8)==0) return importer_charset($texte,$charset);//$texte;
 		if(substr($tag,-1)=='/'){ // self closing tag
 			$tag = rtrim(substr($tag,0,strlen($tag)-1));
 			$out[$tag][]="";
 		}
 		else{
-			$closing_tag = explode(" ",trim($tag));
+			$closing_tag = preg_split(",\s|\t|\n|\r,",trim($tag));
 			$closing_tag=reset($closing_tag);
 			// tag fermant
 			$ncclos = strlen("</$closing_tag>");
@@ -128,7 +128,7 @@ function spip_xml_aplatit($arbre,$separateur = " "){
 			else
 				$s.="$feuille$separateur";
 		}
-	return strlen($separateur)?substr($s,0,-strlen($separateur)):$s;
+	return strlen($separateur) ? substr($s, 0, -strlen($separateur)) : $s;
 }
 
 // http://doc.spip.org/@spip_xml_tagname
@@ -158,14 +158,16 @@ function spip_xml_decompose_tag($tag){
 }
 
 // http://doc.spip.org/@spip_xml_match_nodes
-function spip_xml_match_nodes($regexp,&$arbre,&$matches){
+function spip_xml_match_nodes($regexp,&$arbre,&$matches,$init=true){
+	if ($init)
+		$matches = array();
 	if(is_array($arbre) && count($arbre))
 		foreach(array_keys($arbre) as $tag){
 			if (preg_match($regexp,$tag))
 				$matches[$tag] = &$arbre[$tag];
 			if (is_array($arbre[$tag]))
 				foreach(array_keys($arbre[$tag]) as $occurences)
-					spip_xml_match_nodes($regexp,$arbre[$tag][$occurences],$matches);
+					spip_xml_match_nodes($regexp,$arbre[$tag][$occurences],$matches,false);
 		}
 	return (count($matches));
 }

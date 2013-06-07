@@ -3,13 +3,15 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // Inserer la feuille de style selon les normes, dans le <head>
 // puis les boutons
@@ -43,11 +45,11 @@ function affiche_boutons_admin($contenu) {
 	include_spip('inc/filtres');
 
 	// Inserer le css d'admin
-	$css = "<link rel='stylesheet' href='".url_absolue(find_in_path('spip_admin.css'))
+	$css = "<link rel='stylesheet' href='".url_absolue(direction_css(find_in_path('spip_admin.css')))
 	. "' type='text/css' />\n";
 	if ($f = find_in_path('spip_admin_perso.css'))
 		$css .= "<link rel='stylesheet' href='"
-		. url_absolue($f) . "' type='text/css' />\n";
+		. url_absolue(direction_css($f)) . "' type='text/css' />\n";
 
 	($pos = stripos($contenu, '</head>'))
 	    || ($pos = stripos($contenu, '<body>'))

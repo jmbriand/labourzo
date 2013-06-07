@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // --------------------------
 // Gestion des taches de fond
@@ -52,42 +52,21 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 
 // http://doc.spip.org/@inc_genie_dist
 function inc_genie_dist($taches = array()) {
+	include_spip('inc/queue');
 
-	if (!$taches)
-		$taches = taches_generales();
+	if (_request('exec')=='job_queue')
+		return;
 
-	// Quelle est la tache la plus urgente ?
-	$tache = '';
-	$tmin = $t = time();
-	foreach ($taches as $nom => $periode) {
-		$celock = _DIR_TMP . $nom . '.lock';
-		$date_lock = @filemtime($celock);
-		if ($date_lock + $periode < $tmin) {
-			$tmin = $date_lock + $periode;
-			$tache = $nom;
-			$lock = $celock;
-			$last = $date_lock;
-		}
-	// debug : si la date du fichier est superieure a l'heure actuelle,
-	// c'est que les serveurs Http et de fichiers sont desynchro.
-	// Ca peut mettre en peril les taches cron : signaler dans le log
-	// (On laisse toutefois flotter sur une heure, pas la peine de s'exciter
-	// pour si peu)
-		else if ($date_lock > $t + 3600)
-			spip_log("Erreur de date du fichier $lock : $date_lock > $t !");
-	}
-	if ($tache) {
-		spip_timer('tache');
-		touch($lock);
-		$cron = charger_fonction($tache, 'genie');
-		$retour = $cron($last);
-		// si la tache a eu un effet : log
-		if ($retour) {
-			spip_log("cron: $tache (" . spip_timer('tache') . ") $retour");
-			if ($retour < 0)
-				@touch($lock, 0 - $retour);
-		}
-	}
+	$force_jobs = array();
+	// l'ancienne facon de lancer une tache cron immediatement
+	// etait de la passer en parametre a ing_genie_dist
+	// on reroute en ajoutant simplement le job a la queue, ASAP
+	foreach($taches as $function=>$period)
+		$force_jobs[] = queue_add_job($function, _T('tache_cron_asap', array('function'=>$function)), array(time()-abs($period)), "genie/");
+	
+	// et on passe la main a la gestion de la queue !
+	// en forcant eventuellement les jobs ajoute a l'instant
+	queue_schedule(count($force_jobs)?$force_jobs:null);
 }
 
 //
@@ -101,6 +80,10 @@ function inc_genie_dist($taches = array()) {
 // http://doc.spip.org/@taches_generales
 function taches_generales($taches_generales = array()) {
 
+	// verifier que toutes les taches cron sont planifiees
+	// c'est une tache cron !
+	$taches_generales['queue_watch'] = 3600*24;
+
 	// MAJ des rubriques publiques (cas de la publication post-datee)
 	// est fait au coup par coup a present
 	//	$taches_generales['rubriques'] = 3600;
@@ -108,26 +91,20 @@ function taches_generales($taches_generales = array()) {
 	// Optimisation de la base
 	$taches_generales['optimiser'] = 3600*48;
 
-	// cache (chaque 20 minutes => 1/16eme du repertoire cache)
-	$taches_generales['invalideur'] = 1200;
+	// cache (chaque 10 minutes => 1/16eme du repertoire cache,
+	// soit toutes les 2h40 sur le meme rep)
+	$taches_generales['invalideur'] = 600;
 
 	// nouveautes
 	if ($GLOBALS['meta']['adresse_neuf'] AND $GLOBALS['meta']['jours_neuf']
 	AND ($GLOBALS['meta']['quoi_de_neuf'] == 'oui'))
 		$taches_generales['mail']= 3600 * 24 * $GLOBALS['meta']['jours_neuf'];
 
-	// stats : toutes les 5 minutes on peut vider un panier de visites
-	if ($GLOBALS['meta']["activer_statistiques"] == "oui") {
-		$taches_generales['visites'] = 300; 
-		$taches_generales['popularites'] = 7200; # calcul lourd
-	}
-
-	// syndication
-	if ($GLOBALS['meta']["activer_syndic"] == "oui") 
-		$taches_generales['syndic'] = 90;
-
 	// maintenance (ajax, verifications diverses)
-		$taches_generales['maintenance'] = 3600 * 2;
+	$taches_generales['maintenance'] = 3600 * 2;
+
+	// verifier si une mise a jour de spip est disponible (2 fois par semaine suffit largement)
+	$taches_generales['mise_a_jour'] = 3*24*3600;
 
 	return pipeline('taches_generales_cron',$taches_generales);
 }
@@ -147,4 +124,65 @@ function genie_invalideur_dist($t) {
 		return (0 - $t);
 	return 1;
 }
+
+/**
+ * Une tache periodique pour surveiller les taches crons et les relancer si besoin
+ * quand ce cron s'execute, il n'est plus dans la queue, donc il se replanifie
+ * lui meme, avec last=time()
+ * avec une dose d'aleatoire pour ne pas planifier toutes les taches au meme moment
+ *
+ * @return int
+ */
+function genie_queue_watch_dist(){
+	static $deja_la = false;
+	if ($deja_la) return; // re-entrance si l'insertion des jobs echoue (pas de table spip_jobs a l'upgrade par exemple)
+	$deja_la = true;
+	$taches = taches_generales();
+	$programmees = sql_allfetsel('fonction','spip_jobs',sql_in('fonction',array_keys($taches)));
+	$programmees = array_map('reset',$programmees);
+	foreach($taches as $tache=>$periode){
+		if (!in_array($tache,$programmees))
+			queue_genie_replan_job($tache,$periode,time()-round(rand(1,$periode)),0);
+	}
+	$deja_la = false;
+	return 1;
+}
+
+/**
+ * Replanifier une tache periodique
+ *
+ * @param string $function
+ *   nom de la fonction a appeler
+ * @param int $period
+ *   periodicite en secondes
+ * @param int $last
+ *   date du dernier appel (timestamp)
+ * @param int $time
+ *   date de replanification
+ *   si null calculee automaitquement a partir de $last et $period
+ *   si 0  = asap mais on n'insere pas le job si deja en cours d'execution
+ * @param int $priority
+ *   priorite
+ * @return void
+ */
+function queue_genie_replan_job($function,$period,$last=0,$time=null, $priority=0){
+	static $done = array();
+	if (isset($done[$function])) return;
+	$done[$function] = true;
+	if (is_null($time)){
+		$time=time();
+		if ($last)
+			$time = max($last+$period,$time);
+	}
+	if (!$last)
+		$last = $time-$period;
+	spip_log("replan_job $function $period $last $time $priority",'queue');
+	include_spip('inc/queue');
+	// on replanifie un job cron
+	// uniquement si il n'y en a pas deja un avec le meme nom
+	// independament de l'argument
+	queue_add_job($function, _T('tache_cron_secondes', array('function'=>$function, 'nb'=>$period)), array($last), "genie/", 'function_only', $time, $priority);
+}
+
+
 ?>

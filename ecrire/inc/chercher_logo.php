@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // http://doc.spip.org/@inc_chercher_logo_dist
 function inc_chercher_logo_dist($id, $_id_objet, $mode='on') {
@@ -33,7 +33,7 @@ function inc_chercher_logo_dist($id, $_id_objet, $mode='on') {
 function type_du_logo($_id_objet) {
 	return isset($GLOBALS['table_logos'][$_id_objet])
 		? $GLOBALS['table_logos'][$_id_objet]
-		: preg_replace(',^id_,', '', $_id_objet);
+		: objet_type(preg_replace(',^id_,','',$_id_objet));
 }
 
 // Exceptions standards (historique)
@@ -41,10 +41,8 @@ global $table_logos;
 $table_logos = array( 
 	'id_article' => 'art', 
 	'id_auteur' => 'aut', 
-#	'id_breve' => 'breve', 
-#	'id_mot' => 'mot', 
-	'id_syndic'=> 'site',
-	'id_rubrique' => 'rub'
+	'id_rubrique' => 'rub',
+	'id_groupe' => 'groupe',
 );
 
 ?>

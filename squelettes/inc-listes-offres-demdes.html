@@ -8,7 +8,7 @@
  <B_offresA>
       <h2><:offres_en_cours:></h2>
       <ul>
-          <BOUCLE_offresA(XX_EMPLOYR) {emp_domaines LIKE %CVL%} {par emp_datmodif}{inverse}>
+          <BOUCLE_offresA(xx_employr) {emp_domaines LIKE %anim%} {par emp_datmodif}{inverse}>
           <li>
 	          <a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'8','7'})]&emp_id=#EMP_ID" title="Consulter cette offre">
 	          <small>#EMP_NOM</small> <big>#EMP_POSTE </big> <q>#EMP_DURDATES</q>
@@ -25,7 +25,7 @@
   <B_demandesA>
       <h2><:demandes_en_cours:></h2>
       <ul>
-          <BOUCLE_demandesA(XX_DEMANDR) {dem_domaines LIKE %C.V.L.%} {par dem_datmodif}{inverse}>
+          <BOUCLE_demandesA(xx_demandr) {dem_domaines LIKE %anim%} {par dem_datmodif}{inverse}>
           <li>
 	          <a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'25','26'})]&dem_id=#DEM_ID" title="Consulter cette demande">
 	          <big>#DEM_PRENOM&nbsp;#DEM_NOM</big> <small>[(#LANG|=={br}|?{
@@ -144,11 +144,74 @@ alert("Sorry, the Google Maps API is not compatible with this browser.");
   <div class="nettoyeur"></div>
   
 <div class="liste offre petite_enfance">
+  <B_offresB>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresB(xx_employr) {emp_domaines LIKE %gardenf%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'32','31'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresB>
+      </ul>
+
+  </B_offresB>
+     <h2><:aucune_offre:></h2>
+  <//B_offresB>
+  </div>
+
+
+</BOUCLE_petitenf>
+
+  [(#REM) Listes des fiches Ecoles, ensgmt ]
+<BOUCLE_ecoles(RUBRIQUES) {id_rubrique} {id_rubrique IN 5,11}>
+<div class="liste offre">
+  <B_offresC>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresC(xx_employr) {emp_domaines LIKE %enseignmt%} {par emp_datmodif}{inverse}>
+          <li>
+	          <a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'22','16'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresC>
+      </ul>
+  </B_offresC>
+     <h2><:aucune_offre:></h2>
+  <//B_offresC>
+</div>
+
+
+<div class="liste demande">
+ <B_demandesC>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesC(xx_demandr) {dem_domaines LIKE %enseignmt%} {par dem_datmodif}{inverse}>
+          <li>
+			<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'27','28'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesC>
+      </ul>
+  </B_demandesC>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesC>
+</div>
+</BOUCLE_ecoles>
+
+
+
+  [(#REM) Listes des fiches Accompagnement scolaire ]
+<BOUCLE_accscol(RUBRIQUES) {id_rubrique} {id_rubrique IN 31,32}>
+<div class="liste offre">
   <B_offresD>
       <h2><:offres_en_cours:></h2>
       <ul>
-          <BOUCLE_offresD(XX_EMPLOYR) {emp_domaines LIKE %Petite%} {par emp_datmodif}{inverse}>
-          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'32','31'})]&emp_id=#EMP_ID">
+          <BOUCLE_offresD(xx_employr) {emp_domaines LIKE %accompscol%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'44','41'})]&emp_id=#EMP_ID">
 	          <small>#EMP_NOM</small> 
 	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
 	          </a>
@@ -162,83 +225,307 @@ alert("Sorry, the Google Maps API is not compatible with this browser.");
   </div>
 
 
-</BOUCLE_petitenf>
-
-  [(#REM) Listes des fiches Ecoles, ensgmt ]
-<BOUCLE_ecoles(RUBRIQUES) {id_rubrique} {id_rubrique IN 5,11}>
-<div class="liste offre">
-  <B_offresB>
-      <h2><:offres_en_cours:></h2>
-      <ul>
-          <BOUCLE_offresB(XX_EMPLOYR) {emp_domaines LIKE %Ecoles%} {par emp_datmodif}{inverse}>
-          <li>
-	          <a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'22','16'})]&emp_id=#EMP_ID">
-	          <small>#EMP_NOM</small> <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
-	          </a>
-          </li>
-          </BOUCLE_offresB>
-      </ul>
-  </B_offresB>
-     <h2><:aucune_offre:></h2>
-  <//B_offresB>
-</div>
-
-
-<div class="liste demande">
- <B_demandesB>
+  <div class="liste demande">
+  <B_demandesD>
       <h2><:demandes_en_cours:></h2>
       <ul>
-          <BOUCLE_demandesB(XX_DEMANDR) {dem_domaines LIKE %Ecoles%} {par dem_datmodif}{inverse}>
+          <BOUCLE_demandesD(xx_demandr) {dem_domaines LIKE %accompscol%} {par dem_datmodif}{inverse}>
           <li>
-			<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'27','28'})]&dem_id=#DEM_ID">
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'45','42'})]&dem_id=#DEM_ID">
 			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
 			</a>
           </li>
-          </BOUCLE_demandesB>
+          </BOUCLE_demandesD>
       </ul>
-  </B_demandesB>
+  </B_demandesD>
      <h2><:aucune_demande:></h2>
-  <//B_demandesB>
-</div>
-</BOUCLE_ecoles>
+  <//B_demandesD>
+  </div>
+</BOUCLE_accscol>
 
 
 
-  [(#REM) Listes des fiches Action culturelle ]
-<BOUCLE_actcult(RUBRIQUES) {id_rubrique} {id_rubrique IN 12,13}>
+  [(#REM) Listes des fiches Commerce ]
+<BOUCLE_commerce(RUBRIQUES) {id_rubrique} {id_rubrique IN 33,34}>
 <div class="liste offre">
-  <B_offresC>
+  <B_offresE>
       <h2><:offres_en_cours:></h2>
       <ul>
-          <BOUCLE_offresC(XX_EMPLOYR) {emp_domaines LIKE %culturelle%} {par emp_datmodif}{inverse}>
-          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'24','23'})]&emp_id=#EMP_ID">
+          <BOUCLE_offresE(xx_employr) {emp_domaines LIKE %commarti%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'48','46'})]&emp_id=#EMP_ID">
 	          <small>#EMP_NOM</small> 
 	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
 	          </a>
           </li>
-          </BOUCLE_offresC>
+          </BOUCLE_offresE>
       </ul>
 
-  </B_offresC>
+  </B_offresE>
      <h2><:aucune_offre:></h2>
-  <//B_offresC>
+  <//B_offresE>
   </div>
 
 
   <div class="liste demande">
-  <B_demandesC>
+  <B_demandesE>
       <h2><:demandes_en_cours:></h2>
       <ul>
-          <BOUCLE_demandesC(XX_DEMANDR) {dem_domaines LIKE %culturelle%} {par dem_datmodif}{inverse}>
+          <BOUCLE_demandesE(xx_demandr) {dem_domaines LIKE %commarti%} {par dem_datmodif}{inverse}>
           <li>
-          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'29','30'})]&dem_id=#DEM_ID">
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'49','47'})]&dem_id=#DEM_ID">
 			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
 			</a>
           </li>
-          </BOUCLE_demandesC>
+          </BOUCLE_demandesE>
       </ul>
-  </B_demandesC>
+  </B_demandesE>
      <h2><:aucune_demande:></h2>
-  <//B_demandesC>
+  <//B_demandesE>
   </div>
-</BOUCLE_actcult>
+</BOUCLE_commerce>
+
+
+
+  [(#REM) Listes des fiches Santé ]
+<BOUCLE_sante(RUBRIQUES) {id_rubrique} {id_rubrique IN 35,36}>
+<div class="liste offre">
+  <B_offresF>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresF(xx_employr) {emp_domaines LIKE %sante%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'53','50'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresF>
+      </ul>
+
+  </B_offresF>
+     <h2><:aucune_offre:></h2>
+  <//B_offresF>
+  </div>
+
+
+  <div class="liste demande">
+  <B_demandesF>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesF(xx_demandr) {dem_domaines LIKE %sante%} {par dem_datmodif}{inverse}>
+          <li>
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'51','52'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesF>
+      </ul>
+  </B_demandesF>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesF>
+  </div>
+</BOUCLE_sante>
+
+
+
+  [(#REM) Listes des fiches Communication ]
+<BOUCLE_commedia(RUBRIQUES) {id_rubrique} {id_rubrique IN 37,38}>
+<div class="liste offre">
+  <B_offresG>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresG(xx_employr) {emp_domaines LIKE %commedia%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'55','54'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresG>
+      </ul>
+
+  </B_offresG>
+     <h2><:aucune_offre:></h2>
+  <//B_offresG>
+  </div>
+
+
+  <div class="liste demande">
+  <B_demandesG>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesG(xx_demandr) {dem_domaines LIKE %commedia%} {par dem_datmodif}{inverse}>
+          <li>
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'56','57'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesG>
+      </ul>
+  </B_demandesG>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesG>
+  </div>
+</BOUCLE_commedia>
+
+
+
+  [(#REM) Listes des fiches Linguistes ]
+<BOUCLE_linguis(RUBRIQUES) {id_rubrique} {id_rubrique IN 39,40}>
+<div class="liste offre">
+  <B_offresH>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresH(xx_employr) {emp_domaines LIKE %linguis%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'58','59'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresH>
+      </ul>
+
+  </B_offresH>
+     <h2><:aucune_offre:></h2>
+  <//B_offresH>
+  </div>
+
+
+  <div class="liste demande">
+  <B_demandesH>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesH(xx_demandr) {dem_domaines LIKE %linguis%} {par dem_datmodif}{inverse}>
+          <li>
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'61','60'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesH>
+      </ul>
+  </B_demandesH>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesH>
+  </div>
+</BOUCLE_linguis>
+
+
+
+  [(#REM) Listes des fiches Administration ]
+<BOUCLE_admin(RUBRIQUES) {id_rubrique} {id_rubrique IN 41,42}>
+<div class="liste offre">
+  <B_offresI>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresI(xx_employr) {emp_domaines LIKE %admin%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'62','63'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresI>
+      </ul>
+
+  </B_offresI>
+     <h2><:aucune_offre:></h2>
+  <//B_offresI>
+  </div>
+
+
+  <div class="liste demande">
+  <B_demandesI>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesI(xx_demandr) {dem_domaines LIKE %admin%} {par dem_datmodif}{inverse}>
+          <li>
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'65','64'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesI>
+      </ul>
+  </B_demandesI>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesI>
+  </div>
+</BOUCLE_admin>
+
+
+
+  [(#REM) Listes des fiches Arts ]
+<BOUCLE_arts(RUBRIQUES) {id_rubrique} {id_rubrique IN 43,44}>
+<div class="liste offre">
+  <B_offresJ>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresJ(xx_employr) {emp_domaines LIKE %arts%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'66','67'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresJ>
+      </ul>
+
+  </B_offresJ>
+     <h2><:aucune_offre:></h2>
+  <//B_offresJ>
+  </div>
+
+
+  <div class="liste demande">
+  <B_demandesJ>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesJ(xx_demandr) {dem_domaines LIKE %arts%} {par dem_datmodif}{inverse}>
+          <li>
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'69','68'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesJ>
+      </ul>
+  </B_demandesJ>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesJ>
+  </div>
+</BOUCLE_arts>
+
+
+
+  [(#REM) Listes des fiches Divers ]
+<BOUCLE_divers(RUBRIQUES) {id_rubrique} {id_rubrique IN 45,46}>
+<div class="liste offre">
+  <B_offresK>
+      <h2><:offres_en_cours:></h2>
+      <ul>
+          <BOUCLE_offresK(xx_employr) {emp_domaines LIKE %divers%} {par emp_datmodif}{inverse}>
+          <li><a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'70','71'})]&emp_id=#EMP_ID">
+	          <small>#EMP_NOM</small> 
+	          <big>#EMP_POSTE</big> <q>#EMP_DURDATES</q>
+	          </a>
+          </li>
+          </BOUCLE_offresK>
+      </ul>
+
+  </B_offresK>
+     <h2><:aucune_offre:></h2>
+  <//B_offresK>
+  </div>
+
+
+  <div class="liste demande">
+  <B_demandesK>
+      <h2><:demandes_en_cours:></h2>
+      <ul>
+          <BOUCLE_demandesK(xx_demandr) {dem_domaines LIKE %divers%} {par dem_datmodif}{inverse}>
+          <li>
+          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'73','72'})]&dem_id=#DEM_ID">
+			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
+			</a>
+          </li>
+          </BOUCLE_demandesK>
+      </ul>
+  </B_demandesK>
+     <h2><:aucune_demande:></h2>
+  <//B_demandesK>
+  </div>
+</BOUCLE_divers>

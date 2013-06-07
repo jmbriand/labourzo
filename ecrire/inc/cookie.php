@@ -3,36 +3,56 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 //
 // Appliquer le prefixe cookie
 //
 // http://doc.spip.org/@spip_setcookie
 function spip_setcookie ($name='', $value='', $expire=0, $path='AUTO', $domain='', $secure='') {
+	// liste des cookies en httponly (a passer en define si besoin)
+	$httponly = in_array($name, explode(' ', 'spip_session'));
+
 	$name = preg_replace ('/^spip_/', $GLOBALS['cookie_prefix'].'_', $name);
 	if ($path == 'AUTO')
-		$path = preg_replace(',^\w+://[^/]*,', '', url_de_base());
+		$path = defined('_COOKIE_PATH')?_COOKIE_PATH:preg_replace(',^\w+://[^/]*,', '', url_de_base());
+	if (!$domain AND defined('_COOKIE_DOMAIN'))
+		$domain = _COOKIE_DOMAIN;
 
-	#spip_log("cookie('$name', '$value', '$expire', '$path', '$domain', '$secure'");
+	#spip_log("cookie('$name', '$value', '$expire', '$path', '$domain', '$secure', '$httponly'");
 
-	if ($secure)
-		@setcookie ($name, $value, $expire, $path, $domain, $secure);
-	else if ($domain)
-		@setcookie ($name, $value, $expire, $path, $domain);
-	else if ($path)
-		@setcookie ($name, $value, $expire, $path);
-	else if ($expire)
-		@setcookie ($name, $value, $expire);
-	else
-		@setcookie ($name, $value);
+	$a =
+	($httponly AND strnatcmp(phpversion(),'5.2.0') >= 0) ?
+	@setcookie ($name, $value, $expire, $path, $domain, $secure, $httponly)
+	: ($secure ?
+	@setcookie ($name, $value, $expire, $path, $domain, $secure)
+	: ($domain ?
+	@setcookie ($name, $value, $expire, $path, $domain)
+	: ($path ?
+	@setcookie ($name, $value, $expire, $path)
+	: ($expire ?
+	@setcookie ($name, $value, $expire)
+	:
+	@setcookie ($name, $value)
+	))));
+
+	spip_cookie_envoye(true);
+
+	return $a;
+}
+
+function spip_cookie_envoye($set = '') {
+  static $envoye = false;
+  if($set)
+    $envoye = true;
+  return $envoye;
 }
 
 // http://doc.spip.org/@recuperer_cookies_spip

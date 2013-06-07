@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 
 // http://doc.spip.org/@action_preferer_dist
@@ -23,7 +23,7 @@ function action_preferer_dist() {
 		$arg = $securiser_action();
 	} else $arg = $_GET['arg'];
 
-	if (!preg_match(",^(.+):(.+)$,", $arg, $r))
+	if (!preg_match(",^(.+):(.*)$,", $arg, $r))
 		spip_log("action_preferer_dist: $arg pas compris");
 	else {
 	$prefs_mod = false;
@@ -35,6 +35,10 @@ function action_preferer_dist() {
 	}
 	elseif ($op == 'display') {
 		$GLOBALS['visiteur_session']['prefs']['display'] = $val;
+		$prefs_mod = true;
+	}
+	elseif ($op == 'display_outils') {
+		$GLOBALS['visiteur_session']['prefs']['display_outils'] = $val;
 		$prefs_mod = true;
 	}
 

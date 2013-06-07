@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // http://doc.spip.org/@install_etape_1_dist
 function install_etape_1_dist()
@@ -50,12 +50,8 @@ function install_etape_1_dist()
 	echo info_progression_etape(1,'etape_','install/');
 
 	// ces deux chaines de langues doivent etre reecrites
-#	echo info_etape(_T('info_connexion_mysql'), _T('texte_connexion_mysql').aide ("install1"));
-	echo info_etape(_T('info_connexion_base_donnee'),
-			'<p>'
-					. _T('texte_connexion_mysql')
-			.'</p>'
-			);
+#	echo info_etape(_T('info_connexion_mysql'), _T('texte_connexion_mysql').aide ("install1", true));
+	echo info_etape(_T('info_connexion_base_donnee'));
 	echo install_connexion_form($db, $login, $pass, $predef, "\n<input type='hidden' name='chmod' value='$chmod' />", 2);
 	echo install_fin_html();
 }

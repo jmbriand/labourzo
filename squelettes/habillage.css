@@ -317,7 +317,8 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 .themes li 
 {
 	width: 165px;
-	height: 140px;	
+	height: 140px;
+	background-color: #333
 }
 
 .entrees li 
@@ -340,7 +341,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 .themes li a 
 {
-	padding: 55px 10px 10px 10px;
+	padding: 45px 5px 10px 10px;
 }
 
 .entrees li a 
@@ -365,7 +366,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 .sommaire li a small
 {
-	line-height: 16px;
+	line-height: 1.2em;
 }
 
 #sidebar .entrees li a small {line-height: 12px;}
@@ -385,6 +386,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 
 .sommaire .presentation {font-size: 11px; font-family: "Helvetica Neue", helvetica, sans-serif}
+.sommaire .themes li.presentation {background: transparent}
 
 
 /* ANIMATIONS
@@ -699,4 +701,54 @@ form#modif ul li textarea,
 #pied ul li.acces-admin {text-align: right;}
 #pied ul li.acces-admin a {font-size: 11px; display: block; padding: 10px; text-transform: uppercase; color: #000; text-decoration: none;}
 #pied ul li.acces-admin a:hover {text-decoration: underline;}
+
+
+@media (min-width: 980px) {
+
+.sommaire {width: 740px;}
+#contenu {width: 925px} 
+
+}
+
+
+
+@media (max-width: 640px) {
+
+#entete {height: 80px}
+#contenu,
+#pied ul { width: 625px}
+.sommaire {width: 380px; padding-left: 40px}
+#sidebar {width: 180px;margin-right:20px}
+.contact-mentions, .rss-plan, .acces-admin {width: 160px}
+.entrees li {width: 350px}
+}
+
+@media (max-width: 360px) {
+body {font-size: 1.1em; line-height: 1.3em}
+#entete {height: 40px}
+#contenu,
+#pied ul,
+.sommaire { width: 335px}
+#sidebar,
+.entrees li {width: 265px;}
+
+.entrees li {height: 80px}
+
+.themes li {width: 265px}
+
+.page_sommaire #sidebar {margin-right: 30px; margin-top: 20px}
+
+.entrees li small {font-size: 1em}
+.contact-mentions, .rss-plan, .acces-admin {width: 160px}
+
+.sommaire li a small {line-height:1.3em; font-size: 0.8em}
+.sommaire .presentation {font-size: 0.8em; line-height: 1em;}
+.sommaire .presentation p {padding: 0 20px}
+#pied ul li {padding: 20px}
+
+.derniers_articles ul li * {font-size: 0.9em}
+
+#menu_langue {left:40px; top:40px}
+}
+
 

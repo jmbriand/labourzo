@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2010                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -25,7 +25,7 @@ function balise_LOGIN_PRIVE ($p) {
 #    <boucle(AUTEURS)>[(#LOGIN_PRIVE{#URL_ECRIRE, #LOGIN})]
 
 // http://doc.spip.org/@balise_LOGIN_PRIVE_stat
-function balise_LOGIN_PRIVE_stat ($args, $filtres) {
+function balise_LOGIN_PRIVE_stat ($args, $context_compil) {
 	return array(isset($args[1]) ? $args[1] : $args[0], (isset($args[2]) ? $args[2] : ''));
 }
 

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2010                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -24,8 +24,8 @@ include_spip('inc/cookie');
 // Determiner l'action demandee
 //
 
-$exec = _request('exec');
-$reinstall = _request('reinstall')?_request('reinstall'):($exec=='install'?'oui':NULL);
+$exec = (string)_request('exec');
+$reinstall = (!is_null(_request('reinstall')))?_request('reinstall'):($exec=='install'?'oui':NULL);
 //
 // Les scripts d'insallation n'authentifient pas, forcement,
 // alors il faut blinder les variables d'URL
@@ -47,6 +47,9 @@ if (autoriser_sans_cookie($exec)) {
 // initialiser a la langue par defaut
 include_spip('inc/lang');
 utiliser_langue_visiteur();
+// forcer la langue de l'utilisateur pour les squelettes
+$forcer_lang = true;
+
 
 if (_request('action') OR _request('var_ajax') OR _request('formulaire_action')){
 	// Charger l'aiguilleur qui va mettre sur la bonne voie les traitements derogatoires
@@ -97,34 +100,23 @@ elseif (isset($GLOBALS['meta']["admin"])) {
 	}
 	if ($n) {
 		list(,$var_f,$n) = $l;
+		if (tester_url_ecrire("base_$var_f"))
+			$var_f = "base_$var_f";
 		if ($var_f != $exec) {
 			spip_log("Le script $var_f lance par $n se substitue a $exec");
 			$exec = $var_f;
+			set_request('exec', $exec);
 		}
 	}
 }
 // si nom pas plausible, prendre le script par defaut
-elseif (!preg_match(',^[a-z_][0-9a-z_]*$,i', $exec)) $exec = "accueil";
-
-// Verification des plugins
-// (ne pas interrompre une restauration ou un upgrade)
-elseif ($exec!='upgrade'
-AND !$var_auth
-AND !_DIR_RESTREINT
-AND autoriser('configurer')
-AND lire_fichier(_DIR_TMP.'verifier_plugins.txt',$l)
-AND $l = @unserialize($l)) {
-	foreach ($l as $fichier) {
-		if (!@is_readable($fichier)) {
-			spip_log("Verification plugin: echec sur $fichier !");
-			include_spip('inc/plugin');
-			verifie_include_plugins();
-			break; // sortir de la boucle, on a fait un verif
-		}
-	}
+// attention aux deux cas 404/403 qui commencent par un 4 !
+elseif (!preg_match(',^[a-z4_][0-9a-z_-]*$,i', $exec)) {
+	$exec = "accueil";
+	set_request('exec', $exec);
 }
 
-// compatibilite ascendante
+// compatibilite ascendante : obsolete, ne plus utiliser
 $GLOBALS['spip_display'] = isset($GLOBALS['visiteur_session']['prefs']['display'])
 	? $GLOBALS['visiteur_session']['prefs']['display']
 	: 0;
@@ -147,23 +139,15 @@ if ($var_f = _request('transformer_xml')) {
 	set_request('var_url', $exec);
 	$exec = $var_f;
 }
-elseif (find_in_path("prive/exec/$exec.html")) {
-	$exec = "fond";
+if ($var_f = tester_url_ecrire($exec)) {
+	$var_f = charger_fonction ($var_f);
+	$var_f(); // at last
 }
-
-// Trouver la fonction eventuellement surchargee
-$var_f = charger_fonction($exec);
-
-// Z'y va
-$var_f();
-
-if ($GLOBALS['var_mode'] == 'debug') {
-	include_spip('public/debug');
-	$var_mode_affiche = _request('var_mode_affiche');
-	$var_mode_objet = _request('var_mode_objet');
-	debug_dumpfile("",$var_mode_objet,$var_mode_affiche);
+else {
+	// Rien de connu: rerouter vers exec=404 au lieu d'echouer
+	// ce qui permet de laisser la main a un plugin
+	$var_f = charger_fonction('404');
+	$var_f($exec);
 }
-if (isset($tableau_des_erreurs) AND count($tableau_des_erreurs) AND $affiche_boutons_admin)
-	echo affiche_erreurs_page($tableau_des_erreurs);
 
 ?>

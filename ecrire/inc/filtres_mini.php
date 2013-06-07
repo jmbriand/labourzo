@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -11,7 +11,7 @@
 \***************************************************************************/
 
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 //
 // Filtres d'URLs
@@ -24,10 +24,14 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 //
 // http://doc.spip.org/@resolve_path
 function resolve_path($url) {
+	list($url, $query) = array_pad(explode('?', $url, 2), 2, null);
 	while (preg_match(',/\.?/,', $url, $regs)		# supprime // et /./
 	OR preg_match(',/[^/]*/\.\./,S', $url, $regs)	# supprime /toto/../
 	OR preg_match(',^/\.\./,S', $url, $regs))		# supprime les /../ du haut
 		$url = str_replace($regs[0], '/', $url);
+
+	if ($query)
+		$url .= '?'.$query;
 
 	return '/'.preg_replace(',^/,S', '', $url);
 }
@@ -42,7 +46,7 @@ function suivre_lien($url, $lien) {
 
 	if (preg_match(',^(mailto|javascript):,iS', $lien))
 		return $lien;
-	if (preg_match(',^([a-z0-9]+://.*?)(/.*)?$,iS', $lien, $r))
+	if (preg_match(';^((?:[a-z]{3,7}:)?//.*?)(/.*)?$;iS', $lien, $r))
 		return $r[1].resolve_path($r[2]);
 
 	# L'url site spip est un lien absolu aussi
@@ -52,14 +56,13 @@ function suivre_lien($url, $lien) {
 
 	# lien relatif, il faut verifier l'url de base
 	# commencer par virer la chaine de get de l'url de base
-	if (preg_match(',^(.*?://[^/]+)(/.*?/?)?([^/#?]*)([?][^#]*)?(#.*)?$,S', $url, $regs)) {
+	if (preg_match(';^((?:[a-z]{3,7}:)?//[^/]+)(/.*?/?)?([^/#?]*)([?][^#]*)?(#.*)?$;S', $url, $regs)) {
 		$debut = $regs[1];
 		$dir = !strlen($regs[2]) ? '/' : $regs[2];
 		$mot = $regs[3];
 		$get = isset($regs[4])?$regs[4]:"";
 		$hash = isset($regs[5])?$regs[5]:"";
 	}
-	#var_dump(array('url'=>$url,'debut'=>$debut,'dir'=>$dir,'mot'=>$mot,'get'=>$get,'hash'=>$hash));
 	switch (substr($lien,0,1)) {
 		case '/':
 			return $debut . resolve_path($lien);
@@ -83,11 +86,21 @@ function url_absolue($url, $base='') {
 	return suivre_lien($base, $url);
 }
 
+/**
+ * Supprimer le protocole d'une url absolue
+ * pour le rendre implicite (URL commencant par "//")
+ * @param string $url_absolue
+ * @return string
+ */
+function protocole_implicite($url_absolue){
+	return preg_replace(";^[a-z]{3,7}://;i","//",$url_absolue);
+}
+
 // un filtre pour transformer les URLs relatives en URLs absolues ;
 // ne s'applique qu'aux textes contenant des liens
 // http://doc.spip.org/@liens_absolus
 function liens_absolus($texte, $base='') {
-	if (preg_match_all(',(<(a|link)[[:space:]]+[^<>]*href=["\']?)([^"\' ><[:space:]]+)([^<>]*>),imsS', 
+	if (preg_match_all(',(<(a|link|image)[[:space:]]+[^<>]*href=["\']?)([^"\' ><[:space:]]+)([^<>]*>),imsS', 
 	$texte, $liens, PREG_SET_ORDER)) {
 		foreach ($liens as $lien) {
 			$abs = url_absolue($lien[3], $base);

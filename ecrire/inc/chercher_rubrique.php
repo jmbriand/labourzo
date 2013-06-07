@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 define('_SPIP_SELECT_RUBRIQUES', 20); /* mettre 100000 pour desactiver ajax */
 
@@ -44,7 +44,7 @@ $GLOBALS['selecteur_rubrique'] = 'inc_chercher_rubrique_dist';
 
 // http://doc.spip.org/@style_menu_rubriques
 function style_menu_rubriques($i) {
-	global $browser_name, $browser_version, $spip_lang_left;
+	global $browser_name, $spip_lang_left;
 
 	$espace = '';
 	if (preg_match(",mozilla,i", $browser_name)) {
@@ -63,7 +63,6 @@ function style_menu_rubriques($i) {
 
 // http://doc.spip.org/@sous_menu_rubriques
 function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $exclus, $restreint, $type) {
-	global $browser_name, $browser_version;
 	static $decalage_secteur;
 
 	// Si on a demande l'exclusion ne pas descendre dans la rubrique courante
@@ -78,9 +77,7 @@ function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $excl
 	// le style en fonction de la profondeur
 	list($class, $style, $espace) = style_menu_rubriques($niv);
 
-	// class='selec_rub' sauf pour contourner le bug MSIE / MacOs 9.0
-	if (!($browser_name == "MSIE" AND floor($browser_version) == "5"))
-		$class .= " selec_rub";
+	$class .= " selec_rub";
 
 	// creer l'<option> pour la rubrique $root
 
@@ -99,14 +96,8 @@ function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $excl
 				$niv+1, $data, $enfants, $exclus, $restreint, $type);
 
 	// si l'objet a deplacer est publie, verifier qu'on a acces aux rubriques
-	if ($restreint AND !autoriser('publierdans','rubrique',$root))
+	if ($restreint AND $root!=$id_rubrique AND !autoriser('publierdans','rubrique',$root))
 		return $sous;
-
-	// sauter un cran pour les secteurs (sauf premier)
-	if ($niv == 1
-	AND $decalage_secteur++
-	AND $type != 'breve')
-		$r = "<option value='$root'></option>\n".$r;
 
 	// et voila le travail
 	return $r.$sous;
@@ -116,10 +107,13 @@ function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $excl
 // http://doc.spip.org/@selecteur_rubrique_html
 function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem=0) {
 	$data = array();
-	if ($type == 'rubrique')
+	if ($type == 'rubrique' AND autoriser('publierdans','rubrique',0))
 		$data[0] = _T('info_racine_site');
-	if ($type == 'auteur')
-		$data[0] = '&nbsp;'; # premier choix = neant (rubriques restreintes)
+	# premier choix = neant
+	# si auteur (rubriques restreintes)
+	# ou si creation avec id_rubrique=0
+	elseif ($type == 'auteur' OR !$id_rubrique)
+		$data[0] = '&nbsp;';
 
 	//
 	// creer une structure contenant toute l'arborescence
@@ -130,8 +124,7 @@ function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem=0) {
 	while ($r = sql_fetch($q)) {
 		if (autoriser('voir','rubrique',$r['id_rubrique'])){
 			// titre largeur maxi a 50
-			$titre = couper(supprimer_tags(typo(extraire_multi($r['titre']
-			)))." ", 50);
+			$titre = couper(supprimer_tags(typo($r['titre']))." ", 50);
 			if ($GLOBALS['meta']['multi_rubriques'] == 'oui'
 			AND ($r['langue_choisie'] == "oui" OR $r['id_parent'] == 0))
 				$titre .= ' ['.traduire_nom_langue($r['lang']).']';
@@ -141,6 +134,15 @@ function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem=0) {
 		}
 	}
 
+	// si une seule rubrique comme choix possible,
+	// inutile de mettre le selecteur sur un choix vide par defaut
+	// sauf si le selecteur s'adresse a une rubrique puisque on peut la mettre a la racine dans ce cas
+	if (count($data)==2
+	  AND isset($data[0])
+	  AND !in_array($type,array('auteur','rubrique'))
+	  AND !$id_rubrique)
+		unset($data[0]);
+
 
 	$opt = sous_menu_rubriques($id_rubrique,0, 0,$data,$enfants,$idem, $restreint, $type);
 	$att = " id='id_parent' name='id_parent'\nclass='selecteur_parent verdana1'";
@@ -148,7 +150,7 @@ function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem=0) {
 	if (preg_match(',^<option[^<>]*value=.(\d*).[^<>]*>([^<]*)</option>$,',$opt,$r))
 	  $r = "<input$att type='hidden' value='" . $r[1] . "' />" . $r[2] ;
 	else 
-	  $r = "<select$att size='1'>\n$opt</select>\n";
+	  $r = "<select".$att." size='1'>\n$opt</select>\n";
 
 	# message pour neuneus (a supprimer ?)
 #	if ($type != 'auteur' AND $type != 'breve')
@@ -157,15 +159,25 @@ function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem=0) {
 	return $r;
 }
 
-// http://doc.spip.org/@selecteur_rubrique_ajax
+/**
+ * http://doc.spip.org/@selecteur_rubrique_ajax
+ *
+ * $restreint indique qu'il faut limiter les rubriques affichees
+ * aux rubriques editables par l'admin restreint... or, ca ne marche pas.
+ * Pour la version HTML c'est bon (cf. ci-dessus), mais pour l'ajax...
+ * je laisse ca aux specialistes de l'ajax & des admins restreints
+ * note : toutefois c'est juste un pb d'interface, car question securite
+ * la verification est faite a l'arrivee des donnees (Fil)
+ *
+ *
+ * @param int $id_rubrique
+ * @param string $type
+ * @param bool $restreint
+ * @param int $idem
+ * @param string $do
+ * @return string
+ */
 function selecteur_rubrique_ajax($id_rubrique, $type, $restreint, $idem=0, $do) {
-
-       ## $restreint indique qu'il faut limiter les rubriques affichees
-       ## aux rubriques editables par l'admin restreint... or, ca ne marche pas.
-       ## Pour la version HTML c'est bon (cf. ci-dessus), mais pour l'ajax...
-       ## je laisse ca aux specialistes de l'ajax & des admins restreints
-       ## note : toutefois c'est juste un pb d'interface, car question securite
-       ## la verification est faite a l'arrivee des donnees (Fil)
 
 	if ($id_rubrique) {
 		$titre = sql_fetsel("titre", "spip_rubriques", "id_rubrique=$id_rubrique");
@@ -179,7 +191,8 @@ function selecteur_rubrique_ajax($id_rubrique, $type, $restreint, $idem=0, $do) 
 	$init = " disabled='disabled' type='text' value=\"" . $titre . "\"\nstyle='width:300px;'";
 
 	$url = generer_url_ecrire('selectionner',"id=$id_rubrique&type=$type&do=$do"
-	. (!$idem ? '' : ("&exclus=$idem&racine=" . ($restreint ? 'non' : 'oui'))) 
+	. (!$idem ? '' : "&exclus=$idem")
+	. ($restreint ? "" : "&racine=oui")
 	. (isset($GLOBALS['var_profile']) ? '&var_profile=1' : ''));
 
 
@@ -195,7 +208,7 @@ function selecteur_rubrique_ajax($id_rubrique, $type, $restreint, $idem=0, $do) 
 // http://doc.spip.org/@construire_selecteur
 function construire_selecteur($url, $js, $idom, $name, $init='', $id=0)
 {
-	$icone = (strpos($idom, 'auteur')!==false) ? 'message.gif' : 'loupe.png';
+	$icone = (strpos($idom, 'auteur')!==false) ? 'auteur-24.png' : 'rechercher-20.png';
 	return
  	"<div class='rubrique_actuelle'><a onclick=\""
 	.  $js
@@ -203,7 +216,7 @@ function construire_selecteur($url, $js, $idom, $name, $init='', $id=0)
 	. $url
 	. "', this.parentNode.nextSibling, this.nextSibling,'',event)\"><img src='"
 	. chemin_image($icone)
-	. "'\nstyle='vertical-align: middle;' alt=' ' /></a><img src='"
+	. "'\nstyle='vertical-align: middle;' alt='"._T('titre_image_selecteur')."' /></a><img src='"
 	. chemin_image('searching.gif') 
 	. "' id='img_"
 	.  $idom

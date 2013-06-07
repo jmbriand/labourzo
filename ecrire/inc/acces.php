@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // http://doc.spip.org/@creer_pass_aleatoire
 function creer_pass_aleatoire($longueur = 8, $sel = "") {
@@ -41,11 +41,13 @@ function creer_pass_aleatoire($longueur = 8, $sel = "") {
 	return $pass;
 }
 
-//
-// Creer un identifiant aleatoire
-//
-
-// http://doc.spip.org/@creer_uniqid
+/**
+ * Creer un identifiant aleatoire
+ *
+ * http://doc.spip.org/@creer_uniqid
+ *
+ * @return string
+ */
 function creer_uniqid() {
 	static $seeded;
 
@@ -168,6 +170,7 @@ function ecrire_acces() {
 	# remarque : ici on laisse passer les "nouveau" de maniere a leur permettre
 	# de devenir redacteur le cas echeant (auth http)... a nettoyer
 	// attention, il faut au prealable se connecter a la base (necessaire car utilise par install)
+	// TODO: factoriser avec auth/spip qui fait deja ce job et generaliser le test spip_connect_ldap()
 
 	if (spip_connect_ldap()) return;
 	$p1 = ''; // login:htpass pour tous
@@ -196,34 +199,34 @@ function generer_htpass($pass) {
 }
 
 //
-// Verifier la presence des .htaccess
+// Installe ou verifie un .htaccess, y compris sa prise en compte par Apache
 //
 // http://doc.spip.org/@verifier_htaccess
-function verifier_htaccess($rep) {
-	$htaccess = "$rep/" . _ACCESS_FILE_NAME;
-	if ((!@file_exists($htaccess)) AND 
-	    !defined('_ECRIRE_INSTALL') AND !defined('_TEST_DIRS')) {
-		spip_log("demande de creation de $htaccess");
-		if ($_SERVER['SERVER_ADMIN'] != 'www@nexenservices.com'){
-			if (!$f = @fopen($htaccess, "w")) {
-				spip_log("ECHEC DE LA CREATION DE $htaccess"); # ne pas traduire
-			} else {
-				fputs($f, "deny from all\n");
-				fclose($f);
-			}
-		} else {
-			echo "<span style='color: #FF0000'>IMPORTANT : </span>";
-			echo "Votre h&eacute;bergeur est Nexen Services.<br />";
-			echo "La protection du r&eacute;pertoire <i>$rep/</i> doit se faire
-			par l'interm&eacute;diaire de ";
-			echo "<a href=\"http://www.nexenservices.com/webmestres/htlocal.php\"
-			target=\"_blank\">l'espace webmestres</a>.";
-			echo "Veuillez cr&eacute;er manuellement la protection pour
-			ce r&eacute;pertoire (un couple login/mot de passe est
-			n&eacute;cessaire).<br />";
+function verifier_htaccess($rep, $force=false) {
+	$htaccess = rtrim($rep,"/") . "/" . _ACCESS_FILE_NAME;
+	if (((@file_exists($htaccess)) OR defined('_TEST_DIRS')) AND !$force)
+		return true;
+	if ($ht = @fopen($htaccess, "w")) {
+		fputs($ht, "deny from all\n");
+		fclose($ht);
+		@chmod($htaccess, _SPIP_CHMOD & 0666);
+		$t = rtrim($rep,"/") . "/.ok";
+		if ($ht = @fopen($t, "w")) {
+			@fclose($ht);
+			include_spip('inc/distant');
+			$t = substr($t,strlen(_DIR_RACINE));
+			$t = url_de_base() . $t;
+			$ht = recuperer_lapage($t, false, 'HEAD', 0);
+			// htaccess inoperant si on a recupere des entetes HTTP
+			// (ignorer la reussite si connexion par fopen)
+			$ht = !(isset($ht[0]) AND $ht[0]);
 		}
 	}
-}
+	spip_log("Creation de $htaccess " . ($ht ? " reussie" : " manquee"));
+	return $ht;
+}	
+
+
 
 // http://doc.spip.org/@gerer_htaccess
 function gerer_htaccess() {

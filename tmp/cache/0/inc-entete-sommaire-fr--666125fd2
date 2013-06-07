@@ -1,4 +1,0 @@
-a:9:{s:5:"texte";s:175:"<div id="entete">
-<a rel="start home" href="http://ubajm/labourzogit/?lang=fr" title="Accueil du site" class="accueil"><strong id="nom_site_spip">LABOURZO</strong></a>
-</div>
-";s:9:"squelette";s:37:"html_d95a4ba0c310866af02bc9c0a25a7e7f";s:6:"source";s:35:"squelettes/inc-entete-sommaire.html";s:11:"process_ins";s:4:"html";s:11:"invalideurs";a:1:{s:5:"cache";s:35:"0/inc-entete-sommaire-fr--666125fd2";}s:7:"entetes";a:1:{s:12:"X-Spip-Cache";i:86400;}s:5:"duree";i:0;s:8:"contexte";a:5:{s:4:"lang";s:2:"fr";s:4:"date";s:19:"2013-04-08 19:13:51";s:12:"date_default";b:1;s:10:"date_redac";s:19:"2013-04-08 19:13:51";s:18:"date_redac_default";b:1;}s:2:"gz";b:0;}

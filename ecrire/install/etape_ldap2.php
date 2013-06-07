@@ -3,13 +3,15 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // http://doc.spip.org/@install_etape_ldap2_dist
 function install_etape_ldap2_dist()
@@ -72,10 +74,10 @@ function install_etape_ldap2_dist()
 	}
 	else {
 		echo info_etape(_T('titre_connexion_ldap')), info_progression_etape(1,'etape_ldap','install/', true),
-			"<p class='resultat'>"._T('avis_connexion_ldap_echec_1')."</p>",
+			"<div class='error'><p>"._T('avis_connexion_ldap_echec_1')."</p>",
 			"<p>"._T('avis_connexion_ldap_echec_2').
 			"<br />\n"._T('avis_connexion_ldap_echec_3') .
-			'<br /><br />'. $erreur. '<b> ?</b></p>'
+			'<br /><br />'. $erreur. '<b> ?</b></p></div>'
 		;
 	}
 

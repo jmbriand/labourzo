@@ -3,18 +3,31 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
-include_spip('inc/filtres');
 include_spip('inc/charsets');
 include_spip('xml/interfaces');
+
+/**
+ * Encoder les entites
+ * @param string $texte
+ * @return string
+ */
+function xml_entites_html($texte){
+	if (!is_string($texte) OR !$texte
+	OR strpbrk($texte, "&\"'<>")==false
+	) return $texte;
+
+	$texte = htmlspecialchars($texte,ENT_QUOTES);
+	return $texte;
+}
 
 // http://doc.spip.org/@xml_debutElement
 function xml_debutElement($phraseur, $name, $attrs)
@@ -36,7 +49,7 @@ function xml_debutElement($phraseur, $name, $attrs)
 	$sep = ' ';
 	foreach ($attrs as $k => $v) {
 	  $delim = strpos($v, "'") === false ? "'" : '"';
-	  $val = entites_html($v);
+	  $val = xml_entites_html($v);
 	  $att .= $sep .  $k . "=" . $delim
 	    . ($delim !== '"' ? str_replace('&quot;', '"', $val) : $val)
 	    . $delim;
@@ -78,11 +91,10 @@ function xml_textElement($phraseur, $data)
 	$depth = $phraseur->depth;
 	$phraseur->contenu[$depth] .= preg_match('/^script/',$phraseur->ouvrant[$depth])
 	  ? $data
-	  : entites_html($data);
+	  : xml_entites_html($data);
 }
 
-// http://doc.spip.org/@xml_PiElement
-function xml_PiElement($phraseur, $target, $data)
+function xml_piElement($phraseur, $target, $data)
 {
 	$depth = $phraseur->depth;
 
@@ -99,7 +111,7 @@ function xml_PiElement($phraseur, $target, $data)
 
 
 // http://doc.spip.org/@xml_defautElement
-function xml_defautElement($phraseur, $data)
+function xml_defaultElement($phraseur, $data)
 {
 	$depth = $phraseur->depth;
 
@@ -120,7 +132,7 @@ function xml_parsestring($phraseur, $data)
 			 ('(' .
 			  _T('erreur_balise_non_fermee') .
 			  " <tt>" .
-			  $prhaseur->ouvrant[$phraseur->depth] .
+			  $phraseur->ouvrant[$phraseur->depth] .
 			  "</tt> " .
 			  _T('ligne') .
 			  " " .
@@ -139,31 +151,10 @@ function coordonnees_erreur($phraseur, $msg)
 }
 
 // http://doc.spip.org/@xml_sax_dist
-function xml_sax_dist($page, $apply=false, $phraseur=NULL)
+function xml_sax_dist($page, $apply=false, $phraseur=NULL, $doctype='', $charset=null)
 {
-	// init par defaut si pas fait (compatibilite Tidy espace public)
-	if (!$phraseur) {
-		$indenter_xml = charger_fonction('indenter', 'xml');
-		return $indenter_xml($page, $apply);
-	}
-
-	$xml_parser = xml_parser_create($GLOBALS['meta']['charset']);
-
-	xml_set_element_handler($xml_parser,
-			array($phraseur, "debutElement"),
-			array($phraseur, "finElement"));
-
-	xml_set_character_data_handler($xml_parser,
-				       array($phraseur, "textElement"));
-
-	xml_set_processing_instruction_handler($xml_parser,
-				       array($phraseur, 'PiElement'));
-
-	xml_set_default_handler($xml_parser,
-				array($phraseur, "defautElement"));
-
-	xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false);
-
+	if (is_null($charset))
+		$charset = $GLOBALS['meta']['charset'];
 	if ($apply) {
 		ob_start();
 		if (is_array($apply))
@@ -175,16 +166,60 @@ function xml_sax_dist($page, $apply=false, $phraseur=NULL)
 		if (!$page) $page = $r;
 	}
 
+	if (!$page) return '';
 	// charger la DTD et transcoder les entites,
 	// et escamoter le doctype que sax mange en php5 mais pas en  php4
-	list($entete,$page, $dtc) = sax_bug($page);
+	if (!$doctype) {
+		if (!$r = analyser_doctype($page)) {
+			$page = _MESSAGE_DOCTYPE . _DOCTYPE_ECRIRE
+			  . preg_replace(_REGEXP_DOCTYPE, '', $page);
+			$r =  analyser_doctype($page);
+		}
+		list($entete, $avail, $grammaire, $rotlvl) = array_pad($r, 4, null);
+		$page = substr($page,strlen($entete));
+	} else {
+		$avail = 'SYSTEM';
+		$grammaire = $doctype;
+		$rotlvl = basename($grammaire);
+	}
+
+	include_spip('xml/analyser_dtd');
+	$dtc = charger_dtd($grammaire, $avail, $rotlvl);
+	$page = sax_bug($page, $dtc, $charset);
+
+	// compatibilite Tidy espace public
+	if (!$phraseur) {
+		$indenter_xml = charger_fonction('indenter', 'xml');
+		return $indenter_xml($page, $apply);
+	}
+
+	$xml_parser = xml_parser_create($charset);
+
+	xml_set_element_handler($xml_parser,
+			array($phraseur, "debutElement"),
+			array($phraseur, "finElement"));
+
+	xml_set_character_data_handler($xml_parser,
+				       array($phraseur, "textElement"));
+
+	xml_set_processing_instruction_handler($xml_parser,
+				       array($phraseur, 'piElement'));
+
+	xml_set_default_handler($xml_parser,
+				array($phraseur, "defaultElement"));
+
+	xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false);
 
 	$phraseur->sax = $xml_parser;
-	$phraseur->entete = $entete;
+	if (isset($entete)) {
+		$phraseur->entete = $entete;
+	}
 	$phraseur->page = $page;
 	$phraseur->dtc = $dtc;
 	$phraseur->phraserTout($xml_parser, $page);
 	xml_parser_free($xml_parser);
+	$phraseur->sax = '';
+	return $phraseur;
 }
 
 // SAX ne dit pas si une Entite est dans un attribut ou non.
@@ -195,38 +230,10 @@ function xml_sax_dist($page, $apply=false, $phraseur=NULL)
 // sinon on se rabat sur ce qu'en connait SPIP en standard.
 
 // http://doc.spip.org/@sax_bug
-function sax_bug($data)
+function sax_bug($data, $dtc, $charset=null)
 {
-	static $dtd = array(); # cache bien utile pour le validateur en boucle
-
-	$r = analyser_doctype($data);
-
-	if (!$r) {
-		$data = _MESSAGE_DOCTYPE . _DOCTYPE_ECRIRE
-		. preg_replace(_REGEXP_DOCTYPE, '', $data);
-		$r =  analyser_doctype($data);
-	}
-
-	list($doctype, $topelement, $avail, $grammaire, $rotlvl, $len) = $r;
-	$file = _DIR_CACHE_XML . preg_replace('/[^\w.]/','_', $rotlvl) . '.gz';
-
-	if (isset($dtd[$file]))
-		$dtc = $dtd[$file];
-	else {
-		if (lire_fichier($file, $r)) {
-			$dtc = unserialize($r);
-		} else {
-			include_spip('xml/analyser_dtd');
-			$dtc = charger_dtd($grammaire, $avail);
-			if (($avail == 'PUBLIC' ) AND $dtc)
-				ecrire_fichier($file, serialize($dtc), true);
-		}
-		$dtd[$file] = $dtc;
-	}
-
-	// l'entete contient eventuellement < ? xml... ? >, le Doctype, 
-	// et des commentaires autour d'eux
-	$entete = ltrim(substr($data,0,$len));
+	if (is_null($charset))
+		$charset = $GLOBALS['meta']['charset'];
 
 	if ($dtc) {
 		$trans = array();
@@ -235,14 +242,15 @@ function sax_bug($data)
 			if (!strpos(" amp lt gt quot ", $k))
 			    $trans["&$k;"] = $v;
 		}
-		$data = strtr(substr($data,$len), $trans);
+		$data = strtr($data, $trans);
 	} else {
-		$data = html2unicode(substr($data,$len), true);
+		$data = html2unicode($data, true);
 	}
-	return array($entete,unicode2charset($data), $dtc);
+	return unicode2charset($data, $charset);
 }
 
-// Reperer le Doctype et le decomposer selon:
+// Retirer < ? xml... ? > et autre PI, ainsi que les commentaires en debut
+// afin de reperer le Doctype et le decomposer selon:
 // http://www.freebsd.org/doc/fr_FR.ISO8859-1/books/fdp-primer/sgml-primer-doctype-declaration.html
 // Si pas de Doctype et premiere balise = RSS prendre la doctype RSS 0.91:
 // les autres formats RSS n'ont pas de DTD,
@@ -251,16 +259,23 @@ function sax_bug($data)
 function analyser_doctype($data)
 {
 	if (!preg_match(_REGEXP_DOCTYPE, $data, $page)) {
-		if (!preg_match(_REGEXP_XML_RSS, $data, $page))
-			return array();
-		else return array('',
-				  'rss',
-				  'PUBLIC', 
-				  _DOCTYPE_RSS,
-				  'rss-0.91.dtd',
-				  strlen($page[1]));
+		if (preg_match(_REGEXP_XML, $data, $page)) {
+			list(,$entete, $topelement) = $page;
+			if ($topelement == 'rss')
+			  return array($entete, 'PUBLIC', 
+				       _DOCTYPE_RSS,
+					     'rss-0.91.dtd');
+			else {
+				$dtd = $topelement . '.dtd';
+				$f = find_in_path($dtd);
+				if (file_exists($f))
+				  return array($entete, 'SYSTEM', $f, $dtd);
+			}
+		}
+		spip_log("Dtd pas vu pour " . substr($data, 0, 100));
+		return array();
 	}
-	list($doctype,$pi,$co,$pico, $topelement, $avail,$suite) = $page;
+	list($entete,, $topelement, $avail,$suite) = $page;
 
 	if (!preg_match('/^"([^"]*)"\s*(.*)$/', $suite, $r))
 		if (!preg_match("/^'([^']*)'\s*(.*)$/", $suite, $r))
@@ -279,6 +294,6 @@ function analyser_doctype($data)
 		$grammaire = $r[1];
 	}
 
-	return array(substr($doctype,strlen($pico)), $topelement, $avail, $grammaire, $rotlvl, strlen($doctype));
+	return array($entete, $avail, $grammaire, $rotlvl);
 }
 ?>

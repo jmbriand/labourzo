@@ -1,4 +1,0 @@
-#CACHE{0}
-<BOUCLE_articles(BREVES) {id_rubrique=#ENV{id_rubrique}} {par num titre, titre}{inverse}>[(#TITRE|strip_tags)]|[(#URL_PAGE{breve}|parametre_url{id_breve,#BREVE}|url_absolue)]|#ID_BREVE
-</BOUCLE_articles>
-

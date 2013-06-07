@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('inc/filtres');
 
@@ -27,7 +27,7 @@ function inc_selectionner_dist ($sel, $idom="", $exclus=0, $aff_racine=false, $r
 		$info = generer_url_ecrire('informer', "type=rubrique&rac=$idom&do=$do&id=");
 		$idom3 = $idom . "_selection";
 
-		$onClick = " aff_selection(0, '$idom3', '$info', event);";
+		$onClick = "jQuery(this).parent().addClass('on');jQuery('#choix_parent_principal .on').removeClass('on'); aff_selection(0, '$idom3', '$info', event);return false;";
 
 		$ondbClick = strtr(str_replace("'", "&#8217;",
 				str_replace('"', "&#34;",
@@ -37,15 +37,17 @@ function inc_selectionner_dist ($sel, $idom="", $exclus=0, $aff_racine=false, $r
 		$js_func = $do . '_selection_titre';
 		$ondbClick = "$js_func('$ondbClick',0,'selection_rubrique','id_parent');";
 
-		$aff_racine = "<div class='arial11 petite-racine'\nonclick=\""
-		. $onClick
-		. "\"\nondbclick=\""
-		. $ondbClick
-		. $onClick
-		. "\">\n<div class='highlight off'>"
+		$aff_racine = "<div class='petite-racine item'>"
+		. "<a href='#'"
+			. "onclick=\""
+			. $onClick
+			. "\"\nondbclick=\""
+			. $ondbClick
+			. $onClick
+		. "\">"
 		. _T("info_racine_site")
-		. "</div></div>";
-	} else $onClick = '';
+		. "</a></div>";
+	}
 
 	$url_init = generer_url_ecrire('plonger',"rac=$idom&exclus=$exclus&id=0&col=1&do=$do");
 
@@ -106,7 +108,7 @@ function construire_selectionner_hierarchie($idom, $liste, $racine, $url, $name,
 	. "<div id='"
 	.  $idom2
 	.  "'><div id='$idom4'"
-	. " class='arial1'>" 
+	. " class=''>"
 	. $liste
 	. "</div></div>\n<div id='$idom3'></div></div>\n";
 }

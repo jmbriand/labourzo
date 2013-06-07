@@ -1,121 +1,121 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://www.spip.net/trad-lang/
+// extrait automatiquement de http://trad.spip.net/tradlang_module/public?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
-// A
-'accueil_site' => 'P&aacute;gina inicial',
-'articles' => 'Mat&eacute;rias',
-'articles_auteur' => 'Mat&eacute;rias deste autor',
-'articles_populaires' => 'Mat&eacute;rias mais populares',
-'articles_rubrique' => 'Mat&eacute;rias desta se&ccedil;&atilde;o',
-'aucun_article' => 'N&atilde;o h&aacute; nenhuma mat&eacute;ria neste endere&ccedil;o',
-'aucun_auteur' => 'N&atilde;o h&aacute; nenhum autor neste endere&ccedil;o',
-'aucun_site' => 'N&atilde;o h&aacute; nenhum site neste endere&ccedil;o',
-'aucune_breve' => 'N&atilde;o h&aacute; nenhuma nota neste endere&ccedil;o',
-'aucune_rubrique' => 'N&atilde;o h&aacute; nenhuma se&ccedil;&atilde;o neste endere&ccedil;o',
-'autres' => 'Outros',
-'autres_breves' => 'Outras notas',
-'autres_groupes_mots_clefs' => 'Outros grupos de palavras-chave',
-'autres_sites' => 'Outros sites',
+	// A
+	'accueil_site' => 'Página inicial',
+	'article' => 'Matéria',
+	'articles' => 'Matérias',
+	'articles_auteur' => 'Matérias deste autor',
+	'articles_populaires' => 'Matérias mais populares',
+	'articles_rubrique' => 'Matérias desta seção',
+	'aucun_article' => 'Não há nenhuma matéria neste endereço',
+	'aucun_auteur' => 'Não há nenhum autor neste endereço',
+	'aucun_site' => 'Não há nenhum site neste endereço',
+	'aucune_breve' => 'Não há nenhuma nota neste endereço',
+	'aucune_rubrique' => 'Não há nenhuma seção neste endereço',
+	'auteur' => 'Autor',
+	'autres' => 'Outros',
+	'autres_breves' => 'Outras notas',
+	'autres_groupes_mots_clefs' => 'Outros grupos de palavras-chave',
+	'autres_sites' => 'Outros sites',
 
-// B
-'bonjour' => 'Bom dia',
-'breves' => 'Notas',
+	// B
+	'bonjour' => 'Bom dia',
 
-// C
-'commenter_site' => 'Comentar este site',
-'copie_document_impossible' => 'N&atilde;o foi poss&iacute;vel copiar o documento',
+	// C
+	'commenter_site' => 'Comentar este site',
+	'contact' => 'Contato',
+	'copie_document_impossible' => 'Não foi possível copiar o documento',
 
-// D
-'date' => 'Data',
-'dernier_ajout' => '&Uacute;ltima inclus&atilde;o',
-'dernieres_breves' => '&Uacute;ltimas notas',
-'derniers_articles' => '&Uacute;ltimas mat&eacute;rias',
-'derniers_commentaires' => '&Uacute;ltimos coment&aacute;rios',
-'derniers_messages_forum' => '&Uacute;ltimas mensagens publicadas nos f&oacute;runs',
-'documents_interdits_forum' => 'Documentos proib&iacute;dos no f&oacute;rum',
+	// D
+	'date' => 'Data',
+	'dernier_ajout' => 'Última inclusão',
+	'dernieres_breves' => 'Últimas notas',
+	'derniers_articles' => 'Últimas matérias',
+	'derniers_commentaires' => 'Últimos comentários',
+	'derniers_messages_forum' => 'Últimas mensagens publicadas nos fóruns',
 
-// E
-'edition_mode_texte' => 'Edi&ccedil;&atilde;o em modo texto de',
-'en_reponse' => 'Em resposta a:',
-'en_resume' => 'Em resumo',
-'envoyer_message' => 'Enviar uma mensagem',
-'espace_prive' => 'Espa&ccedil;o privado',
+	// E
+	'edition_mode_texte' => 'Edição em modo texto de',
+	'en_reponse' => 'Em resposta a:',
+	'en_resume' => 'Em resumo',
+	'envoyer_message' => 'Enviar uma mensagem',
+	'espace_prive' => 'Espaço privado',
 
-// F
-'formats_acceptes' => 'Formatos aceitos: @formats@.',
-'forum' => 'F&oacute;rum',
+	// F
+	'formats_acceptes' => 'Formatos aceitos: @formats@.',
 
-// H
-'hierarchie_site' => 'Hierarquia do site',
+	// H
+	'hierarchie_site' => 'Hierarquia do site',
 
-// J
-'jours' => 'dias',
+	// J
+	'jours' => 'dias',
 
-// L
-'lien_connecter' => 'Conectar-se',
+	// L
+	'lien_connecter' => 'Conectar-se',
 
-// M
-'meme_auteur' => 'Do mesmo autor',
-'meme_rubrique' => 'Na mesma se&ccedil;&atilde;o',
-'memes_auteurs' => 'Dos mesmos autores',
-'message' => 'Mensagem',
-'messages_forum' => 'Mensagens de f&oacute;rum',
-'messages_recents' => 'Mensagens de f&oacute;rum mais recentes',
-'mots_clefs' => 'Palavras-chave',
-'mots_clefs_meme_groupe' => 'Palavras-chave no mesmo grupo',
+	// M
+	'meme_auteur' => 'Do mesmo autor',
+	'meme_rubrique' => 'Na mesma seção',
+	'memes_auteurs' => 'Dos mesmos autores',
+	'message' => 'Mensagem',
+	'messages_forum' => 'Mensagens',
+	'messages_recents' => 'Mensagens de fórum mais recentes',
+	'mots_clef' => 'Palavra-chave',
+	'mots_clefs' => 'Palavras-chave',
+	'mots_clefs_meme_groupe' => 'Palavras-chave no mesmo grupo',
 
-// N
-'navigation' => 'Navega&ccedil;&atilde;o',
-'nom' => 'Nome',
-'nouveautes' => 'As novidades',
-'nouveautes_web' => 'Novidades na web',
-'nouveaux_articles' => 'Novas mat&eacute;rias',
-'nouvelles_breves' => 'Novas notas',
+	// N
+	'navigation' => 'Navegação',
+	'nom' => 'Nome',
+	'nouveautes' => 'As novidades',
+	'nouveautes_web' => 'Novidades na web',
+	'nouveaux_articles' => 'Novas matérias',
+	'nouvelles_breves' => 'Novas notas',
 
-// P
-'page_precedente' => 'pagina anterior',
-'page_suivante' => 'p&aacute;gina seguinte',
-'par_auteur' => 'por ',
-'participer_site' => 'Voc&ecirc; pode participar da vida deste site e propor as suas pr&oacute;prias mat&eacute;rias ao se inscrever abaixo. Voc&ecirc; receber&aacute; imediatamente um e-mail informando os seus c&oacute;digos de acesso ao espa&ccedil;o privado do site.',
-'plan_site' => 'Mapa do site',
-'popularite' => 'Popularidade',
-'poster_message' => 'Postar uma mensagem',
-'proposer_site' => 'Voc&ecirc; pode propor a inclus&atilde;o de um site nesta se&ccedil;&atilde;o:',
+	// P
+	'page_precedente' => 'pagina anterior',
+	'page_suivante' => 'página seguinte',
+	'par_auteur' => 'por ',
+	'participer_site' => 'Você pode participar da vida deste site e propor as suas próprias matérias ao se inscrever abaixo. Você receberá imediatamente um e-mail informando os seus códigos de acesso ao espaço privado do site.',
+	'plan_site' => 'Mapa do site',
+	'popularite' => 'Popularidade',
+	'poster_message' => 'Postar uma mensagem',
+	'proposer_site' => 'Você pode propor a inclusão de um site nesta seção:',
 
-// R
-'repondre_article' => 'Responder a esta mat&eacute;ria',
-'repondre_breve' => 'Responder a esta nota',
-'repondre_message' => 'Responder a esta mensagem',
-'resultats_recherche' => 'Resultados da pesquisa',
-'retour_debut_forums' => 'Voltar ao in&iacute;cio dos f&oacute;runs',
-'rubrique' => 'Se&ccedil;&atilde;o',
-'rubriques' => 'Se&ccedil;&otilde;es',
+	// R
+	'repondre_article' => 'Responder a esta matéria',
+	'repondre_breve' => 'Responder a esta nota',
+	'resultats_recherche' => 'Resultados da pesquisa',
+	'retour_debut_forums' => 'Voltar ao início dos fóruns',
+	'rubrique' => 'Seção',
+	'rubriques' => 'Seções',
 
-// S
-'signatures_petition' => 'Assinaturas',
-'site_realise_avec_spip' => 'Site realizado com SPIP',
-'sites_web' => 'Websites',
-'sous_rubriques' => 'Subse&ccedil;&otilde;es',
-'spam' => 'Spam',
-'suite' => 'a seguir',
-'sur_web' => 'Na web',
-'syndiquer_rubrique' => 'Sindicar esta se&ccedil;&atilde;o',
-'syndiquer_site' => 'Sindicar todo o site',
+	// S
+	'signatures_petition' => 'Assinaturas',
+	'site_realise_avec_spip' => 'Site realizado com SPIP',
+	'sites_web' => 'Websites',
+	'sous_rubriques' => 'Subseções',
+	'spam' => 'Spam',
+	'suite' => 'a seguir',
+	'sur_web' => 'Na web',
+	'syndiquer_rubrique' => 'Sindicar esta seção',
+	'syndiquer_site' => 'Sindicar todo o site',
 
-// T
-'texte_lettre_information' => 'Esta &eacute; a mensagem de informa&ccedil;&atilde;o do site',
-'texte_lettre_information_2' => 'Esta mensagem compila as mat&eacute;rias e as notas publicadas desde',
+	// T
+	'texte_lettre_information' => 'Esta é a mensagem de informação do site',
+	'texte_lettre_information_2' => 'Esta mensagem compila as novidades publicadas desde',
 
-// V
-'ver_imprimer' => 'Vers&atilde;o para impress&atilde;o',
-'voir_en_ligne' => 'Ver online',
-'voir_squelette' => 'visualizar o gabarito desta p&aacute;gina'
+	// V
+	'ver_imprimer' => 'Versão para impressão',
+	'voir_en_ligne' => 'Ver online',
+	'voir_squelette' => 'visualizar o template desta página'
 );
 
 ?>

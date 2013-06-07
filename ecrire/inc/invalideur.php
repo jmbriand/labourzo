@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -11,7 +11,7 @@
 \***************************************************************************/
 
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('base/serial');
 
@@ -30,7 +30,7 @@ function nombre_de_fichiers_repertoire($dir,$nb_estim_taille = 20) {
 	if (!$h = @opendir($dir)) return false;
 	$total = 0;
 	while (($fichier = @readdir($h)) !== false)
-		if ($fichier[0]!='.'){
+		if ($fichier[0]!='.' AND !is_dir("$dir/$fichier")){
 			$total++;
 			if ($nb AND rand(1,10)==1){
 				$taille += filesize("$dir/$fichier");
@@ -58,12 +58,32 @@ function taille_du_cache() {
 }
 
 // Invalider les caches lies a telle condition
+// les invalideurs sont de la forme 'objet/id_objet'
+// la condition est generalement "id='objet/id_objet'"
 // ici on se contente de noter la date de mise a jour dans les metas
 // http://doc.spip.org/@suivre_invalideur
 function suivre_invalideur($cond, $modif=true) {
-	if ($modif) {
-		ecrire_meta('derniere_modif', time());
+	if (!$modif)
+		return;
+
+	// determiner l'objet modifie : forum, article, etc
+	if (preg_match(',["\']([a-z_]+)[/"\'],', $cond, $r))
+		$objet = objet_type($r[1]);
+
+	// stocker la date_modif_$objet (ne sert a rien pour le moment)
+	if (isset($objet))
+		ecrire_meta('derniere_modif_'.$objet, time());
+
+	// si $derniere_modif_invalide est un array('article', 'rubrique')
+	// n'affecter la meta que si un de ces objets est modifie
+	if (is_array($GLOBALS['derniere_modif_invalide'])) {
+		if (in_array($objet, $GLOBALS['derniere_modif_invalide']))
+			ecrire_meta('derniere_modif', time());
 	}
+	// sinon, cas standard, toujours affecter la meta
+	else
+		ecrire_meta('derniere_modif', time());
+
 }
 
 
@@ -92,8 +112,10 @@ function purger_repertoire($dir, $options=array()) {
 			}
 		}
 		else if (is_dir($chemin)){
-			if ($fichier != 'CVS')
-				$total += purger_repertoire($chemin, $options);
+			$opts = $options;
+			if (isset($otpions['limit']))
+				$otps['limit'] = $otpions['limit'] - $total;
+			$total += purger_repertoire($chemin, $opts);
 			if (isset($options['subdir']) && $options['subdir'])
 				spip_unlink($chemin);
 		}
@@ -129,14 +151,16 @@ function appliquer_quota_cache() {
 		.(intval(16*$total_cache/(1024*1024/10))/10)." Mo","invalideur");
 
 	// Nombre max de fichiers a supprimer
-	if ($quota_cache > 0) {
+	if ($quota_cache > 0
+	AND $taille > 0) {
 		$trop = $total_cache - ($quota_cache/16)*1024*1024;
 		$trop = 3 * intval($trop / $taille);
 		if ($trop > 0) {
 			$n = purger_repertoire($dir,
 				array(
 					'atime' => time() - _AGE_CACHE_ATIME,
-					'limit' => $trop
+					'limit' => $trop,
+					'subdir' => true // supprimer les vieux sous repertoire de session (avant [15851])
 				)
 			);
 			spip_log("$dir : $n/$trop caches supprimes [taille moyenne $taille]","invalideur");
@@ -191,15 +215,6 @@ function retire_caches($chemin = '') {
 }
 
 
-// Pour que le compilo ajoute un invalideur a la balise #PARAMETRES_FORUM
-// Noter l'invalideur de la page contenant ces parametres,
-// en cas de premier post sur le forum
-// http://doc.spip.org/@code_invalideur_forums
-function code_invalideur_forums($p, $code) {
-	return $code;
-}
-
-
 // Fonction permettant au compilo de calculer les invalideurs d'une page
 // (note: si absente, n'est pas appellee)
 /*
@@ -221,9 +236,7 @@ function supprime_invalideurs() { }
 // http://doc.spip.org/@maj_invalideurs
 function maj_invalideurs ($fichier, &$page) { }
 
-// pour les forums l'invalideur est : 'id_forum/a23'
-// pour les petitions et autres, l'invalideur est par exemple :
-// 'varia/pet60'
+// les invalideurs sont de la forme "objet/id_objet"
 // http://doc.spip.org/@insere_invalideur
 function insere_invalideur($inval, $fichier) { }
 

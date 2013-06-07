@@ -3,14 +3,15 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
+include_spip('base/objets');
 
 //
 // Utilitaires indispensables autour des serveurs SQL
@@ -27,15 +28,15 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 function spip_connect($serveur='', $version='') {
 	global $connexions, $spip_sql_version;
 
+	$serveur = !is_string($serveur) ? '' : strtolower($serveur);
 	$index = $serveur ? $serveur : 0;
 	if (!$version) $version = $spip_sql_version;
 	if (isset($connexions[$index][$version])) return $connexions[$index];
 
 	include_spip('base/abstract_sql');
-	if (isset($_GET['var_profile'])) include_spip('public/debug');
 	$install = (_request('exec') == 'install');
 
-	// Premiere connexion ? 
+	// Premiere connexion ?
 	if (!($old = isset($connexions[$index]))) {
 		$f = (!preg_match('/^[\w\.]*$/', $serveur))
 		? '' // nom de serveur mal ecrit
@@ -47,19 +48,24 @@ function spip_connect($serveur='', $version='') {
 
 		unset($GLOBALS['db_ok']);
 		unset($GLOBALS['spip_connect_version']);
-		
 		if ($f) { 
 			if (is_readable($f)) { 
-				include($f); 
+				include($f);
 			} elseif ($serveur AND !$install) {
+				// chercher une declaration de serveur dans le path
+				// qui pourra un jour servir a declarer des bases sqlite
+				// par des plugins. Et sert aussi aux boucles POUR.
 				find_in_path("$serveur.php",'connect/',true);
 			}
 		}
-
 		if (!isset($GLOBALS['db_ok'])) {
 		  // fera mieux la prochaine fois
-			if ($install) return false; 
-			spip_log("spip_connect: serveur $index mal defini dans '$f'.");
+			if ($install) return false;
+			if ($f AND is_readable($f))
+				spip_log("spip_connect: fichier de connexion '$f' OK.", _LOG_INFO_IMPORTANTE);
+			else
+				spip_log("spip_connect: fichier de connexion '$f' non trouve", _LOG_INFO_IMPORTANTE);
+			spip_log("spip_connect: echec connexion ou serveur $index mal defini dans '$f'.", _LOG_HS);
 			// ne plus reessayer si ce n'est pas l'install
 			return $connexions[$index]=false;
 		}
@@ -67,7 +73,7 @@ function spip_connect($serveur='', $version='') {
 	}
 	// si la connexion a deja ete tentee mais a echoue, le dire!
 	if (!$connexions[$index]) return false;
-	
+
 	// la connexion a reussi ou etait deja faite.
 	// chargement de la version du jeu de fonctions
 	// si pas dans le fichier par defaut
@@ -75,8 +81,8 @@ function spip_connect($serveur='', $version='') {
 	$jeu = 'spip_' . $type .'_functions_' . $version;
 	if (!isset($GLOBALS[$jeu])) {
 		if (!find_in_path($type . '_' . $version . '.php', 'req/', true)){
-		  spip_log("spip_connect: serveur $index version '$version' non defini pour '$type'");
-			// ne plus reessayer 
+		  spip_log("spip_connect: serveur $index version '$version' non defini pour '$type'", _LOG_HS);
+			// ne plus reessayer
 			return $connexions[$index][$version] = array();
 		}
 	}
@@ -94,7 +100,7 @@ function spip_connect($serveur='', $version='') {
 		$charset = spip_connect_main($GLOBALS[$jeu]);
 		if (!$charset) {
 			unset($connexions[$index]);
-			spip_log("spip_connect: absence de charset");
+			spip_log("spip_connect: absence de charset", _LOG_AVERTISSEMENT);
 			return false;
 		}
 	} else	{
@@ -111,6 +117,16 @@ function spip_connect($serveur='', $version='') {
 	return $connexions[$index];
 }
 
+function spip_sql_erreur($serveur='')
+{
+	$connexion = spip_connect($serveur);
+	$e = sql_errno($serveur);
+	$t = (isset($connexion['type']) ? $connexion['type'] : 'sql');
+	$m = "Erreur $e de $t: " . sql_error($serveur) . "\n" . $connexion['last'];
+	$f = $t . $serveur;
+	spip_log($m, $f.'.'._LOG_ERREUR);
+}
+
 // Cette fonction ne doit etre appelee qu'a travers la fonction sql_serveur
 // definie dans base/abstract_sql
 // Elle existe en tant que gestionnaire de versions,
@@ -122,58 +138,89 @@ function spip_connect_sql($version, $ins='', $serveur='', $cont=false) {
 	if (function_exists($f = @$desc[$version][$ins])) return $f;
 	if ($cont) return $desc;
 	if ($ins)
-		spip_log("Le serveur '$serveur' version $version n'a pas '$ins'");
+		spip_log("Le serveur '$serveur' version $version n'a pas '$ins'", _LOG_ERREUR);
 	include_spip('inc/minipres');
 	echo minipres(_T('info_travaux_titre'), _T('titre_probleme_technique'));
 	exit;
 }
 
-// Fonction appelee par le fichier cree dans config/ a l'instal'.
-// Il contient un appel direct a cette fonction avec comme arguments
-// les identifants de connexion.
-// Si la connexion reussit, la globale db_ok memorise sa description.
-// C'est un tableau egalement retourne en valeur, pour les appels a l'install'
-
-// http://doc.spip.org/@spip_connect_db
-function spip_connect_db($host, $port, $login, $pass, $db='', $type='mysql', $prefixe='', $ldap='') {
+/**
+ * Fonction appelee par le fichier cree dans config/ a l'instal'.
+ * Il contient un appel direct a cette fonction avec comme arguments
+ * les identifants de connexion.
+ * Si la connexion reussit, la globale db_ok memorise sa description.
+ * C'est un tableau egalement retourne en valeur, pour les appels a l'install'
+ *
+ * http://doc.spip.org/@spip_connect_db
+ *
+ * @param string $host
+ * @param string $port
+ * @param string $login
+ * @param string $pass
+ * @param string $db
+ * @param string $type
+ * @param string $prefixe
+ * @param string $auth
+ * @return array
+ */
+function spip_connect_db($host, $port, $login, $pass, $db='', $type='mysql', $prefixe='', $auth='') {
 	global $db_ok;
 
-	## TODO : mieux differencier les serveurs
-	$f = _DIR_TMP . $type . 'out';
+	// temps avant nouvelle tentative de connexion
+	// suite a une connection echouee
+	if (!defined('_CONNECT_RETRY_DELAY'))
+		define('_CONNECT_RETRY_DELAY',30);
 
-	if (@file_exists($f)
-	AND (time() - @filemtime($f) < 30)
-	AND !defined('_ECRIRE_INSTALL')) {
+	$f = "";
+	// un fichier de identifiant par combinaison (type,host,port,db)
+	// pour ne pas declarer tout indisponible d'un coup
+	// si en cours d'installation ou si db=@test@ on ne pose rien
+	// car c'est un test de connexion
+	if (!defined('_ECRIRE_INSTALL') AND !$db=="@test@")
+		$f = _DIR_TMP . $type . '.' . substr(md5($host.$port.$db),0,8) . '.out';
+	elseif ($db=='@test@')
+		$db = '';
+
+	if ($f
+		AND @file_exists($f)
+	  AND (time() - @filemtime($f) < _CONNECT_RETRY_DELAY)) {
+		spip_log( "Echec : $f recent. Pas de tentative de connexion", _LOG_HS);
 		return;
 	}
-	if (!$prefixe) 
+
+	if (!$prefixe)
 		$prefixe = isset($GLOBALS['table_prefix'])
 		? $GLOBALS['table_prefix'] : $db;
 	$h = charger_fonction($type, 'req', true);
 	if (!$h) {
-		spip_log("les requetes $type ne sont pas fournies");
+		spip_log( "les requetes $type ne sont pas fournies", _LOG_HS);
 		return;
 	}
-	if ($g = $h($host, $port, $login, $pass, $db, $prefixe, $ldap)) {
+	if ($g = $h($host, $port, $login, $pass, $db, $prefixe)) {
 
+		if (!is_array($auth)) {
+			// compatibilite version 0.7 initiale
+			$g['ldap'] = $auth;
+			$auth = array('ldap' => $auth);
+		}
+		$g['authentification'] = $auth;
 		$g['type'] = $type;
 		return $db_ok = $g;
 	}
 	// En cas d'indisponibilite du serveur, eviter de le bombarder
-	if (!defined('_ECRIRE_INSTALL')) {
+	if ($f) {
 		@touch($f);
-		$err = "Echec connexion $host $port $login $db";
-		spip_log($err);
-		spip_log($err, $type);
+		spip_log( "Echec connexion serveur $type : host[$host] port[$port] login[$login] base[$db]", $type.'.'._LOG_HS);
 	}
 }
 
-// Premiere connexion au serveur principal: 
+// Premiere connexion au serveur principal:
 // retourner le charset donnee par la table principale
 // mais verifier que le fichier de connexion n'est pas trop vieux
-// Version courante = 0.7 (indication d'un LDAP comme 7e arg)
-// La version 0.6 indique le prefixe comme 6e arg
-// La version 0.5 indique le serveur comme 5e arg
+// Version courante = 0.7 
+// La version 0.7 indique un serveur d'authentification comme 8e arg
+// La version 0.6 indique le prefixe comme 7e arg
+// La version 0.5 indique le serveur comme 6e arg
 //
 // La version 0.0 (non numerotee) doit etre refaite par un admin
 // les autres fonctionnent toujours, meme si :
@@ -196,119 +243,22 @@ function spip_connect_main($connexion)
 	return ($r['valeur'] ? $r['valeur'] : -1);
 }
 
-// http://doc.spip.org/@spip_connect_ldap
+// compatibilite
 function spip_connect_ldap($serveur='') {
-	$connexion = spip_connect($serveur);
-	if ($connexion['ldap'] AND is_string($connexion['ldap'])) {
-		include_once( _DIR_CONNECT . $connexion['ldap']);
-		if ($GLOBALS['ldap_link'])
-		  $connexion['ldap'] = array('link' => $GLOBALS['ldap_link'],
-					'base' => $GLOBALS['ldap_base']);
-	}
-	return $connexion['ldap'];
+	include_spip('auth/ldap');
+	return auth_ldap_connect($serveur);
 }
 
-// 1 interface de abstract_sql a demenager dans base/abstract_sql a terme
-
+// Echappement d'une valeur (num, string, array) sous forme de chaine PHP
+// pour un array(1,'a',"a'") renvoie la chaine "'1','a','a\''"
+// Usage sql un peu deprecie, a remplacer par sql_quote()
 // http://doc.spip.org/@_q
 function _q ($a) {
-	return (is_numeric($a)) ? strval($a) : 
+	return (is_numeric($a)) ? strval($a) :
 		(!is_array($a) ? ("'" . addslashes($a) . "'")
 		 : join(",", array_map('_q', $a)));
 }
 
-// Nommage bizarre des tables d'objets
-// http://doc.spip.org/@table_objet
-function table_objet($type) {
-	static $surnoms = null;
-	if (!$surnoms){
-		// passer dans un pipeline qui permet aux plugins de declarer leurs exceptions
-		$surnoms = pipeline('declarer_tables_objets_surnoms',
-			array(
-				'article' => 'articles',
-				'auteur' => 'auteurs',
-				'breve' => 'breves',
-				'document' => 'documents',
-				'doc' => 'documents', # pour les modeles
-				'img' => 'documents',
-				'emb' => 'documents',
-				'forum' => 'forums', # hum hum redevient spip_forum par table_objet_sql mais casse par un bete "spip_".table_objet()
-				'groupe_mots' => 'groupes_mots', # hum
-				'groupe_mot' => 'groupes_mots', # hum
-				'groupe' => 'groupes_mots', # hum (EXPOSE)
-				'message' => 'messages',
-				'mot' => 'mots',
-				'petition' => 'petitions',
-				'rubrique' => 'rubriques',
-				'signature' => 'signatures',
-				'syndic' => 'syndic',
-				'site' => 'syndic', # hum hum
-				'syndic_article' => 'syndic_articles',
-				'type_document' => 'types_documents', # hum
-				'extension' => 'types_documents' # hum
-			));
-	}
-	return isset($surnoms[$type])
-		? $surnoms[$type]
-		: preg_replace(',ss$,', 's', $type."s");
-}
-
-// http://doc.spip.org/@table_objet_sql
-function table_objet_sql($type) {
-	global $table_des_tables;
-	$nom = table_objet($type);
-	include_spip('public/interfaces');
-	if (isset($table_des_tables[$nom])) {
-		$t = $table_des_tables[$nom];
-		$nom = 'spip_' . $t;
-	}
-	return $nom ;
-}
-
-// http://doc.spip.org/@id_table_objet
-function id_table_objet($type,$serveur='') {
-	$type = preg_replace(',^spip_|s$,', '', $type);
-	if ($type == 'forum')
-		return 'id_forum';
-	else if ($type == 'type')
-		return 'extension';
-	else {
-		if (!$type) return;
-		$t = table_objet($type);
-		$trouver_table = charger_fonction('trouver_table', 'base');
-		$desc = $trouver_table($t,$serveur);
-		return @$desc['key']["PRIMARY KEY"];
-	}
-}
-
-// http://doc.spip.org/@objet_type
-function objet_type($table_objet){
-	// scenario de base
-	// le type est decline a partir du nom de la table en enlevant le prefixe eventuel
-	// et la marque du pluriel
-	$type = preg_replace(',^spip_|s$,', '', $table_objet);
-	// si le type redonne bien la table c'est bon
-	if ( (table_objet($type)==$table_objet) 
-	  OR (table_objet_sql($type)==$table_objet))
-	  return $type;
-	
-	// sinon on passe par la cle primaire id_xx pour trouver le type
-	// car le s a la fin est incertain 
-	// notamment en cas de pluriel derogatoire
-	// id_jeu/spip_jeux id_journal/spip_journaux qui necessitent tout deux
-	// une declaration jeu => jeux, journal => journaux
-	// dans le pipeline declarer_tables_objets_surnoms
-	$trouver_table = charger_fonction('trouver_table', 'base');
-	if ($desc = $trouver_table($table_objet)
-	  AND isset($desc['key']["PRIMARY KEY"])){
-		$primary = $desc['key']["PRIMARY KEY"];
-		$primary = explode(',',$primary);
-		$primary = reset($primary);
-		$type = preg_replace(',^id_,', '', $primary);
-	}
-	// on a fait ce qu'on a pu
-	return $type;	
-}
 
 // Recuperer le nom de la table de jointure xxxx sur l'objet yyyy
 // http://doc.spip.org/@table_jointure
@@ -316,13 +266,80 @@ function table_jointure($x, $y) {
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$xdesc = $trouver_table(table_objet($x));
 	$ydesc = $trouver_table(table_objet($y));
-	$tx = $xdesc['table'];
-	$ty = $ydesc['table'];
 	$ix = @$xdesc['key']["PRIMARY KEY"];
 	$iy = @$ydesc['key']["PRIMARY KEY"];
-	if ($table = $GLOBALS['tables_jointures'][$ty][$ix]) return $table;
-	if ($table = $GLOBALS['tables_jointures'][$tx][$iy]) return $table;
+	if ($table = $ydesc['tables_jointures'][$ix]) return $table;
+	if ($table = $xdesc['tables_jointures'][$iy]) return $table;
 	return '';
+}
+
+/**
+ * Echapper les textes entre ' ' ou " " d'une requete SQL
+ * avant son pre-traitement
+ * On renvoi la query sans textes et les textes separes, dans
+ * leur ordre d'apparition dans la query
+ *
+ * @param string $query
+ * @return array
+ */
+function query_echappe_textes($query){
+	static $codeEchappements = array("''"=>"\x1@##@\x1", "\'"=>"\x2@##@\x2", "\\\""=>"\x3@##@\x3");
+	$query = str_replace(array_keys($codeEchappements), array_values($codeEchappements), $query);
+	if (preg_match_all("/((['])[^']*(\\2))|(([\"])[^\"]*(\\5))/S",$query,$textes)){
+		$textes = reset($textes); // indice 0 du match
+		switch(count($textes)){
+			case 0:$replace=array();break;
+			case 1:$replace=array('%1$s');break;
+			case 2:$replace=array('%1$s','%2$s');break;
+			case 3:$replace=array('%1$s','%2$s','%3$s');break;
+			case 4:$replace=array('%1$s','%2$s','%3$s','%4$s');break;
+			case 5:$replace=array('%1$s','%2$s','%3$s','%4$s','%5$s');break;
+			default:
+				$replace = range(1,count($textes));
+				$replace = '%'.implode('$s,%',$replace).'$s';
+				$replace = explode(',',$replace);
+				break;
+		}
+		$query = str_replace($textes,$replace,$query);
+	}
+	else
+		$textes = array();
+
+	return array($query, $textes);
+}
+
+/**
+ * Reinjecter les textes d'une requete SQL a leur place initiale,
+ * apres traitement de la requete
+ *
+ * @param string $query
+ * @param array $textes
+ * @return string
+ */
+function query_reinjecte_textes($query, $textes){
+	static $codeEchappements = array("''"=>"\x1@##@\x1", "\'"=>"\x2@##@\x2", "\\\""=>"\x3@##@\x3");
+	# debug de la substitution
+	#if (($c1=substr_count($query,"%"))!=($c2=count($textes))){
+	#	spip_log("$c1 ::". $query,"tradquery"._LOG_ERREUR);
+	#	spip_log("$c2 ::". var_export($textes,1),"tradquery"._LOG_ERREUR);
+	#	spip_log("ini ::". $qi,"tradquery"._LOG_ERREUR);
+	#}
+	switch (count($textes)){
+		case 0:break;
+		case 1:$query=sprintf($query,$textes[0]);break;
+		case 2:$query=sprintf($query,$textes[0],$textes[1]);break;
+		case 3:$query=sprintf($query,$textes[0],$textes[1],$textes[2]);break;
+		case 4:$query=sprintf($query,$textes[0],$textes[1],$textes[2],$textes[3]);break;
+		case 5:$query=sprintf($query,$textes[0],$textes[1],$textes[2],$textes[3],$textes[4]);break;
+		default:
+			array_unshift($textes,$query);
+			$query = call_user_func_array('sprintf',$textes);
+			break;
+	}
+
+	$query = str_replace(array_values($codeEchappements), array_keys($codeEchappements), $query);
+
+	return $query;
 }
 
 // Pour compatibilite. Ne plus utiliser.

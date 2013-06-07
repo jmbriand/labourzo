@@ -1,6 +1,6 @@
 [(#REM)
 	Un cache plus court, pour la boucle syndic_articles
-]#CACHE{3600}
+]
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
 <head>
@@ -11,7 +11,6 @@
 
 <body class="page_sommaire">
 <div id="page">
-
 
 
 	[(#REM) Entete de la page + titre du site ]
@@ -33,19 +32,19 @@
 		<B_rubriques>
 		<div class="themes">
 			<ul>
-			<BOUCLE_rubriques(RUBRIQUES) {racine}{tout} {par num titre, titre} {lang}{id_secteur !IN 1,25}{0,2}>
-				<li class="section#ID_RUBRIQUE">
-					<a href="#URL_RUBRIQUE"[ class="(#EXPOSE)"]>#LOGO_RUBRIQUE <big>[(#TITRE)]</big> <small>[(#DESCRIPTIF|supprimer_tags)]</small></a>
-				</li>
-			</BOUCLE_rubriques>
-			
 			<BOUCLE_article(ARTICLES) {id_article IN 20,21} {lang}>
 				<li class="presentation">#INTRODUCTION</li>
 			</BOUCLE_article>
-				
-			<BOUCLE_rubriques_B(RUBRIQUES) {racine}{tout} {par num titre, titre} {lang}{id_secteur !IN 1,25}{2,5}>
+			
+			<BOUCLE_rubriques(RUBRIQUES) {racine}{tout} {par num titre, titre} {lang}{id_secteur !IN 1,25}{0,2}>
 				<li class="section#ID_RUBRIQUE">
-					<a href="#URL_RUBRIQUE"[ class="(#EXPOSE)"]>#LOGO_RUBRIQUE <big>[(#TITRE)]</big> <small>[(#DESCRIPTIF|supprimer_tags)]</small></a>
+					<a href="#URL_RUBRIQUE"[ class="(#EXPOSE)"]>[(#LOGO_RUBRIQUE|image_reduire{85,0})] <big>[(#TITRE)]</big> <small>[(#DESCRIPTIF|supprimer_tags)]</small></a>
+				</li>
+			</BOUCLE_rubriques>
+							
+			<BOUCLE_rubriques_B(RUBRIQUES) {racine}{tout} {par num titre, titre} {lang}{id_secteur !IN 1,25}{2,10}>
+				<li class="section#ID_RUBRIQUE">
+					<a href="#URL_RUBRIQUE"[ class="(#EXPOSE)"]>[(#LOGO_RUBRIQUE|image_reduire{85,0})] <big>[(#TITRE)]</big> <small>[(#DESCRIPTIF|supprimer_tags)]</small></a>
 				</li>
 			</BOUCLE_rubriques_B>
 			</ul>
@@ -59,8 +58,8 @@
 		[(#REM) ENTREES DEMANDEUR ou EMPLOYEUR ]
 		<div class="entrees">
 			<ul>
-			<li><a href="spip.php?page=accesEmp&id_article=[(#LANG|=={br}|?{'14','18'})]"><img class="spip_logos" src="./squelettes/img/demande.png" alt="demandes"><:entree_offre:></a></li>		
-			<li><a href="spip.php?page=accesDem&id_article=[(#LANG|=={br}|?{'11','17'})]"><img class="spip_logos" src="./squelettes/img/offre.png" alt="offres"><:entree_demande:></a></li>
+			<li><a href="spip.php?page=accesEmp&id_article=[(#LANG|=={br}|?{'14','18'})]"><img class="spip_logos" src="#CHEMIN{img}/demande.png" alt="demandes"><:entree_offre:></a></li>		
+			<li><a href="spip.php?page=accesDem&id_article=[(#LANG|=={br}|?{'11','17'})]"><img class="spip_logos" src="#CHEMIN{img}/offre.png" alt="offres"><:entree_demande:></a></li>
 			</ul>
 		<div class="nettoyeur"></div>			
 		</div>

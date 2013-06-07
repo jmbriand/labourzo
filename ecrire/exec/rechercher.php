@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('inc/actions');
 include_spip('inc/texte');
@@ -85,10 +85,10 @@ function exec_rechercher_args($id, $type, $exclus, $rac, $do)
 
 	if ($points) {
 		arsort($points);
-		$style = " style='background-image: url(" . chemin_image('secteur-12.gif') . ")'";
+		$style = " style='background-image: url(" . chemin_image('secteur-12.png') . ")'";
 		foreach($rub as $k => $v) {
 			$rub[$k]['atts'] = ($v["id_parent"] ? $style : '')
-			. " class='arial11 petite-rubrique'";
+			. " class='petite-rubrique'";
 		}
 	}
 

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -19,7 +19,7 @@
  http://www.loc.gov/standards/iso639-2/langcodes.html
 */
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 $GLOBALS['codes_langues'] = array(
 	'aa' => "Afar",
@@ -57,9 +57,11 @@ $GLOBALS['codes_langues'] = array(
 	'el' => "&#949;&#955;&#955;&#951;&#957;&#953;&#954;&#940;",
 	'en' => "English",
 	'en_hx' => "H4ck3R",
+	'en_sm' => "Smurf",
 	'eo' => "Esperanto",
 	'es' => "Espa&#241;ol",
 	'es_co' => "Colombiano",
+	'es_mx_pop' => "Mexicano a lo g&#252;ey",
 	'et' => "eesti",
 	'eu' => "euskara",
 	'fa' => "&#1601;&#1575;&#1585;&#1587;&#1609;",
@@ -69,6 +71,10 @@ $GLOBALS['codes_langues'] = array(
 	'fo' => "f&#248;royskt",
 	'fon' => "fongb&egrave;",
 	'fr' => "fran&#231;ais",
+	'fr_sc' => "schtroumpf",
+	'fr_lpc' => "langue parl&#233;e compl&#233;t&#233;e",
+	'fr_lsf' => "langue des signes fran&#231;aise",
+	'fr_spl' => "fran&#231;ais simplifi&#233;",
 	'fr_tu' => "fran&#231;ais copain",
 	'fy' => "Frisian",
 	'ga' => "Irish",
@@ -78,6 +84,7 @@ $GLOBALS['codes_langues'] = array(
 	'grc' => "&#7944;&#961;&#967;&#945;&#943;&#945; &#7961;&#955;&#955;&#951;&#957;&#953;&#954;&#942;", // grec ancien
 	'gu' => "Gujarati",
 	'ha' => "Hausa",
+	'hac' => "&#1705;-&#1607;&#1734;&#1585;&#1575;&#1605;&#1740;", //"Kurdish-Horami"
 	'hbo' => "&#1506;&#1489;&#1512;&#1497;&#1514;&#1470;&#1492;&#1514;&#1504;&#1498;", // hebreu classique ou biblique
 	'he' => "&#1506;&#1489;&#1512;&#1497;&#1514;",
 	'hi' => "&#2361;&#2367;&#2306;&#2342;&#2368;",
@@ -101,7 +108,7 @@ $GLOBALS['codes_langues'] = array(
 	'kn' => "Kannada",
 	'ko' => "&#54620;&#44397;&#50612;",
 	'ks' => "Kashmiri",
-	'ku' => "Kurdish",
+	'ku' => "&#1705;&#1608;&#1585;&#1583;&#1740;",
 	'ky' => "Kirghiz",
 	'la' => "lingua latina",
 	'lb' => "L&euml;tzebuergesch",
@@ -143,8 +150,9 @@ $GLOBALS['codes_langues'] = array(
 	'om' => "(Afan) Oromo",
 	'or' => "Oriya",
 	'pa' => "Punjabi",
+	'pbb' => 'Nasa Yuwe',
 	'pl' => "polski",
-	'ps' => "Pashto, Pushto",
+	'ps' => "&#1662;&#1690;&#1578;&#1608;",
 	'pt' => "Portugu&#234;s",
 	'pt_br' => "Portugu&#234;s do Brasil",
 	'qu' => "Quechua",

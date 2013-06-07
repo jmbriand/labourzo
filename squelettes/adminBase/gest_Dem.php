@@ -14,7 +14,7 @@
 <?PHP 
 // CORRECTIONS VALEURS
 $dem_id = $_REQUEST ['dem_id'] ;
-$dem_idauteur = $_REQUEST ['dem_idauteur'] ;
+/*$dem_idauteur = $_REQUEST ['dem_idauteur'] ;*/
 $dem_nom = addslashes ( $_REQUEST ['dem_nom']);
 $dem_prenom = addslashes ( $_REQUEST ['dem_prenom']);
 $dem_datnais = datemysql($_REQUEST['dem_datnais']) ;
@@ -28,46 +28,41 @@ if (isset($_REQUEST [dem_diplomes ])) $dem_diplomes = implode (',', $_REQUEST [d
 $dem_diplodivers = addslashes ( $_REQUEST ['dem_diplodivers'] );
 $dem_dispo = addslashes ( $_REQUEST ['dem_dispo'] );
 $dem_remq = addslashes ( $_REQUEST ['dem_remq'] );
-$dem_lat = $_REQUEST ['dem_lat'];
-$dem_long = $_REQUEST ['dem_long'];
 
-$cvbr_nom = $_FILES['cvbr']['name'] ;    //Le nom original du fichier, comme sur le disque du visiteur, (exemple: mon_icone.png).
-//$cv_type = $_FILES['cv']['type'] ;    //Le type du fichier. Par exemple, cela peut être "image/png"
-$cvbr_size = $_FILES['cvbr']['size'] ;    //La taille du fichier en octets
-$cvbr_tmp = $_FILES['cvbr']['tmp_name'] ;//L'adresse vers le fichier uploadé dans le répertoire temporaire
-$cvbr_err = $_FILES['cvbr']['error'] ;   //Le code d'erreur, qui permet de savoir si le fichier a bien été uploadé
-
-$cvfr_nom = $_FILES['cvfr']['name'] ;    //Le nom original du fichier, comme sur le disque du visiteur, (exemple: mon_icone.png).
-//$cv_type = $_FILES['cv']['type'] ;    //Le type du fichier. Par exemple, cela peut être "image/png"
-$cvfr_size = $_FILES['cvfr']['size'] ;    //La taille du fichier en octets
-$cvfr_tmp = $_FILES['cvfr']['tmp_name'] ;//L'adresse vers le fichier uploadé dans le répertoire temporaire
-$cvfr_err = $_FILES['cvfr']['error'] ;   //Le code d'erreur, qui permet de savoir si le fichier a bien été uploadé
-
-//$inserer = $_REQUEST['inserer'] ;
-//$modifier = $_REQUEST['modifier'] ;
+$modifier = $_REQUEST['modifier'] ;
 $precedent = $_REQUEST['precedent'] ;
+$suivant = $_REQUEST['suivant'] ;
 $detruire = $_REQUEST['detruire'] ;
 //$detcv = $_REQUEST['detcv'] ;
 
+
 //----Connection à la base, et création de l'ordre SQL 
 
+if (isset($modifier))  
+	 $requete = "UPDATE  ".TABLE_DEM." 
+					 SET dem_nom='$dem_nom', dem_prenom='$dem_prenom', dem_datnais='$dem_datnais', dem_email='$dem_email', 
+					 dem_cp='$dem_cp', dem_ville='$dem_ville', dem_voit='$dem_voit', dem_domaines='$dem_domaines', 
+					 dem_profpost='$dem_profpost', dem_diplomes='$dem_diplomes', dem_diplodivers='$dem_diplodivers', 
+					 dem_dispo='$dem_dispo', dem_remq='$dem_remq'
+					 		WHERE dem_id= $dem_id "; 
+					 		
+	 		
 if (isset($detruire)) 
-	 $requete = "DELETE FROM ".TABLE_DEM."
-	 WHERE dem_id= $dem_id"; 
+	 $requete = "DELETE FROM ".TABLE_DEM." WHERE dem_id= $dem_id"; 
 	  
 //------ Exécution de l'ordre 
-//$connexion = connexion(SERVEUR, NOM, PASSE, BASE); 
 if (isset($requete)) {
 	$resultat = mysql_query	($requete, $connexion); 
 	if ($resultat) {
 				if (isset($detruire)) {
 //					echo "<br>Destructions CVs de dem_id : " . $dem_id ;
 					destrocvs($dem_id, $connexion);
+					$dem_id = "";
 				};
 				echo "<div class='menu' id='documents_joints'><h2>" . _T('operation_succes') . "</h2></div>";
 				echo 
 				"<form action='' method='post'> \n "
-				."<INPUT TYPE=\"hidden\" id=\"dem_id\" NAME=\"dem_id\" VALUE=\"" . $dem_id . "\">"
+				."<INPUT TYPE=\"hidden\" id=\"dem_id\" NAME=\"dem_id\" VALUE=\"".$dem_id."\">"
 				."<input type='submit' value='" . _T('continuer') . "'>\n"
 				."</form>" ;
 				return;
@@ -78,44 +73,65 @@ if (isset($requete)) {
 	; 
 };
 
-// $resultat = execRequete ("SELECT * FROM ".TABLE_DEM." ORDER BY dem_id LIMIT 1", $connexion); 
 $mareq = "SELECT * FROM ".TABLE_DEM ;
 $fiche = 0;
 
 if ($dem_id != '') {
 	if (isset($precedent)) {
 			$resultat = execRequete ($mareq." WHERE dem_id<".$dem_id." ORDER BY dem_id DESC LIMIT 1", $connexion); 
-		} else {
+		} else if (isset($suivant)) {
 			$resultat = execRequete ($mareq." WHERE dem_id>".$dem_id." ORDER BY dem_id LIMIT 1", $connexion); 
+		} else {	// demande d'edition ou retour de modif
+			$resultat = execRequete ($mareq." WHERE dem_id=".$dem_id, $connexion); 
 			}
 	 $fiche = mysql_num_rows($resultat) ;
-	} 
+	} else {
+		$resultat = execRequete ($mareq." ORDER BY dem_id", $connexion); 
+	echo "<table cellpadding=\"1\" cellspacing=\"1\" border=\"1\" width=\"100%\">
+		<tr>
+			<td>id</td>
+			<td>Nom</td>
+			<td>Prénom</td>
+			<td>domaine</td>
+			<td>Date modif</td>
+			<td> </td>
+		</tr>";
+		while ($ligne = mysql_fetch_object ($resultat)) {
+			echo " 
+					 <tr><td>$ligne->dem_id </td> 
+					 <td>$ligne->dem_nom</td> 
+					 <td >$ligne->dem_prenom</td>
+					 <td>$ligne->dem_domaines</td> 
+					 <td >$ligne->dem_datmodif</td>
+					 <td ><form action='' method='post' class='ajax'>
+				  	 <INPUT TYPE='hidden' id='dem_id' NAME='dem_id' VALUE='$ligne->dem_id'>
+                <input type='submit' name='edit' value='edit'>
+                </form></td>
+					 </tr>"; 
+			};
+	echo "</table>";
+	return;
+	};
 
+
+
+
+// cas d'un precedent sur premier ou suivant sur dernier
 if ($fiche == 0)  {
-		$resultat = execRequete ($mareq." ORDER BY dem_id LIMIT 1", $connexion); 
+//		$resultat = execRequete ($mareq." ORDER BY dem_id LIMIT 1", $connexion); 
+		$resultat = execRequete ($mareq." WHERE dem_id=".$dem_id, $connexion); 
 		}
 
  $ligne = mysql_fetch_object ($resultat); 
  $fiche = mysql_num_rows($resultat) ;
-/* if ($fiche > 1) 
- 		{echo "<br><div class=alerte > -+-+-+- Erreur de compte : veuillez contacter l'administrateur du site -+-+-+-</div>";
- 		exit() ;};
-*/
-$dem_idauteur = $ligne->dem_idauteur ;
+
+ $dem_idauteur = $ligne->dem_idauteur ;
 
  $resu = execRequete ("SELECT * FROM xx_upcurvit WHERE up_idauteur = '$dem_idauteur' ", $connexion); 
  $nbcv = mysql_num_rows($resu) ;
- if ($nbcv < 1 and ( 
- 	strpos($ligne->dem_domaines, 'C.V.L.') !== false ||
- 	strpos($ligne->dem_domaines, 'Ecoles') !== false ||
- 	strpos($ligne->dem_domaines, 'Action') !== false)
- 	) {
-// 	echo "<div class=alerte >" . _T('joindre_cv_svp') . "</div>";
- };
 
-
- $listedoms = array('C.V.L.', 'Baby sitting', 'Petite enfance', 'Ecoles', 'Action culturelle') ;
- $labelsdoms = array(_T('cvl'), _T('babysit'), _T('petite_enf_agree'), _T('ecoles'), _T('action_cultu')) ;
+ $listedoms = array('anim', 'gardenf', 'enseignmt', 'accompscol', 'commarti', 'sante', 'commedia', 'linguis', 'admin', 'arts', 'divers') ;
+ $labelsdoms = array(_T('anim'), _T('gardenf'), _T('enseignmt'), _T('accompscol'), _T('commarti'), _T('sante'), _T('commedia'), _T('linguis'), _T('admin'), _T('arts'), _T('divers')) ;
  $listediplm = array('B.A.F.A.', 'Stagiaire BAFA', 'B.A.F.D.', 'Stagiaire BAFD', 'BEATEP-BPJEPS', 'Surveillant de baignade', 'Premiers secours') ;
  $labelsdiplm = array(_T('bafa'), _T('stage_bafa'), _T('bafd'), _T('stage_bafd'), _T('beatep_bpjeps'), _T('surv_baignade'), _T('premiers_sec')) ;
 ?> 
@@ -127,7 +143,7 @@ $dem_idauteur = $ligne->dem_idauteur ;
 			<label for="dem_id">dem_id</label>
 	  		<INPUT TYPE="text" id="dem_id" NAME="dem_id" VALUE="<?php echo"$ligne->dem_id" ;?>">
 			&nbsp;&nbsp;&nbsp;<label for="dem_idauteur">dem_idauteur</label>
-	  		<INPUT TYPE="text" id="dem_idauteur" NAME="dem_idauteur" VALUE="<?php echo"$dem_idauteur" ;?>">
+	  		<INPUT TYPE="text" id="dem_idauteur" NAME="dem_idauteur" VALUE="<?php echo"$ligne->dem_idauteur" ;?>">
 	  		<INPUT TYPE="hidden" ID="dem_lat" NAME="dem_lat" VALUE="<?php echo"$ligne->dem_lat" ;?>">
 	  		<INPUT TYPE="hidden" ID="dem_long" NAME="dem_long" VALUE="<?php echo"$ligne->dem_long" ;?>">	 			 
 			<INPUT TYPE="hidden" name="MAX_FILE_SIZE" value="<?php echo $taille_max ?>" />
@@ -166,8 +182,12 @@ $dem_idauteur = $ligne->dem_idauteur ;
 	<!-- <?php boutonsValidation ('spip.php?page=sommaire', $ligne->dem_id, 'dem_') ; ?> -->
 	<p class='boutons'>
 	<input type=SUBMIT name='precedent' value='<< Précédent' >
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type=SUBMIT name='modifier' value='<?php echo  _T('modifier') ;?>' >
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type=SUBMIT name='detruire' value='<?php echo  _T('detruire') ;?>' 
 								onClick="javascript:return confirm('<?php echo  _T('confirm_suppr') ;?>')">
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type=SUBMIT name='suivant' value='Suivant >>' >
 	</p>
  

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -11,7 +11,7 @@
 \***************************************************************************/
 
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // envoyer le navigateur sur une nouvelle adresse
 // en evitant les attaques par la redirection (souvent indique par 1 $_GET)
@@ -20,7 +20,7 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 function redirige_par_entete($url, $equiv='', $status = 302) {
 	if (!in_array($status,array(301,302)))
 		$status = 302;
-	
+
 	$url = trim(strtr($url, "\n\r", "  "));
 	# en theorie on devrait faire ca tout le temps, mais quand la chaine
 	# commence par ? c'est imperatif, sinon l'url finale n'est pas la bonne
@@ -28,6 +28,12 @@ function redirige_par_entete($url, $equiv='', $status = 302) {
 		$url = url_de_base().$url;
 	if ($url[0]=='#')
 		$url = self('&').$url;
+	# si profondeur non nulle et url relative, il faut la passer en absolue
+	if ($GLOBALS['profondeur_url']>(_DIR_RESTREINT?1:2)
+		AND !preg_match(",^(\w+:)?//,",$url)){
+		include_spip("inc/filtres_mini");
+		$url = url_absolue($url);
+	}
 
 	if ($x = _request('transformer_xml'))
 		$url = parametre_url($url, 'transformer_xml', $x, '&');
@@ -45,8 +51,8 @@ function redirige_par_entete($url, $equiv='', $status = 302) {
 		$url ="./";
 
 	// Il n'y a que sous Apache que setcookie puis redirection fonctionne
-
-	if (!$equiv OR (strncmp("Apache", $_SERVER['SERVER_SOFTWARE'],6)==0) OR defined('_SERVER_APACHE')) {
+  include_spip('inc/cookie');
+	if ((!$equiv AND !spip_cookie_envoye()) OR ((strncmp("Apache", $_SERVER['SERVER_SOFTWARE'],6)==0) OR defined('_SERVER_APACHE'))) {
 		@header("Location: " . $url);
 		$equiv="";
 	} else {
@@ -135,7 +141,8 @@ function http_status($status) {
 		304 => '304 Not Modified',
 		401 => '401 Unauthorized',
 		403 => '403 Forbidden',
-		404 => '404 Not Found'
+		404 => '404 Not Found',
+		503 => '503 Service Unavailable'
 	);
 
 	if ($REDIRECT_STATUS && $REDIRECT_STATUS == $status) return;
@@ -163,7 +170,7 @@ function http_no_cache() {
 	header("Content-Type: text/html; charset=$charset");
 	header("Expires: 0");
 	header("Last-Modified: " .gmdate("D, d M Y H:i:s"). " GMT");
-	header("Cache-Control: no-store, no-cache, must-revalidate");
+	header("Cache-Control: no-cache, must-revalidate");
 	header("Pragma: no-cache");
 }
 

@@ -472,7 +472,10 @@ function cvenrgt($cv_nom, $cv_size, $cv_tmp, $cv_err, $taille_max)
 			else {
 				$nomfich = md5(uniqid(rand(), true)) . ".{$extension_upload}" ;
 				$deplace = move_uploaded_file($cv_tmp, "IMG/cvdemandr/". $nomfich);
-//				if ($deplace) echo "Transfert r&eacute;ussi";
+				if (!$deplace) {
+					echo "Erreur de stockage, contacter l\'administrateur du site SVP.";
+					return "";
+				}
 				
 			};
 		};
@@ -572,16 +575,28 @@ function Aff_formemp($ligne, $emp_idauteur)
 	echo "</li><li class='obligatoire'>";
 	echo "<label>" . _T('domaine_emp') . "</label>";
 	echo "<ul><li>";
-	echo formRadio ('emp_domaines', 'CVL', $ligne, _T('cvl'));
+	echo formRadio ('emp_domaines', 'anim', $ligne, _T('anim'));
 	echo "</li><li>";
-   echo formRadio ('emp_domaines', 'Baby Sit.', $ligne, _T('babysit'));
+   echo formRadio ('emp_domaines', 'gardenf', $ligne, _T('gardenf'));
 //   echo "<input type='hidden'  name='emp_domaines'  id='Baby Sit.' value='Baby Sit.'  />" ;
 	echo "</li><li>";
-   echo formRadio ('emp_domaines', 'Petite enf.', $ligne, _T('petite_enf'));
+   echo formRadio ('emp_domaines', 'enseignmt', $ligne, _T('enseignmt'));
 	echo "</li><li>";
-   echo formRadio ('emp_domaines', 'Ecoles', $ligne, _T('ecoles'));
+   echo formRadio ('emp_domaines', 'accompscol', $ligne, _T('accompscol'));
 	echo "</li><li>";
-   echo formRadio ('emp_domaines', 'Action culturelle', $ligne, _T('action_cultu'));
+   echo formRadio ('emp_domaines', 'commarti', $ligne, _T('commarti'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'sante', $ligne, _T('sante'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'commedia', $ligne, _T('commedia'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'linguis', $ligne, _T('linguis'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'admin', $ligne, _T('admin'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'arts', $ligne, _T('arts'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'divers', $ligne, _T('divers'));
 	echo "</li></ul>";
 	echo "</li><li>";
 	echo "<label for=\"emp_mission\">" . _T('mission') . "</label>";

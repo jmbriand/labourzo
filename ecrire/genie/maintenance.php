@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // Diverses taches de maintenance
 // http://doc.spip.org/@genie_maintenance_dist
@@ -64,7 +64,7 @@ function message_crash_tables() {
 		return 
 		'<strong>' . _T('texte_recuperer_base') . '</strong><br />'
 		. ' <tt>'.join(', ', $crash).'</tt><br />'
-		. generer_form_ecrire('admin_repair',
+		. generer_form_ecrire('base_repair',
 			_T('texte_crash_base'), '',
 			_T('bouton_tenter_recuperation'))
 		;

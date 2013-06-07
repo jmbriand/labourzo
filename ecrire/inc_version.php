@@ -3,51 +3,47 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
+#
 
-
-if (defined("_ECRIRE_INC_VERSION")) return;
-define("_ECRIRE_INC_VERSION", "1");
+if (defined('_ECRIRE_INC_VERSION')) return;
+define('_ECRIRE_INC_VERSION', "1");
 
 # masquer les eventuelles erreurs sur les premiers define
 error_reporting(E_ALL ^ E_NOTICE);
-# compatibilite anciennes versions
-# si vous n'avez aucun fichier .php3, redefinissez a ""
-# ne concerne que le fichier mes_options.php3
-define('_EXTENSION_PHP', '.php3');
-#define('_EXTENSION_PHP', '');
-#mettre a true pour compatibilite PHP3 
-define('_FEED_GLOBALS', false);
+
+# version PHP minimum exigee (cf. inc/utils)
+define ('_PHP_MIN', '5.1.0');
 
 # le nom du repertoire ecrire/
-define('_DIR_RESTREINT_ABS', 'ecrire/');
+if (!defined('_DIR_RESTREINT_ABS')) define('_DIR_RESTREINT_ABS', 'ecrire/');
 # sommes-nous dans ecrire/ ?
 define('_DIR_RESTREINT',
  (!is_dir(_DIR_RESTREINT_ABS) ? "" : _DIR_RESTREINT_ABS));
 # ou inversement ?
 define('_DIR_RACINE', _DIR_RESTREINT ? '' : '../');
 
+# chemins absolus
+define('_ROOT_RACINE', dirname(dirname(__FILE__)).'/');
+define('_ROOT_CWD', getcwd().'/');
+define('_ROOT_RESTREINT', _ROOT_CWD . _DIR_RESTREINT);
+
 // Icones
 # nom du dossier images
-define('_NOM_IMG_PACK', 'images/');
+if (!defined('_NOM_IMG_PACK')) define('_NOM_IMG_PACK', 'images/');
 # le chemin http (relatif) vers les images standard
 define('_DIR_IMG_PACK', (_DIR_RACINE . 'prive/' . _NOM_IMG_PACK));
-# le chemin des vignettes de type de document
-define('_DIR_IMG_ICONES_DIST', _DIR_RACINE . "prive/vignettes/");
-# le chemin des icones de la barre d'edition des formulaires
-define('_DIR_IMG_ICONES_BARRE', _DIR_RACINE . "prive/icones_barre/");
 
 # le chemin php (absolu) vers les images standard (pour hebergement centralise)
 define('_ROOT_IMG_PACK', dirname(dirname(__FILE__)) . '/prive/' . _NOM_IMG_PACK);
-define('_ROOT_IMG_ICONES_DIST', dirname(dirname(__FILE__)) . '/prive/vignettes/');
 
 # le nom du repertoire des  bibliotheques JavaScript
-define('_JAVASCRIPT', 'javascript/'); // utilisable avec #CHEMIN et find_in_path
+if (!defined('_JAVASCRIPT')) define('_JAVASCRIPT', 'javascript/'); // utilisable avec #CHEMIN et find_in_path
 define('_DIR_JAVASCRIPT', (_DIR_RACINE . 'prive/' . _JAVASCRIPT));
 
 # Le nom des 4 repertoires modifiables par les scripts lances par httpd
@@ -55,34 +51,48 @@ define('_DIR_JAVASCRIPT', (_DIR_RACINE . 'prive/' . _JAVASCRIPT));
 # mais on peut les mettre ailleurs et changer completement les noms
 
 # le nom du repertoire des fichiers Temporaires Inaccessibles par http://
-define('_NOM_TEMPORAIRES_INACCESSIBLES', "tmp/");
+if (!defined('_NOM_TEMPORAIRES_INACCESSIBLES')) define('_NOM_TEMPORAIRES_INACCESSIBLES', "tmp/");
 # le nom du repertoire des fichiers Temporaires Accessibles par http://
-define('_NOM_TEMPORAIRES_ACCESSIBLES', "local/");
+if (!defined('_NOM_TEMPORAIRES_ACCESSIBLES')) define('_NOM_TEMPORAIRES_ACCESSIBLES', "local/");
 # le nom du repertoire des fichiers Permanents Inaccessibles par http://
-define('_NOM_PERMANENTS_INACCESSIBLES', "config/");
+if (!defined('_NOM_PERMANENTS_INACCESSIBLES')) define('_NOM_PERMANENTS_INACCESSIBLES', "config/");
 # le nom du repertoire des fichiers Permanents Accessibles par http://
-define('_NOM_PERMANENTS_ACCESSIBLES', "IMG/");
+if (!defined('_NOM_PERMANENTS_ACCESSIBLES')) define('_NOM_PERMANENTS_ACCESSIBLES', "IMG/");
 
 
 // Le nom du fichier de personnalisation
-define('_NOM_CONFIG', 'mes_options');
+if (!defined('_NOM_CONFIG')) define('_NOM_CONFIG', 'mes_options');
 
 // Son emplacement absolu si on le trouve
-if (@file_exists($f = _DIR_RESTREINT . _NOM_CONFIG . '.php')
-OR (_EXTENSION_PHP
-	AND @file_exists($f = _DIR_RESTREINT . _NOM_CONFIG . _EXTENSION_PHP))
-OR (@file_exists($f = _DIR_RACINE . _NOM_PERMANENTS_INACCESSIBLES . _NOM_CONFIG . '.php'))) {
+if (@file_exists($f = _ROOT_RACINE . _NOM_PERMANENTS_INACCESSIBLES . _NOM_CONFIG . '.php')
+OR (@file_exists($f = _ROOT_RESTREINT . _NOM_CONFIG . '.php'))) {
 	define('_FILE_OPTIONS', $f);
 } else define('_FILE_OPTIONS', '');
+
+// les modules par defaut pour la traduction.
+// Constante utilisee par le compilateur et le decompilateur
+// sa valeur etant traitee par inc_traduire_dist
+
+if (!defined('MODULES_IDIOMES')) define('MODULES_IDIOMES', 'public|spip|ecrire');
 
 // *** Fin des define *** //
 
 
 // Inclure l'ecran de securite
 if (!defined('_ECRAN_SECURITE')
-AND @file_exists($f = _DIR_RACINE . _NOM_PERMANENTS_INACCESSIBLES . 'ecran_securite.php'))
+AND @file_exists($f = _ROOT_RACINE . _NOM_PERMANENTS_INACCESSIBLES . 'ecran_securite.php'))
 	include $f;
 
+/*
+ * detecteur de robot d'indexation
+ * utilise en divers endroits, centralise ici si l'ecran l'a pas deja fait
+ */
+if (!defined('_IS_BOT'))
+	define('_IS_BOT',
+		isset($_SERVER['HTTP_USER_AGENT'])
+		AND preg_match(',bot|slurp|crawler|spider|webvac|yandex|INA dlweb|EC2LinkFinder|80legs,i',
+			$_SERVER['HTTP_USER_AGENT'])
+	);
 
 //
 // *** Parametrage par defaut de SPIP ***
@@ -96,6 +106,18 @@ AND @file_exists($f = _DIR_RACINE . _NOM_PERMANENTS_INACCESSIBLES . 'ecran_secur
 # comment on logge, defaut 4 tmp/spip.log de 100k, 0 ou 0 suppriment le log
 $nombre_de_logs = 4;
 $taille_des_logs = 100;
+
+// Definir les niveaux de log
+defined('_LOG_HS') || define('_LOG_HS', 0);
+defined('_LOG_ALERTE_ROUGE') || define('_LOG_ALERTE_ROUGE', 1);
+defined('_LOG_CRITIQUE') || define('_LOG_CRITIQUE', 2);
+defined('_LOG_ERREUR') || define('_LOG_ERREUR', 3);
+defined('_LOG_AVERTISSEMENT') || define('_LOG_AVERTISSEMENT', 4);
+defined('_LOG_INFO_IMPORTANTE') || define ('_LOG_INFO_IMPORTANTE', 5);
+defined('_LOG_INFO') || define('_LOG_INFO', 6);
+defined('_LOG_DEBUG') || define('_LOG_DEBUG', 7);
+
+// on peut definir _LOG_FILTRE_GRAVITE dans mes_options.php
 
 // Prefixe des tables dans la base de donnees
 // (a modifier pour avoir plusieurs sites SPIP dans une seule base)
@@ -144,8 +166,6 @@ if (isset($_SERVER['REMOTE_ADDR'])) $ip = $_SERVER['REMOTE_ADDR'];
 // ou dans spip.log), ni dans les forums (responsabilite)
 # $ip = substr(md5($ip),0,16);
 
-// faut-il passer les connexions MySQL en mode debug ?
-$mysql_debug = false;
 
 // faut-il faire des connexions completes rappelant le nom du serveur et/ou de
 // la base MySQL ? (utile si vos squelettes appellent d'autres bases MySQL)
@@ -177,7 +197,7 @@ $quota_cache = 10;
 //
 # aide en ligne
 $home_server = 'http://www.spip.net';
-$help_server = $home_server . '/aide';
+$help_server = array($home_server . '/aide');
 # glossaire pour raccourci [?X]. Aussi: [?X#G] et definir glossaire_G
 $url_glossaire_externe =  "http://@lang@.wikipedia.org/wiki/%s";
 
@@ -195,43 +215,18 @@ $xml_indent = false;
 
 // Vignettes de previsulation des referers
 // dans les statistiques
-// 3 de trouves, possibilite de switcher
-// - Thumbshots.org: le moins instrusif, quand il n'a pas, il renvoit un pixel vide
-// - Girafa semble le plus complet, bicoz renvoit toujours la page d'accueil; mais avertissement si pas de preview
+// 2 de trouves, possibilite de switcher
 // - Alexa, equivalent Thumbshots, avec vignettes beaucoup plus grandes mais avertissement si pas de preview
 //   Pour Alexa, penser a indiquer l'url du site dans l'id.
 //   Dans Alexa, si on supprimer size=small, alors vignettes tres grandes
-$source_vignettes = "http://open.thumbshots.org/image.pxf?url=http://";
-// $source_vignettes = "http://msnsearch.srv.girafa.com/srv/i?s=MSNSEARCH&r=http://";
+// - apercite.fr : on conserve exactement la même expression pour insérer l'url du site
+$source_vignettes = "http://www.apercite.fr/api/apercite/120x90/oui/oui/http://";
 // $source_vignettes = "http://pthumbnails.alexa.com/image_server.cgi?id=www.monsite.net&size=small&url=http://";
 
 $formats_logos =  array ('gif', 'jpg', 'png');
 
 // Controler les dates des item dans les flux RSS ?
 $controler_dates_rss = true;
-
-// bardee de variables de personnalisation pour la typo (cf inc/texte)
-// class_spip : savoir si on veut class="spip" sur p i strong & li
-// class_spip_plus : class="spip" sur les ul ol h3 hr quote table...
-// la difference c'est que des css specifiques existent pour les seconds
-// 
-$class_spip =  '';  /*' class="spip"'*/
-$class_spip_plus =  ' class="spip"';
-$toujours_paragrapher =  true;
-$ligne_horizontale =  "\n<hr$class_spip_plus />\n";
-$debut_intertitre =  "\n<h3$class_spip_plus>";
-$fin_intertitre =  "</h3>\n";
-$debut_gras =  "<strong$class_spip>";
-$fin_gras =  '</strong>';
-$debut_italique =  "<i$class_spip>";
-$fin_italique =  '</i>';
-$ouvre_ref =  '&nbsp;[';
-$ferme_ref =  ']';
-$ouvre_note =  '[';
-$ferme_note =  '] ';
-$les_notes =  '';
-$compt_note =  0;
-$notes_vues =  array();
 
 
 //
@@ -242,71 +237,7 @@ $notes_vues =  array();
 # note: un pipeline non reference se compile aussi, mais uniquement
 # lorsqu'il est rencontre
 // http://doc.spip.org/@Tuto-Se-servir-des-points-d-entree
-$spip_pipeline = array(
-	'accueil_encours' => '',
-	'accueil_gadgets' => '',
-	'accueil_informations' => '',
-	 # cf. public/assembler
-	'affichage_final' => '|f_surligne|f_tidy|f_admin|f_msie',
-	'affiche_droite' => '',
-	'affiche_gauche' => '',
-	'affiche_milieu' => '',
-	'affiche_enfants' => '',
-	'affiche_hierarchie' => '',
-	'boite_infos' => 'f_boite_infos',
-	'ajouter_boutons' => '',
-	'ajouter_onglets' => '',
-	'body_prive' => '',
-	'declarer_tables_interfaces'=>'',
-	'declarer_tables_principales'=>'',
-	'declarer_tables_auxiliaires'=>'',
-	'declarer_tables_objets_surnoms' => '',
-	'definir_session' => '',
-	'delete_all' => '',
-	'delete_statistiques' => '',
-	'exec_init' => '',
-	'formulaire_charger' => '',
-	'formulaire_verifier' => '',
-	'formulaire_traiter' => '',
-	'header_prive' => '|f_jQuery||compacte_head',
-	'insert_head' => '|f_jQuery',
-	'jquery_plugins' => '',
-#	'insert_js' => '',
-	'lister_tables_noexport' => '',
-	'libelle_association_mots' => '',
-#	'verifie_js_necessaire' => '',
-	'mots_indexation' => '',
-	'nettoyer_raccourcis_typo' => '',
-	'pre_boucle' => '',
-	'post_boucle' => '',
-	'pre_propre' => '|extraire_multi|traiter_poesie|traiter_retours_chariots',
-	'pre_liens' => '|traiter_raccourci_liens|traiter_raccourci_glossaire
-		|traiter_raccourci_ancre',
-	'post_propre' => '',
-	'pre_typo' => '|extraire_multi',
-	'post_typo' => '|quote_amp',
-	'pre_edition' => '|premiere_revision',
-	'post_edition' => '|nouvelle_revision',
-	'pre_syndication' => '',
-	'post_syndication' => '',
-	'pre_indexation' => '',
-	'requete_dico' => '',
-	'agenda_rendu_evenement' => '',
-	'taches_generales_cron' => '',
-	'calculer_rubriques' => '',
-	'autoriser' => '',
-	'notifications' => '',
-	'afficher_contenu_objet' => '',
-	'afficher_revision_objet'=>'',
-	'editer_contenu_objet' => '',
-	'creer_chaine_url' => '|creer_chaine_url',
-	'rechercher_liste_des_champs' => '',
-	'rechercher_liste_des_jointures' => '',
-	'recuperer_fond' => '',
-	'styliser' => '',
-	'trig_calculer_prochain_postdate' => '',
-	'trig_propager_les_secteurs' => '',
-);
+$spip_pipeline = array();
 
 # la matrice standard (fichiers definissant les fonctions a inclure)
 $spip_matrice = array ();
@@ -326,51 +257,45 @@ $table_date = array();
 $table_titre = array();
 $tables_jointures = array();
 
-// Liste des statuts. 
+// Liste des statuts.
 $liste_des_statuts = array(
-			"info_administrateurs" => '0minirezo',
-			"info_redacteurs" =>'1comite',
-			"info_visiteurs" => '6forum',
-			"info_statut_site_4" => '5poubelle'
-			);
+	"info_administrateurs" => '0minirezo',
+	"info_redacteurs" =>'1comite',
+	"info_visiteurs" => '6forum',
+	"texte_statut_poubelle" => '5poubelle'
+);
 
 $liste_des_etats = array(
-			'texte_statut_en_cours_redaction' => 'prepa',
-			'texte_statut_propose_evaluation' => 'prop',
-			'texte_statut_publie' => 'publie',
-			'texte_statut_poubelle' => 'poubelle',
-			'texte_statut_refuse' => 'refuse' 
-			);
-
-$liste_des_forums = array(
-			'bouton_radio_modere_posteriori' => 'pos',
-			'bouton_radio_modere_priori' => 'pri',
-			'bouton_radio_modere_abonnement' => 'abo',
-			'info_pas_de_forum' => 'non'
+	'texte_statut_en_cours_redaction' => 'prepa',
+	'texte_statut_propose_evaluation' => 'prop',
+	'texte_statut_publie' => 'publie',
+	'texte_statut_poubelle' => 'poubelle',
+	'texte_statut_refuse' => 'refuse'
 );
 
 // liste des methodes d'authentifications
 $liste_des_authentifications = array(
-			'spip'=>'spip',
-			'ldap'=>'ldap'
+	'spip'=>'spip',
+	'ldap'=>'ldap'
 );
 
 // Experimental : pour supprimer systematiquement l'affichage des numeros
 // de classement des titres, recopier la ligne suivante dans mes_options :
-# $table_des_traitements['TITRE'][]= 'typo(supprimer_numero(%s))';
+# $table_des_traitements['TITRE'][]= 'typo(supprimer_numero(%s), "TYPO", $connect)';
 
 // Droits d'acces maximum par defaut
 @umask(0);
 
-// numero de branche, utilise par les plugins 
-// pour specifier les versions de SPIP necessaire
-// il faut s'en tenir a un nombre de decimales fixe ex : 2.0.0, 2.0.0-dev, 2.0.0-beta, 2.0.0-beta2 
-$spip_version_branche = "2.0.10";
+// numero de branche, utilise par les plugins
+// pour specifier les versions de SPIP necessaires
+// il faut s'en tenir a un nombre de decimales fixe
+// ex : 2.0.0, 2.0.0-dev, 2.0.0-beta, 2.0.0-beta2
+$spip_version_branche = "3.0.10";
 // version des signatures de fonctions PHP
 // (= numero SVN de leur derniere modif cassant la compatibilite et/ou necessitant un recalcul des squelettes)
-$spip_version_code = 12691;
-// version de la base SQL (= numero SVN de sa derniere modif, a verifier dans le fichier ecrire/maj/sv10000.php) 
-$spip_version_base = 14558;
+$spip_version_code = 17873;
+// version de la base SQL (= numero SVN de sa derniere modif)
+$spip_version_base = 19268;
 
 // version de l'interface a la base
 $spip_sql_version = 1;
@@ -389,16 +314,16 @@ $meta = $connect_id_rubrique = array();
 //
 // Charger les fonctions liees aux serveurs Http et Sql.
 //
-require_once _DIR_RESTREINT . 'inc/utils.php';
-require_once _DIR_RESTREINT . 'base/connect_sql.php';
+require_once _ROOT_RESTREINT . 'inc/utils.php';
+require_once _ROOT_RESTREINT . 'base/connect_sql.php';
 
 // Definition personnelles eventuelles
 
-if (_FILE_OPTIONS) include_once _FILE_OPTIONS;
+if (_FILE_OPTIONS) {include_once _FILE_OPTIONS;}
 
 // Masquer les warning
-define('SPIP_ERREUR_REPORT',E_ALL ^ E_NOTICE);
-define('SPIP_ERREUR_REPORT_INCLUDE_PLUGINS',0);
+if (!defined('E_DEPRECATED')) define('E_DEPRECATED', 8192); // compatibilite PHP 5.3
+if (!defined('SPIP_ERREUR_REPORT')) define('SPIP_ERREUR_REPORT', E_ALL ^ E_NOTICE ^ E_DEPRECATED);
 error_reporting(SPIP_ERREUR_REPORT);
 
 // Initialisations critiques non surchargeables par les plugins
@@ -409,7 +334,7 @@ error_reporting(SPIP_ERREUR_REPORT);
 // ou a defini certaines des constantes que cette fonction doit definir
 // ===> on execute en neutralisant les messages d'erreur
 
-@spip_initialisation_core(
+spip_initialisation_core(
 	(_DIR_RACINE  . _NOM_PERMANENTS_INACCESSIBLES),
 	(_DIR_RACINE  . _NOM_PERMANENTS_ACCESSIBLES),
 	(_DIR_RACINE  . _NOM_TEMPORAIRES_INACCESSIBLES),
@@ -422,23 +347,21 @@ error_reporting(SPIP_ERREUR_REPORT);
 // qui ne sera pas execute car _ECRIRE_INC_VERSION est defini
 // donc il faut avoir tout fini ici avant de charger les plugins
 
-if (@is_readable(_DIR_TMP."charger_plugins_options.php")){
+if (@is_readable(_CACHE_PLUGINS_OPT) AND @is_readable(_CACHE_PLUGINS_PATH)){
 	// chargement optimise precompile
-	include_once(_DIR_TMP."charger_plugins_options.php");
+	include_once(_CACHE_PLUGINS_OPT);
 } else {
-	@spip_initialisation_suite();
+	spip_initialisation_suite();
 	include_spip('inc/plugin');
 	// generer les fichiers php precompiles
 	// de chargement des plugins et des pipelines
-	if (verif_plugin()) {
-		if (@is_readable(_DIR_TMP."charger_plugins_options.php"))
-			include_once(_DIR_TMP."charger_plugins_options.php");
-		else
-			spip_log("generation de charger_plugins_options.php impossible; pipeline desactives");
-	}
+	actualise_plugins_actifs();
 }
 // Initialisations non critiques surchargeables par les plugins
-@spip_initialisation_suite();
+spip_initialisation_suite();
+
+// niveau maxi d'enregistrement des logs
+defined('_LOG_FILTRE_GRAVITE') || define('_LOG_FILTRE_GRAVITE', _LOG_INFO_IMPORTANTE);
 
 if (!defined('_OUTILS_DEVELOPPEURS'))
 	define('_OUTILS_DEVELOPPEURS',false);
@@ -469,46 +392,18 @@ OR _request('action') == 'test_dirs')) {
 	// autrement c'est une install ad hoc (spikini...), on sait pas faire
 }
 
-//
-// Reglage de l'output buffering : si possible, generer une sortie
-// compressee pour economiser de la bande passante ; sauf dans l'espace
-// prive car sinon ca rame a l'affichage (a revoir...)
-//
-
-@header("Vary: Cookie, Accept-Encoding");
-// si un buffer est deja ouvert, stop
-if (!test_espace_prive()
-AND $flag_ob
-AND strlen(ob_get_contents())==0
-AND !headers_sent()) {
-	if (
-	$GLOBALS['meta']['auto_compress_http'] == 'oui'
-	// special bug de proxy
-	AND !(isset($_SERVER['HTTP_VIA']) AND preg_match(",NetCache|Hasd_proxy,i", $_SERVER['HTTP_VIA']))
-	// special bug Netscape Win 4.0x
-	AND (strpos($_SERVER['HTTP_USER_AGENT'], 'Mozilla/4.0') === false)
-	// special bug Apache2x
-	#&& !preg_match(",Apache(-[^ ]+)?/2,i", $_SERVER['SERVER_SOFTWARE'])
-	// test suspendu: http://article.gmane.org/gmane.comp.web.spip.devel/32038/
-	#&& !($GLOBALS['flag_sapi_name'] AND preg_match(",^apache2,", @php_sapi_name()))
-	// si la compression est deja commencee, stop
-	# && !@ini_get("zlib.output_compression")
-	AND !@ini_get("output_handler")
-	AND !isset($_GET['var_mode']) # bug avec le debugueur qui appelle ob_end_clean()
-	)
-		ob_start('ob_gzhandler');
-}
 
 // Vanter notre art de la composition typographique
 // La globale $spip_header_silencieux permet de rendre le header minimal pour raisons de securite
-define('_HEADER_COMPOSED_BY', "Composed-By: SPIP");
-
-if (!headers_sent())
+if (!defined('_HEADER_COMPOSED_BY')) define('_HEADER_COMPOSED_BY', "Composed-By: SPIP");
+if (!headers_sent()) {
+	header("Vary: Cookie, Accept-Encoding");
 	if (!isset($GLOBALS['spip_header_silencieux']) OR !$GLOBALS['spip_header_silencieux'])
-		@header(_HEADER_COMPOSED_BY . " $spip_version_affichee @ www.spip.net" . (isset($GLOBALS['meta']['plugin_header'])?(" + ".$GLOBALS['meta']['plugin_header']):""));
+		header(_HEADER_COMPOSED_BY . " $spip_version_affichee @ www.spip.net" . (isset($GLOBALS['meta']['plugin_header'])?(" + ".$GLOBALS['meta']['plugin_header']):""));
 	else // header minimal
-		@header(_HEADER_COMPOSED_BY . " @ www.spip.net");
+		header(_HEADER_COMPOSED_BY . " @ www.spip.net");
+}
 
-# spip_log($_SERVER['REQUEST_METHOD'].' '.self() . ' - '._FILE_CONNECT);
+spip_log($_SERVER['REQUEST_METHOD'].' '.self() . ' - '._FILE_CONNECT,_LOG_DEBUG);
 
 ?>

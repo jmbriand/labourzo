@@ -3,14 +3,29 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
+
+function securiser_redirect_action($redirect){
+	if (tester_url_absolue($redirect) AND !defined('_AUTORISER_ACTION_ABS_REDIRECT')){
+		// si l'url est une url du site, on la laisse passer sans rien faire
+		// c'est encore le plus simple
+		$base = $GLOBALS['meta']['adresse_site']."/";
+		if (strlen($base) AND strncmp($redirect,$base,strlen($base))==0)
+			return $redirect;
+		$base = url_de_base();
+		if (strlen($base) AND strncmp($redirect,$base,strlen($base))==0)
+			return $redirect;
+		return "";
+	}
+	return $redirect;
+}
 
 // http://doc.spip.org/@traiter_appels_actions
 function traiter_appels_actions(){
@@ -19,6 +34,12 @@ function traiter_appels_actions(){
 		include_spip('base/abstract_sql'); // chargement systematique pour les actions
 		include_spip('inc/autoriser');
 		include_spip('inc/headers');
+		include_spip('inc/actions');
+		// des actions peuvent appeler _T
+		if (!isset($GLOBALS['spip_lang'])) {
+			include_spip('inc/lang');
+			utiliser_langue_visiteur();
+		}
 		// si l'action est provoque par un hit {ajax}
 		// il faut transmettre l'env ajax au redirect
 		// on le met avant dans la query string au cas ou l'action fait elle meme sa redirection
@@ -29,13 +50,17 @@ function traiter_appels_actions(){
 			$url = parametre_url($url,'var_ajax',$v,'&');
 			$url = parametre_url($url,'var_ajax_env',$args,'&');
 			set_request('redirect',$url);
-		}		
+		}
+		else if(_request('redirect')){
+			set_request('redirect',securiser_redirect_action(_request('redirect')));
+		}
 		$var_f = charger_fonction($action, 'action');
 		$var_f();
 		if (!isset($GLOBALS['redirect'])) {
 			$GLOBALS['redirect'] = _request('redirect');
 			if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$GLOBALS['redirect'] = urldecode($GLOBALS['redirect']);
+			$GLOBALS['redirect'] = securiser_redirect_action($GLOBALS['redirect']);
 		}
 		if ($url = $GLOBALS['redirect']) {
 			// si l'action est provoque par un hit {ajax}
@@ -94,11 +119,16 @@ function traiter_appels_inclusions_ajax(){
 			$page = recuperer_fond($fond,$contexte,array('trim'=>false));
 			$texte = $page;
 			if ($ancre = _request('var_ajax_ancre')){
+				// pas n'importe quoi quand meme dans la variable !
+				$ancre = str_replace(array('<','"',"'"),array('&lt;','&quot;',''),$ancre);
 				$texte = "<a href='#$ancre' name='ajax_ancre' style='display:none;'>anchor</a>".$texte;
 			}
 		}
-		else 
+		else {
+			include_spip('inc/headers');
+			http_status(403);
 			$texte = _L('signature ajax bloc incorrecte');
+		}
 		ajax_retour($texte);
 		return true; // on a fini le hit
 	}
@@ -133,8 +163,10 @@ function traiter_formulaires_dynamiques($get=false){
 		// changer la langue avec celle qui a cours dans le formulaire
 		// on la depile de $args car c'est un argument implicite masque	
 		changer_langue(array_shift($args));
-
 			
+
+		// inclure mes_fonctions et autres filtres avant verifier/traiter
+		include_spip('public/parametrer');
 		$verifier = charger_fonction("verifier","formulaires/$form/",true);
 		$post["erreurs_$form"] = pipeline(
 				  'formulaire_verifier',
@@ -142,9 +174,16 @@ function traiter_formulaires_dynamiques($get=false){
 						'args'=>array('form'=>$form,'args'=>$args),
 						'data'=>$verifier?call_user_func_array($verifier,$args):array())
 					);
+		// si on ne demandait qu'une verif json
+		if (_request('formulaire_action_verifier_json')){
+			include_spip('inc/json');
+			include_spip('inc/actions');
+			ajax_retour(json_encode($post["erreurs_$form"]),'text/plain');
+			return true; // on a fini le hit
+		}
+		$retour = "";
 		if ((count($post["erreurs_$form"])==0)){
 			$rev = "";
-			$retour = "";
 			if ($traiter = charger_fonction("traiter","formulaires/$form/",true))
 				$rev = call_user_func_array($traiter,$args);
 

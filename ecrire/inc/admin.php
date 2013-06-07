@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // demande/verifie le droit de creation de repertoire par le demandeur;
 // memorise dans les meta que ce script est en cours d'execution
@@ -41,7 +41,7 @@ function inc_admin_dist($script, $titre, $comment='', $anonymous=false)
 // pour eviter des executions en parallele, notamment apres Time-Out.
 // Cette meta contient le nom du script et, a un hachage pres, du demandeur.
 // Le code de ecrire/index.php devie toute demande d'execution d'un script
-// vers le script d'administration indique par cette meta si elle est là.
+// vers le script d'administration indique par cette meta si elle est lï¿½.
 // Au niveau de la fonction inc_admin, on controle la meta 'admin'.
 // Si la meta n'est pas la, 
 //	c'est le debut on la cree.
@@ -63,15 +63,20 @@ function admin_verifie_session($script, $anonymous=false) {
 		ecrire_meta('admin', $signal, 'non');
 	} else {
 		if (!$anonymous AND ($valeur != $signal)) {
-			if (intval(substr($valeur, strpos($valeur,'_')+1))<>
-			    $GLOBALS['visiteur_session']['id_auteur']) {
+			if (!preg_match('/^(.*)_(\d+)_/', $GLOBALS['meta']["admin"], $l)
+				OR intval($l[2])!=$GLOBALS['visiteur_session']['id_auteur']) {
 				include_spip('inc/minipres');
 				spip_log("refus de lancer $script, priorite a $valeur");
 				return minipres(_T('info_travaux_texte'));
 			}
 		}
 	}
-	spip_log("admin $pref" . ($valeur ? " (reprise)" : ' (init)'));
+	$journal = "spip";
+	if (autoriser('configurer')) // c'est une action webmestre, soit par ftp soit par statut webmestre
+		$journal = 'webmestre';
+	// on pourrait statuer automatiquement les webmestres a l'init d'une action auth par ftp ... ?
+
+	spip_log("admin $pref" . ($valeur ? " (reprise)" : ' (init)'),$journal);
 	return '';
 }
 
@@ -112,7 +117,7 @@ function debut_admin($script, $action='', $corps='') {
 
 	// Si on est un super-admin, un bouton de validation suffit
 	// sauf dans les cas destroy
-		if ((autoriser('webmestre') OR $script === 'admin_repair')
+		if ((autoriser('webmestre') OR $script === 'repair')
 		AND $script != 'delete_all') {
 			if (_request('validation_admin') == $signal) {
 				spip_log ("Action super-admin: $action");
@@ -122,30 +127,40 @@ function debut_admin($script, $action='', $corps='') {
 			$suivant = _T('bouton_valider');
 			$js = '';
 		} else {
+			// cet appel permet d'assurer un copier-coller du nom du repertoire a creer dans tmp (esj)
+			// l'insertion du script a cet endroit n'est pas xhtml licite mais evite de l'embarquer dans toutes les pages minipres
+			$corps .= http_script('',  "spip_barre.js");
+
 			$corps .= "<fieldset><legend>"
 			. _T('info_authentification_ftp')
 			. aide("ftp_auth")
 			. "</legend>\n<label for='fichier'>"
 			. _T('info_creer_repertoire')
 			. "</label>\n"
-			. "<input class='formo' size='40' id='fichier' name='fichier' value='"
+            . "<span id='signal' class='formo'>".$signal."</span>"
+            . "<input type='hidden' id='fichier' name='fichier' value='" 
 			. $signal
-			. "' /><br />"
+			. "' />"
 			. _T('info_creer_repertoire_2', array('repertoire' => joli_repertoire($dir)))
 			. "</fieldset>";
 
 			$suivant = _T('bouton_recharger_page');
 
-	// code volontairement tordu:
-	// provoquer la copie dans le presse papier du nom du repertoire
-	// en remettant a vide le champ pour que ca marche aussi en cas
-	// de JavaScript inactif.
+			// code volontairement tordu:
+			// provoquer la copie dans le presse papier du nom du repertoire
+			// en remettant a vide le champ pour que ca marche aussi en cas
+			// de JavaScript inactif.
+			$js = " onload='var range=document.createRange(); var signal = document.getElementById(\"signal\"); var userSelection = window.getSelection(); range.setStart(signal,0); range.setEnd(signal,1); userSelection.addRange(range);'";
 
-			$js = " onload='document.forms[0].fichier.value=\"\";barre_inserer(\"$signal\", document.forms[0].fichier)'";
 		}
 
+		// admin/xxx correspond
+		// a exec/base_xxx de preference
+		// et exec/xxx sinon (compat)
+		if (tester_url_ecrire("base_$script"))
+			$script = "base_$script";
 		$form = copy_request($script, $corps, $suivant);
-		$info_action = _T('info_action', array('action' => $action));
+		$info_action = _T('info_action', array('action' => "$action"));
 		return minipres($info_action, $form, $js);
 	}
 }
@@ -164,12 +179,12 @@ function fin_admin($action) {
 // http://doc.spip.org/@copy_request
 function copy_request($script, $suite, $submit='')
 {
-        include_spip('inc/filtres');
-	foreach($_POST as $n => $c) {
-	  if (($n != 'fichier') AND !is_array($c))
-		$suite .= "\n<input type='hidden' name='$n' value='" .
-		  entites_html($c) .
-		  "'  />";
+	include_spip('inc/filtres');
+	foreach(array_merge($_POST,$_GET) as $n => $c) {
+		if (!in_array($n,array('fichier','exec','validation_admin')) AND !is_array($c))
+		$suite .= "\n<input type='hidden' name='".htmlspecialchars($n)."' value='" .
+			entites_html($c) .
+			"'  />";
 	}
 	return  generer_form_ecrire($script, $suite, '', $submit);
 }

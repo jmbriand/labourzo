@@ -10,71 +10,31 @@ $.fn.hoverClass = function(c) {
 };
 
 
-var bandeau_elements = false;
-var dir_page = $("html").attr("dir");
-
-function getBiDiOffset(el) {
-    var offset = el.offsetLeft;
-    if(dir_page=="rtl")
-      offset = (window.innerWidth || el.offsetParent.clientWidth)-(offset+el.offsetWidth);
-    return offset;
-}
-
-function decaleSousMenu() {
-  var sousMenu = $("div.bandeau_sec",this).css({visibility:'hidden',display:'block'});
-  if(!sousMenu.length) return;
-  var left;
-  if($.browser.msie) {
-    if(sousMenu.bgIframe) sousMenu.bgIframe();
-    left = getBiDiOffset(sousMenu[0].parentNode) + getBiDiOffset($("#bandeau-principal div")[0]);
-  } else left = getBiDiOffset(sousMenu[0]);
-  if (left > 0) {
-		var demilargeur = Math.floor( sousMenu[0].offsetWidth / 2 );
-    var gauche = left - demilargeur
-			+ Math.floor(largeur_icone / 2);
-		if (gauche < 0) gauche = 0;
-    sousMenu.css(dir_page=="rtl"?"right":"left",gauche+"px");
-	}
-  sousMenu.css({display:'',visibility:''});
-}
-
-function changestyle(id_couche, element, style) {
-
-	// La premiere fois, regler l'emplacement des sous-menus
-	if (!bandeau_elements) {
-		bandeau_elements = $('#haut-page div.bandeau');
-	}
-
-	// Masquer les elements du bandeau
-	var select = $(bandeau_elements).not('#'+id_couche);
-	// sauf eventuellement la boite de recherche si la souris passe en-dessous
-	if (id_couche=='garder-recherche') select.not('#bandeaurecherche');
-		select.css({'visibility':'hidden', 'display':'none'});
-	// Afficher, le cas echeant, celui qui est demande
-	if (element)
-		$('#'+id_couche).css({element:style});
-	else
-		$('#'+id_couche).css({'visibility':'visible', 'display':'block'});
-}
-
 var accepter_change_statut = false;
-
+/**
+ * Utilisee dans inc/puce_statut pour les puces au survol
+ * @param int id
+ * @param strong type
+ * @param int decal
+ * @param string puce
+ * @param string script
+ */
 function selec_statut(id, type, decal, puce, script) {
 
-	node = findObj('imgstatut'+type+id);
+	node = $('.imgstatut'+type+id);
 
 	if (!accepter_change_statut)
 		accepter_change_statut = confirm(confirm_changer_statut);
 
-	if (!accepter_change_statut || !node) return;
+	if (!accepter_change_statut || !node.length) return;
 
-	$('#statutdecal'+type+id)
-	.css('marginLeft', decal+'px')
+	$('.statutdecal'+type+id)
+	.css('margin-left', decal+'px')
 	.removeClass('on');
 
 	$.get(script, function(c) {
 		if (!c)
-			node.src = puce;
+			node.attr('src',puce);
 		else {
 			r = window.open();
 			r.document.write(c);
@@ -83,67 +43,153 @@ function selec_statut(id, type, decal, puce, script) {
 	});
 }
 
-function prepare_selec_statut(nom, type, id, action)
+/**
+ * Utilisee dans inc/puce_statut pour les puces au survol
+ * @param objet node
+ * @param string nom
+ * @param string type
+ * @param int id
+ * @param string action
+ */
+function prepare_selec_statut(node, nom, type, id, action)
 {
-	$('#' + nom + type + id)
+	$(node)
 	.hoverClass('on')
 	.addClass('on')
 	.load(action + '&type='+type+'&id='+id);
 }
 
-function changeclass(objet, myClass) {
-	objet.className = myClass;
+
+// deplier un ou plusieurs blocs
+jQuery.fn.showother = function(cible) {
+	var me = this;
+	if (me.is('.replie')) {
+		me.addClass('deplie').removeClass('replie');
+		jQuery(cible)
+		.slideDown('fast',
+			function(){
+				jQuery(me)
+				.addClass('blocdeplie')
+				.removeClass('blocreplie')
+				.removeClass('togglewait');
+			}
+		).trigger('deplie');
+	}
+	return this;
 }
 
-
-function hauteurFrame(nbCol) {
-	hauteur = $(window).height() - 40;
-	hauteur = hauteur - $('#haut-page').height();
-	
-	if (findObj('brouteur_hierarchie'))
-		hauteur = hauteur - $('#brouteur_hierarchie').height();
-
-	for (i=0; i<nbCol; i++) {
-		$('#iframe' + i)
-		.height(hauteur + 'px');
-	}
+// replier un ou plusieurs blocs
+jQuery.fn.hideother = function(cible) {
+	var me = this;
+	if (!me.is('.replie')){
+		me.addClass('replie').removeClass('deplie');
+		jQuery(cible)
+		.slideUp('fast',
+			function(){
+				jQuery(me)
+				.addClass('blocreplie')
+				.removeClass('blocdeplie')
+				.removeClass('togglewait');
+			}
+		).trigger('replie');
+}
+	return this;
 }
 
-function changeVisible(input, id, select, nonselect) {
-	if (input) {
-		element = findObj_forcer(id);
-		if (element.style.display != select)  element.style.display = select;
-	} else {
-		element = findObj_forcer(id);
-		if (element.style.display != nonselect)  element.style.display = nonselect;
-	}
+// pour le bouton qui deplie/replie un ou plusieurs blocs
+jQuery.fn.toggleother = function(cible) {
+	if (this.is('.deplie'))
+		return this.hideother(cible);
+	else
+		return this.showother(cible);
 }
 
+// deplier/replier en hover
+// on le fait subtilement : on attend 400ms avant de deplier, periode
+// durant laquelle, si la souris  sort du controle, on annule le depliement
+// le repliement ne fonctionne qu'au clic
+// Cette fonction est appelee a chaque hover d'un bloc depliable
+// la premiere fois, elle initialise le fonctionnement du bloc ; ensuite
+// elle ne fait plus rien
+jQuery.fn.depliant = function(cible) {
+	// premier passage
+	if (!this.is('.depliant')) {
+		var time = 400;
 
+		var me = this;
+		this
+		.addClass('depliant');
 
-// livesearchlike...
+		// effectuer le premier hover
+		if (!me.is('.deplie')) {
+			me.addClass('hover')
+			.addClass('togglewait');
+			var t = setTimeout(function(){
+				me.toggleother(cible);
+				t = null;
+			}, time);
+		}
 
+		me
+		// programmer les futurs hover
+		.hover(function(e){
+			me
+			.addClass('hover');
+			if (!me.is('.deplie')) {
+				me.addClass('togglewait');
+				if (t) { clearTimeout(t); t = null; }
+				t = setTimeout(function(){
+					me.toggleother(cible);
+					t = null;
+					}, time);
+			}
+		}
+		, function(e){
+			if (t) { clearTimeout(t); t = null; }
+			me
+			.removeClass('hover');
+		})
 
+		// gerer le triangle clicable
+		/*.find("a.titremancre")
+			.click(function(){
+				if (me.is('.togglewait') || t) return false;
+				me
+				.toggleother(cible);
+				return false;
+			})*/
+		.end();
 
-// effacement titre quand new=oui
-var antifocus=false;
-// effacement titre des groupes de mots-cles de plus de 50 mots
-var antifocus_mots = new Array();
-
-function puce_statut(selection){
-	if (selection=="publie"){
-		return "puce-verte.gif";
 	}
-	if (selection=="prepa"){
-		return "puce-blanche.gif";
-	}
-	if (selection=="prop"){
-		return "puce-orange.gif";
-	}
-	if (selection=="refuse"){
-		return "puce-rouge.gif";
-	}
-	if (selection=="poubelle"){
-		return "puce-poubelle.gif";
+	return this;
+}
+jQuery.fn.depliant_clicancre = function(cible) {
+		var me = this.parent();
+		// gerer le triangle clicable
+		if (me.is('.togglewait')) return false;
+		me.toggleother(cible);
+		return false;
+}
+
+/**
+ * Recharger les blocs d'une page exec
+ * et changer la class du body si necessaire
+ * Par defaut les blocs recharges sont #navigation,#extra
+ * mais il suffit de passer des valeurs differentes en second argument
+ * 
+ * @param exec
+ * @param blocs
+ */
+function reloadExecPage(exec, blocs){
+	if (window.jQuery) {
+		jQuery(function(){
+			if (!blocs)
+				blocs="#navigation,#extra";
+			jQuery(blocs).find('>div').ajaxReload({args:{exec:exec}});
+			if (exec.match(/_edit$/))
+				jQuery('body').addClass('edition');
+			else
+				jQuery('body').removeClass('edition');
+		})
 	}
 }

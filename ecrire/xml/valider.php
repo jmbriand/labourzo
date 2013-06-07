@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // Validateur XML en deux passes, fonde sur SAX pour la premiere
 // Faudrait faire deux classes car pour la premiere passe
@@ -27,8 +27,8 @@ function validerElement($phraseur, $name, $attrs)
 			$p = isset($this->dtc->elements[$name]);
 		}
 		if (!$p) {
-			coordonnees_erreur($this," <b>$name</b> "
-				     . _T('zxml_inconnu_balise'));
+			coordonnees_erreur($this," <b>$name</b>&nbsp;: "
+				. _T('zxml_inconnu_balise'));
 			return; 
 		}
 	}
@@ -59,7 +59,11 @@ function validerElement($phraseur, $name, $attrs)
 	            . (!$bons_peres ? ''
 	               : ('<p style="font-size: 80%"> '._T('zxml_mais_de').' <b>'. $bons_peres . '</b></p>')));
 		} else if ($this->dtc->regles[$pere][0]=='/') {
-		  $this->fratrie[substr($depth,2)].= "$name ";
+			$frat = substr($depth,2);
+			if (!isset($this->fratrie[$frat])) {
+				$this->fratrie[$frat] = '';
+			}
+			$this->fratrie[$frat] .= "$name ";
 		}
 	      }
 	    }
@@ -108,6 +112,16 @@ function validerAttribut($phraseur, $name, $val, $bal)
 			$this->$f($phraseur, $name, $val, $bal);
 #		else spip_log("$type type d'attribut inconnu");
 	}
+}
+
+function validerAttribut_NMTOKEN($phraseur, $name, $val, $bal)
+{
+	$this->valider_motif($phraseur, $name, $val, $bal, _REGEXP_NMTOKEN);
+}
+
+function validerAttribut_NMTOKENS($phraseur, $name, $val, $bal)
+{
+	$this->valider_motif($phraseur, $name, $val, $bal, _REGEXP_NMTOKENS);
 }
 
 // http://doc.spip.org/@validerAttribut_ID
@@ -184,7 +198,7 @@ function debutElement($phraseur, $name, $attrs)
 	if ($this->dtc->elements)
 		$this->validerElement($phraseur, $name, $attrs);
 
-	xml_debutElement($this, $name, $attrs);
+	if ($f = $this->process['debut']) $f($this, $name, $attrs);
 	$depth = $this->depth;
 	$this->debuts[$depth] =  strlen($this->res);
 	foreach ($attrs as $k => $v) {
@@ -219,17 +233,18 @@ function finElement($phraseur, $name)
 			}
 		} else {
 			$f = $this->fratrie[substr($depth,2)];
-			if (!preg_match($regle, $f))
+			if (!preg_match($regle, $f)) {
 				coordonnees_erreur($this,
 				" <p>\n<b>$name</b> "
 				  .  _T('zxml_succession_fils_incorrecte')
 				  . '&nbsp;: <b>'
 				  . $f
 				  . '</b>');
+			}
 		}
 
 	}
-	xml_finElement($this, $name, $vide);
+	if ($f = $this->process['fin']) $f($this, $name, $vide);
 }
 
 // http://doc.spip.org/@textElement
@@ -245,12 +260,13 @@ function textElement($phraseur, $data)
 			);
 		}
 	}
-	xml_textElement($this, $data);
+	if ($f = $this->process['text']) $f($this, $data);
 }
 
-// http://doc.spip.org/@PiElement
-function PiElement($phraseur, $target, $data)
-{	xml_PiElement($this, $target, $data);}
+function piElement($phraseur, $target, $data)
+{
+	if ($f = $this->process['pi']) $f($this, $target, $data);
+}
 
 // Denonciation des entitees XML inconnues
 // Pour contourner le bug de conception de SAX qui ne signale pas si elles
@@ -260,8 +276,8 @@ function PiElement($phraseur, $target, $data)
 // le source de la page laisse legitimement supposer. 
 
 // http://doc.spip.org/@defautElement
-function defautElement($phraseur, $data)
-{	
+function defaultElement($phraseur, $data)
+{
 	if (!preg_match('/^<!--/', $data)
 	AND (preg_match_all('/&([^;]*)?/', $data, $r, PREG_SET_ORDER)))
 		foreach ($r as $m) {
@@ -272,8 +288,9 @@ function defautElement($phraseur, $data)
 				  . ' '
 				  );
 		}
-
-	xml_defautElement($this, $data);
+	if (isset($this->process['default']) AND ($f = $this->process['default'])) {
+		$f($this, $data);
+	}
 }
 
 // http://doc.spip.org/@phraserTout
@@ -288,16 +305,10 @@ function phraserTout($phraseur, $data)
 	}
 }
 
- var $depth = "";
- var $res = "";
- var $err = array();
- var $contenu = array();
- var $ouvrant = array();
- var $reperes = array();
- var $entete = '';
- var $page = '';
- var $dtc = NULL;
- var $sax = NULL;
+// Init
+function ValidateurXML($process=array()) {
+	if (is_array($process)) $this->process = $process;
+}
 
  var $ids = array();
  var $idrefs = array();
@@ -305,18 +316,33 @@ function phraserTout($phraseur, $data)
  var $debuts = array();
  var $fratrie = array();
 
+ var $dtc = NULL;
+ var $sax = NULL;
+ var $depth = "";
+ var $entete = '';
+ var $page = '';
+ var $res = "";
+ var $err = array();
+ var $contenu = array();
+ var $ouvrant = array();
+ var $reperes = array();
+ var $process =  array(
+			'debut' => 'xml_debutElement',
+			'fin' => 'xml_finElement',
+			'text' => 'xml_textElement',
+			'pi' => 'xml_piElement',
+			'default' => 'xml_defaultElement'
+				 );
 }
 
-// Retourne un tableau formee de la page analysee et du tableau des erreurs,
-// ce dernier ayant comme entrees des sous-tableaux [message, ligne, colonne]
+// Retourne une structure ValidateurXML, dont le champ "err" est un tableau
+// ayant comme entrees des sous-tableaux [message, ligne, colonne]
 
 // http://doc.spip.org/@xml_valider_dist
-function xml_valider_dist($page, $apply=false)
+function xml_valider_dist($page, $apply=false, $process=false, $doctype='', $charset=null)
 {
+	$f = new ValidateurXML($process);
 	$sax = charger_fonction('sax', 'xml');
-	$f = new ValidateurXML();
-	$sax($page, $apply, $f);
-	$page = $f->err ? $f->page : $f->res;
-	return array($f->entete . $page, $f->err);
+	return $sax($page, $apply, $f, $doctype, $charset);
 }
 ?>

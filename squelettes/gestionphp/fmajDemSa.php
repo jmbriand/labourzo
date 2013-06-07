@@ -309,8 +309,8 @@ if (isset($requete)) {
 
  }
 /* $respays=execRequete ("SELECT  pcode, pnom FROM pays ORDER BY pnom", $connexion);  */
- $listedoms = array('C.V.L.', 'Baby sitting', 'Petite enfance', 'Ecoles', 'Action culturelle') ;
- $labelsdoms = array(_T('cvl'), _T('babysit'), _T('petite_enf_agree'), _T('ecoles'), _T('action_cultu')) ;
+ $listedoms = array('anim', 'gardenf', 'enseignmt', 'accompscol', 'commarti', 'sante', 'commedia', 'linguis', 'admin', 'arts', 'divers') ;
+ $labelsdoms = array(_T('anim'), _T('gardenf'), _T('enseignmt'), _T('accompscol'), _T('commarti'), _T('sante'), _T('commedia'), _T('linguis'), _T('admin'), _T('arts'), _T('divers')) ;
  $listediplm = array('B.A.F.A.', 'Stagiaire BAFA', 'B.A.F.D.', 'Stagiaire BAFD', 'BEATEP-BPJEPS', 'Surveillant de baignade', 'Premiers secours') ;
  $labelsdiplm = array(_T('bafa'), _T('stage_bafa'), _T('bafd'), _T('stage_bafd'), _T('beatep_bpjeps'), _T('surv_baignade'), _T('premiers_sec')) ;
 ?> 

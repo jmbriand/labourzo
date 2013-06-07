@@ -3,93 +3,103 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // http://doc.spip.org/@action_editer_article_dist
-function action_editer_article_dist() {
-
-	$securiser_action = charger_fonction('securiser_action', 'inc');
-	$arg = $securiser_action();
+function action_editer_article_dist($arg=null) {
+	include_spip('inc/autoriser');
+	$err="";
+	if (is_null($arg)){
+		$securiser_action = charger_fonction('securiser_action', 'inc');
+		$arg = $securiser_action();
+	}
 
 	// si id_article n'est pas un nombre, c'est une creation 
 	// mais on verifie qu'on a toutes les donnees qu'il faut.
 	if (!$id_article = intval($arg)) {
 		$id_parent = _request('id_parent');
-		$id_auteur = $GLOBALS['visiteur_session']['id_auteur'];
-		if (!($id_parent AND $id_auteur)) {
-			include_spip('inc/headers');
-			redirige_url_ecrire();
-		}
-		if (($id_article = insert_article($id_parent)) > 0)
-		
-		# cf. GROS HACK ecrire/inc/getdocument
-		# rattrapper les documents associes a cet article nouveau
-		# ils ont un id = 0-id_auteur
-
-			sql_updateq("spip_documents_liens", array("id_objet" => $id_article), array("id_objet = ".(0-$id_auteur),"objet='article'"));
-	} 
+		if (!$id_parent)
+			$err = _L("creation interdite d'un article sans rubrique");
+		elseif(!autoriser('creerarticledans','rubrique',$id_parent))
+			$err = _T("info_creerdansrubrique_non_autorise");
+		else
+			$id_article = article_inserer($id_parent);
+	}
 
 	// Enregistre l'envoi dans la BD
-	if ($id_article > 0) $err = articles_set($id_article);
+	if ($id_article > 0) $err = article_modifier($id_article);
 
-	if (_request('redirect')) {
-		$redirect = parametre_url(urldecode(_request('redirect')),
-			'id_article', $id_article, '&') . $err;
-	
-		include_spip('inc/headers');
-		redirige_par_entete($redirect);
-	}
-	else 
-		return array($id_article,$err);
+	if ($err)
+		spip_log("echec editeur article: $err",_LOG_ERREUR);
+
+	return array($id_article,$err);
 }
 
-// Appelle toutes les fonctions de modification d'un article
-// $err est de la forme '&trad_err=1'
-// http://doc.spip.org/@articles_set
-function articles_set($id_article) {
-	$err = '';
+/**
+ * Appelle toutes les fonctions de modification d'un article
+ * $err est de la forme chaine de langue ou vide si pas d'erreur
+ * http://doc.spip.org/@articles_set
+ *
+ * @param  $id_article
+ * @param null $set
+ * @return string
+ */
+function article_modifier($id_article, $set=null) {
 
 	// unifier $texte en cas de texte trop long
 	trop_longs_articles();
 
-	$c = array();
-	foreach (array(
-		'surtitre', 'titre', 'soustitre', 'descriptif',
-		'nom_site', 'url_site', 'chapo', 'texte', 'ps'
-	) as $champ)
-		$c[$champ] = _request($champ);
+	include_spip('inc/modifier');
+	include_spip('inc/filtres');
+	$c = collecter_requests(
+		// white list
+		objet_info('article','champs_editables'),
+		// black list
+		array('date','statut','id_parent'),
+		// donnees eventuellement fournies
+		$set
+	);
 
-	if (_request('changer_virtuel') == 'oui') {
-		$r = _request('virtuel');
-		$c['chapo'] = (strlen($r) ? '='.$r : '');
+	// Si l'article est publie, invalider les caches et demander sa reindexation
+	$t = sql_getfetsel("statut", "spip_articles", "id_article=".intval($id_article));
+	$invalideur = $indexation = false;
+	if ($t == 'publie') {
+		$invalideur = "id='article/$id_article'";
+		$indexation = true;
 	}
 
-	include_spip('inc/modifier');
-	revision_article($id_article, $c);
+	if ($err = objet_modifier_champs('article', $id_article,
+		array(
+			'nonvide' => array('titre' => _T('info_nouvel_article')." "._T('info_numero_abbreviation').$id_article),
+			'invalideur' => $invalideur,
+			'indexation' => $indexation,
+			'date_modif' => 'date_modif' // champ a mettre a date('Y-m-d H:i:s') s'il y a modif
+		),
+		$c))
+		return $err;
 
 	// Modification de statut, changement de rubrique ?
-	$c = array();
-	foreach (array(
-		'date', 'statut', 'id_parent'
-	) as $champ)
-		$c[$champ] = _request($champ);
-	$err .= instituer_article($id_article, $c);
-
-	// Un lien de trad a prendre en compte
-	$err .= article_referent($id_article, array('lier_trad' => _request('lier_trad')));
+	$c = collecter_requests(array('date', 'statut', 'id_parent'),array(),$set);
+	$err = article_instituer($id_article, $c);
 
 	return $err;
 }
 
-// http://doc.spip.org/@insert_article
-function insert_article($id_rubrique) {
+/**
+ * Inserer un nouvel article en base
+ * http://doc.spip.org/@insert_article
+ *
+ * @param int $id_rubrique
+ * @return int
+ */
+function article_inserer($id_rubrique) {
 
 
 	// Si id_rubrique vaut 0 ou n'est pas definie, creer l'article
@@ -99,14 +109,19 @@ function insert_article($id_rubrique) {
 		$id_rubrique = $row['id_rubrique'];
 	} else $row = sql_fetsel("lang, id_secteur", "spip_rubriques", "id_rubrique=$id_rubrique");
 
-	$id_secteur = $row['id_secteur'];
+	// eviter $id_secteur = NULL (erreur sqlite) si la requete precedente echoue 
+	// cas de id_rubrique = -1 par exemple avec plugin "pages"
+	$id_secteur = isset($row['id_secteur']) ? $row['id_secteur'] : 0;
+	
 	$lang_rub = $row['lang'];
 
+	$lang = "";
+	$choisie = 'non';
 	// La langue a la creation : si les liens de traduction sont autorises
 	// dans les rubriques, on essaie avec la langue de l'auteur,
 	// ou a defaut celle de la rubrique
 	// Sinon c'est la langue de la rubrique qui est choisie + heritee
-	if ($GLOBALS['meta']['multi_articles'] == 'oui') {
+	if (in_array('spip_articles',explode(',',$GLOBALS['meta']['multi_objets']))) {
 		lang_select($GLOBALS['visiteur_session']['lang']);
 		if (in_array($GLOBALS['spip_lang'],
 		explode(',', $GLOBALS['meta']['langues_multilingue']))) {
@@ -120,19 +135,46 @@ function insert_article($id_rubrique) {
 		$lang = $lang_rub ? $lang_rub : $GLOBALS['meta']['langue_site'];
 	}
 
-	$id_article = sql_insertq("spip_articles", array(
+	$champs = array(
 		'id_rubrique' => $id_rubrique,
 		'id_secteur' =>  $id_secteur,
 		'statut' =>  'prepa',
 		'date' => date('Y-m-d H:i:s'),
-		'accepter_forum' => 
-			substr($GLOBALS['meta']['forums_publics'],0,3),
 		'lang' => $lang,
-		'langue_choisie' =>$choisie));
+		'langue_choisie' =>$choisie);
+
+	// Envoyer aux plugins
+	$champs = pipeline('pre_insertion',
+		array(
+			'args' => array(
+				'table' => 'spip_articles',
+			),
+			'data' => $champs
+		)
+	);
+
+	$id_article = sql_insertq("spip_articles", $champs);
+
+	pipeline('post_insertion',
+		array(
+			'args' => array(
+				'table' => 'spip_articles',
+				'id_objet' => $id_article
+			),
+			'data' => $champs
+		)
+	);
 
 	// controler si le serveur n'a pas renvoye une erreur
-	if ($id_article > 0) 
-		sql_insertq('spip_auteurs_articles', array('id_auteur' => $GLOBALS['visiteur_session']['id_auteur'], 'id_article' => $id_article));;
+	if ($id_article > 0){
+		$id_auteur = ((is_null(_request('id_auteur')) AND isset($GLOBALS['visiteur_session']['id_auteur']))?
+			$GLOBALS['visiteur_session']['id_auteur']
+			:_request('id_auteur'));
+		if ($id_auteur){
+			include_spip('action/editer_auteur');
+			auteur_associer($id_auteur, array('article'=>$id_article));
+		}
+	}
 
 	return $id_article;
 }
@@ -143,7 +185,7 @@ function insert_article($id_rubrique) {
 // statut et rubrique sont lies, car un admin restreint peut deplacer
 // un article publie vers une rubrique qu'il n'administre pas
 // http://doc.spip.org/@instituer_article
-function instituer_article($id_article, $c, $calcul_rub=true) {
+function article_instituer($id_article, $c, $calcul_rub=true) {
 
 	include_spip('inc/autoriser');
 	include_spip('inc/rubriques');
@@ -196,20 +238,21 @@ function instituer_article($id_article, $c, $calcul_rub=true) {
 			$champs['statut'] = 'prop';
 	}
 
-
 	// Envoyer aux plugins
 	$champs = pipeline('pre_edition',
 		array(
 			'args' => array(
 				'table' => 'spip_articles',
 				'id_objet' => $id_article,
-				'action'=>'instituer'
+				'action'=>'instituer',
+				'statut_ancien' => $statut_ancien,
+				'date_ancienne' => $date_ancienne,
 			),
 			'data' => $champs
 		)
 	);
 
-	if (!count($champs)) return;
+	if (!count($champs)) return '';
 
 	// Envoyer les modifs.
 
@@ -217,7 +260,7 @@ function instituer_article($id_article, $c, $calcul_rub=true) {
 
 	// Invalider les caches
 	include_spip('inc/invalideur');
-	suivre_invalideur("id='id_article/$id_article'");
+	suivre_invalideur("id='article/$id_article'");
 
 	if ($date) {
 		$t = strtotime($date);
@@ -233,7 +276,9 @@ function instituer_article($id_article, $c, $calcul_rub=true) {
 			'args' => array(
 				'table' => 'spip_articles',
 				'id_objet' => $id_article,
-				'action'=>'instituer'
+				'action'=>'instituer',
+				'statut_ancien' => $statut_ancien,
+				'date_ancienne' => $date_ancienne,
 			),
 			'data' => $champs
 		)
@@ -242,7 +287,7 @@ function instituer_article($id_article, $c, $calcul_rub=true) {
 	// Notifications
 	if ($notifications = charger_fonction('notifications', 'inc')) {
 		$notifications('instituerarticle', $id_article,
-			array('statut' => $statut, 'statut_ancien' => $statut_ancien, 'date'=>$date)
+			array('statut' => $statut, 'statut_ancien' => $statut_ancien, 'date'=>$date, 'date_ancienne' => $date_ancienne)
 		);
 	}
 
@@ -294,45 +339,21 @@ function trop_longs_articles() {
 	}
 }
 
-// Poser un lien de traduction vers un article de reference
-// http://doc.spip.org/@article_referent
-function article_referent ($id_article, $c) {
 
-	if (!$c = intval($c['lier_trad'])) return;
-
-	// selectionner l'article cible, qui doit etre different de nous-meme,
-	// et quitter s'il n'existe pas
-	$id_lier = sql_getfetsel('id_trad', 'spip_articles', "id_article=$c AND NOT(id_article=$id_article)");
-
-	if ($id_lier === NULL)
-	{
-		spip_log("echec lien de trad vers article incorrect ($lier_trad)");
-		return '&trad_err=1';
-	}
-
-	// $id_lier est le numero du groupe de traduction
-	// Si l'article vise n'est pas deja traduit, son identifiant devient
-	// le nouvel id_trad de ce nouveau groupe et on l'affecte aux deux
-	// articles
-	if ($id_lier == 0) {
-		sql_updateq("spip_articles", array("id_trad" => $c), "id_article IN ($c, $id_article)");
-	}
-	// sinon ajouter notre article dans le groupe
-	else {
-		sql_updateq("spip_articles", array("id_trad" => $id_lier), "id_article = $id_article");
-	}
-
-	return ''; // pas d'erreur
-}
-
-
-
-// obsolete, utiliser revision_article dans inc/modifier
-// http://doc.spip.org/@revisions_articles
+// obsoletes
 function revisions_articles ($id_article, $c=false) {
-	include_spip('inc/modifier');
-	return revision_article($id_article,$c);
+	return article_modifier($id_article,$c);
 }
-
-
+function revision_article ($id_article, $c=false) {
+	return article_modifier($id_article,$c);
+}
+function articles_set($id_article, $set=null) {
+	return article_modifier($id_article,$set);
+}
+function insert_article($id_rubrique) {
+	return article_inserer($id_rubrique);
+}
+function instituer_article($id_article, $c, $calcul_rub=true) {
+	return article_instituer($id_article,$c,$calcul_rub);
+}
 ?>

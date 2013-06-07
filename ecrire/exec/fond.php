@@ -3,70 +3,66 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
-/**
- * Un exec generique qui utilise le fond homonyme de l'exec demande
- * dans l'url
- */
-function exec_fond_dist(){
 
-	// pas d'autorisation
-	// c'est au fond de les gerer avec #AUTORISER, et de renvoyer un fond vide le cas echeant
-	// qui declenchera un minipres acces interdit
-	$exec = _request('exec');
-	$fond = trim(recuperer_fond("prive/exec/$exec",$_GET));
-	if (!$fond) {
+$fond = _request('exec');
+$GLOBALS['delais'] = 0;// pas de cache !
+// Securite
+if (strstr($fond, '/')) {
+	if (!include_spip('inc/autoriser')
+		OR !autoriser('webmestre')) {
 		include_spip('inc/minipres');
 		echo minipres();
 		exit;
 	}
+}
+else
+	$fond = "prive/squelettes/$fond";
 
-	$titre = "exec_$exec";
-	$navigation = "";
-	$extra = "";
+// quelques inclusions et ini prealables
+include_spip('inc/commencer_page');
 
-	// recuperer le titre dans le premier hn de la page
-	if (preg_match(",<h[1-6][^>]*>(.+)</h[1-6]>,Uims",$fond,$match)){
-		$titre = $match[1];
-	}
+function shutdown_error(){
 
-	// recuperer la navigation (colonne de gauche)
-	if (preg_match(",<!--#navigation-->.+<!--/#navigation-->,Uims",$fond,$match)){
-		$navigation = $match[0];
-		$fond = str_replace($navigation,"",$fond);
-	}
+	// si on arrive ici avec un tampon non ferme : erreur fatale
+/*	if (ob_get_level()){
+		// envoyer tous les tampons
+		while (ob_get_level())
+			ob_end_flush();
 
-	// recuperer les extras (colonne de droite)
-	if (preg_match(",<!--#extra-->.+<!--/#extra-->,Uims",$fond,$match)){
-		$extra = $match[0];
-		$fond = str_replace($extra,"",$fond);
-	}
+		var_dump(error_get_last());
+		#echo "<hr />"."Erreur fatale (memoire ?)<hr />";
+		@flush();
+	}*/
+}
+register_shutdown_function('shutdown_error');
 
-	include_spip('inc/presentation'); // alleger les inclusions avec un inc/presentation_mini
-	$commencer_page = charger_fonction('commencer_page','inc');
-	echo $commencer_page($titre);
 
-	echo debut_gauche("exec_$exec",true);
-	echo $navigation;
-	echo pipeline('affiche_gauche',array('args'=>array('exec'=>$exec),'data'=>''));
+// on retient l'envoi de html pour pouvoir tout jeter et generer une 403
+// si on tombe sur un filtre sinon_interdire_acces
+// il faudrait etre capable de flusher cela des que le contenu principal est genere
+// car c'est lui qui peut faire des appels a ce filtre
+ob_start();
+# comme on est dans un exec, l'auth a deja ete testee
+# on peut appeler directement public.php
+include "public.php";
+// flushons si cela ne l'a pas encore ete
+ob_end_flush();
+/**
+ * Un exec generique qui branche sur un squelette Z pour ecrire
+ * La fonction ne fait rien, c'est l'inclusion du fichier qui declenche le traitement
+ *
+ */
+function exec_fond_dist(){
 
-	echo creer_colonne_droite("exec_$exec",true);
-	echo $extra;
-	echo pipeline('affiche_droite',array('args'=>array('exec'=>$exec),'data'=>''));
-
-	echo debut_droite("exec_$exec",true);
-	echo $fond;
-	echo pipeline('affiche_milieu',array('args'=>array('exec'=>$exec),'data'=>''));
-
-	echo fin_gauche(),fin_page();
 }
 
 ?>

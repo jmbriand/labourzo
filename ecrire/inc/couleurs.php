@@ -3,14 +3,14 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // Appelee sans argument, cette fonction retourne un menu de couleurs
 // Avec un argument numerique, elle retourne les parametres d'URL 
@@ -65,6 +65,34 @@ function inc_couleurs_dist($choix=NULL, $ajouter=false)
 		"couleur_lien" => "#3B5063",
 		"couleur_lien_off" => "#6D8499"
 		),
+// Vert de gris
+7 => array (
+		"couleur_foncee" => "#999966",
+		"couleur_claire" => "#CCCC99",
+		"couleur_lien" => "#666633",
+		"couleur_lien_off" => "#999966"
+		),
+// Rose vieux
+8 => array (
+		"couleur_foncee" => "#EB68B3",
+		"couleur_claire" => "#E4A7C5",
+		"couleur_lien" => "#8F004D",
+		"couleur_lien_off" => "#BE6B97"
+		),
+// Violet
+9 => array (
+		"couleur_foncee" => "#8F8FBD",
+		"couleur_claire" => "#C4C4DD",
+		"couleur_lien" => "#6071A5",
+		"couleur_lien_off" => "#5C5C8C"
+		),
+//  Gris
+10 => array (
+		"couleur_foncee" => "#909090",
+		"couleur_claire" => "#D3D3D3",
+		"couleur_lien" => "#808080",
+		"couleur_lien_off" => "#909090"
+		),
 );
 
 	if (is_numeric($choix)) {
@@ -82,56 +110,16 @@ function inc_couleurs_dist($choix=NULL, $ajouter=false)
 	} else {
 		if (is_array($choix)) {
 			if ($ajouter) {
-				return $couleurs_spip = array_merge($couleurs_spip, $choix);
+				foreach($choix as $c)
+					$couleurs_spip[] = $c;
+				return $couleurs_spip;
 			} else {
 				return $couleurs_spip = $choix;
 			}
 		}
 
-		$evt = '
-onmouseover="changestyle(\'bandeauinterface\');"
-onfocus="changestyle(\'bandeauinterface\');"
-onblur="changestyle(\'bandeauinterface\');"';
-
-		$bloc = '';
-		$ret = self('&');
-		foreach ($couleurs_spip as $key => $val) {
-			$bloc .=
-			'<a href="'
-			  . generer_action_auteur('preferer',"couleur:$key",$ret)
-				. '"'
-			. ' rel="'.generer_url_public('style_prive','ltr='
-				. $GLOBALS['spip_lang_left'] . '&'
-				. inc_couleurs_dist($key)).'"'
-			  . $evt
-			.'>'
-			. http_img_pack("rien.gif",
-					_T('choix_couleur_interface') . $key,
-					"width='8' height='8' style='margin: 1px; background-color: "	. $val['couleur_claire'] . ";'")
-			. "</a>";
-		}
-
-		// Ce js permet de changer de couleur sans recharger la page
-
-		return  '<span id="selecteur_couleur">'
-		.  $bloc
-		. "</span>\n"
-		. '<script type="text/javascript"><!--' . "
-			$('#selecteur_couleur a')
-			.click(function(){
-				$('head>link#cssprivee')
-				.clone()
-				.removeAttr('id')
-				.attr('href', $(this).attr('rel'))
-				.appendTo($('head'));
-
-				$.get($(this).attr('href'));
-				return false;
-			});
-		// --></script>\n";
-
-
 	}
+	return $couleurs_spip;
 }
 
 ?>

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -11,90 +11,149 @@
 \***************************************************************************/
 
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // Ce fichier doit imperativement definir la fonction ci-dessous:
 
-// Actuellement tous les squelettes se terminent par .html
-// pour des raisons historiques, ce qui est trompeur
+/**
+ * Determiner le squelette qui sera utilise pour rendre la page ou le bloc
+ * a partir de $fond et du $contetxe
+ * 
+ * Actuellement tous les squelettes se terminent par .html
+ * pour des raisons historiques, ce qui est trompeur
+ *
+ * @param string $fond
+ * @param array $contexte
+ * @param string $lang
+ * @param string $connect
+ * @param string $ext
+ * @return array
+ *
+ * http://doc.spip.org/@public_styliser_dist
+ */
+function public_styliser_dist($fond, $contexte, $lang='', $connect='') {
+	static $styliser_par_z;
 
-// http://doc.spip.org/@public_styliser_dist
-function public_styliser_dist($fond, $id_rubrique, $lang='', $connect='', $ext='html') {
+	// s'assurer que le fond est licite
+	// car il peut etre construit a partir d'une variable d'environnement
+	if (strpos($fond,"../")!==false OR strncmp($fond,'/',1)==0)
+		$fond = "404";
+  
+	// Choisir entre $fond-dist.html, $fond=7.html, etc?
+	$id_rubrique = 0;
+	// Chercher le fond qui va servir de squelette
+	if ($r = quete_rubrique_fond($contexte))
+		list($id_rubrique, $lang) = $r;
 
 	// trouver un squelette du nom demande
-	$base = find_in_path("$fond.$ext");
+	// ne rien dire si on ne trouve pas, 
+	// c'est l'appelant qui sait comment gerer la situation
+	// ou les plugins qui feront mieux dans le pipeline
+	$squelette = trouver_fond($fond,"",true);
+	$ext = $squelette['extension'];
 
-	// supprimer le ".html" pour pouvoir affiner par id_rubrique ou par langue
-	$squelette = substr($base, 0, - strlen(".$ext"));
-
-	// pipeline styliser
-	$squelette = pipeline('styliser', array(
+	$flux = array(
 		'args' => array(
 			'id_rubrique' => $id_rubrique,
 			'ext' => $ext,
 			'fond' => $fond,
 			'lang' => $lang,
-			'contexte' => $GLOBALS['contexte'], // le style d'un objet peut dependre de lui meme
+			'contexte' => $contexte, // le style d'un objet peut dependre de lui meme
 			'connect' => $connect
 		),
-		'data' => $squelette,
-	));
+		'data' => $squelette['fond'],
+	);
 
-	// Trouver un squelette de base dans le chemin
-	if (!$squelette) {
-		// Si pas de squelette regarder si c'est une table
-		$trouver_table = charger_fonction('trouver_table', 'base');
-		if (preg_match('/^table:(.*)$/', $fond, $r)
-		AND $table = $trouver_table($r[1], $connect)
-		AND include_spip('inc/autoriser')
-		AND autoriser('webmestre')
-		) {
-				$fond = $r[1];
-				$squelette = _DIR_TMP . 'table_'.$fond;
-				$base = $squelette . ".$ext";
-				if (!file_exists($base)
-				OR  $GLOBALS['var_mode']) {
-					$vertebrer = charger_fonction('vertebrer', 'public');
-					ecrire_fichier($base, $vertebrer($table));
-				}
-		} else {
-			// Indiquer une erreur squelette
-			include_spip('public/debug');
-			erreur_squelette(_T('info_erreur_squelette2',
-				array('fichier'=>"'$fond.$ext'")),
-				$GLOBALS['dossier_squelettes']);
-			// provoquer 404
-			return array(null, $ext, $ext, null);
-		}
+	if (test_espace_prive() OR defined('_ZPIP')) {
+		if (!$styliser_par_z)
+			$styliser_par_z = charger_fonction('styliser_par_z','public');
+		$flux = $styliser_par_z($flux);
 	}
 
-	// On selectionne, dans l'ordre :
-	// fond=10
-	if ($id_rubrique) {
-		$f = "$squelette=$id_rubrique";
-		if (@file_exists("$f.$ext"))
-			$squelette = $f;
-		else {
-			// fond-10 fond-<rubriques parentes>
-			do {
-				$f = "$squelette-$id_rubrique";
-				if (@file_exists("$f.$ext")) {
-					$squelette = $f;
-					break;
-				}
-			} while ($id_rubrique = quete_parent($id_rubrique));
-		}
-	}
+	$flux = styliser_par_objets($flux);
 
-	// Affiner par lang
-	if ($lang) {
-		$l = lang_select($lang);
-		$f = "$squelette.".$GLOBALS['spip_lang'];
-		if ($l) lang_select();
-		if (@file_exists("$f.$ext"))
-			$squelette = $f;
-	}
+	// pipeline styliser
+	$squelette = pipeline('styliser', $flux);
 
 	return array($squelette, $ext, $ext, "$squelette.$ext");
+}
+
+function styliser_par_objets($flux){
+	if (test_espace_prive()
+		AND !$squelette = $flux['data']
+	  AND strncmp($flux['args']['fond'],'prive/objets/',13)==0
+	  AND $echafauder = charger_fonction('echafauder','prive',true)) {
+		if (strncmp($flux['args']['fond'],'prive/objets/liste/',19)==0){
+			$table = table_objet(substr($flux['args']['fond'],19));
+			$table_sql = table_objet_sql($table);
+			$objets = lister_tables_objets_sql();
+			if (isset($objets[$table_sql]))
+				$flux['data'] = $echafauder($table,$table,$table_sql,"prive/objets/liste/objets",$flux['args']['ext']);
+		}
+		if (strncmp($flux['args']['fond'],'prive/objets/contenu/',21)==0){
+			$type = substr($flux['args']['fond'],21);
+			$table = table_objet($type);
+			$table_sql = table_objet_sql($table);
+			$objets = lister_tables_objets_sql();
+			if (isset($objets[$table_sql]))
+				$flux['data'] = $echafauder($type,$table,$table_sql,"prive/objets/contenu/objet",$flux['args']['ext']);
+		}
+	}
+	return $flux;
+}
+
+/**
+ * Calcul de la rubrique associee a la requete
+ * (selection de squelette specifique par id_rubrique & lang)
+ *
+ * attention, on repete cela a chaque inclusion,
+ * on optimise donc pour ne faire la recherche qu'une fois
+ * par contexte semblable du point de vue des id_xx
+ *
+ * http://doc.spip.org/@quete_rubrique_fond
+ *
+ * @staticvar array $liste_objets
+ * @param array $contexte
+ * @return array
+ */
+function quete_rubrique_fond($contexte) {
+	static $liste_objets = null;
+	static $quete = array();
+	if (is_null($liste_objets)) {
+		$liste_objets = array();
+		include_spip('inc/urls');
+		include_spip('public/quete');
+		$l = urls_liste_objets(false);
+		// placer la rubrique en tete des objets
+		$l = array_diff($l,array('rubrique'));
+		array_unshift($l, 'rubrique');
+		foreach($l as $objet){
+			$id = id_table_objet($objet);
+			if (!isset($liste_objets[$id]))
+				$liste_objets[$id] = objet_type($objet,false);
+		}
+	}
+	$c = array_intersect_key($contexte,$liste_objets);
+	if (!count($c)) return false;
+
+	$c = array_map('intval',$c);
+	$s = serialize($c);
+	if (isset($quete[$s]))
+		return $quete[$s];
+
+	if (isset($c['id_rubrique']) AND $r = $c['id_rubrique']){
+		unset($c['id_rubrique']);
+		$c = array('id_rubrique'=>$r) + $c;
+	}
+
+	foreach($c as $_id=>$id) {
+		if ($id
+		  AND $row = quete_parent_lang(table_objet_sql($liste_objets[$_id]),$id)) {
+			$lang = isset($row['lang']) ? $row['lang'] : '';
+			if ($_id=='id_rubrique' OR (isset($row['id_rubrique']) AND $id=$row['id_rubrique']))
+				return $quete[$s] = array ($id, $lang);
+		}
+	}
+	return $quete[$s] = false;
 }
 ?>

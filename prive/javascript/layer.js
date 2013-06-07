@@ -37,125 +37,6 @@ function findObj_forcer(n) {
 	return findObj_test_forcer(n, true);
 }
 
-function hide_obj(obj) {
-	var element;
-	if (element = findObj(obj)){
-		jQuery(element).css("visibility","hidden");
-	}
-}
-
-// deplier un ou plusieurs blocs
-jQuery.fn.showother = function(cible) {
-	var me = this;
-	if (me.is('.replie')) {
-		me.addClass('deplie').removeClass('replie');
-		jQuery(cible)
-		.slideDown('fast',
-			function(){
-				jQuery(me)
-				.addClass('blocdeplie')
-				.removeClass('blocreplie')
-				.removeClass('togglewait');
-			}
-		);
-	}
-	return this;
-}
-
-// replier un ou plusieurs blocs
-jQuery.fn.hideother = function(cible) {
-	var me = this;
-	if (!me.is('.replie')){
-		me.addClass('replie').removeClass('deplie');
-		jQuery(cible)
-		.slideUp('fast',
-			function(){
-				jQuery(me)
-				.addClass('blocreplie')
-				.removeClass('blocdeplie')
-				.removeClass('togglewait');
-			}
-		);
-}
-	return this;
-}
-
-// pour le bouton qui deplie/replie un ou plusieurs blocs
-jQuery.fn.toggleother = function(cible) {
-	if (this.is('.deplie'))
-		return this.hideother(cible);
-	else
-		return this.showother(cible);
-}
-
-// deplier/replier en hover
-// on le fait subtilement : on attend 400ms avant de deplier, periode
-// durant laquelle, si la souris  sort du controle, on annule le depliement
-// le repliement ne fonctionne qu'au clic
-// Cette fonction est appelee a chaque hover d'un bloc depliable
-// la premiere fois, elle initialise le fonctionnement du bloc ; ensuite
-// elle ne fait plus rien
-jQuery.fn.depliant = function(cible) {
-	// premier passage
-	if (!this.is('.depliant')) {
-		var time = 400;
-
-		var me = this;
-		this
-		.addClass('depliant');
-
-		// effectuer le premier hover
-		if (!me.is('.deplie')) {
-			me.addClass('hover')
-			.addClass('togglewait');
-			var t = setTimeout(function(){
-				me.toggleother(cible);
-				t = null;
-			}, time);
-		}
-
-		me
-		// programmer les futurs hover
-		.hover(function(e){
-			me
-			.addClass('hover');
-			if (!me.is('.deplie')) {
-				me.addClass('togglewait');
-				if (t) { clearTimeout(t); t = null; }
-				t = setTimeout(function(){
-					me.toggleother(cible);
-					t = null;
-					}, time);
-			}
-		}
-		, function(e){
-			if (t) { clearTimeout(t); t = null; }
-			me
-			.removeClass('hover');
-		})
-
-		// gerer le triangle clicable
-		/*.find("a.titremancre")
-			.click(function(){
-				if (me.is('.togglewait') || t) return false;
-				me
-				.toggleother(cible);
-				return false;
-			})*/
-		.end();
-
-	}
-	return this;
-}
-jQuery.fn.depliant_clicancre = function(cible) {
-		var me = this.parent();
-		// gerer le triangle clicable
-		if (me.is('.togglewait')) return false;
-		me.toggleother(cible);
-		return false;
-}
-
-
 //
 // Fonctions pour mini_nav
 //
@@ -181,10 +62,11 @@ function slide_horizontal (couche, slide, align, depart, etape ) {
 
 function changerhighlight (couche) {
 	jQuery(couche)
-	.removeClass('off')
+	.addClass('on')
 	.siblings()
 		.not(couche)
-		.addClass('off');
+		.removeClass('on');
+	jQuery('.petite-racine.on').removeClass('on');
 }
 
 function aff_selection (arg, idom, url, event) {
@@ -211,14 +93,17 @@ function aff_selection_titre(titre, id, idom, nid)
 	if (p.is('.submit_plongeur')) p.get(p.length-1).submit();
 }
 
-function admin_tech_selection_titre(titre, id, idom, nid)
-{
-	nom = titre.replace(/\W+/g, '_');
-	findObj_forcer("znom_sauvegarde").value=nom;
-	findObj_forcer("nom_sauvegarde").value=nom;
-	aff_selection_titre(titre, id, idom, nid);
-}
 
+/**
+ * Utilise dans inc/plonger
+ * @param id
+ * @param racine
+ * @param url
+ * @param col
+ * @param sens
+ * @param informer
+ * @param event
+ */
 function aff_selection_provisoire(id, racine, url, col, sens,informer,event)
 {
     charger_id_url(url.href,
@@ -232,11 +117,19 @@ function aff_selection_provisoire(id, racine, url, col, sens,informer,event)
   return false;
 }
 
-// Lanche une requete Ajax a chaque frappe au clavier dans une balise de saisie.
-// Si l'entree redevient vide, rappeler l'URL initiale si dispo.
-// Sinon, controler au retour si le resultat est unique, 
-// auquel cas forcer la selection.
-
+/**
+ * Lanche une requete Ajax a chaque frappe au clavier dans une balise de saisie.
+ * Si l'entree redevient vide, rappeler l'URL initiale si dispo.
+ * Sinon, controler au retour si le resultat est unique,
+ * auquel cas forcer la selection.
+ * utlise dans inc/selectionner
+ * @param valeur
+ * @param rac
+ * @param url
+ * @param img
+ * @param nid
+ * @param init
+ */
 function onkey_rechercher(valeur, rac, url, img, nid, init) {
 	var Field = findObj_forcer(rac);
 	if (!valeur.length) {	
@@ -266,64 +159,46 @@ function onkey_rechercher(valeur, rac, url, img, nid, init) {
 // (ou du fragment qu'on vient de recharger en ajax)
 // et leur applique les comportements js souhaites
 // ici :
-// * retailler les input
 // * utiliser ctrl-s, F8 etc comme touches de sauvegarde
+var verifForm_clicked=false;
 function verifForm(racine) {
-	if(!jQuery.browser.mozilla) return;
-	jQuery("input.forml,input.formo,textarea.forml,textarea.formo", racine||document)
-	.each(function() {
-		var jField = jQuery(this);
-		var w = jField.css('width');
-		if (!w || w == '100%') {
-			jField.css('width','95%');
-		} else {
-			w = parseInt(w) -
-			(parseInt(jField.css("borderLeftWidth")) +
-				parseInt(jField.css("borderRightWidth")) +
-				parseInt(jField.css("paddingLeft")) +
-				parseInt(jField.css("paddingRight")
-			));
-			jField.width(w+'px');
-		}
-	});
-
+	verifForm_clicked = false; // rearmer quand on passe ici (il y a eu de l'ajax par exemple)
+	if (!jQuery) return; // appels ajax sur iframe
 	// Clavier pour sauver (cf. crayons)
-	jQuery('form', racine||document)
-	.keypress(function(e){
-		if (
-		(e.ctrlKey && (
-			/* ctrl-s ou ctrl-maj-S, firefox */
-			((e.charCode||e.keyCode) == 115) || ((e.charCode||e.keyCode) == 83))
-			/* ctrl-s, safari */
-			|| (e.charCode==19 && e.keyCode==19)
-		) || (!e.charCode && e.keyCode == 119 /* F8, windows */)
-		) {
-			jQuery(this).find('input[type=submit]')
-			.click();
-			return false;
-		}
-	});
-}
-
-// Si Ajax est disponible, cette fonction l'utilise pour envoyer la requete.
-// Si le premier argument n'est pas une url, ce doit etre un formulaire.
-// Le deuxieme argument doit etre l'ID d'un noeud qu'on animera pendant Ajax.
-// Le troisieme, optionnel, est la fonction traitant la reponse.
-// La fonction par defaut affecte le noeud ci-dessus avec la reponse Ajax.
-// En cas de formulaire, AjaxSqueeze retourne False pour empecher son envoi
-// Le cas True ne devrait pas se produire car le cookie spip_accepte_ajax
-// a du anticiper la situation.
-// Toutefois il y toujours un coup de retard dans la pose d'un cookie:
-// eviter de se loger avec redirection vers un telle page
-
-function AjaxSqueeze(trig, id, callback, event)
-{
-	var target = jQuery('#'+id);
-
-	// position du demandeur dans le DOM (le donner direct serait mieux)
-	if (!target.size()) {return true;}
-
-	return !AjaxSqueezeNode(trig, target, callback, event);
+	// cf http://www.quirksmode.org/js/keys.html
+	if (!jQuery.browser.msie)
+		// keypress renvoie le charcode correspondant au caractere frappe (ici s)
+		jQuery('form:not(.bouton_action_post)', racine||document).not('.verifformok')
+		.keypress(function(e){
+			if (
+				((e.ctrlKey && (
+					/* ctrl-s ou ctrl-maj-S, firefox */
+					(((e.charCode||e.keyCode) == 115) || ((e.charCode||e.keyCode) == 83))
+					/* ctrl-s, safari */
+					|| (e.charCode==19 && e.keyCode==19)
+				 )
+				) /* ctrl-s, Opera Mac */
+				|| (e.keyCode==19 && jQuery.browser.opera))
+				&& !verifForm_clicked
+			) {
+				verifForm_clicked = true;
+				jQuery(this).find('input[type=submit]')
+				.click();
+				return false;
+			}
+		}).addClass('verifformok');
+	else
+		// keydown renvoie le keycode correspondant a la touche pressee (ici F8)
+		jQuery('form:not(.bouton_action_post)', racine||document).not('.verifformok')
+		.keydown(function(e){
+			//jQuery('#ps').after("<div>ctrl:"+e.ctrlKey+"<br />charcode:"+e.charCode+"<br />keycode:"+e.keyCode+"<hr /></div>");
+			if (!e.charCode && e.keyCode == 119 /* F8, windows */ && !verifForm_clicked){
+				verifForm_clicked = true;
+				jQuery(this).find('input[type=submit]')
+				.click();
+				return false;
+			}
+		}).addClass('verifformok');
 }
 
 // La fonction qui fait vraiment le travail decrit ci-dessus.
@@ -398,17 +273,6 @@ function AjaxSqueezeNode(trig, target, f, event)
 	return true; 
 }
 
-// Les Submit avec attribut name ne sont pas transmis par JQuery
-// Cette fonction clone le bouton de soumission en hidden
-// Voir l'utilisation dans ajax_action_post dans inc/actions
-
-function AjaxNamedSubmit(input) {
-	jQuery('<input type="hidden" />')
-	.attr('name', input.name)
-	.attr('value', input.value)
-	.insertAfter(input);
-	return true;
-}
 
 function AjaxRet(res,status, target, callback) {
 	if (res.aborted) return;
@@ -448,9 +312,10 @@ function charger_node_url(myUrl, Field, jjscript, img, event)
 	if (url_chargee[myUrl]) {
 			var el = jQuery(Field).html(url_chargee[myUrl])[0];
 			retour_id_url(el, jjscript);
-			triggerAjaxLoad(el);
+			jQuery.spip.triggerAjaxLoad(el);
 			return false; 
-	  } else {
+	}
+	else {
 		if (img) img.style.visibility = "visible";
 		if (xhr_actifs[Field]) { xhr_actifs[Field].aborted = true;xhr_actifs[Field].abort(); }
 		xhr_actifs[Field] = AjaxSqueezeNode(myUrl,
@@ -488,16 +353,8 @@ function charger_node_url_si_vide(url, noeud, gifanime, jjscript,event) {
   return false;
 }
 
-function charger_id_url_si_vide (myUrl, myField, jjscript, event) {
-	var Field = findObj_forcer(myField); // selects the given element
-	if (!Field) return;
-
-	if (Field.innerHTML == "") {
-		charger_id_url(myUrl, myField, jjscript, event) 
-	}
-	else {
-		Field.style.visibility = "visible";
-		Field.style.display = "block";
-	}
-}
-
+// Lancer verifForm
+jQuery(document).ready(function(){
+	verifForm();
+	onAjaxLoad(verifForm);
+});
