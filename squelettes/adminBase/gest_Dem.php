@@ -118,7 +118,6 @@ if ($dem_id != '') {
 
 // cas d'un precedent sur premier ou suivant sur dernier
 if ($fiche == 0)  {
-//		$resultat = execRequete ($mareq." ORDER BY dem_id LIMIT 1", $connexion); 
 		$resultat = execRequete ($mareq." WHERE dem_id=".$dem_id, $connexion); 
 		}
 

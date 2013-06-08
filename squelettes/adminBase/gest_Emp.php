@@ -14,8 +14,7 @@
 <?PHP 
 // CORRECTIONS VALEURS
 $emp_id = $_REQUEST ['emp_id'] ;
-$emp_idauteur = $_REQUEST ['emp_idauteur'] ;
-$emp_nom = addslashes ( $_REQUEST ['emp_nom']);
+/*$emp_nom = addslashes ( $_REQUEST ['emp_nom']);
 $emp_adresse = addslashes ( $_REQUEST ['emp_adresse']);
 $emp_cp = $_REQUEST ['emp_cp'];
 $emp_ville = addslashes ( $_REQUEST ['emp_ville'] );
@@ -32,9 +31,11 @@ $emp_profil = addslashes ( $_REQUEST ['emp_profil'] );
 $emp_mission = addslashes ( $_REQUEST ['emp_mission'] );
 $emp_remu = addslashes ( $_REQUEST ['emp_remu'] );
 $emp_remq = addslashes ( $_REQUEST ['emp_remq'] );
-$emp_contact = addslashes ( $_REQUEST ['emp_contact'] );
+$emp_contact = addslashes ( $_REQUEST ['emp_contact'] );*/
 
+$modifier = $_REQUEST['modifier'] ;
 $precedent = $_REQUEST['precedent'] ;
+$suivant = $_REQUEST['suivant'] ;
 $detruire = $_REQUEST['detruire'] ;
 
 //----Connection à la base, et création de l'ordre SQL 
@@ -67,14 +68,43 @@ $fiche = 0;
 if ($emp_id != '') {
 	if (isset($precedent)) {
 			$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." WHERE emp_id<".$emp_id." ORDER BY emp_id DESC LIMIT 1", $connexion); 
-		} else {
+		} else if (isset($suivant)) {
 			$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." WHERE emp_id>".$emp_id." ORDER BY emp_id LIMIT 1", $connexion); 
+		} else {		// demande d'edition ou retour de modif
+			$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." WHERE emp_id=".$emp_id, $connexion); 
 			}
 	 $fiche = mysql_num_rows($resultat) ;
-	} 
+	} else {
+		$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." ORDER BY emp_datmodif", $connexion); 
+	echo "<table cellpadding=\"1\" cellspacing=\"1\" border=\"1\" width=\"100%\">
+		<tr>
+			<td>id</td>
+			<td>Employeur</td>
+			<td>Poste</td>
+			<td>domaine</td>
+			<td>Date modif</td>
+			<td> </td>
+		</tr>";
+		while ($ligne = mysql_fetch_object ($resultat)) {
+			echo " 
+					 <tr><td>$ligne->emp_id </td> 
+					 <td>$ligne->emp_nom</td> 
+					 <td >$ligne->emp_poste</td>
+					 <td>$ligne->emp_domaines</td> 
+					 <td >$ligne->emp_datmodif</td>
+					 <td ><form action='' method='post' class='ajax'>
+				  	 <INPUT TYPE='hidden' id='emp_id' NAME='emp_id' VALUE='$ligne->emp_id'>
+                <input type='submit' name='edit' value='edit'>
+                </form></td>
+					 </tr>"; 
+			};
+	echo "</table>";
+	return;
+	};
 
+// cas d'un precedent sur premier ou suivant sur dernier
 if ($fiche == 0)  {
-		$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." ORDER BY emp_id LIMIT 1", $connexion); 
+		$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." WHERE emp_id=".$emp_id, $connexion); 
 		}
 		
 $ligne = mysql_fetch_object ($resultat); 
@@ -142,8 +172,12 @@ $ligne = mysql_fetch_object ($resultat);
 	
 	echo "<p class='boutons'>" ;
 	echo "<input type=SUBMIT name='precedent' value='<< Précédent' > \n" ;
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+	echo "<input type=SUBMIT name='modifier' value='". _T('modifier')."' >";
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 	echo "<input type=SUBMIT name='detruire' value='" . _T('detruire') . "' 
 						onClick=\"javascript:return confirm('" . _T('confirm_suppr') . "') \"> \n ";			
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 	echo "<input type=SUBMIT name='suivant' value='Suivant >>' > \n" ;
 	echo "</p>" ;
 			
