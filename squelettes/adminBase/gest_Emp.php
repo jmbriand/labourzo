@@ -14,7 +14,7 @@
 <?PHP 
 // CORRECTIONS VALEURS
 $emp_id = $_REQUEST ['emp_id'] ;
-/*$emp_nom = addslashes ( $_REQUEST ['emp_nom']);
+$emp_nom = addslashes ( $_REQUEST ['emp_nom']);
 $emp_adresse = addslashes ( $_REQUEST ['emp_adresse']);
 $emp_cp = $_REQUEST ['emp_cp'];
 $emp_ville = addslashes ( $_REQUEST ['emp_ville'] );
@@ -31,7 +31,7 @@ $emp_profil = addslashes ( $_REQUEST ['emp_profil'] );
 $emp_mission = addslashes ( $_REQUEST ['emp_mission'] );
 $emp_remu = addslashes ( $_REQUEST ['emp_remu'] );
 $emp_remq = addslashes ( $_REQUEST ['emp_remq'] );
-$emp_contact = addslashes ( $_REQUEST ['emp_contact'] );*/
+$emp_contact = addslashes ( $_REQUEST ['emp_contact'] );
 
 $modifier = $_REQUEST['modifier'] ;
 $precedent = $_REQUEST['precedent'] ;
@@ -40,20 +40,32 @@ $detruire = $_REQUEST['detruire'] ;
 
 //----Connection à la base, et création de l'ordre SQL 
  
+if (isset($modifier))  
+	 $requete = "UPDATE  ".TABLE_EMP." 
+			 SET emp_nom='$emp_nom', emp_adresse='$emp_adresse', emp_cp='$emp_cp', emp_ville='$emp_ville', 
+				 emp_tel='$emp_tel', emp_fax='$emp_fax', emp_mel='$emp_mel', emp_web='$emp_web', emp_domaines='$emp_domaines', 
+				 emp_poste='$emp_poste', emp_type='$emp_type', emp_durdates='$emp_durdates', emp_lieu='$emp_lieu', 
+				 emp_profil='$emp_profil', emp_mission='$emp_mission', emp_remu='$emp_remu', emp_remq='$emp_remq', 
+				 emp_contact='$emp_contact' WHERE emp_id= $emp_id "; 
+					 		
 if (isset($detruire)) 
 	 $requete = "DELETE FROM ".TABLE_EMP."
 	 WHERE emp_id= $emp_id"; 
 	  
 //------ Exécution de l'ordre 
-//$connexion = connexion(SERVEUR, NOM, PASSE, BASE); 
 if (isset($requete)) {
 	$resultat = mysql_query	($requete, $connexion); 
 	if ($resultat) {
+				$butconti = "edit";	// pour article-30 et retour liste ou pas
+				if (isset($detruire)) {
+					$emp_id = "";
+				$butconti = "";
+				};
 				echo 
 				"<form action='' method='post'> \n "
 				."<INPUT TYPE=\"hidden\" id=\"emp_id\" NAME=\"emp_id\" VALUE=\"" . $emp_id . "\">"
-				."<h2>Suppression de l'enregistrement N° ". $emp_id . " effectuée. <h2/>\n"
-				."<input type='submit' value='" . _T('continuer') . "'>\n"
+				."<div class='menu' id='documents_joints'><h2>" . _T('operation_succes') . "</h2></div>"
+				."<input type='submit' name='".$butconti."' value='" . _T('continuer') . "'>\n"
 				."</form>" ;
 				return;
 				}
@@ -69,7 +81,7 @@ if ($emp_id != '') {
 	if (isset($precedent)) {
 			$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." WHERE emp_id<".$emp_id." ORDER BY emp_id DESC LIMIT 1", $connexion); 
 		} else if (isset($suivant)) {
-			$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." WHERE emp_id>".$emp_id." ORDER BY emp_id LIMIT 1", $connexion); 
+			$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." WHERE emp_id>".$emp_id." LIMIT 1", $connexion); 
 		} else {		// demande d'edition ou retour de modif
 			$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." WHERE emp_id=".$emp_id, $connexion); 
 			}
@@ -133,15 +145,27 @@ $ligne = mysql_fetch_object ($resultat);
 	echo "</li><li>";
 	echo "<label>" . _T('domaine_emp') . "</label>";
 	echo "<ul><li>";
-	echo formRadio ('emp_domaines', 'CVL', $ligne, _T('cvl'));
+	echo formRadio ('emp_domaines', 'anim', $ligne, _T('anim'));
 	echo "</li><li>";
-   echo formRadio ('emp_domaines', 'Baby Sit.', $ligne, _T('babysit'));
+   echo formRadio ('emp_domaines', 'gardenf', $ligne, _T('gardenf'));
 	echo "</li><li>";
-   echo formRadio ('emp_domaines', 'Petite enf.', $ligne, _T('petite_enf'));
+   echo formRadio ('emp_domaines', 'enseignmt', $ligne, _T('enseignmt'));
 	echo "</li><li>";
-   echo formRadio ('emp_domaines', 'Ecoles', $ligne, _T('ecoles'));
+   echo formRadio ('emp_domaines', 'accompscol', $ligne, _T('accompscol'));
 	echo "</li><li>";
-   echo formRadio ('emp_domaines', 'Action culturelle', $ligne, _T('action_cultu'));
+   echo formRadio ('emp_domaines', 'commarti', $ligne, _T('commarti'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'sante', $ligne, _T('sante'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'commedia', $ligne, _T('commedia'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'linguis', $ligne, _T('linguis'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'admin', $ligne, _T('admin'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'arts', $ligne, _T('arts'));
+	echo "</li><li>";
+   echo formRadio ('emp_domaines', 'divers', $ligne, _T('divers'));
 	echo "</li></ul>";
 	echo "</li><li>";
 	echo "<label for=\"emp_mission\">" . _T('mission') . "</label>";

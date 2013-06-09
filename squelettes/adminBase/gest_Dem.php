@@ -54,16 +54,18 @@ if (isset($detruire))
 if (isset($requete)) {
 	$resultat = mysql_query	($requete, $connexion); 
 	if ($resultat) {
+				$butconti = "edit";
 				if (isset($detruire)) {
 //					echo "<br>Destructions CVs de dem_id : " . $dem_id ;
 					destrocvs($dem_id, $connexion);
 					$dem_id = "";
+					$butconti = "";
 				};
 				echo "<div class='menu' id='documents_joints'><h2>" . _T('operation_succes') . "</h2></div>";
 				echo 
 				"<form action='' method='post'> \n "
 				."<INPUT TYPE=\"hidden\" id=\"dem_id\" NAME=\"dem_id\" VALUE=\"".$dem_id."\">"
-				."<input type='submit' value='" . _T('continuer') . "'>\n"
+				."<input type='submit' name='".$butconti."' value='" . _T('continuer') . "'>\n"
 				."</form>" ;
 				return;
 	}
@@ -86,7 +88,7 @@ if ($dem_id != '') {
 			}
 	 $fiche = mysql_num_rows($resultat) ;
 	} else {
-		$resultat = execRequete ($mareq." ORDER BY dem_id", $connexion); 
+		$resultat = execRequete ($mareq." ORDER BY dem_datmodif", $connexion); 
 	echo "<table cellpadding=\"1\" cellspacing=\"1\" border=\"1\" width=\"100%\">
 		<tr>
 			<td>id</td>
