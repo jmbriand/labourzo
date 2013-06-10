@@ -70,51 +70,135 @@
 	     [(#REM) Navigation fiches suivantes / précédentes ]
 			<BOUCLE_animOf(ARTICLES) {id_article} {id_article IN 7,8}>
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
-				<BOUCLE_precOA(xx_employr){emp_domaines LIKE %CVL%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+				<BOUCLE_precOA(xx_employr){emp_domaines LIKE %anim%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
 					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
 				</BOUCLE_precOA>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
-				<BOUCLE_suivOA(xx_employr){emp_domaines LIKE %CVL%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+				<BOUCLE_suivOA(xx_employr){emp_domaines LIKE %anim%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
 					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
 				</BOUCLE_suivOA>
 			</BOUCLE_animOf>
 			
 			<BOUCLE_petitenf(ARTICLES) {id_article} {id_article IN 31,32}>
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
-				<BOUCLE_precOPE(xx_employr){emp_domaines LIKE %Petite%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+				<BOUCLE_precOPE(xx_employr){emp_domaines LIKE %gardenf%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
 					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
 				</BOUCLE_precOPE>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
-				<BOUCLE_suivOPE(xx_employr){emp_domaines LIKE %Petite%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+				<BOUCLE_suivOPE(xx_employr){emp_domaines LIKE %gardenf%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
 					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
 				</BOUCLE_suivOPE>
 			</BOUCLE_petitenf>
 			
 			<BOUCLE_ecolof(ARTICLES) {id_article} {id_article IN 16,22}>
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
-				<BOUCLE_precOE(xx_employr){emp_domaines LIKE %Ecoles%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+				<BOUCLE_precOE(xx_employr){emp_domaines LIKE %enseignmt%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
 					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
 				</BOUCLE_precOE>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
-				<BOUCLE_suivOE(xx_employr){emp_domaines LIKE %Ecoles%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+				<BOUCLE_suivOE(xx_employr){emp_domaines LIKE %enseignmt%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
 					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
 				</BOUCLE_suivOE>
 			</BOUCLE_ecolof>
 			
-			<BOUCLE_actculof(ARTICLES) {id_article} {id_article IN 23,24}>
+			<BOUCLE_accscolof(ARTICLES) {id_article} {id_article IN 41,44}>
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
-				<BOUCLE_precOC(xx_employr){emp_domaines LIKE %culturelle%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+				<BOUCLE_precOAS(xx_employr){emp_domaines LIKE %accompscol%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
 					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
-				</BOUCLE_precOC>
+				</BOUCLE_precOAS>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
-				<BOUCLE_suivOC(xx_employr){emp_domaines LIKE %culturelle%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+				<BOUCLE_suivOAS(xx_employr){emp_domaines LIKE %accompscol%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
 					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
-				</BOUCLE_suivOC>
-			</BOUCLE_actculof>
+				</BOUCLE_suivOAS>
+			</BOUCLE_accscolof>
+			
+			<BOUCLE_commartiof(ARTICLES) {id_article} {id_article IN 46,48}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOCA(xx_employr){emp_domaines LIKE %commarti%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOCA>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOCA(xx_employr){emp_domaines LIKE %commarti%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOCA>
+			</BOUCLE_commartiof>
+			
+			<BOUCLE_sante(ARTICLES) {id_article} {id_article IN 50,53}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOSA(xx_employr){emp_domaines LIKE %sante%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOSA>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOSA(xx_employr){emp_domaines LIKE %sante%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOSA>
+			</BOUCLE_sante>
+			
+			<BOUCLE_commedia(ARTICLES) {id_article} {id_article IN 54,55}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOCM(xx_employr){emp_domaines LIKE %commedia%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOCM>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOCM(xx_employr){emp_domaines LIKE %commedia%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOCM>
+			</BOUCLE_commedia>
+			
+			<BOUCLE_linguis(ARTICLES) {id_article} {id_article IN 59,58}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOLI(xx_employr){emp_domaines LIKE %linguis%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOLI>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOLI(xx_employr){emp_domaines LIKE %linguis%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOLI>
+			</BOUCLE_linguis>
+			
+			<BOUCLE_admin(ARTICLES) {id_article} {id_article IN 63,62}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOAD(xx_employr){emp_domaines LIKE %admin%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOAD>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOAD(xx_employr){emp_domaines LIKE %admin%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOAD>
+			</BOUCLE_admin>
+			
+			<BOUCLE_arts(ARTICLES) {id_article} {id_article IN 66,67}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precOAR(xx_employr){emp_domaines LIKE %arts%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precOAR>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivOAR(xx_employr){emp_domaines LIKE %arts%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivOAR>
+			</BOUCLE_arts>
+			
+			<BOUCLE_divers(ARTICLES) {id_article} {id_article IN 70,71}>
+				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
+				<BOUCLE_precODI(xx_employr){emp_domaines LIKE %divers%} {par emp_datmodif}{emp_datmodif>#_offresA:EMP_DATMODIF}{exclus}{0,1}>
+					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_precedente:></a></div>
+				</BOUCLE_precODI>
+				
+				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
+				<BOUCLE_suivODI(xx_employr){emp_domaines LIKE %divers%} {par emp_datmodif}{emp_datmodif<=#_offresA:EMP_DATMODIF}{1,1}{inverse}>
+					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID'><:fiche_suivante:></a></div>
+				</BOUCLE_suivODI>
+			</BOUCLE_divers>
 			
          <ul class="top">
              [<li><small><:poste:>&nbsp;</small><strong>(#EMP_POSTE)</strong></li>]
