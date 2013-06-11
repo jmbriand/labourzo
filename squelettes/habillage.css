@@ -838,8 +838,9 @@ background-repeat: no-repeat;
 	padding: 5px 15px;
 	margin-bottom: 15px;
 	background: transparent url(./img/fond-transp.png) repeat center center; 
+	clear: both;
 }
-.page_fiche #principal .top li {margin-bottom: 5px; float: none}
+.page_fiche #principal .top li {margin-bottom: 5px; float: none; padding-top: 0.5em}
 .page_fiche #principal li.top {margin-bottom: 5px;}
 .page_fiche #principal .top small {border-bottom: none; display: inline-table; width: 130px; text-align: right}
 .page_fiche #principal .top strong { font: 300 2.5em Zag, helvetica, sans-serif; float: none; border: none}
@@ -875,6 +876,10 @@ background-repeat: no-repeat;
 .page_fiche .nom_famille {text-transform: uppercase}
 
 
+/*	LES FICHES PRECEDENT / SUIVANT
+	------------------------------ */
+
+.page_fiche #principal ul#suivprec li {text-transform: uppercase; }	
 
 
 
