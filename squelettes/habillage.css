@@ -6,8 +6,233 @@
 /* ------------------------------------------
 /* Typographie generale (style transversaux)
 /* ------------------------------------------ */
+
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Regular-webfont.eot');
+    src: url('polices/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Regular-webfont.woff') format('woff'),
+         url('polices/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Regular-webfont.svg#Roboto') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Italic-webfont.eot');
+    src: url('polices/Roboto-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Italic-webfont.woff') format('woff'),
+         url('polices/Roboto-Italic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Italic-webfont.svg#Roboto') format('svg');
+    font-weight: 400;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Bold-webfont.eot');
+    src: url('polices/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Bold-webfont.woff') format('woff'),
+         url('polices/Roboto-Bold-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Bold-webfont.svg#Roboto') format('svg');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-BoldItalic-webfont.eot');
+    src: url('polices/Roboto-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-BoldItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-BoldItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-BoldItalic-webfont.svg#Roboto') format('svg');
+    font-weight: 700;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('polices/Roboto-Condensed-webfont.eot');
+    src: url('polices/Roboto-Condensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Condensed-webfont.woff') format('woff'),
+         url('polices/Roboto-Condensed-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Condensed-webfont.svg#Roboto Condensed') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('polices/Roboto-CondensedItalic-webfont.eot');
+    src: url('polices/Roboto-CondensedItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-CondensedItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-CondensedItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-CondensedItalic-webfont.svg#Roboto Condensed') format('svg');
+    font-weight: 400;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('polices/Roboto-BoldCondensed-webfont.eot');
+    src: url('polices/Roboto-BoldCondensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-BoldCondensed-webfont.woff') format('woff'),
+         url('polices/Roboto-BoldCondensed-webfont.ttf') format('truetype'),
+         url('polices/Roboto-BoldCondensed-webfont.svg#Roboto Condensed') format('svg');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('polices/Roboto-BoldCondensedItalic-webfont.eot');
+    src: url('polices/Roboto-BoldCondensedItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-BoldCondensedItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-BoldCondensedItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-BoldCondensedItalic-webfont.svg#Roboto Condensed') format('svg');
+    font-weight: 700;
+    font-style: italic;
+
+}
+
+/*
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Thin-webfont.eot');
+    src: url('polices/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Thin-webfont.woff') format('woff'),
+         url('polices/Roboto-Thin-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Thin-webfont.svg#Roboto') format('svg');
+    font-weight: 100;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-ThinItalic-webfont.eot');
+    src: url('polices/Roboto-ThinItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-ThinItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-ThinItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-ThinItalic-webfont.svg#Roboto') format('svg');
+    font-weight: 100;
+    font-style: italic;
+
+}
+*/
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Light-webfont.eot');
+    src: url('polices/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Light-webfont.woff') format('woff'),
+         url('polices/Roboto-Light-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Light-webfont.svg#Roboto') format('svg');
+    font-weight: 300;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-LightItalic-webfont.eot');
+    src: url('polices/Roboto-LightItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-LightItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-LightItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-LightItalic-webfont.svg#Roboto') format('svg');
+    font-weight: 300;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Medium-webfont.eot');
+    src: url('polices/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Medium-webfont.woff') format('woff'),
+         url('polices/Roboto-Medium-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Medium-webfont.svg#Roboto') format('svg');
+    font-weight: 500;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-MediumItalic-webfont.eot');
+    src: url('polices/Roboto-MediumItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-MediumItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-MediumItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-MediumItalic-webfont.svg#Roboto') format('svg');
+    font-weight: 500;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Black-webfont.eot');
+    src: url('polices/Roboto-Black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Black-webfont.woff') format('woff'),
+         url('polices/Roboto-Black-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Black-webfont.svg#Roboto') format('svg');
+    font-weight: 900;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-BlackItalic-webfont.eot');
+    src: url('polices/Roboto-BlackItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-BlackItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-BlackItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-BlackItalic-webfont.svg#Roboto') format('svg');
+    font-weight: 900;
+    font-style: italic;
+
+}
+
+
+
+@font-face {
+    font-family: 'Zag';
+    src: url('polices/zag_regular-webfont.eot');
+    src: url('polices/zag_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/zag_regular-webfont.woff') format('woff'),
+         url('polices/zag_regular-webfont.ttf') format('truetype'),
+         url('polices/zag_regular-webfont.svg#zag') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Zag';
+    src: url('polices/zag_bold-webfont.eot');
+    src: url('polices/zag_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/zag_bold-webfont.woff') format('woff'),
+         url('polices/zag_bold-webfont.ttf') format('truetype'),
+         url('polices/zag_bold-webfont.svg#zag') format('svg');
+    font-weight: normal;
+    font-style: bold;
+
+}
+
 html { font-size: 100%; background: transparent url('./img/fond.gif') repeat center top; } /* Cf.: http://pompage.net/pompe/definir-des-tailles-de-polices-en-CSS/ */
-body { font-size: 0.8125em; font-family: "Helvetica Neue", helvetica, sans-serif; color: #254f44; }
+body { font-size: 0.8125em; font-family: "Roboto", helvetica, sans-serif; font-weight: 300; color: #254f44; }
 
 /* Titraille / Intertitres */
 h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; font-weight: normal; font-size: 1em; font-family: Georgia, Times, serif; }
@@ -418,14 +643,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', end
 /* COMMERCE, AGRICULTURE
 ---------------------------------------------- */
 .section34, .section33 {
-background: #b25e5e;
-background: -moz-linear-gradient(top,  #b25e5e 0%, #6d0001 100%);
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b25e5e), color-stop(100%,#6d0001));
-background: -webkit-linear-gradient(top,  #b25e5e 0%,#6d0001 100%);
-background: -o-linear-gradient(top,  #b25e5e 0%,#6d0001 100%);
-background: -ms-linear-gradient(top,  #b25e5e 0%,#6d0001 100%);
-background: linear-gradient(to bottom,  #b25e5e 0%,#6d0001 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b25e5e', endColorstr='#6d0001',GradientType=0 );
+background: #c98686;
+background: -moz-linear-gradient(top,  #c98686 0%, #7f1919 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c98686), color-stop(100%,#7f1919));
+background: -webkit-linear-gradient(top,  #c98686 0%,#7f1919 100%);
+background: -o-linear-gradient(top,  #c98686 0%,#7f1919 100%);
+background: -ms-linear-gradient(top,  #c98686 0%,#7f1919 100%);
+background: linear-gradient(to bottom,  #c98686 0%,#7f1919 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c98686', endColorstr='#7f1919',GradientType=0 );
+
 }
 
 /* SANTE
@@ -586,6 +812,9 @@ background-repeat: no-repeat;
 
 
 .page_fiche #principal ul {}
+
+.page_fiche #principal ul li {float: left; margin-bottom: 1em; clear: both; width: 100%}
+
 .page_fiche #principal .top 
 {
 	border: 1px solid #000;
@@ -603,11 +832,10 @@ background-repeat: no-repeat;
 	display: block;
 	text-transform: uppercase;
 	color: #333;
-	border-bottom: 1px dotted #999;
-	font-size: 11px;
+	font-size: 1.1em;
 	float: left;
-	width: 140px;
-	margin-right: 1em;
+	width: 23%;
+
 }
 
 .page_fiche #principal ul li strong 
@@ -616,13 +844,16 @@ background-repeat: no-repeat;
 	font-weight: normal;
 	color: #000;
 	float: right;
+	width: 73%;
+	padding-left: 2%;
+	margin-left: -1px;
+	border-left: 1px dotted #999;
 }
 
 .page_fiche #principal ul li.info_date {text-align: right;}
 .page_fiche #principal ul li.info_date strong,
 .page_fiche #principal ul li.info_date small {display: inline; float: none; text-transform:none; border-bottom: none;color: #666; font-size: 10px;}
 
-.page_fiche #principal ul li {margin-bottom: 1em; float: left}
 
 .page_fiche .nom_famille {text-transform: uppercase}
 
@@ -795,8 +1026,10 @@ form#modif ul li textarea,
 	.page_fiche #principal {width: 640px}
 	.page_fiche #sidebar {width: 250px}
 	
-	.page_fiche #principal ul li small {font-size: 1.2em;}
-	.page_fiche #principal ul li strong {font-size: 1.4em}
+	.page_fiche #principal ul li small {font-size: 1.1em;}
+	.page_fiche #principal ul li strong {font-size: 1.3em}
+	
+	#sidebar .rubriques li {font-size: 1.1em}
 	
 }
 
