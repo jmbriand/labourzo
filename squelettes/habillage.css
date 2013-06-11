@@ -34,11 +34,11 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('polices/Roboto-Bold-webfont.eot');
-    src: url('polices/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-Bold-webfont.woff') format('woff'),
-         url('polices/Roboto-Bold-webfont.ttf') format('truetype'),
-         url('polices/Roboto-Bold-webfont.svg#Roboto') format('svg');
+    src: url('polices/Roboto-500-webfont.eot');
+    src: url('polices/Roboto-500-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-500-webfont.woff') format('woff'),
+         url('polices/Roboto-500-webfont.ttf') format('truetype'),
+         url('polices/Roboto-500-webfont.svg#Roboto') format('svg');
     font-weight: 700;
     font-style: normal;
 
@@ -46,11 +46,11 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('polices/Roboto-BoldItalic-webfont.eot');
-    src: url('polices/Roboto-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-BoldItalic-webfont.woff') format('woff'),
-         url('polices/Roboto-BoldItalic-webfont.ttf') format('truetype'),
-         url('polices/Roboto-BoldItalic-webfont.svg#Roboto') format('svg');
+    src: url('polices/Roboto-500Italic-webfont.eot');
+    src: url('polices/Roboto-500Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-500Italic-webfont.woff') format('woff'),
+         url('polices/Roboto-500Italic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-500Italic-webfont.svg#Roboto') format('svg');
     font-weight: 700;
     font-style: italic;
 
@@ -82,11 +82,11 @@
 
 @font-face {
     font-family: 'Roboto Condensed';
-    src: url('polices/Roboto-BoldCondensed-webfont.eot');
-    src: url('polices/Roboto-BoldCondensed-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-BoldCondensed-webfont.woff') format('woff'),
-         url('polices/Roboto-BoldCondensed-webfont.ttf') format('truetype'),
-         url('polices/Roboto-BoldCondensed-webfont.svg#Roboto Condensed') format('svg');
+    src: url('polices/Roboto-500Condensed-webfont.eot');
+    src: url('polices/Roboto-500Condensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-500Condensed-webfont.woff') format('woff'),
+         url('polices/Roboto-500Condensed-webfont.ttf') format('truetype'),
+         url('polices/Roboto-500Condensed-webfont.svg#Roboto Condensed') format('svg');
     font-weight: 700;
     font-style: normal;
 
@@ -94,11 +94,11 @@
 
 @font-face {
     font-family: 'Roboto Condensed';
-    src: url('polices/Roboto-BoldCondensedItalic-webfont.eot');
-    src: url('polices/Roboto-BoldCondensedItalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-BoldCondensedItalic-webfont.woff') format('woff'),
-         url('polices/Roboto-BoldCondensedItalic-webfont.ttf') format('truetype'),
-         url('polices/Roboto-BoldCondensedItalic-webfont.svg#Roboto Condensed') format('svg');
+    src: url('polices/Roboto-500CondensedItalic-webfont.eot');
+    src: url('polices/Roboto-500CondensedItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-500CondensedItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-500CondensedItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-500CondensedItalic-webfont.svg#Roboto Condensed') format('svg');
     font-weight: 700;
     font-style: italic;
 
@@ -203,7 +203,6 @@
 }
 
 
-/*
 
 @font-face {
     font-family: 'Zag';
@@ -212,11 +211,10 @@
          url('polices/zag_regular-webfont.woff') format('woff'),
          url('polices/zag_regular-webfont.ttf') format('truetype'),
          url('polices/zag_regular-webfont.svg#zag') format('svg');
-    font-weight: normal;
+    font-weight: 300;
     font-style: normal;
 
 }
-*/
 
 
 
@@ -228,10 +226,18 @@
          url('polices/zag_bold-webfont.woff') format('woff'),
          url('polices/zag_bold-webfont.ttf') format('truetype'),
          url('polices/zag_bold-webfont.svg#zag') format('svg');
-    font-weight: normal;
-    font-style: bold;
+    font-weight: 500;
+    font-style: normal;
 
 }
+
+
+/*
+       Cufon.replace('.sommaire big');
+       Cufon.replace('h1');
+       Cufon.replace('#sidebar li a big');
+       Cufon.replace('#pied ul li h4');
+*/
 
 html { font-size: 100%; background: transparent url('./img/fond.gif') repeat center top; } /* Cf.: http://pompage.net/pompe/definir-des-tailles-de-polices-en-CSS/ */
 body { font-size: 0.8125em; font-family: "Roboto", helvetica, sans-serif; font-weight: 300; color: #254f44; }
@@ -239,18 +245,27 @@ body { font-size: 0.8125em; font-family: "Roboto", helvetica, sans-serif; font-w
 /* Titraille / Intertitres */
 h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; font-weight: normal; font-size: 1em; font-family: Georgia, Times, serif; }
 h1 { font-size: 4em; letter-spacing: 1px; color: #fff; }
-h2 { font-size: 1.40em; font-weight: normal; }
+h2 { font-size: 1.40em; font-weight: 300; }
 h2, h2 a, h2 a:focus, h2 a:hover, h2 a:active { }
-h3 { font-size: 1.20em; font-weight: bold; }
+h3 { font-size: 1.20em; font-weight: 500; }
 h3.spip {} /* Cf.: spip_style.css */
 hr.spip {} /* Cf.: spip_style.css */
 
+.sommaire big,
+h1,
+#sidebar li a big,
+#pied ul li h4 {
+	font-family: Zag, helvetica, arial, sans-serif;
+	font-weight: 300;
+	text-transform: uppercase;
+}
+
 /* Autres enrichissements typo */
-strong { font-weight: bold; }
+strong { font-weight: 500; }
 em { font-style: italic; }
 abbr, acronym { border-bottom: 1px dotted; cursor: help; }
 small { font-size: 0.90em; }
-dfn { font-weight: bold;  }
+dfn { font-weight: 500;  }
 del { text-decoration: line-through; }
 ins { background-color: white; color: #74de8a !important; text-decoration: none; }
 sup, sub { font-size: .8em; font-variant: normal; }
@@ -338,9 +353,9 @@ hr {border: 0; padding: 0; margin: 0; background: transparent; clear: both; }
 .cartouche .soustitre { margin-top: 0.50em; margin-bottom: 0.30em; }
 .cartouche .traductions { font-size: 0.90em; }
 
-.chapo { margin-bottom: 1.50em; line-height: 1.40em; font-weight: bold; color: #000}
+.chapo { margin-bottom: 1.50em; line-height: 1.40em; font-weight: 500; color: #000}
 .texte { line-height: 1.50em; padding: 5px 0}
-.hyperlien { display: block; padding: 0.50em 1em; font-weight: bold; color: #8B6F92; }
+.hyperlien { display: block; padding: 0.50em 1em; font-weight: 500; color: #8B6F92; }
 .ps, .notes { margin-bottom: 2em; line-height: 1.40em; }
 .notes { clear: both; font-size: 0.90em; }
 
@@ -357,14 +372,14 @@ abbr.published { border: 0; }
 
 /* Habillage des forums
 ---------------------------------------------- */
-.repondre { clear: both; margin-top: 2.50em; margin-right: 1em; text-align: right; font-weight: bold; }
+.repondre { clear: both; margin-top: 2.50em; margin-right: 1em; text-align: right; font-weight: 500; }
 
 /* Habillage des forums */
 ul.forum { display: block; clear: both; margin: 0; padding: 0; }
 ul.forum, ul.forum ul { list-style: none; }
 .forum-fil { margin-top: 1.50em; }
 .forum-fil ul { display: block; margin: 0; padding: 0; margin-left: 1em; }
-.forum-chapo .forum-titre, .forum-chapo .forum-titre a { display: block; margin: 0; padding: 0; font-weight: bold; color: #333; }
+.forum-chapo .forum-titre, .forum-chapo .forum-titre a { display: block; margin: 0; padding: 0; font-weight: 500; color: #333; }
 .forum-texte { margin: 0; padding: 0.50em 1em; color: #333; }
 .forum-texte .hyperlien {}
 .forum-texte .repondre { margin: 0; padding: 0.10em 0; text-align: right; }
@@ -413,7 +428,7 @@ ul ul ul ul ul .forum-chapo { background: #FFF; }
 
 /* Pagination */
 .pagination { clear: both; text-align: right; font-size: 0.90em; color: #666; }
-.pagination .on { font-weight: bold; color: #666; }
+.pagination .on { font-weight: 500; color: #666; }
 
 /* Rubriques */
 .rubriques ul { border: 0; }
@@ -480,7 +495,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 #principal .liste ul li a q {display: block; font-size: 13px;}
 
 #principal .offre ul li a small {text-transform: uppercase; font-size: 12px}
-#principal .liste ul li a big {font-weight: bold; font-size: 15px}
+#principal .liste ul li a big {font-weight: 500; font-size: 15px}
 #principal .liste ul li a q {quotes: none;}
 
 
@@ -504,7 +519,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 #sidebar .rubriques li a {display: block; padding: 20px 20px 5px 5px; color: #fff}
 #sidebar .rubriques li a:hover {text-decoration: none;}
-#sidebar .rubriques li a big {display: block; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;}
+#sidebar .rubriques li a big {display: block; text-transform: uppercase; font-weight: 500; letter-spacing: 1px;}
 
 #sidebar .rubriques li img {position: absolute; top: -20px; right: 0;}
 
@@ -584,7 +599,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 	text-transform: uppercase;
 	font-size: 16px;
 	letter-spacing: 1px;
-	font-weight: bold;
+	font-weight: 500;
 }
 
 #sidebar .entrees li a big {font-size: 14px}
@@ -783,11 +798,11 @@ background-repeat: no-repeat;
 
 .derniers_articles ul li * 
 {
-	font: normal 10px "Helvetica Neue", helvetica, sans-serif;
+	font: 300 10px "Helvetica Neue", helvetica, sans-serif;
 	text-decoration: none;
 }
 
-.derniers_articles ul li strong {font-weight: bold}
+.derniers_articles ul li strong {font-weight: 500}
 .derniers_articles ul li abbr {color: #666; float: right}
 
 .derniers_articles ul li small {display:block;}
@@ -819,7 +834,7 @@ background-repeat: no-repeat;
 
 .page_fiche #principal .top 
 {
-	border: 1px solid #000;
+	border: 1px dotted #999;
 	padding: 5px 15px;
 	margin-bottom: 15px;
 	background: transparent url(./img/fond-transp.png) repeat center center; 
@@ -827,7 +842,7 @@ background-repeat: no-repeat;
 .page_fiche #principal .top li {margin-bottom: 5px; float: none}
 .page_fiche #principal li.top {margin-bottom: 5px;}
 .page_fiche #principal .top small {border-bottom: none; display: inline-table; width: 130px; text-align: right}
-.page_fiche #principal .top strong { font: normal 18px Georgia, serif; float: none}
+.page_fiche #principal .top strong { font: 300 2.5em Zag, helvetica, sans-serif; float: none; border: none}
 
 .page_fiche #principal ul li small 
 {
@@ -843,7 +858,7 @@ background-repeat: no-repeat;
 .page_fiche #principal ul li strong 
 {
 	font-size: 13px;
-	font-weight: normal;
+	font-weight: 300;
 	color: #000;
 	float: right;
 	width: 73%;
@@ -854,7 +869,7 @@ background-repeat: no-repeat;
 
 .page_fiche #principal ul li.info_date {text-align: right;}
 .page_fiche #principal ul li.info_date strong,
-.page_fiche #principal ul li.info_date small {display: inline; float: none; text-transform:none; border-bottom: none;color: #666; font-size: 10px;}
+.page_fiche #principal ul li.info_date small {display: inline; float: none; text-transform:none; border: none;color: #666; font-size: 10px;}
 
 
 .page_fiche .nom_famille {text-transform: uppercase}
@@ -887,7 +902,7 @@ background-repeat: no-repeat;
 .formulaire_spip fieldset legend
 {
 	xfont-family: "Georgia",serif;
-	font-weight: normal;
+	font-weight: 300;
 	font-size: 12px;
 	text-transform: uppercase;
 	padding: 5px 10px;
@@ -901,7 +916,7 @@ form#modif li label,
 .formulaire_spip label
 {
 	display: block;
-	font: normal 18px Georgia, serif;
+	font: 300 18px Georgia, serif;
 }
 form#modif li.obligatoire label,
 .formulaire_spip li.obligatoire label {padding-left: 17px; background: transparent url(./img/etoile.gif) no-repeat left 3px}
@@ -911,7 +926,7 @@ form#modif li ul {padding-left: 15px}
 form#modif li li label 
 {
 	display: inline;
-	font: normal 12px "Helvetica Neue", Helvetica, sans-serif;	
+	font: 300 12px "Helvetica Neue", Helvetica, sans-serif;	
 }
 
 form#modif li li {margin-bottom: 0;margin-top: 2px}
@@ -955,7 +970,7 @@ form#modif ul li textarea,
 	margin: 0 0 15px 0;
 	font-size: 12px;
 	line-height: 16px;
-	font-weight: normal;
+	font-weight: 300;
 	padding: 10px 20px;
 	color: #fff;
 	background: transparent url(./img/fond-babysitting.gif) repeat-x center center;
@@ -980,8 +995,8 @@ form#modif ul li textarea,
 /* LES CVs
 ---------------------------------------------- */
 
-#cv li,
-#cv li a {float:left;}
+#principal #cv li,
+#principal #cv li a {float:left; clear: none; width: 75px; margin-right: 15px}
 
 #cv li a {width: 75px; height: 75px; display: block; margin: 10px 10px 10px 0;}
 #cv li.fr a {background: transparent url(./img/CV-FR.gif) no-repeat center center}
@@ -994,7 +1009,7 @@ form#modif ul li textarea,
 
 #pied ul {width: 740px; margin: -25px auto 0 auto; position: relative; color: #fff;}
 #pied ul li {float: left}
-#pied ul li h4 {text-transform: uppercase; letter-spacing: 1px; font: normal 18px "Helvetica Neue", sans-serif; padding-top: 25px;}
+#pied ul li h4 {text-transform: uppercase; letter-spacing: 1px; font: 300 18px "Helvetica Neue", sans-serif; padding-top: 25px;}
 #pied ul li p {margin: 0; padding-bottom: 5px;}
 
 #pied ul li a {color: #fff; text-decoration: underline;}
@@ -1058,6 +1073,7 @@ form#modif ul li textarea,
 @media (max-width: 360px) {
 
 	body {font-size: 1.1em; line-height: 1.3em}
+	.sommaire big, h1 {font-size: 1.5em}
 	
 	#menu_langue {left:100px; top: -120px}
 	
