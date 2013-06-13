@@ -7,11 +7,11 @@
 /*
 @font-face {
     font-family: 'Roboto';
-    src: url('polices/Roboto-Regular-webfont.eot');
-    src: url('polices/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-Regular-webfont.woff') format('woff'),
-         url('polices/Roboto-Regular-webfont.ttf') format('truetype'),
-         url('polices/Roboto-Regular-webfont.svg#Roboto') format('svg');
+    src: url('polices/roboto-regular-webfont.eot');
+    src: url('polices/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-regular-webfont.woff') format('woff'),
+         url('polices/roboto-regular-webfont.ttf') format('truetype'),
+         url('polices/roboto-regular-webfont.svg#Roboto') format('svg');
     font-weight: 400;
     font-style: normal;
 
@@ -19,11 +19,11 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('polices/Roboto-Italic-webfont.eot');
-    src: url('polices/Roboto-Italic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-Italic-webfont.woff') format('woff'),
-         url('polices/Roboto-Italic-webfont.ttf') format('truetype'),
-         url('polices/Roboto-Italic-webfont.svg#Roboto') format('svg');
+    src: url('polices/roboto-italic-webfont.eot');
+    src: url('polices/roboto-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-italic-webfont.woff') format('woff'),
+         url('polices/roboto-italic-webfont.ttf') format('truetype'),
+         url('polices/roboto-italic-webfont.svg#Roboto') format('svg');
     font-weight: 400;
     font-style: italic;
 
@@ -56,11 +56,11 @@
 
 @font-face {
     font-family: 'Roboto Condensed';
-    src: url('polices/Roboto-Condensed-webfont.eot');
-    src: url('polices/Roboto-Condensed-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-Condensed-webfont.woff') format('woff'),
-         url('polices/Roboto-Condensed-webfont.ttf') format('truetype'),
-         url('polices/Roboto-Condensed-webfont.svg#Roboto Condensed') format('svg');
+    src: url('polices/robotocondensed-regular-webfont.eot');
+    src: url('polices/robotocondensed-regular.eot?#iefix') format('embedded-opentype'),
+         url('polices/robotocondensed-regular.woff') format('woff'),
+         url('polices/robotocondensed-regular.ttf') format('truetype'),
+         url('polices/robotocondensed-regular.svg#Roboto Condensed') format('svg');
     font-weight: 400;
     font-style: normal;
 
@@ -68,11 +68,11 @@
 
 @font-face {
     font-family: 'Roboto Condensed';
-    src: url('polices/Roboto-CondensedItalic-webfont.eot');
-    src: url('polices/Roboto-CondensedItalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-CondensedItalic-webfont.woff') format('woff'),
-         url('polices/Roboto-CondensedItalic-webfont.ttf') format('truetype'),
-         url('polices/Roboto-CondensedItalic-webfont.svg#Roboto Condensed') format('svg');
+    src: url('polices/robotocondensed-italic-webfont.eot');
+    src: url('polices/robotocondensed-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/robotocondensed-italic-webfont.woff') format('woff'),
+         url('polices/robotocondensed-italic-webfont.ttf') format('truetype'),
+         url('polices/robotocondensed-italic-webfont.svg#Roboto Condensed') format('svg');
     font-weight: 400;
     font-style: italic;
 
@@ -132,11 +132,11 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('polices/Roboto-Light-webfont.eot');
-    src: url('polices/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-Light-webfont.woff') format('woff'),
-         url('polices/Roboto-Light-webfont.ttf') format('truetype'),
-         url('polices/Roboto-Light-webfont.svg#Roboto') format('svg');
+    src: url('polices/roboto-light-webfont.eot');
+    src: url('polices/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-light-webfont.woff') format('woff'),
+         url('polices/roboto-light-webfont.ttf') format('truetype'),
+         url('polices/roboto-light-webfont.svg#Roboto') format('svg');
     font-weight: 300;
     font-style: normal;
 
@@ -144,11 +144,11 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('polices/Roboto-LightItalic-webfont.eot');
-    src: url('polices/Roboto-LightItalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-LightItalic-webfont.woff') format('woff'),
-         url('polices/Roboto-LightItalic-webfont.ttf') format('truetype'),
-         url('polices/Roboto-LightItalic-webfont.svg#Roboto') format('svg');
+    src: url('polices/roboto-lightitalic-webfont.eot');
+	src: url('polices/roboto-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-lightitalic-webfont.woff') format('woff'),
+         url('polices/roboto-lightitalic-webfont.ttf') format('truetype'),
+         url('polices/roboto-lightitalic-webfont.svg#Roboto') format('svg');
     font-weight: 300;
     font-style: italic;
 
@@ -156,11 +156,11 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('polices/Roboto-Medium-webfont.eot');
-    src: url('polices/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-Medium-webfont.woff') format('woff'),
-         url('polices/Roboto-Medium-webfont.ttf') format('truetype'),
-         url('polices/Roboto-Medium-webfont.svg#Roboto') format('svg');
+    src: url('polices/roboto-medium-webfont.eot');
+    src: url('polices/roboto-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-medium-webfont.woff') format('woff'),
+         url('polices/roboto-medium-webfont.ttf') format('truetype'),
+         url('polices/roboto-medium-webfont.svg#Roboto') format('svg');
     font-weight: 500;
     font-style: normal;
 
@@ -168,11 +168,11 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('polices/Roboto-MediumItalic-webfont.eot');
-    src: url('polices/Roboto-MediumItalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('polices/Roboto-MediumItalic-webfont.woff') format('woff'),
-         url('polices/Roboto-MediumItalic-webfont.ttf') format('truetype'),
-         url('polices/Roboto-MediumItalic-webfont.svg#Roboto') format('svg');
+    src: url('polices/roboto-mediumitalic-webfont.eot');
+    src: url('polices/roboto-mediumitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-mediumitalic-webfont.woff') format('woff'),
+         url('polices/roboto-mediumitalic-webfont.ttf') format('truetype'),
+         url('polices/roboto-mediumitalic-webfont.svg#Roboto') format('svg');
     font-weight: 500;
     font-style: italic;
 
@@ -240,7 +240,7 @@ body { font-size: 0.8125em; font-family: "Roboto", helvetica, sans-serif; font-w
 
 /* Titraille / Intertitres */
 h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; font-weight: normal; font-size: 1em; font-family: Zag, helvetica, arial, sans-serif;}
-h1 { font-size: 4em; letter-spacing: 1px; color: #fff; }
+h1 { font-size: 3em; letter-spacing: 1px; color: #fff; }
 h2 { font-size: 1.40em; font-weight: 300; }
 h2, h2 a, h2 a:focus, h2 a:hover, h2 a:active { }
 h3 { font-size: 1.20em; font-weight: 500; }
@@ -264,10 +264,12 @@ form#modif ul li input,
 form#modif ul li textarea,
 .formulaire_spip input,
 .formulaire_spip textarea,
-.derniers_articles ul li {font-family: "Roboto", helvetica, sans-serif; font-weight: 300;}
+.derniers_articles ul li,
+.derniers_articles ul li h3 {font-family: "Roboto", helvetica, sans-serif; font-weight: 300;}
 
 /* Autres enrichissements typo */
-strong { font-weight: 500; }
+strong,
+.on { font-weight: 500; }
 em { font-style: italic; }
 abbr, acronym { border-bottom: 1px dotted; cursor: help; }
 small { font-size: 0.90em; }
@@ -275,6 +277,7 @@ dfn { font-weight: 500;  }
 del { text-decoration: line-through; }
 ins { background-color: white; color: #74de8a !important; text-decoration: none; }
 sup, sub { font-size: .8em; font-variant: normal; }
+
 
 /* Listes */
 ul.spip {} /* Cf.: spip_style.css */
@@ -351,7 +354,7 @@ hr {border: 0; padding: 0; margin: 0; background: transparent; clear: both; }
 #hierarchie, #hierarchie a { color: #254f44; }
 #hierarchie .on {border-bottom: 1px dotted #254f44}
 
-.cartouche { margin-bottom: 2em; }
+.cartouche { margin-bottom: 1em; }
 .cartouche .spip_logos { float: right; margin-left: 16px; margin-bottom: 4px; }
 .cartouche p { margin: 0; padding: 0; clear: left; }
 .surtitre, .soustitre { font-size: 0.90em; color: #666; text-transform: uppercase; letter-spacing: 0.10em; }
@@ -593,7 +596,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 .entrees li a 
 {
-	padding: 20px 10px 10px 10px;
+	padding: 15px 10px 10px 10px;
 }
 #sidebar .entrees li a {padding: 10px;}
 
@@ -614,7 +617,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 .themes li a big {width: 100%; line-height:1em; font-size: 1.5em;position: relative; z-index: 10}
 .entrees li a big {width: 80%;}
 
-.sommaire li a small {display: block;	line-height: 1.2em; font-size: 0.9em; font-weight: 400 }
+.sommaire li a small {display: block;	line-height: 1.1em; font-size: 0.9em; font-weight: 400 }
 .entrees li a small {width: 70%; line-height:1.2em; }
 
 .sommaire li a img.spip_logos,
@@ -627,7 +630,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 .sommaire .presentation {font-size: 1.02em;}
 .sommaire .themes li.presentation {background: transparent}
-.sommaire .themes li.presentation p {margin: 0; line-height: 1.1em;}
+.sommaire .themes li.presentation p {line-height: 1.1em;}
 
 
 /* ANIMATIONS
@@ -794,11 +797,9 @@ background-repeat: no-repeat;
 
 #sidebar ul li {margin: 0;}
 
+.derniers_articles h3 { font-size: 0.95em }
 
-.derniers_articles ul li * {
-	font-size: 1em;
-	text-decoration: none;
-}
+.derniers_articles ul li * { text-decoration: none; font-style: normal; }
 
 .derniers_articles ul li strong {font-weight: 500}
 .derniers_articles ul li abbr {color: #666; float: right}
@@ -833,15 +834,15 @@ background-repeat: no-repeat;
 .page_fiche #principal .top 
 {
 	border: 1px dotted #999;
-	padding: 5px 15px;
+	padding: 10px 15px 15px;
 	margin-bottom: 15px;
 	background: transparent url(./img/fond-transp.png) repeat center center; 
 	clear: both;
 }
-.page_fiche #principal .top li {margin-bottom: 5px; float: none; padding-top: 0.5em}
+.page_fiche #principal .top li {margin-bottom: 0; float: none; padding-top: 0}
 .page_fiche #principal li.top {margin-bottom: 5px;}
-.page_fiche #principal .top small {border-bottom: none; display: inline-table; width: 130px; text-align: right}
-.page_fiche #principal .top strong { font: 300 2.5em Zag, helvetica, sans-serif; float: none; border: none}
+.page_fiche #principal .top small {border-bottom: none; display: inline-table; width: 145px; float: none; vertical-align:baseline; text-align: right}
+.page_fiche #principal .top strong { font-size: 1.5em; font-weight: 300; float: none; border: none}
 
 .page_fiche #principal ul li small 
 {
@@ -850,13 +851,14 @@ background-repeat: no-repeat;
 	color: #333;
 	font-size: 1.1em;
 	float: left;
-	width: 23%;
+	width: 25%;
+	text-align: right;
 
 }
 
 .page_fiche #principal ul li strong 
 {
-	font-size: 13px;
+	font-size: 1.1em;
 	font-weight: 300;
 	color: #000;
 	float: right;
@@ -876,8 +878,9 @@ background-repeat: no-repeat;
 
 /*	LES FICHES PRECEDENT / SUIVANT
 	------------------------------ */
-
-.page_fiche #principal ul#suivprec li {text-transform: uppercase; }	
+.page_fiche #principal ul#suivprec .precedent {float: left;}
+.page_fiche #principal ul#suivprec .suivant {float: right; text-align: right}
+.page_fiche #principal ul#suivprec li {text-transform: uppercase; width: 50%; clear: none}	
 
 
 
@@ -1046,7 +1049,6 @@ form#modif ul li textarea,
 	.page_fiche #sidebar {width: 250px}
 	
 	.page_fiche #principal ul li small {font-size: 1.1em;}
-	.page_fiche #principal ul li strong {font-size: 1.3em}
 	
 	#sidebar .rubriques li {font-size: 1.1em}
 	
