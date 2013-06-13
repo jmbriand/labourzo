@@ -1,0 +1,1106 @@
+/* Labourzo CSS V2 */
+/* Essai zzz */
+/*
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/roboto-regular-webfont.eot');
+    src: url('polices/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-regular-webfont.woff') format('woff'),
+         url('polices/roboto-regular-webfont.ttf') format('truetype'),
+         url('polices/roboto-regular-webfont.svg#Roboto') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/roboto-italic-webfont.eot');
+    src: url('polices/roboto-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-italic-webfont.woff') format('woff'),
+         url('polices/roboto-italic-webfont.ttf') format('truetype'),
+         url('polices/roboto-italic-webfont.svg#Roboto') format('svg');
+    font-weight: 400;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-500-webfont.eot');
+    src: url('polices/Roboto-500-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-500-webfont.woff') format('woff'),
+         url('polices/Roboto-500-webfont.ttf') format('truetype'),
+         url('polices/Roboto-500-webfont.svg#Roboto') format('svg');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-500Italic-webfont.eot');
+    src: url('polices/Roboto-500Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-500Italic-webfont.woff') format('woff'),
+         url('polices/Roboto-500Italic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-500Italic-webfont.svg#Roboto') format('svg');
+    font-weight: 700;
+    font-style: italic;
+
+}
+*/
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('polices/robotocondensed-regular-webfont.eot');
+    src: url('polices/robotocondensed-regular.eot?#iefix') format('embedded-opentype'),
+         url('polices/robotocondensed-regular.woff') format('woff'),
+         url('polices/robotocondensed-regular.ttf') format('truetype'),
+         url('polices/robotocondensed-regular.svg#Roboto Condensed') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('polices/robotocondensed-italic-webfont.eot');
+    src: url('polices/robotocondensed-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/robotocondensed-italic-webfont.woff') format('woff'),
+         url('polices/robotocondensed-italic-webfont.ttf') format('truetype'),
+         url('polices/robotocondensed-italic-webfont.svg#Roboto Condensed') format('svg');
+    font-weight: 400;
+    font-style: italic;
+
+}
+/*
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('polices/Roboto-500Condensed-webfont.eot');
+    src: url('polices/Roboto-500Condensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-500Condensed-webfont.woff') format('woff'),
+         url('polices/Roboto-500Condensed-webfont.ttf') format('truetype'),
+         url('polices/Roboto-500Condensed-webfont.svg#Roboto Condensed') format('svg');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('polices/Roboto-500CondensedItalic-webfont.eot');
+    src: url('polices/Roboto-500CondensedItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-500CondensedItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-500CondensedItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-500CondensedItalic-webfont.svg#Roboto Condensed') format('svg');
+    font-weight: 700;
+    font-style: italic;
+
+}
+*/
+
+/*
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Thin-webfont.eot');
+    src: url('polices/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Thin-webfont.woff') format('woff'),
+         url('polices/Roboto-Thin-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Thin-webfont.svg#Roboto') format('svg');
+    font-weight: 100;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-ThinItalic-webfont.eot');
+    src: url('polices/Roboto-ThinItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-ThinItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-ThinItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-ThinItalic-webfont.svg#Roboto') format('svg');
+    font-weight: 100;
+    font-style: italic;
+
+}
+*/
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/roboto-light-webfont.eot');
+    src: url('polices/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-light-webfont.woff') format('woff'),
+         url('polices/roboto-light-webfont.ttf') format('truetype'),
+         url('polices/roboto-light-webfont.svg#Roboto') format('svg');
+    font-weight: 300;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/roboto-lightitalic-webfont.eot');
+	src: url('polices/roboto-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-lightitalic-webfont.woff') format('woff'),
+         url('polices/roboto-lightitalic-webfont.ttf') format('truetype'),
+         url('polices/roboto-lightitalic-webfont.svg#Roboto') format('svg');
+    font-weight: 300;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/roboto-medium-webfont.eot');
+    src: url('polices/roboto-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-medium-webfont.woff') format('woff'),
+         url('polices/roboto-medium-webfont.ttf') format('truetype'),
+         url('polices/roboto-medium-webfont.svg#Roboto') format('svg');
+    font-weight: 500;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/roboto-mediumitalic-webfont.eot');
+    src: url('polices/roboto-mediumitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/roboto-mediumitalic-webfont.woff') format('woff'),
+         url('polices/roboto-mediumitalic-webfont.ttf') format('truetype'),
+         url('polices/roboto-mediumitalic-webfont.svg#Roboto') format('svg');
+    font-weight: 500;
+    font-style: italic;
+
+}
+/*
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-Black-webfont.eot');
+    src: url('polices/Roboto-Black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-Black-webfont.woff') format('woff'),
+         url('polices/Roboto-Black-webfont.ttf') format('truetype'),
+         url('polices/Roboto-Black-webfont.svg#Roboto') format('svg');
+    font-weight: 900;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('polices/Roboto-BlackItalic-webfont.eot');
+    src: url('polices/Roboto-BlackItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/Roboto-BlackItalic-webfont.woff') format('woff'),
+         url('polices/Roboto-BlackItalic-webfont.ttf') format('truetype'),
+         url('polices/Roboto-BlackItalic-webfont.svg#Roboto') format('svg');
+    font-weight: 900;
+    font-style: italic;
+
+}
+*/
+
+
+
+@font-face {
+    font-family: 'Zag';
+    src: url('polices/zag_regular-webfont.eot');
+    src: url('polices/zag_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/zag_regular-webfont.woff') format('woff'),
+         url('polices/zag_regular-webfont.ttf') format('truetype'),
+         url('polices/zag_regular-webfont.svg#zag') format('svg');
+    font-weight: 300;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Zag';
+    src: url('polices/zag_bold-webfont.eot');
+    src: url('polices/zag_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('polices/zag_bold-webfont.woff') format('woff'),
+         url('polices/zag_bold-webfont.ttf') format('truetype'),
+         url('polices/zag_bold-webfont.svg#zag') format('svg');
+    font-weight: 500;
+    font-style: normal;
+
+}
+
+
+
+html { font-size: 100%; background: transparent url('./img/fond.gif') repeat center top; } /* Cf.: http://pompage.net/pompe/definir-des-tailles-de-polices-en-CSS/ */
+body { font-size: 0.8125em; font-family: "Roboto", helvetica, sans-serif; font-weight: 300; color: #254f44; }
+
+/* Titraille / Intertitres */
+h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; font-weight: normal; font-size: 1em; font-family: Zag, helvetica, arial, sans-serif;}
+h1 { font-size: 3em; letter-spacing: 1px; color: #fff; }
+h2 { font-size: 1.40em; font-weight: 300; }
+h2, h2 a, h2 a:focus, h2 a:hover, h2 a:active { }
+h3 { font-size: 1.20em; font-weight: 500; }
+h3.spip {} /* Cf.: spip_style.css */
+hr.spip {} /* Cf.: spip_style.css */
+
+.sommaire big,
+h1,
+#sidebar li a big,
+#pied ul li h4 {
+	font-family: Zag, helvetica, arial, sans-serif;
+	font-weight: 300;
+	text-transform: uppercase;
+}
+
+.sommaire li a,
+#sidebar .entrees li a,
+.sommaire li a small,
+.sommaire .presentation,
+form#modif ul li input,
+form#modif ul li textarea,
+.formulaire_spip input,
+.formulaire_spip textarea,
+.derniers_articles ul li,
+.derniers_articles ul li h3 {font-family: "Roboto", helvetica, sans-serif; font-weight: 300;}
+
+/* Autres enrichissements typo */
+strong,
+.on { font-weight: 500; }
+em { font-style: italic; }
+abbr, acronym { border-bottom: 1px dotted; cursor: help; }
+small { font-size: 0.90em; }
+dfn { font-weight: 500;  }
+del { text-decoration: line-through; }
+ins { background-color: white; color: #74de8a !important; text-decoration: none; }
+sup, sub { font-size: .8em; font-variant: normal; }
+
+
+/* Listes */
+ul.spip {} /* Cf.: spip_style.css */
+ol.spip {} /* Cf.: spip_style.css */
+dl {}
+dt {}
+dd {}
+li {list-style: none}
+ul {margin:0; padding: 0;}
+
+/* Citations, code et poesie */
+cite {}
+q {}
+blockquote {}
+blockquote.spip {} /* Cf.: spip_style.css */
+blockquote.spip_poesie {} /* Cf.: spip_style.css */
+.spip_code {} /* Cf.: spip_style.css */
+.spip_cadre {} /* Cf.: spip_style.css */
+address {}
+
+/* Tableaux */
+table.spip {} /* Cf.: spip_style.css */
+
+/* Logos, documents et images */
+img { margin: 0; padding: 0; border: 0; }
+.spip_logos {} /* Cf.: spip_style.css */
+.spip_documents {} /* Cf.: spip_style.css */
+.spip_documents_center {} /* Cf.: spip_style.css */
+.spip_documents_left {} /* Cf.: spip_style.css */
+.spip_documents_right {} /* Cf.: spip_style.css */
+.spip_doc_titre {} /* Cf.: spip_style.css */
+.spip_doc_descriptif {} /* Cf.: spip_style.css */
+
+
+/* ------------------------------------------
+/* Disposition a l'ecran des blocs principaux
+/* ------------------------------------------ */
+body { background: transparent; margin: 0; padding: 0; text-align: center; }
+
+#page { position: relative; text-align: left; }
+
+#principal { width: 530px; float: left;}
+#sidebar { float: right; width: 185px; }
+
+
+#entete { width: 100%; height:120px; position: relative}
+#entete a.accueil { display: block; width: 100%; height: 100%; background: transparent url(./img/tetiere.jpg) repeat center top}
+#entete a.accueil img.spip_logos { }
+#entete a.accueil #nom_site_spip { position: absolute; top:-500px }
+#entete .formulaire_menu_lang { text-align: right; width: 1000px; margin: 0 auto; } /*Cf.: spip_formulaires.css*/
+.formulaire_spip select {width: auto;}
+
+#conteneur {background: #fff url(./img/conteneur.jpg) repeat-x center top}
+#contenu {width: 740px; margin: 0 auto; padding-bottom: 40px; position:relative}
+
+#navigation { float: right; width: 30%; margin-top: 1em; overflow: hidden; }
+#extra { float: left; width: 185px; min-height: 350px; margin-top: 20px; }
+
+#pied { clear: both; padding: 0.40em 0; font-size: 0.90em; background: transparent url(./img/pied.gif) repeat-x left top; }
+
+/* Espaceur de blocs */
+.nettoyeur { clear: both; height: 0; margin: 0; padding: 0; border: 0; line-height: 1px; font-size: 1px; }
+hr {border: 0; padding: 0; margin: 0; background: transparent; clear: both; }
+
+/* Non visible a l'ecran */
+.invisible { position: absolute; top: -3000em; height: 1%; }
+
+
+/* ------------------------------------------
+/* Habillage des elements du contenu
+/* ------------------------------------------ */
+
+#hierarchie { clear: both; margin-bottom: 2em; font-size: 0.90em; }
+#hierarchie, #hierarchie a { color: #254f44; }
+#hierarchie .on {border-bottom: 1px dotted #254f44}
+
+.cartouche { margin-bottom: 1em; }
+.cartouche .spip_logos { float: right; margin-left: 16px; margin-bottom: 4px; }
+.cartouche p { margin: 0; padding: 0; clear: left; }
+.surtitre, .soustitre { font-size: 0.90em; color: #666; text-transform: uppercase; letter-spacing: 0.10em; }
+.cartouche .surtitre { margin-bottom: 0.30em; }
+.cartouche .soustitre { margin-top: 0.50em; margin-bottom: 0.30em; }
+.cartouche .traductions { font-size: 0.90em; }
+
+.chapo { margin-bottom: 1.50em; line-height: 1.40em; font-weight: 500; color: #000}
+.texte { line-height: 1.50em; padding: 5px 0}
+.hyperlien { display: block; padding: 0.50em 1em; font-weight: 500; color: #8B6F92; }
+.ps, .notes { margin-bottom: 2em; line-height: 1.40em; }
+.notes { clear: both; font-size: 0.90em; }
+
+abbr.published { border: 0; }
+
+/* Portfolio */
+#documents_portfolio { clear: both; margin: 2em auto; text-align: center; }
+#documents_portfolio .spip_logos { margin: 6px 3px 0 3px; border: 4px solid #DDD; }
+#documents_portfolio a.on .spip_logos { border-color: #F57900; }
+#documents_portfolio a:focus .spip_logos,
+#documents_portfolio a:hover .spip_logos,
+#documents_portfolio a:active .spip_logos { border-color: #8B6F92; }
+
+
+/* Habillage des forums
+---------------------------------------------- */
+.repondre { clear: both; margin-top: 2.50em; margin-right: 1em; text-align: right; font-weight: 500; }
+
+/* Habillage des forums */
+ul.forum { display: block; clear: both; margin: 0; padding: 0; }
+ul.forum, ul.forum ul { list-style: none; }
+.forum-fil { margin-top: 1.50em; }
+.forum-fil ul { display: block; margin: 0; padding: 0; margin-left: 1em; }
+.forum-chapo .forum-titre, .forum-chapo .forum-titre a { display: block; margin: 0; padding: 0; font-weight: 500; color: #333; }
+.forum-texte { margin: 0; padding: 0.50em 1em; color: #333; }
+.forum-texte .hyperlien {}
+.forum-texte .repondre { margin: 0; padding: 0.10em 0; text-align: right; }
+
+/* Boite d'un forum : eclaircissement progressif des bords */
+ul .forum-message { border: 1px solid #666; margin: 0; padding: 0; margin-bottom: 1em; }
+ul ul .forum-message { border: 1px solid #A4A4A4; }
+ul ul ul .forum-message { border: 1px solid #B8B8B8; }
+ul ul ul ul .forum-message { border: 1px solid #CCC; }
+ul ul ul ul ul .forum-message { border: 1px solid #E0E0E0; }
+ul ul ul ul ul ul .forum-message { border: 1px dotted #E0E0E0; }
+
+/* Boite de titre d'un forum : mise en couleur selon la profondeur du forum */
+ul .forum-chapo { border: 0; border-bottom: 1px dotted #B8B8B8; margin: 0; padding: 3px 6px 2px 6px; background: #C4E0E0; }
+ul ul .forum-chapo { background: #D4E8E8; }
+ul ul ul .forum-chapo { background: #E4F0F0; }
+ul ul ul ul .forum-chapo { background: #F4F8F8; border-bottom: 1px dotted #E0E0E0; }
+ul ul ul ul ul .forum-chapo { background: #FFF; }
+
+
+/* Habillage des petitions
+---------------------------------------------- */
+#signatures { clear: both; margin: 0 0 2em 0; padding: 0; background: none; }
+#signatures table { width: 100%; margin: 1em 0 0 0; }
+#signatures thead { text-align: center; color: #555; }
+#signatures td { padding: 0.50em; border: 2px solid #FEFEFE; vertical-align: top; }
+#signatures td.signature-date { background: #E4F0F0; text-align: center; white-space: nowrap; }
+#signatures td.signature-nom { background: #ECF4F4; text-align: center; }
+#signatures td.signature-nom small { display: block; }
+#signatures td.signature-message { background: #F4F8F8; }
+#signatures .formulaire_recherche { margin: 1em 0; text-align: right; } /*Cf.: spip_formulaires.css*/
+#signatures .formulaire_recherche input.text { width: 10em; text-align: left; } /*Cf.: spip_formulaires.css*/
+
+
+/* ------------------------------------------
+/* Sous-navigation et autres menus
+/* ------------------------------------------ */
+
+/* Habillage general des menus de navigation */
+.menu { clear: both; margin-bottom: 2em; text-align: left; }
+.menu p { margin: 0.20em 0; padding: 0.20em 0.10em; }
+.menu ul { margin: 0; padding: 0; list-style: none; }
+.menu ul li { margin: 0.20em 0; padding: 0.20em; }
+.menu ul li ul { margin-left: 1em; border: 0; }
+.menu ul li li { padding: 0; border: 0; }
+
+/* Pagination */
+.pagination { clear: both; text-align: right; font-size: 0.90em; color: #666; }
+.pagination .on { font-weight: 500; color: #666; }
+
+/* Rubriques */
+.rubriques ul { border: 0; }
+.rubriques ul li { border: 0; }
+
+.formulaire_recherche { margin-bottom: 2em; } /*Cf.: spip_formulaires.css*/
+
+/* Listes d'articles et extraits introductifs */
+.articles ul li { clear: both; padding: 0.40em 0.20em; }
+.articles ul li h3 { margin: 0.30em 0; }
+.articles .spip_logos { float: right; clear: right; margin: 0 0 4px 16px; }
+.articles ul li .enclosures { float: right; text-align: right; max-width: 60%; margin: 0; }
+.articles ul li .introduction { margin-top: 0.30em; line-height: 1.40em; }
+
+
+/* Couleurs des liens
+---------------------------------------------- */
+a,a.spip_out { color: #000; text-decoration: none; }
+a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
+
+
+
+
+
+
+/* ------------------------------------------
+/* PAGE RUBRIQUE
+/* ------------------------------------------ */
+
+
+#principal .liste 
+{
+	width:49%;
+	margin-right: 1%;
+	float: left;
+}
+
+#principal .demande {margin-right: 0;} /* Deuxieme colonne des listes*/
+#principal .petite_enfance {margin-top: 30px; float: none; width: 100%; margin-right: 0;}
+#principal .petite_enfance li {width:260px; margin-right: 5px; float: left}
+
+#principal .liste h2 {margin-bottom: 10px; padding: 0 10px; color: }
+
+
+#principal .liste ul li a 
+{
+	background: transparent url(./img/item-deco.gif) no-repeat right top;
+	display: block;
+	padding: 8px;
+	xpadding: 10px 10px 50px 50px;
+	color: #666;
+	border-width: 0 0 1px 1px;
+	border-style: solid;
+	border-color: #ccc;
+	margin-bottom: 5px;
+	text-decoration: none;
+	
+}
+
+#principal .liste ul li a:hover { background-position: right -200px; color: #000;}
+
+#principal .liste ul li a small,
+#principal .liste ul li a big,
+#principal .liste ul li a q {display: block; font-size: 13px;}
+
+#principal .offre ul li a small {text-transform: uppercase; font-size: 12px}
+#principal .liste ul li a big {font-weight: 500; font-size: 15px}
+#principal .liste ul li a q {quotes: none;}
+
+
+.page_rubrique .cartouche .spip_logos {float: left; margin: 0; padding: 0;}
+.page_rubrique .cartouche p {clear: none}
+.page_rubrique .chapo {margin-bottom: 5px; font-size: 14px;}
+
+
+#sidebar .rubriques ul {background: transparent}
+#sidebar .rubriques li 
+{
+	min-height: 50px;
+	-moz-border-radius: 5px; 
+  	-webkit-border-radius: 5px; 
+  	border-radius: 5px;
+  	margin-bottom: 25px;
+  	position: relative;
+	background-position: center center;
+	background-repeat: repeat-x;  	
+}
+
+#sidebar .rubriques li a {display: block; padding: 20px 20px 5px 5px; color: #fff}
+#sidebar .rubriques li a:hover {text-decoration: none;}
+#sidebar .rubriques li a big {display: block; text-transform: uppercase; font-weight: 500; letter-spacing: 1px;}
+
+#sidebar .rubriques li img {position: absolute; top: -20px; right: 0;}
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------------
+/* PAGE SOMMAIRE + ENTREES SIDEBAR
+/* ------------------------------------------ */
+
+.themes {padding-top: 0;}
+.entrees {padding-bottom: 25px;}
+#sidebar .entrees {margin-top: -20px}
+.sommaire {float:left; width: 555px;}
+
+.sommaire li,
+#sidebar .entrees li {
+	float: left;
+	position: relative;
+	list-style: none;
+	margin-right: 20px;
+	margin-top: 40px;
+	-moz-border-radius: 10px; 
+  	-webkit-border-radius: 10px; 
+  	border-radius: 10px;
+	background-position: center center;
+	background-repeat: repeat-x;  	
+	
+}
+
+.themes li 
+{
+	width: 165px;
+	height: 140px;
+	background-color: #333
+}
+
+.entrees li 
+{
+	width: 257px;
+	height: 70px;
+	background-image: url(./img/fond-entrees.gif);
+}
+
+#sidebar .entrees li {width: 185px; margin-top: 20px}
+
+.sommaire li a,
+#sidebar .entrees li a
+{
+	display: block;
+	color: #fff;
+	text-decoration: none;
+}
+
+.themes li a 
+{
+	padding: 45px 5px 10px 10px;
+}
+
+.entrees li a 
+{
+	padding: 15px 10px 10px 10px;
+}
+#sidebar .entrees li a {padding: 10px;}
+
+.sommaire li a big,
+#sidebar .entrees li a big
+{
+	display: block;
+	text-transform: uppercase;
+	font-size: 16px;
+	letter-spacing: 1px;
+	font-weight: 500;
+}
+
+#sidebar .entrees li a big {font-size: 14px}
+
+#sidebar .entrees li a small {line-height: 12px;}
+
+.themes li a big {width: 100%; line-height:1em; font-size: 1.5em;position: relative; z-index: 10}
+.entrees li a big {width: 80%;}
+
+.sommaire li a small {display: block;	line-height: 1.1em; font-size: 0.9em; font-weight: 400 }
+.entrees li a small {width: 70%; line-height:1.2em; }
+
+.sommaire li a img.spip_logos,
+#sidebar .entrees li a img.spip_logos
+ {position: absolute; right: 0;}
+.themes li a img.spip_logos {top: -25px; z-index: 9}
+.entrees li a img.spip_logos {top: -35px; }
+#sidebar .entrees li a img.spip_logos {top: -20px;right:-5px}
+
+
+.sommaire .presentation {font-size: 1.02em;}
+.sommaire .themes li.presentation {background: transparent}
+.sommaire .themes li.presentation p {line-height: 1.1em;}
+
+
+/* ANIMATIONS
+---------------------------------------------- */
+.section6, .section7 { background-image: url(./img/fond-animation.gif); }
+
+/* PETITE ENFANCE
+---------------------------------------------- */
+.section3, .section10 { background-image: url(./img/fond-petiteEnfance.gif); }
+
+/* ECOLES
+---------------------------------------------- */
+.section5, .section11 { background-image: url(./img/fond-ecole.gif); }
+
+/* ATSEM ACCOMPAGNEMENTS
+---------------------------------------------- */
+.section32, .section31 {
+background: #7db9e8;
+background: -moz-linear-gradient(top,  #7db9e8 0%, #386599 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7db9e8), color-stop(100%,#386599));
+background: -webkit-linear-gradient(top,  #7db9e8 0%,#386599 100%);
+background: -o-linear-gradient(top,  #7db9e8 0%,#386599 100%);
+background: -ms-linear-gradient(top,  #7db9e8 0%,#386599 100%);
+background: linear-gradient(to bottom,  #7db9e8 0%,#386599 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', endColorstr='#386599',GradientType=0 );
+
+}
+
+/* COMMERCE, AGRICULTURE
+---------------------------------------------- */
+.section34, .section33 {
+background: #c98686;
+background: -moz-linear-gradient(top,  #c98686 0%, #7f1919 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c98686), color-stop(100%,#7f1919));
+background: -webkit-linear-gradient(top,  #c98686 0%,#7f1919 100%);
+background: -o-linear-gradient(top,  #c98686 0%,#7f1919 100%);
+background: -ms-linear-gradient(top,  #c98686 0%,#7f1919 100%);
+background: linear-gradient(to bottom,  #c98686 0%,#7f1919 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c98686', endColorstr='#7f1919',GradientType=0 );
+
+}
+
+/* SANTE
+---------------------------------------------- */
+.section36, .section35 {
+background: #cccabf;
+background: -moz-linear-gradient(top,  #cccabf 0%, #8b8c7f 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccabf), color-stop(100%,#8b8c7f));
+background: -webkit-linear-gradient(top,  #cccabf 0%,#8b8c7f 100%);
+background: -o-linear-gradient(top,  #cccabf 0%,#8b8c7f 100%);
+background: -ms-linear-gradient(top,  #cccabf 0%,#8b8c7f 100%);
+background: linear-gradient(to bottom,  #cccabf 0%,#8b8c7f 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccabf', endColorstr='#8b8c7f',GradientType=0 );
+
+}
+
+/* MEDIAS
+---------------------------------------------- */
+.section38, .section37 {
+background: #dd3042;
+background: -moz-linear-gradient(top,  #dd3042 0%, #db002b 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dd3042), color-stop(100%,#db002b));
+background: -webkit-linear-gradient(top,  #dd3042 0%,#db002b 100%);
+background: -o-linear-gradient(top,  #dd3042 0%,#db002b 100%);
+background: -ms-linear-gradient(top,  #dd3042 0%,#db002b 100%);
+background: linear-gradient(to bottom,  #dd3042 0%,#db002b 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dd3042', endColorstr='#db002b',GradientType=0 );
+
+}
+
+/* TRADUCTIONS
+---------------------------------------------- */
+.section40, .section39 { 
+background: #9ddd6e;
+background: -moz-linear-gradient(top,  #9ddd6e 0%, #50c100 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#9ddd6e), color-stop(100%,#50c100));
+background: -webkit-linear-gradient(top,  #9ddd6e 0%,#50c100 100%);
+background: -o-linear-gradient(top,  #9ddd6e 0%,#50c100 100%);
+background: -ms-linear-gradient(top,  #9ddd6e 0%,#50c100 100%);
+background: linear-gradient(to bottom,  #9ddd6e 0%,#50c100 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ddd6e', endColorstr='#50c100',GradientType=0 );
+
+}
+
+/* ADMINISTRATIONS
+---------------------------------------------- */
+.section42, .section41 { background-image: url(./img/fond-babysitting.gif); }
+
+/* ARTS
+---------------------------------------------- */
+.section44, .section43 { 
+background: #fc8a8a;
+background: -moz-linear-gradient(top,  #fc8a8a 0%, #e85555 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fc8a8a), color-stop(100%,#e85555));
+background: -webkit-linear-gradient(top,  #fc8a8a 0%,#e85555 100%);
+background: -o-linear-gradient(top,  #fc8a8a 0%,#e85555 100%);
+background: -ms-linear-gradient(top,  #fc8a8a 0%,#e85555 100%);
+background: linear-gradient(to bottom,  #fc8a8a 0%,#e85555 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8a8a', endColorstr='#e85555',GradientType=0 );
+
+}
+
+/* DIVERS
+---------------------------------------------- */
+.section46, .section45 { background-image: url(./img/fond-actionCulturelle.gif); }
+
+
+
+
+
+
+/* MENU LANGUES
+---------------------------------------------- */
+
+#menu_langue 
+{
+position: absolute;
+right: 5px;
+top: -82px;
+width: 82px;
+height: 76px;
+}
+
+#menu_langue li {display: block; width: 100%; height: 100%;}
+#menu_langue li.off,
+#menu_langue li a em {display: none}
+
+#menu_langue li a
+{
+display: block;
+width: 100%;
+height: 100%;
+background-image: url(./img/bouton-fr-br.gif);
+background-color: transparent;
+background-repeat: no-repeat;
+}
+
+#menu_langue li a.fr { background-position: left 0; }
+
+#menu_langue li a.br { background-position: left -76px; }
+
+
+
+
+/* SIDEBAR
+---------------------------------------------- */
+.page_sommaire #sidebar {margin-top: 40px;}
+
+#sidebar h2 
+{
+	background: transparent url(./img/fond-dernieres-entrees-h2.gif) repeat-x center center;
+	margin: 0;
+	font: 14px/14px "Helvetica Neue", sans-serif;
+	text-transform: uppercase;
+	color: #fff;
+	padding: 5px;
+}
+
+#sidebar ul 
+{
+	background-color:#eee;
+	margin: 0 0 20px 0;
+}
+
+#sidebar ul li {margin: 0;}
+
+.derniers_articles h3 { font-size: 0.95em }
+
+.derniers_articles ul li * { text-decoration: none; font-style: normal; }
+
+.derniers_articles ul li strong {font-weight: 500}
+.derniers_articles ul li abbr {color: #666; float: right}
+
+.derniers_articles ul li small {display:block;}
+.derniers_articles ul li a {display: block; padding: 5px; border-bottom: 1px solid #999}
+.derniers_articles ul li a:hover { background: #999; color: #fff;}
+
+.derniers_articles ul#dernieres_offres em,
+.derniers_articles ul#dernieres_demandes strong {float: left;}
+
+.derniers_articles ul#dernieres_offres strong,
+.derniers_articles ul#dernieres_demandes em {display: block;}
+
+
+
+
+
+
+
+
+
+
+/* LES FICHES
+---------------------------------------------- */
+
+
+.page_fiche #principal ul {}
+
+.page_fiche #principal ul li {float: left; margin-bottom: 1em; clear: both; width: 100%}
+
+.page_fiche #principal .top 
+{
+	border: 1px dotted #999;
+	padding: 10px 15px 15px;
+	margin-bottom: 15px;
+	background: transparent url(./img/fond-transp.png) repeat center center; 
+	clear: both;
+}
+.page_fiche #principal .top li {margin-bottom: 0; float: none; padding-top: 0}
+.page_fiche #principal li.top {margin-bottom: 5px;}
+.page_fiche #principal .top small {border-bottom: none; display: inline-table; width: 145px; float: none; vertical-align:baseline; text-align: right}
+.page_fiche #principal .top strong { font-size: 1.5em; font-weight: 300; float: none; border: none}
+
+.page_fiche #principal ul li small 
+{
+	display: block;
+	text-transform: uppercase;
+	color: #333;
+	font-size: 1.1em;
+	float: left;
+	width: 25%;
+	text-align: right;
+
+}
+
+.page_fiche #principal ul li strong 
+{
+	font-size: 1.1em;
+	font-weight: 300;
+	color: #000;
+	float: right;
+	width: 73%;
+	padding-left: 2%;
+	margin-left: -1px;
+	border-left: 1px dotted #999;
+}
+
+.page_fiche #principal ul li.info_date {text-align: right;}
+.page_fiche #principal ul li.info_date strong,
+.page_fiche #principal ul li.info_date small {display: inline; float: none; text-transform:none; border: none;color: #666; font-size: 10px;}
+
+
+.page_fiche .nom_famille {text-transform: uppercase}
+
+
+/*	LES FICHES PRECEDENT / SUIVANT
+	------------------------------ */
+.page_fiche #principal ul#suivprec .precedent {float: left;}
+.page_fiche #principal ul#suivprec .suivant {float: right; text-align: right}
+.page_fiche #principal ul#suivprec li {text-transform: uppercase; width: 50%; clear: none}	
+
+
+
+
+/* FORMULAIRES
+---------------------------------------------- */
+
+/* form#modif label {float: left; width: 100px; text-align: right; padding-right: 5px;} */
+
+
+.formulaire_spip .boutons {padding: 5px 0;}
+.formulaire_spip .boutons input 
+{
+	margin-left: 0; 
+	background: transparent url("./img/fond-actionCulturelle.gif") repeat-x center center; 
+	border-style: outset;
+	-moz-border-radius: 5px; 
+  	-webkit-border-radius: 5px; 
+  	border-radius: 5px;	
+}
+
+.formulaire_spip fieldset {margin:0;padding:10px;background: transparent; border: 1px solid #999}
+
+
+.formulaire_spip fieldset legend
+{
+	xfont-family: "Georgia",serif;
+	font-weight: 300;
+	font-size: 12px;
+	text-transform: uppercase;
+	padding: 5px 10px;
+	border: 1px solid #999;
+	background: #eee;
+	color: #666;
+}
+
+form#modif li {margin-bottom: 20px;}
+form#modif li label,
+.formulaire_spip label
+{
+	display: block;
+	font: 300 18px Georgia, serif;
+}
+form#modif li.obligatoire label,
+.formulaire_spip li.obligatoire label {padding-left: 17px; background: transparent url(./img/etoile.gif) no-repeat left 3px}
+form#modif li.obligatoire li label {background: none; padding-left: 0;}
+
+form#modif li ul {padding-left: 15px}
+form#modif li li label 
+{
+	display: inline;
+	font: 300 12px "Helvetica Neue", Helvetica, sans-serif;	
+}
+
+form#modif li li {margin-bottom: 0;margin-top: 2px}
+
+form#modif ul li input,
+form#modif ul li textarea,
+.formulaire_spip input,
+.formulaire_spip textarea
+{
+	padding: 3px 3px 4px 3px; 
+	margin:0; 
+	color: #333; 
+	border: 1px solid #333;	
+	border-style: inset;
+}
+
+
+.acces #principal p,
+.acces #sidebar {margin-top: 0;}
+
+
+.identification 
+{
+	width:255px;
+	margin-right: 20px;
+	float: left;
+}
+
+#principal .nouveau {margin-right: 0} /*class = identification nouveau*/
+
+.identification #password,
+.identification #var_login 
+{
+	width: 150px;
+}
+
+.identification .texte,
+.identification .chapo
+{
+	margin: 0 0 15px 0;
+	font-size: 12px;
+	line-height: 16px;
+	font-weight: 300;
+	padding: 10px 20px;
+	color: #fff;
+	background: transparent url(./img/fond-babysitting.gif) repeat-x center center;
+	-moz-border-radius: 10px; 
+  	-webkit-border-radius: 10px; 
+  	border-radius: 10px;
+}
+
+.identification .texte {background-image: url(./img/fond-entrees.gif);
+}
+
+.identification .texte p,
+.identification .chapo p
+{margin: 0 ;}
+
+#formulaire_menu_lang label {text-align: right}
+
+
+
+
+
+/* LES CVs
+---------------------------------------------- */
+
+#principal #cv li,
+#principal #cv li a {float:left; clear: none; width: 75px; margin-right: 15px}
+
+#cv li a {width: 75px; height: 75px; display: block; margin: 10px 10px 10px 0;}
+#cv li.fr a {background: transparent url(./img/CV-FR.gif) no-repeat center center}
+#cv li.br a {background: transparent url(./img/CV-BZ.gif) no-repeat center center}
+#cv li a em {display: none}
+
+
+/* PIED DE PAGE
+---------------------------------------------- */
+
+#pied ul {width: 740px; margin: -25px auto 0 auto; position: relative; color: #fff;}
+#pied ul li {float: left}
+#pied ul li h4 {text-transform: uppercase; letter-spacing: 1px; font: 300 18px "Helvetica Neue", sans-serif; padding-top: 25px;}
+#pied ul li p {margin: 0; padding-bottom: 5px;}
+
+#pied ul li a {color: #fff; text-decoration: underline;}
+#pied ul li a:hover {color: #000; text-decoration: none;}
+
+#pied ul li.UBAPAR h4 {font-size: 24px}
+
+.UBAPAR {width: 240px;}
+
+.contact-mentions,
+.rss-plan,
+.acces-admin {width: 230px;}
+
+.UBAPAR,
+.contact-mentions { margin-right: 20px;}
+
+
+#pied ul li.acces-admin {text-align: right;}
+#pied ul li.acces-admin a {font-size: 11px; display: block; padding: 10px; text-transform: uppercase; color: #000; text-decoration: none;}
+#pied ul li.acces-admin a:hover {text-decoration: underline;}
+
+
+
+/*	ECRAN LARGE 980px
+	-----------------*/
+
+@media (min-width: 980px) {
+	.sommaire {width: 740px;}
+	#contenu {width: 925px} 
+	
+	.page_fiche #principal,
+	.page_rubrique #principal {width: 640px}
+	
+	.page_fiche #sidebar,
+	.page_rubrique #sidebar {width: 250px}
+	
+	.page_fiche #principal ul li small,
+	.page_rubrique #principal ul li small {font-size: 1.1em;}
+	
+	#sidebar .rubriques li {font-size: 1.1em}
+	
+}
+
+
+/*	ECRAN MOYEN 640px
+	-----------------*/
+@media (max-width: 640px) {
+
+	#menu_langue {left:250px; top: -120px}
+
+	#contenu,
+	#pied ul { width: 625px}
+	.sommaire {width: 380px; padding-left: 40px}
+	#sidebar {width: 180px;margin-right:20px}
+	.contact-mentions, .rss-plan, .acces-admin {width: 160px}
+	.entrees li {width: 350px}
+}
+
+
+
+/*	ECRAN PETIT 360px
+	-----------------*/
+
+@media (max-width: 360px) {
+
+	body {font-size: 1.1em; line-height: 1.3em}
+	.sommaire big, h1 {font-size: 1.5em}
+	
+	#menu_langue {left:100px; top: -120px}
+	
+	#contenu,
+	#pied ul,
+	.sommaire { width: 335px}
+	#sidebar,
+	.entrees li {width: 265px;}
+	
+	.entrees li {height: 80px}
+	
+	.themes li {width: 265px}
+	
+	.page_sommaire #sidebar {margin-right: 30px; margin-top: 20px}
+	
+	.entrees li small {font-size: 1em}
+	.contact-mentions, .rss-plan, .acces-admin {width: 160px}
+	
+	.sommaire li a small {line-height:1.3em; font-size: 0.8em}
+	.sommaire .presentation {font-size: 0.8em; line-height: 1.2em;}
+	.sommaire .presentation p {padding: 0 20px}
+	#pied ul li {padding: 20px}
+	
+	.derniers_articles ul li * {font-size: 0.9em}
+
+}
