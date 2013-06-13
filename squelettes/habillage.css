@@ -470,8 +470,8 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 #principal .liste 
 {
-	width:260px;
-	margin-right: 10px;
+	width:49%;
+	margin-right: 1%;
 	float: left;
 }
 
@@ -1045,10 +1045,14 @@ form#modif ul li textarea,
 	.sommaire {width: 740px;}
 	#contenu {width: 925px} 
 	
-	.page_fiche #principal {width: 640px}
-	.page_fiche #sidebar {width: 250px}
+	.page_fiche #principal,
+	.page_rubrique #principal {width: 640px}
 	
-	.page_fiche #principal ul li small {font-size: 1.1em;}
+	.page_fiche #sidebar,
+	.page_rubrique #sidebar {width: 250px}
+	
+	.page_fiche #principal ul li small,
+	.page_rubrique #principal ul li small {font-size: 1.1em;}
 	
 	#sidebar .rubriques li {font-size: 1.1em}
 	
