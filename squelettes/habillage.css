@@ -8,6 +8,7 @@
 /* ------------------------------------------ */
 
 
+/*
 @font-face {
     font-family: 'Roboto';
     src: url('polices/Roboto-Regular-webfont.eot');
@@ -55,6 +56,7 @@
     font-style: italic;
 
 }
+*/
 
 @font-face {
     font-family: 'Roboto Condensed';
@@ -79,6 +81,7 @@
     font-style: italic;
 
 }
+/*
 
 @font-face {
     font-family: 'Roboto Condensed';
@@ -103,6 +106,7 @@
     font-style: italic;
 
 }
+*/
 
 /*
 @font-face {
@@ -177,6 +181,7 @@
     font-style: italic;
 
 }
+/*
 
 @font-face {
     font-family: 'Roboto';
@@ -201,6 +206,7 @@
     font-style: italic;
 
 }
+*/
 
 
 
@@ -232,18 +238,12 @@
 }
 
 
-/*
-       Cufon.replace('.sommaire big');
-       Cufon.replace('h1');
-       Cufon.replace('#sidebar li a big');
-       Cufon.replace('#pied ul li h4');
-*/
 
 html { font-size: 100%; background: transparent url('./img/fond.gif') repeat center top; } /* Cf.: http://pompage.net/pompe/definir-des-tailles-de-polices-en-CSS/ */
 body { font-size: 0.8125em; font-family: "Roboto", helvetica, sans-serif; font-weight: 300; color: #254f44; }
 
 /* Titraille / Intertitres */
-h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; font-weight: normal; font-size: 1em; font-family: Georgia, Times, serif; }
+h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; font-weight: normal; font-size: 1em; font-family: Zag, helvetica, arial, sans-serif;}
 h1 { font-size: 4em; letter-spacing: 1px; color: #fff; }
 h2 { font-size: 1.40em; font-weight: 300; }
 h2, h2 a, h2 a:focus, h2 a:hover, h2 a:active { }
@@ -259,6 +259,16 @@ h1,
 	font-weight: 300;
 	text-transform: uppercase;
 }
+
+.sommaire li a,
+#sidebar .entrees li a,
+.sommaire li a small,
+.sommaire .presentation,
+form#modif ul li input,
+form#modif ul li textarea,
+.formulaire_spip input,
+.formulaire_spip textarea,
+.derniers_articles ul li {font-family: "Roboto", helvetica, sans-serif; font-weight: 300;}
 
 /* Autres enrichissements typo */
 strong { font-weight: 500; }
@@ -577,7 +587,6 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 {
 	display: block;
 	color: #fff;
-	font-family: "Helvetica Neue",helvetica,sans-serif;
 	text-decoration: none;
 }
 
@@ -604,31 +613,25 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 #sidebar .entrees li a big {font-size: 14px}
 
-.themes li a big {font-size: 20px} 
-
-.sommaire li a small
-{
-	line-height: 1.2em;
-}
-
 #sidebar .entrees li a small {line-height: 12px;}
 
-.themes li a big {width: 70%;}
+.themes li a big {width: 100%; line-height:1em; font-size: 1.5em;position: relative; z-index: 10}
 .entrees li a big {width: 80%;}
 
-.sommaire li a small {display: block;font-family: "Helvetica Neue",helvetica,sans-serif}
-.entrees li a small {width: 70%; line-height:13px; }
+.sommaire li a small {display: block;	line-height: 1.2em; font-size: 0.9em; font-weight: 400 }
+.entrees li a small {width: 70%; line-height:1.2em; }
 
 .sommaire li a img.spip_logos,
 #sidebar .entrees li a img.spip_logos
  {position: absolute; right: 0;}
-.themes li a img.spip_logos {top: -25px; }
+.themes li a img.spip_logos {top: -25px; z-index: 9}
 .entrees li a img.spip_logos {top: -35px; }
 #sidebar .entrees li a img.spip_logos {top: -20px;right:-5px}
 
 
-.sommaire .presentation {font-size: 11px; font-family: "Helvetica Neue", helvetica, sans-serif}
+.sommaire .presentation {font-size: 1.02em;}
 .sommaire .themes li.presentation {background: transparent}
+.sommaire .themes li.presentation p {margin: 0; line-height: 1.1em;}
 
 
 /* ANIMATIONS
@@ -796,9 +799,8 @@ background-repeat: no-repeat;
 #sidebar ul li {margin: 0;}
 
 
-.derniers_articles ul li * 
-{
-	font: 300 10px "Helvetica Neue", helvetica, sans-serif;
+.derniers_articles ul li * {
+	font-size: 1em;
 	text-decoration: none;
 }
 
@@ -941,7 +943,6 @@ form#modif ul li textarea,
 .formulaire_spip input,
 .formulaire_spip textarea
 {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	padding: 3px 3px 4px 3px; 
 	margin:0; 
 	color: #333; 
