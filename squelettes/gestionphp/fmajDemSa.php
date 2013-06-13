@@ -15,73 +15,72 @@
 <script src="squelettes/gestionphp/jquery.js"></script>
 <script type="text/javascript" src="squelettes/gestionphp/jquery.bgiframe.min.js"></script>
 <script type="text/javascript" src="squelettes/gestionphp/jquery.ajaxQueue.js"></script>
-<?php include("squelettes/inc-gmkey.html"); ?> 
+<?php include("squelettes/inc-gmkey.html"); ?>
+
 
 <script type="text/javascript">
-// GOOGLE MAPS
-    var map = null;
-    var geocoder = null;
-
-     function initialize() {     
-      if (GBrowserIsCompatible()) {
-        var lat = $("#dem_lat").val(); var lng = $("#dem_long").val();
-        // INSTANCE PETITE CARTE
-		  map1 = new GMap2(document.getElementById("previsu"));
-        map1.setCenter(new GLatLng(lat, lng), 13);
-        map1.addControl(new GSmallMapControl()); 
-        var point0 = new GLatLng(lat, lng) ;
-        var m0 = new GMarker(point0);
-        map1.addOverlay(m0);        
-        
-        // INSTANCE GRANDE CARTE 
-        map = new GMap2(document.getElementById("map_canvas"));        
-        if (lat == 0) {map.setCenter(new GLatLng(48, -2.61), 7);}
-        else {map.setCenter(new GLatLng(lat, lng), 13);}               
-        map.addControl(new GMapTypeControl());
-        map.addControl(new GSmallMapControl());
-        GEvent.addListener(map,"click", function(overlay,latlng) {     // CLICK = NOUVEAU POINT
-          if (latlng) {
-          	var lat = latlng.lat() ; lat = Math.round(lat*10000000)/10000000;
-          	var lng = latlng.lng() ; lng = Math.round(lng*10000000)/10000000;
-          	document.formCarte.clickLat.value = lat ;
-            document.formCarte.clickLng.value = lng ;
-            var myHtml = 'Lat : ' + lat + '<br />Long : ' + lng;
-            map.openInfoWindow(latlng, myHtml);       
-          }
-        });
-               
-        geocoder = new GClientGeocoder(); 
-      }
-    }
-        
-    function showAddress(address) {	// GEOCODAGE + AFFICHE COORDONNEES
-      if (geocoder) {
-        geocoder.getLatLng(
-          address,
-          function(point) {
-            if (!point) {
-              alert("Je n'ai pas trouvé :\n" + address + "\n Essayez de corrigez l'adresse ...");
-            } else {
-              map.setCenter(point, 13);              
-              var marker = new GMarker(point);
-              map.addOverlay(marker);
-              var lat = point.lat() ;
-				  var lng = point.lng() ;              
-              marker.openInfoWindowHtml(address+'<br />Latitude : '+lat+'<br />Longitude : '+lng);
-				  document.formCarte.clickLat.value = lat ;
-              document.formCarte.clickLng.value = lng ;
-            }
-          }
-        );
-      }
-    }
-   
-	 		var url;	 		
-	 function valider(url)		// MESSAGE D'ALERTE
-	 {
-			if (confirm("si vous avez modifi&eacute; cette fiche structure, cliquez sur le bouton [Annuller],\n puis  [Valider] pour enregistrer la fiche structure avant d'ajouter une activit&eacute;, \n sinon vos modifications seront perdues !"))
-			{window.location=url;}
-	 }	
+		var geocoder;
+		var map;
+		var gmarker;
+		var lat;
+		var lng;
+		
+		function initialize() {
+			geocoder = new google.maps.Geocoder();
+			lat = $("#dem_lat").val();
+			if(lat == 0) { lat = 48.1;} ;
+			lng = $("#dem_long").val();
+			if(lng == 0) { lng = -2.7;} ;
+			var latlng = new google.maps.LatLng(lat, lng);
+			var myOptions = {
+				zoom: 7,
+				center: latlng,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			}
+			
+			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+			
+			gmarker = new google.maps.Marker({
+						map: map,
+						draggable:true,
+						position: latlng
+					});
+			
+			document.getElementById("latbox").value = lat;
+			document.getElementById("lngbox").value = lng;
+			
+			google.maps.event.addListener(gmarker, 'position_changed', function () {
+	
+				document.getElementById("latbox").value = this.getPosition().lat();
+				document.getElementById("dem_lat").value = this.getPosition().lat();
+				document.getElementById("lngbox").value = this.getPosition().lng();
+				document.getElementById("dem_long").value = this.getPosition().lng();
+	
+			});
+		}
+		
+		function codeAddress() {
+			var address = document.getElementById("dem_ville").value;
+			
+			geocoder.geocode( { 'address': address}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					lat = results[0].geometry.location.lat();
+					document.getElementById("latbox").value = lat;
+					document.getElementById("dem_lat").value = lat;
+					lng = results[0].geometry.location.lng();
+					document.getElementById("lngbox").value = lng;
+					document.getElementById("dem_long").value = lng;
+				
+					map.setCenter(results[0].geometry.location);
+					
+					gmarker.setPosition(results[0].geometry.location);
+					
+				} else {
+					alert("Geocode was not successful for the following reason: " + status);
+				}
+			});
+		}     
+	
 
 $(document).ready(function(){	 
 	 $("#modif").submit(function() {	// VERIFIE SAISIE
@@ -110,54 +109,18 @@ $(document).ready(function(){
 		if(nbgeo > 0 && lat == 0) {alert('Veuillez valider un positionnement géographique S.V.P.');return false ;} ;
 		
 	});
-	
+});	
 		 
-	function carte() {	// MONTRE CARTE GOOGLE
-		$("#carte").css("left","0px") ;
-		var address = $("#dem_cp").val()+' '+$("#dem_ville").val();
-		$("#address").val(address);
-		$("#clickLat").val(0); $("#clickLng").val(0);
-		showAddress(address) ;
-	}
-	function masquerCarte () {
-		$("#carte").css({left:"-7000px"});
-	}
-	function localiser() {
-		$("#dem_lat").val($("#clickLat").val());
-		$("#dem_long").val($("#clickLng").val());
-		map1.setCenter(new GLatLng($("#clickLat").val(), $("#clickLng").val()), 13);
-		masquerCarte();
-		alert ("Vous devrez valider cette fiche pour enregistrer la nouvelle position"); 		
-	}
-	$("#coder").click(carte); 
-	$("#masquerCarte").click(masquerCarte);
-	$("#localiser").click(localiser) ;  
-
-}); 	 
-
-
 </script>
 
-<style type="text/css"><!--
-#carte {
-	left : -7000px;
-	top : 368px;
-	width: 606px;
-	padding:1px;
-	position: absolute;
-	background-color:#FFE4B3;
-	border: solid 1px grey;
-	display : block;
-}
-#previsu {
+<style type="text/css">
+#map_canvas {
 	width:390px; height:206px;
 	padding:1px;
 	background-color:#FFE4B3;
 	border: solid 1px grey
 }
---></style>
-<!-- <body  onload="initialize()" onunload="GUnload()"> -->
-
+</style>
  
 <?PHP 
 // CORRECTIONS VALEURS
@@ -219,7 +182,6 @@ if (isset($detruire))
 	 WHERE dem_id= $dem_id"; 
 	  
 //------ Exécution de l'ordre 
-//$connexion = connexion(SERVEUR, NOM, PASSE, BASE); 
 if (isset($requete)) {
 	$resultat = mysql_query	($requete, $connexion); 
 	if ($resultat) {
@@ -334,10 +296,15 @@ if (isset($requete)) {
 		<li class='obligatoire'><?php formInputText ('dem_email', 40, $ligne, _T('mel')); ?></li> 
 		<li><?php formInputText ('dem_cp', 7, $ligne, _T('code_postal')); ?></li>
 		<li class='obligatoire'><?php formInputText ('dem_ville', 40, $ligne, _T('commune')); ?>
-				 <br /><input type="button" value=<?php echo "\"" . _T('positionner') . "\"" ;?> id="coder" />
-				<span class="notes"><?php echo _T('sur_une_carte') ;?></span>
+			&nbsp;<input type="button" onclick="codeAddress()" value="Localiser">
+			<div>
+			Latitude:
+			<input id="latbox" type="text" value="" readonly="">
+			&nbsp; Longitude:
+			<input id="lngbox" type="text" value="" readonly="">
+			</div>
 			  </li>
-		<li><div id="previsu">Prévisualisation</div></li>
+		<li><div id="map_canvas"></div></li>
 		<li><?php echo _T('voiture') ;?>
 			<ul>
 				<li><?php formRadio ('dem_voit', 'Oui', $ligne, _T('oui')); ?></li>
@@ -376,19 +343,3 @@ if (isset($requete)) {
 	<?php boutonsValidation ('spip.php?page=sommaire', $ligne->dem_id, 'dem_') ; ?>
  
 </form> 
-
-<div id="carte" name="carte">
-<div style="float: right" id="masquerCarte"><a href="#">Fermer [X]</a></div>
-  <div class="titre">Trouver les coordonnées</div>
-    <form id='formCarte' name='formCarte' action="#" onsubmit="showAddress(this.address.value); return false">
-      <p><div>Vous pouver saisir une adresse, le nom d'une commune ...</div>     
-        <input type="text" size="50" name="address" id="address" />
-        <input type="hidden" size="10" id="clickLat" name="clickLat"/> 
-        <input type="hidden" size="10" id="clickLng" name="clickLng" />
-        <input type="submit" value="Géocoder" /> 
-      </p>
-      <div align="right">Ou cliquer sur un emplacement sur la carte et 
-      <input type="button" name="localiser" value="Valider" id="localiser" /> cette position</div>
-      <div id="map_canvas" style="width: 600px; height: 300px; margin:0px;"></div> 
-    </form>
-</div>
