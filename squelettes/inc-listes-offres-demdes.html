@@ -45,47 +45,7 @@
   [(#REM) Liste offres et Carte demandes Petite enfance ]
 <BOUCLE_petitenf(RUBRIQUES) {id_rubrique} {id_rubrique IN 3,10}>
 	<INCLURE{fond=inc-gmkey}>
- <script type="text/javascript">
-//<![CDATA[
-
-    function load() {
-      if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map_canvas"));
-        map.addControl(new GSmallMapControl());
-        map.addControl(new GMapTypeControl());
-        map.setCenter(new GLatLng(48, -2.6), 7);
-
-        GDownloadUrl("squelettes/gestionphp/phpsqlajax_genxml2PE.php", function(data) {
-          var xml = GXml.parse(data);
-          var markers = xml.documentElement.getElementsByTagName("marker");
-          for (var i = 0; i < markers.length; i++) {
-            var idaut = markers[i].getAttribute("idaut");
-            var prenom = markers[i].getAttribute("prenom");
-            var nom = markers[i].getAttribute("nom");
-            var cp = markers[i].getAttribute("cp");
-            var commune = markers[i].getAttribute("commune");
-            var point = new GLatLng(parseFloat(markers[i].getAttribute("lat")),
-                                    parseFloat(markers[i].getAttribute("lng")));
-            var marker = createMarker(point, prenom, nom, cp, commune, idaut);
-            map.addOverlay(marker);
-          }
-        });
-      } else {
-alert("Sorry, the Google Maps API is not compatible with this browser.");
-}
-    }
-
-    function createMarker(point, prenom, nom, cp, commune, idaut) {
-      var marker = new GMarker(point);
-      var html = "<b>" + prenom + "  " + nom + "</b> <br/>" + cp + "  " + commune + "<br/>" + 
-				      "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
-      GEvent.addListener(marker, 'click', function() {
-        marker.openInfoWindowHtml(html);
-      });
-      return marker;
-    }
-//]]>
-  </script>
+ <script type="text/javascript" src="squelettes/gestionphp/carto.js"></script>
 
 <div class="liste demande">
       <!-- <h2><:demandes_en_cours:></h2> -->
