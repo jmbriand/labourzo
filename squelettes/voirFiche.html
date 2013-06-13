@@ -293,75 +293,86 @@
 			</BOUCLE_accscolDe>
 			
 			<BOUCLE_commartiDe(ARTICLES) {id_article} {id_article IN 47,49}>
+				<ul id="suivprec">
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
 				<BOUCLE_precDCA(xx_demandr){dem_domaines LIKE %commarti%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
-					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+					<li class="precedent"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></li>
 				</BOUCLE_precDCA>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
 				<BOUCLE_suivDCA(xx_demandr){dem_domaines LIKE %commarti%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
-					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+					<li class="suivant"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></li>
 				</BOUCLE_suivDCA>
 			</BOUCLE_commartiDe>
 			
 			<BOUCLE_commediaDe(ARTICLES) {id_article} {id_article IN 56,57}>
+				<ul id="suivprec">
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
 				<BOUCLE_precDCM(xx_demandr){dem_domaines LIKE %commedia%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
-					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+					<li class="precedent"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></li>
 				</BOUCLE_precDCM>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
 				<BOUCLE_suivDCM(xx_demandr){dem_domaines LIKE %commedia%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
-					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+					<li class="suivant"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></li>
 				</BOUCLE_suivDCM>
+				</ul>
 			</BOUCLE_commediaDe>
 			
 			<BOUCLE_linguisDe(ARTICLES) {id_article} {id_article IN 60,61}>
+				<ul id="suivprec">
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
 				<BOUCLE_precDLI(xx_demandr){dem_domaines LIKE %linguis%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
-					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+					<li class="precedent"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></li>
 				</BOUCLE_precDLI>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
 				<BOUCLE_suivDLI(xx_demandr){dem_domaines LIKE %linguis%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
-					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+					<li class="suivant"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></li>
 				</BOUCLE_suivDLI>
+				</ul>
 			</BOUCLE_linguisDe>
 			
 			<BOUCLE_adminDe(ARTICLES) {id_article} {id_article IN 64,65}>
+				<ul id="suivprec">
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
 				<BOUCLE_precDAD(xx_demandr){dem_domaines LIKE %admin%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
-					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+					<li class="precedent"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></li>
 				</BOUCLE_precDAD>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
 				<BOUCLE_suivDAD(xx_demandr){dem_domaines LIKE %admin%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
-					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+					<li class="suivant"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></li>
 				</BOUCLE_suivDAD>
+				</ul>
 			</BOUCLE_adminDe>
 			
 			<BOUCLE_artsDe(ARTICLES) {id_article} {id_article IN 68,69}>
+				<ul id="suivprec">
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
 				<BOUCLE_precDAR(xx_demandr){dem_domaines LIKE %arts%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
-					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+					<li class="precedent"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></li>
 				</BOUCLE_precDAR>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
 				<BOUCLE_suivDAR(xx_demandr){dem_domaines LIKE %arts%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
-					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+					<li class="suivant"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></li>
 				</BOUCLE_suivDAR>
+				</ul>
 			</BOUCLE_artsDe>
 			
 			<BOUCLE_diversDe(ARTICLES) {id_article} {id_article IN 72,73}>
+				<ul id="suivprec">
 				     <!-- le lien vers la fiche précédente, de date de modif plus ancienne -->
 				<BOUCLE_precDDI(xx_demandr){dem_domaines LIKE %divers%} {par dem_datmodif}{dem_datmodif>#_demandeur:DEM_DATMODIF}{exclus}{0,1}>
-					<div><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></div>
+					<li class="precedent"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_precedente:></a></li>
 				</BOUCLE_precDDI>
 				
 				<!-- le lien vers la fiche suivante, de date de modif plus récente -->
 				<BOUCLE_suivDDI(xx_demandr){dem_domaines LIKE %divers%} {par dem_datmodif}{dem_datmodif<=#_demandeur:DEM_DATMODIF}{1,1}{inverse}>
-					<div align='right'><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></div>
+					<li class="suivant"><a href='spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID'><:fiche_suivante:></a></li>
 				</BOUCLE_suivDDI>
+				</ul>
 			</BOUCLE_diversDe>
 			
          <ul class="top">
