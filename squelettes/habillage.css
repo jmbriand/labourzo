@@ -791,7 +791,7 @@ background-repeat: no-repeat;
 
 #sidebar ul 
 {
-	background: transparent url(./img/fond-dernieres-entrees.gif) repeat-x center center;
+	background-color:#eee;
 	margin: 0 0 20px 0;
 }
 
