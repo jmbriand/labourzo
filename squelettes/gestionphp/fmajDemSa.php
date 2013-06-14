@@ -310,7 +310,102 @@ if (isset($requete)) {
 			  </li>
 		<li><div id="map_canvas"></div></li>
 		<li class='obligatoire'><label><?php echo _T('domaine') ;?></label>
-			<ul><?php formCheckboxEnum ('dem_domaines', $listedoms, $ligne, $labelsdoms); ?></ul>
+			<ul><!-- <?php formCheckboxEnum ('dem_domaines', $listedoms, $ligne, $labelsdoms); ?> -->
+			<?php
+				$s = "";
+				$valeur = $ligne->dem_domaines ;
+				if (ereg("anim", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[0]' id='dem_domaines[0]' value='anim' CHECKED>
+								&nbsp;<label for='dem_domaines[0]'>" . _T('anim') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[0]' id='dem_domaines[0]' value='anim'>
+								&nbsp;<label for='dem_domaines[0]'>" . _T('anim') . "</label></li>";
+				if (ereg("gardenf", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='gardenf' id='gardenf' value='ge' CHECKED>
+								&nbsp;<label for='gardenf'>" . _T('gardenf') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='gardenf' id='gardenf' value='ge'>
+								&nbsp;<label for='gardenf'>" . _T('gardenf') . "</label></li>";
+				$s .= "<li><ul>";
+					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf1' value='gardenf1' ";
+					if (ereg("gardenf1", $valeur)) $s .= "checked";
+					$s .= " />&nbsp;<label for='gardenf1'>gardenf1</label></li>";
+					
+					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf2' value='gardenf2' ";
+					if (ereg("gardenf2", $valeur)) $s .= "checked";
+					$s .= " />&nbsp;<label for='gardenf2'>gardenf2</label></li>";
+					
+					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf3' value='gardenf3' ";
+					if (ereg("gardenf3", $valeur)) $s .= "checked";
+					$s .= " />&nbsp;<label for='gardenf3'>gardenf3</label></li>";
+				$s .= "</ul></li>";
+				
+				if (ereg("enseignmt", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[2]' id='dem_domaines[2]' value='enseignmt' CHECKED>
+								&nbsp;<label for='dem_domaines[2]'>" . _T('enseignmt') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[2]' id='dem_domaines[2]' value='enseignmt'>
+								&nbsp;<label for='dem_domaines[2]'>" . _T('enseignmt') . "</label></li>";
+								
+				if (ereg("accompscol", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[3]' id='dem_domaines[3]' value='accompscol' CHECKED>
+								&nbsp;<label for='dem_domaines[3]'>" . _T('accompscol') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[3]' id='dem_domaines[3]' value='accompscol'>
+								&nbsp;<label for='dem_domaines[3]'>" . _T('accompscol') . "</label></li>";
+								
+				if (ereg("commarti", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[4]' id='dem_domaines[4]' value='commarti' CHECKED>
+								&nbsp;<label for='dem_domaines[4]'>" . _T('commarti') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[4]' id='dem_domaines[4]' value='commarti'>
+								&nbsp;<label for='dem_domaines[4]'>" . _T('commarti') . "</label></li>";
+
+				if (ereg("sante", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[5]' id='dem_domaines[5]' value='sante' CHECKED>
+								&nbsp;<label for='dem_domaines[5]'>" . _T('sante') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[5]' id='dem_domaines[5]' value='sante'>
+								&nbsp;<label for='dem_domaines[5]'>" . _T('sante') . "</label></li>";
+
+				if (ereg("commedia", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[6]' id='dem_domaines[6]' value='commedia' CHECKED>
+								&nbsp;<label for='dem_domaines[6]'>" . _T('commedia') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[6]' id='dem_domaines[6]' value='commedia'>
+								&nbsp;<label for='dem_domaines[6]'>" . _T('commedia') . "</label></li>";
+
+				if (ereg("linguis", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[7]' id='dem_domaines[7]' value='linguis' CHECKED>
+								&nbsp;<label for='dem_domaines[7]'>" . _T('linguis') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[7]' id='dem_domaines[7]' value='linguis'>
+								&nbsp;<label for='dem_domaines[7]'>" . _T('linguis') . "</label></li>";
+
+				if (ereg("admin", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[8]' id='dem_domaines[8]' value='admin' CHECKED>
+								&nbsp;<label for='dem_domaines[8]'>" . _T('admin') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[8]' id='dem_domaines[8]' value='admin'>
+								&nbsp;<label for='dem_domaines[8]'>" . _T('admin') . "</label></li>";
+
+				if (ereg("arts", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[9]' id='dem_domaines[9]' value='arts' CHECKED>
+								&nbsp;<label for='dem_domaines[9]'>" . _T('arts') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[9]' id='dem_domaines[9]' value='arts'>
+								&nbsp;<label for='dem_domaines[9]'>" . _T('arts') . "</label></li>";
+
+				if (ereg("divers", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[10]' id='dem_domaines[10]' value='divers' CHECKED>
+								&nbsp;<label for='dem_domaines[10]'>" . _T('divers') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[10]' id='dem_domaines[10]' value='divers'>
+								&nbsp;<label for='dem_domaines[10]'>" . _T('divers') . "</label></li>";
+								
+				echo $s ;
+			?>
+			</ul>
 		  </li>
 		<li class='obligatoire'><label for="dem_profpost"><?php echo _T('profil') ;?></label>
 				 <textarea rows="3" cols="40" name="dem_profpost" id="dem_profpost"><?php echo "$ligne->dem_profpost" ;?></textarea>
