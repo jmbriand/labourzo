@@ -103,6 +103,9 @@ $(document).ready(function(){
             return false; // The form will *not* submit
         }
 
+		profil = $("#dem_profpost").val();
+		if(profil.length<2) {alert('Veuillez préciser votre profil S.V.P. !');return false ;} ;
+		
 		lat = $("#dem_lat").val();
 		nbgeo = $('input[name="dem_domaines[1]"]:checked').length + 
 					$('input[name="dem_domaines[2]"]:checked').length ;
@@ -296,7 +299,8 @@ if (isset($requete)) {
 		<li class='obligatoire'><?php formInputText ('dem_email', 40, $ligne, _T('mel')); ?></li> 
 		<li><?php formInputText ('dem_cp', 7, $ligne, _T('code_postal')); ?></li>
 		<li class='obligatoire'><?php formInputText ('dem_ville', 40, $ligne, _T('commune')); ?>
-			&nbsp;<input type="button" onclick="codeAddress()" value="Localiser">
+			&nbsp;<input type="button" onclick="codeAddress()" value=<?php echo "\"" . _T('positionner') . "\"" ;?>>
+			<span class="notes"><?php echo _T('sur_une_carte') ;?></span>
 			<div>
 			Latitude:
 			<input id="latbox" type="text" value="" readonly="">
@@ -305,19 +309,13 @@ if (isset($requete)) {
 			</div>
 			  </li>
 		<li><div id="map_canvas"></div></li>
-		<li><?php echo _T('voiture') ;?>
-			<ul>
-				<li><?php formRadio ('dem_voit', 'Oui', $ligne, _T('oui')); ?></li>
-          	<li><?php formRadio ('dem_voit', 'Non', $ligne, _T('non')); ?></li>
-       	</ul>
- 		</li>
-		<li class='obligatoire'><?php echo _T('domaine') ;?>
+		<li class='obligatoire'><label><?php echo _T('domaine') ;?></label>
 			<ul><?php formCheckboxEnum ('dem_domaines', $listedoms, $ligne, $labelsdoms); ?></ul>
 		  </li>
-		<li><label for="dem_profpost"><?php echo _T('profil') ;?><span class="notes">(optionnel)</span></label>
+		<li class='obligatoire'><label for="dem_profpost"><?php echo _T('profil') ;?></label>
 				 <textarea rows="3" cols="40" name="dem_profpost" id="dem_profpost"><?php echo "$ligne->dem_profpost" ;?></textarea>
 			  </li>
-		<li><?php echo _T('diplomes') ;?>
+		<li><label><?php echo _T('diplomes') ;?></label>
 			<ul><?php formCheckboxEnum ('dem_diplomes', $listediplm, $ligne, $labelsdiplm); ?></ul>
 			</li>
 		<li><?php formInputText ('dem_diplodivers', 40, $ligne, _T('diplodivers')); ?></li> 
@@ -329,7 +327,7 @@ if (isset($requete)) {
 			  		<textarea rows="3" cols="40" name="dem_remq" id="dem_remq"><?php echo "$ligne->dem_remq" ;?></textarea>
       </li> 
      <?php if ($ligne->dem_id > '') { 
-			      echo "<li>" . _T('cv_formats')  . "<ul>" ;
+			      echo "<li><label>" . _T('cv_formats')  . "</label><ul>" ;
 			      echo "<li><label for=\"fichierbr\">" . _T('en_breton') . "</label><br />
 				   <input type=\"file\" name=\"cvbr\" id=\"fichierbr\"/></li>";
 			      echo "<li><label for=\"fichierfr\">" . _T('en_francais') . "</label><br />
