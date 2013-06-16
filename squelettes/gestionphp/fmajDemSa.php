@@ -12,8 +12,8 @@
 		$dem_idauteur = $auteur_session['id_auteur'];
 		$taille_max = 1048576 ;
 ?>
-<script src="squelettes/gestionphp/jquery.js"></script>
-<script type="text/javascript" src="squelettes/gestionphp/jquery.bgiframe.min.js"></script>
+<!-- <script src="squelettes/gestionphp/jquery.js"></script> -->
+<!-- <script type="text/javascript" src="squelettes/gestionphp/jquery.bgiframe.min.js"></script> -->
 <script type="text/javascript" src="squelettes/gestionphp/jquery.ajaxQueue.js"></script>
 <?php include("squelettes/inc-gmkey.html"); ?>
 
@@ -93,11 +93,25 @@ $(document).ready(function(){
 		commune = $("#dem_ville").val();
 		if(commune.length<2) {alert('Veuillez préciser votre commune S.V.P. !');return false ;} ;
 		
+       if ($('input[name="gardenf"]:checked').length) {	// si gardenf coche
+       		var $getypes = $(this).find('input[name="dem_domaines[1]"]:checked');
+       		if (!$getypes.length) {
+	            alert("Vous devez choisir au moins un type de garde d'enfants S.V.P. !");
+	            return false; // The form will *not* submit
+       		}
+        }
+
 		var $nbckb = $('input[name="dem_domaines[0]"]:checked').length + 
 					$('input[name="dem_domaines[1]"]:checked').length + 
 					$('input[name="dem_domaines[2]"]:checked').length + 
 					$('input[name="dem_domaines[3]"]:checked').length + 
-					$('input[name="dem_domaines[4]"]:checked').length;
+					$('input[name="dem_domaines[4]"]:checked').length + 
+					$('input[name="dem_domaines[5]"]:checked').length + 
+					$('input[name="dem_domaines[6]"]:checked').length + 
+					$('input[name="dem_domaines[7]"]:checked').length + 
+					$('input[name="dem_domaines[8]"]:checked').length + 
+					$('input[name="dem_domaines[9]"]:checked').length + 
+					$('input[name="dem_domaines[10]"]:checked').length;
        if ($nbckb < 1) {
             alert('Vous devez choisir au moins un domaine S.V.P. !');
             return false; // The form will *not* submit
@@ -107,11 +121,26 @@ $(document).ready(function(){
 		if(profil.length<2) {alert('Veuillez préciser votre profil S.V.P. !');return false ;} ;
 		
 		lat = $("#dem_lat").val();
-		nbgeo = $('input[name="dem_domaines[1]"]:checked').length + 
-					$('input[name="dem_domaines[2]"]:checked').length ;
+		nbgeo = $('input[name="dem_domaines[1]"]:checked').length + 	// garde enfants
+					$('input[name="dem_domaines[5]"]:checked').length ;	// santé
 		if(nbgeo > 0 && lat == 0) {alert('Veuillez valider un positionnement géographique S.V.P.');return false ;} ;
 		
 	});
+	
+	toggle_visibility = function (id) {
+		
+		var e = $("#"+id);
+		e.toggle();
+		
+	}
+	
+	visigetype = function () {
+		
+		toggle_visibility("getype");
+		$('input[name="dem_domaines[1]"]').prop('checked', false);
+		
+	}
+	
 });	
 		 
 </script>
@@ -225,11 +254,17 @@ if (isset($requete)) {
 					 $rez = execRequete ("SELECT * FROM xx_upcurvit WHERE up_idauteur = '$dem_idauteur' ", $connexion); 
 					 $ncv = mysql_num_rows($rez) ;
 					 if ($ncv < 1 and ( 
-					 	strpos($dem_domaines, 'C.V.L.') !== false ||
-					 	strpos($dem_domaines, 'Ecoles') !== false ||
-					 	strpos($dem_domaines, 'Action') !== false)
+					 	strpos($dem_domaines, 'anim') !== false ||
+					 	strpos($dem_domaines, 'enseignmt') !== false ||
+					 	strpos($dem_domaines, 'accompscol') !== false ||
+					 	strpos($dem_domaines, 'commarti') !== false ||
+					 	strpos($dem_domaines, 'commedia') !== false ||
+					 	strpos($dem_domaines, 'linguis') !== false ||
+					 	strpos($dem_domaines, 'admin') !== false ||
+					 	strpos($dem_domaines, 'arts') !== false ||
+					 	strpos($dem_domaines, 'divers') !== false)
 					 	) {
-					 	echo "<div class=alerte >" . _T('joindre_cv_svp') . "</div>";
+						 	echo "<div class=alerte >" . _T('joindre_cv_svp') . "</div>";
 					 };
 
 				};
@@ -303,9 +338,9 @@ if (isset($requete)) {
 			<span class="notes"><?php echo _T('sur_une_carte') ;?></span>
 			<div>
 			Latitude:
-			<input id="latbox" type="text" value="" readonly="">
+			<input id="latbox" type="text" value="" size="15" readonly="">
 			&nbsp; Longitude:
-			<input id="lngbox" type="text" value="" readonly="">
+			<input id="lngbox" type="text" value="" size="15" readonly="">
 			</div>
 			  </li>
 		<li><div id="map_canvas"></div></li>
@@ -321,24 +356,27 @@ if (isset($requete)) {
 					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[0]' id='dem_domaines[0]' value='anim'>
 								&nbsp;<label for='dem_domaines[0]'>" . _T('anim') . "</label></li>";
 				if (ereg("gardenf", $valeur) )
-					$s .= "<li><input type='CHECKBOX'  name='gardenf' id='gardenf' value='ge' CHECKED>
+					$s .= "<li><input type='CHECKBOX'  name='gardenf' id='gardenf' value='ge' onclick=\"visigetype()\" CHECKED>
 								&nbsp;<label for='gardenf'>" . _T('gardenf') . "</label></li>";
 				else 
-					$s .= "<li><input type='CHECKBOX'  name='gardenf' id='gardenf' value='ge'>
+					$s .= "<li><input type='CHECKBOX'  name='gardenf' id='gardenf' value='ge' onclick=\"visigetype()\">
 								&nbsp;<label for='gardenf'>" . _T('gardenf') . "</label></li>";
-				$s .= "<li><ul>";
+				if (ereg("gardenf", $valeur) )
+					$s .= "<div id='getype'><li><ul>";
+				else
+					$s .= "<div id='getype' style='display:none;'><li><ul>";
 					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf1' value='gardenf1' ";
 					if (ereg("gardenf1", $valeur)) $s .= "checked";
-					$s .= " />&nbsp;<label for='gardenf1'>gardenf1</label></li>";
+					$s .= " />&nbsp;<label for='gardenf1'>Baby-sitter</label></li>";
 					
 					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf2' value='gardenf2' ";
 					if (ereg("gardenf2", $valeur)) $s .= "checked";
-					$s .= " />&nbsp;<label for='gardenf2'>gardenf2</label></li>";
+					$s .= " />&nbsp;<label for='gardenf2'>Assitante maternelle agréée</label></li>";
 					
 					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf3' value='gardenf3' ";
 					if (ereg("gardenf3", $valeur)) $s .= "checked";
-					$s .= " />&nbsp;<label for='gardenf3'>gardenf3</label></li>";
-				$s .= "</ul></li>";
+					$s .= " />&nbsp;<label for='gardenf3'>Accueil collectif de jeunes enfants</label></li>";
+				$s .= "</ul></li></div>";
 				
 				if (ereg("enseignmt", $valeur) )
 					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[2]' id='dem_domaines[2]' value='enseignmt' CHECKED>
@@ -421,14 +459,15 @@ if (isset($requete)) {
 			  		<!-- <span class="notes"><?php echo _T('non_affiche') ;?></span> -->
 			  		<textarea rows="3" cols="40" name="dem_remq" id="dem_remq"><?php echo "$ligne->dem_remq" ;?></textarea>
       </li> 
-     <?php if ($ligne->dem_id > '') { 
+     <?php if ($ligne->dem_id > '' && $ligne->dem_domaines != "sante" && $ligne->dem_domaines != "gardenf1") { 
 			      echo "<li><label>" . _T('cv_formats')  . "</label><ul>" ;
 			      echo "<li><label for=\"fichierbr\">" . _T('en_breton') . "</label><br />
 				   <input type=\"file\" name=\"cvbr\" id=\"fichierbr\"/></li>";
 			      echo "<li><label for=\"fichierfr\">" . _T('en_francais') . "</label><br />
 				   <input type=\"file\" name=\"cvfr\" id=\"fichierfr\"/></li>";
 			      echo "</ul></li>" ;
-		     } else echo "<li>" . _T('enregistre_dabord') . "</li>"; 
+		     } else if ($ligne->dem_domaines != "sante" && $ligne->dem_domaines != "gardenf1")
+		     		echo "<li>" . _T('enregistre_dabord') . "</li>"; 
 	  ?>
        
 </ul>

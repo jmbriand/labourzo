@@ -22,8 +22,8 @@ if (!$db_selected) {
 } */
 
 // Select all the rows in the markers table
-
-$query = "SELECT * FROM ".TABLE_DEM." WHERE `dem_domaines` LIKE '%gardenf%'";
+$query = "SELECT `dem_idauteur`,`dem_nom`,`dem_prenom`,`dem_cp`,`dem_ville`,`dem_profpost`,`dem_diplomes`,`dem_lat`,`dem_long`,
+					SUBSTRING((REPLACE(`dem_domaines`, 'anim,', '')),1,8) as type FROM ".TABLE_DEM ." WHERE `dem_domaines` LIKE '%gardenf%'";
 $result = mysql_query($query);
 if (!$result) {  
   die('Invalid query: ' . mysql_error());
@@ -42,9 +42,11 @@ while ($row = @mysql_fetch_assoc($result)){
   $newnode->setAttribute("nom", $row['dem_nom']);
   $newnode->setAttribute("cp", $row['dem_cp']);
   $newnode->setAttribute("commune", $row['dem_ville']);
+  $newnode->setAttribute("diplomes", $row['dem_diplomes']);
+  $newnode->setAttribute("profpost", $row['dem_profpost']);
   $newnode->setAttribute("lat", $row['dem_lat']);
   $newnode->setAttribute("lng", $row['dem_long']);
-  $newnode->setAttribute("type", "coul");
+  $newnode->setAttribute("type", $row['type']);
 } 
 
 echo $dom->saveXML();
