@@ -11,11 +11,8 @@
 		$dem_id = $_REQUEST["dem_id"]; */
 		$dem_idauteur = $auteur_session['id_auteur'];
 		$taille_max = 1048576 ;
+	include("squelettes/inc-gmkey.html"); 
 ?>
-<!-- <script src="squelettes/gestionphp/jquery.js"></script> -->
-<!-- <script type="text/javascript" src="squelettes/gestionphp/jquery.bgiframe.min.js"></script> -->
-<script type="text/javascript" src="squelettes/gestionphp/jquery.ajaxQueue.js"></script>
-<?php include("squelettes/inc-gmkey.html"); ?>
 
 
 <script type="text/javascript">
@@ -367,15 +364,15 @@ if (isset($requete)) {
 					$s .= "<div id='getype' style='display:none;'><li><ul>";
 					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf1' value='gardenf1' ";
 					if (ereg("gardenf1", $valeur)) $s .= "checked";
-					$s .= " />&nbsp;<label for='gardenf1'>Baby-sitter</label></li>";
+					$s .= " />&nbsp;<label for='gardenf1'>" . _T('babysit') . "</label></li>";
 					
 					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf2' value='gardenf2' ";
 					if (ereg("gardenf2", $valeur)) $s .= "checked";
-					$s .= " />&nbsp;<label for='gardenf2'>Assitante maternelle agréée</label></li>";
+					$s .= " />&nbsp;<label for='gardenf2'>" . _T('assmat') . "</label></li>";
 					
 					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf3' value='gardenf3' ";
 					if (ereg("gardenf3", $valeur)) $s .= "checked";
-					$s .= " />&nbsp;<label for='gardenf3'>Accueil collectif de jeunes enfants</label></li>";
+					$s .= " />&nbsp;<label for='gardenf3'>" . _T('accueilcoll') . "</label></li>";
 				$s .= "</ul></li></div>";
 				
 				if (ereg("enseignmt", $valeur) )
