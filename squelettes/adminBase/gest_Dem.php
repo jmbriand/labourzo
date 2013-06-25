@@ -10,6 +10,70 @@
 <script type="text/javascript" src="squelettes/gestionphp/jquery.bgiframe.min.js"></script>
 <script type="text/javascript" src="squelettes/gestionphp/jquery.ajaxQueue.js"></script>
 
+<script type="text/javascript">
+
+$(document).ready(function(){	 
+	 $("#modif").submit(function() {	// VERIFIE SAISIE
+		nom = $("#dem_nom").val();
+		if(nom.length<2) {alert('Veuillez donner un nom S.V.P. !');return false ;} ;
+		
+		mel = $("#dem_email").val();
+		if(mel.lastIndexOf("@")<0) {alert('Veuillez donner une adresse e-mail valide S.V.P. !');return false ;} ;
+		
+		commune = $("#dem_ville").val();
+		if(commune.length<2) {alert('Veuillez préciser votre commune S.V.P. !');return false ;} ;
+		
+       if ($('input[name="gardenf"]:checked').length) {	// si gardenf coche
+       		var $getypes = $(this).find('input[name="dem_domaines[1]"]:checked');
+       		if (!$getypes.length) {
+	            alert("Vous devez choisir au moins un type de garde d'enfants S.V.P. !");
+	            return false; // The form will *not* submit
+       		}
+        }
+
+		var $nbckb = $('input[name="dem_domaines[0]"]:checked').length + 
+					$('input[name="dem_domaines[1]"]:checked').length + 
+					$('input[name="dem_domaines[2]"]:checked').length + 
+					$('input[name="dem_domaines[3]"]:checked').length + 
+					$('input[name="dem_domaines[4]"]:checked').length + 
+					$('input[name="dem_domaines[5]"]:checked').length + 
+					$('input[name="dem_domaines[6]"]:checked').length + 
+					$('input[name="dem_domaines[7]"]:checked').length + 
+					$('input[name="dem_domaines[8]"]:checked').length + 
+					$('input[name="dem_domaines[9]"]:checked').length + 
+					$('input[name="dem_domaines[10]"]:checked').length;
+       if ($nbckb < 1) {
+            alert('Vous devez choisir au moins un domaine S.V.P. !');
+            return false; // The form will *not* submit
+        }
+
+		profil = $("#dem_profpost").val();
+		if(profil.length<2) {alert('Veuillez préciser votre profil S.V.P. !');return false ;} ;
+		
+		lat = $("#dem_lat").val();
+		nbgeo = $('input[name="dem_domaines[1]"]:checked').length + 	// garde enfants
+					$('input[name="dem_domaines[5]"]:checked').length ;	// santé
+		if(nbgeo > 0 && lat == 0) {alert('Veuillez valider un positionnement géographique S.V.P.');return false ;} ;
+		
+	});
+	
+	toggle_visibility = function (id) {
+		
+		var e = $("#"+id);
+		e.toggle();
+		
+	}
+	
+	visigetype = function () {
+		
+		toggle_visibility("getype");
+		$('input[name="dem_domaines[1]"]').prop('checked', false);
+		
+	}
+	
+});	
+		 
+</script>
  
 <?PHP 
 // CORRECTIONS VALEURS
@@ -90,12 +154,12 @@ if ($dem_id != '') {
 	} else {
 		$resultat = execRequete ($mareq." ORDER BY dem_datmodif", $connexion); 
 	echo "<table cellpadding=\"1\" cellspacing=\"1\" border=\"1\" width=\"100%\">
-		<tr>
-			<td>id</td>
-			<td>Nom</td>
-			<td>Prénom</td>
-			<td>domaine</td>
-			<td>Date modif</td>
+		<tr align='center'>
+			<td><big>id</big></td>
+			<td><big>Nom</big></td>
+			<td><big>Prénom</big></td>
+			<td><big>domaine</big></td>
+			<td><big>Date modif</big></td>
 			<td> </td>
 		</tr>";
 		while ($ligne = mysql_fetch_object ($resultat)) {
@@ -154,24 +218,116 @@ if ($fiche == 0)  {
 		<?php $date = timestampeur($ligne->dem_datmodif); echo"$date </SPAN</li>";?>	 
 		<li><?php formInputText ('dem_nom', 40, $ligne, _T('nom_dem'));?>&nbsp;&nbsp;&nbsp;<?php formInputText ('dem_prenom', 40, $ligne, _T('prenom_dem'));?> </li> 
 		<li><?php formInputText ('dem_datnais', 20, $ligne, _T('datnaiss')); ?>  (jj-mm-aaaa)&nbsp;&nbsp;&nbsp;<?php formInputText ('dem_email', 40, $ligne, _T('mel')); ?></li> 
-		<li><?php formInputText ('dem_cp', 7, $ligne, _T('code_postal')); ?>&nbsp;&nbsp;&nbsp;<?php formInputText ('dem_ville', 40, $ligne, _T('commune')); ?>
-		&nbsp;&nbsp;&nbsp;<?php echo _T('voiture') ;?>
-			<ul>
-				<li><?php formRadio ('dem_voit', 'Oui', $ligne, _T('oui')); ?></li>
-          	<li><?php formRadio ('dem_voit', 'Non', $ligne, _T('non')); ?></li>
-       	</ul>
- 		</li>
+		<li><?php formInputText ('dem_cp', 7, $ligne, _T('code_postal')); ?>&nbsp;&nbsp;&nbsp;<?php formInputText ('dem_ville', 40, $ligne, _T('commune')); ?></li>
 		<li><?php echo _T('domaine') ;?>
-			<ul><?php formCheckboxEnum ('dem_domaines', $listedoms, $ligne, $labelsdoms); ?></ul>
+			<ul><!-- <?php formCheckboxEnum ('dem_domaines', $listedoms, $ligne, $labelsdoms); ?> -->
+			<?php
+				$s = "";
+				$valeur = $ligne->dem_domaines ;
+				if (ereg("anim", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[0]' id='dem_domaines[0]' value='anim' CHECKED>
+								&nbsp;<label for='dem_domaines[0]'>" . _T('anim') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[0]' id='dem_domaines[0]' value='anim'>
+								&nbsp;<label for='dem_domaines[0]'>" . _T('anim') . "</label></li>";
+				if (ereg("gardenf", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='gardenf' id='gardenf' value='ge' onclick=\"visigetype()\" CHECKED>
+								&nbsp;<label for='gardenf'>" . _T('gardenf') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='gardenf' id='gardenf' value='ge' onclick=\"visigetype()\">
+								&nbsp;<label for='gardenf'>" . _T('gardenf') . "</label></li>";
+				if (ereg("gardenf", $valeur) )
+					$s .= "<div id='getype'><li><ul>";
+				else
+					$s .= "<div id='getype' style='display:none;'><li><ul>";
+					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf1' value='gardenf1' ";
+					if (ereg("gardenf1", $valeur)) $s .= "checked";
+					$s .= " />&nbsp;<label for='gardenf1'>" . _T('babysit') . "</label></li>";
+					
+					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf2' value='gardenf2' ";
+					if (ereg("gardenf2", $valeur)) $s .= "checked";
+					$s .= " />&nbsp;<label for='gardenf2'>" . _T('assmat') . "</label></li>";
+					
+					$s .= "<li><input type='radio'  name='dem_domaines[1]'  id='gardenf3' value='gardenf3' ";
+					if (ereg("gardenf3", $valeur)) $s .= "checked";
+					$s .= " />&nbsp;<label for='gardenf3'>" . _T('accueilcoll') . "</label></li>";
+				$s .= "</ul></li></div>";
+				
+				if (ereg("enseignmt", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[2]' id='dem_domaines[2]' value='enseignmt' CHECKED>
+								&nbsp;<label for='dem_domaines[2]'>" . _T('enseignmt') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[2]' id='dem_domaines[2]' value='enseignmt'>
+								&nbsp;<label for='dem_domaines[2]'>" . _T('enseignmt') . "</label></li>";
+								
+				if (ereg("accompscol", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[3]' id='dem_domaines[3]' value='accompscol' CHECKED>
+								&nbsp;<label for='dem_domaines[3]'>" . _T('accompscol') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[3]' id='dem_domaines[3]' value='accompscol'>
+								&nbsp;<label for='dem_domaines[3]'>" . _T('accompscol') . "</label></li>";
+								
+				if (ereg("commarti", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[4]' id='dem_domaines[4]' value='commarti' CHECKED>
+								&nbsp;<label for='dem_domaines[4]'>" . _T('commarti') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[4]' id='dem_domaines[4]' value='commarti'>
+								&nbsp;<label for='dem_domaines[4]'>" . _T('commarti') . "</label></li>";
+
+				if (ereg("sante", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[5]' id='dem_domaines[5]' value='sante' CHECKED>
+								&nbsp;<label for='dem_domaines[5]'>" . _T('sante') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[5]' id='dem_domaines[5]' value='sante'>
+								&nbsp;<label for='dem_domaines[5]'>" . _T('sante') . "</label></li>";
+
+				if (ereg("commedia", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[6]' id='dem_domaines[6]' value='commedia' CHECKED>
+								&nbsp;<label for='dem_domaines[6]'>" . _T('commedia') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[6]' id='dem_domaines[6]' value='commedia'>
+								&nbsp;<label for='dem_domaines[6]'>" . _T('commedia') . "</label></li>";
+
+				if (ereg("linguis", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[7]' id='dem_domaines[7]' value='linguis' CHECKED>
+								&nbsp;<label for='dem_domaines[7]'>" . _T('linguis') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[7]' id='dem_domaines[7]' value='linguis'>
+								&nbsp;<label for='dem_domaines[7]'>" . _T('linguis') . "</label></li>";
+
+				if (ereg("admin", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[8]' id='dem_domaines[8]' value='admin' CHECKED>
+								&nbsp;<label for='dem_domaines[8]'>" . _T('admin') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[8]' id='dem_domaines[8]' value='admin'>
+								&nbsp;<label for='dem_domaines[8]'>" . _T('admin') . "</label></li>";
+
+				if (ereg("arts", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[9]' id='dem_domaines[9]' value='arts' CHECKED>
+								&nbsp;<label for='dem_domaines[9]'>" . _T('arts') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[9]' id='dem_domaines[9]' value='arts'>
+								&nbsp;<label for='dem_domaines[9]'>" . _T('arts') . "</label></li>";
+
+				if (ereg("divers", $valeur) )
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[10]' id='dem_domaines[10]' value='divers' CHECKED>
+								&nbsp;<label for='dem_domaines[10]'>" . _T('divers') . "</label></li>";
+				else 
+					$s .= "<li><input type='CHECKBOX'  name='dem_domaines[10]' id='dem_domaines[10]' value='divers'>
+								&nbsp;<label for='dem_domaines[10]'>" . _T('divers') . "</label></li>";
+								
+				echo $s ;
+			?>
+			</ul>
 		  </li>
 		<li><?php echo _T('diplomes') ;?>
 			<ul><?php formCheckboxEnum ('dem_diplomes', $listediplm, $ligne, $labelsdiplm); ?></ul>
 			</li>
 		<li><?php formInputText ('dem_diplodivers', 40, $ligne, _T('diplodivers')); ?></li> 
 		<li><label for="dem_profpost"><?php echo _T('profil') ;?><span class="notes">(optionnel)</span></label>
-				 <textarea rows="3" cols="40" name="dem_profpost" id="dem_profpost"><?php echo "$ligne->dem_profpost" ;?></textarea>
+				 <textarea rows="3" cols="30" name="dem_profpost" id="dem_profpost"><?php echo "$ligne->dem_profpost" ;?></textarea>
 			  &nbsp;&nbsp;&nbsp;<label for="dem_dispo"><?php echo _T('disponibilite') ;?></label>
-        <textarea rows="3" cols="40" name="dem_dispo" id="dem_dispo"><?php echo "$ligne->dem_dispo" ;?></textarea>
+        <textarea rows="3" cols="30" name="dem_dispo" id="dem_dispo"><?php echo "$ligne->dem_dispo" ;?></textarea>
       </li> 
       <li><label for="dem_remq"><?php echo _T('remarques') ;?></label>
 			  		<!-- <span class="notes"><?php echo _T('non_affiche') ;?></span> -->

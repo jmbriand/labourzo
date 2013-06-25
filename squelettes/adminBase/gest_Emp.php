@@ -89,12 +89,12 @@ if ($emp_id != '') {
 	} else {
 		$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." ORDER BY emp_datmodif", $connexion); 
 	echo "<table cellpadding=\"1\" cellspacing=\"1\" border=\"1\" width=\"100%\">
-		<tr>
-			<td>id</td>
-			<td>Employeur</td>
-			<td>Poste</td>
-			<td>domaine</td>
-			<td>Date modif</td>
+		<tr align='center'>
+			<td><big>id</big></td>
+			<td><big>Employeur</big></td>
+			<td><big>Poste</big></td>
+			<td><big>domaine</big></td>
+			<td><big>Date modif</big></td>
 			<td> </td>
 		</tr>";
 		while ($ligne = mysql_fetch_object ($resultat)) {

@@ -42,10 +42,10 @@
 </div>
 </BOUCLE_anim>
 
-  [(#REM) Liste offres et Carte demandes Petite enfance ]
+  [(#REM) Liste offres et Carte demandes Garde enfants ]
 <BOUCLE_petitenf(RUBRIQUES) {id_rubrique} {id_rubrique IN 3,10}>
 	<INCLURE{fond=inc-gmkey}>
- <script type="text/javascript" src="squelettes/gestionphp/carto.js"></script>
+ <script type="text/javascript" src="squelettes/gestionphp/cartoGarde.js"></script>
 
 <div class="liste demande">
       <!-- <h2><:demandes_en_cours:></h2> -->
@@ -198,6 +198,15 @@
 
   [(#REM) Listes des fiches Santé ]
 <BOUCLE_sante(RUBRIQUES) {id_rubrique} {id_rubrique IN 35,36}>
+	<INCLURE{fond=inc-gmkey}>
+ <script type="text/javascript" src="squelettes/gestionphp/cartoSante.js"></script>
+
+<div class="liste demande">
+      <!-- <h2><:demandes_en_cours:></h2> -->
+	<div id="map_canvas" style="width: 530px; height: 250px"></div>
+</div>
+  <div class="nettoyeur"></div>
+
 <div class="liste offre">
   <B_offresF>
       <h2><:offres_en_cours:></h2>
@@ -216,23 +225,6 @@
   <//B_offresF>
   </div>
 
-
-  <div class="liste demande">
-  <B_demandesF>
-      <h2><:demandes_en_cours:></h2>
-      <ul>
-          <BOUCLE_demandesF(xx_demandr) {dem_domaines LIKE %sante%} {par dem_datmodif}{inverse}>
-          <li>
-          	<a href="spip.php?page=voirFiche&id_article=[(#LANG|=={br}|?{'51','52'})]&dem_id=#DEM_ID">
-			<big>#DEM_PRENOM&nbsp;#DEM_NOM</big>
-			</a>
-          </li>
-          </BOUCLE_demandesF>
-      </ul>
-  </B_demandesF>
-     <h2><:aucune_demande:></h2>
-  <//B_demandesF>
-  </div>
 </BOUCLE_sante>
 
 

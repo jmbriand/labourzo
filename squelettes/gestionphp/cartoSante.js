@@ -1,18 +1,18 @@
 /*
-Script de recherche et affichage des gardes d'enfants sur carte
+Script de recherche et affichage métiers de la santé sur carte
 */
 
     var customIcons = {
-      restaurant: {
-        icon: 'http://labs.google.com/ridefinder/images/mm_20_blue.png',
+      sante: {
+        icon: 'squelettes/img/medicine.png',
         shadow: 'http://labs.google.com/ridefinder/images/mm_20_shadow.png'
       },
-      bar: {
+      gardenf2: {
         icon: 'http://labs.google.com/ridefinder/images/mm_20_red.png',
         shadow: 'http://labs.google.com/ridefinder/images/mm_20_shadow.png'
       },
-      coul: {
-        icon: 'http://labs.google.com/ridefinder/images/mm_20_blue.png',
+      gardenf3: {
+        icon: 'http://labs.google.com/ridefinder/images/mm_20_green.png',
         shadow: 'http://labs.google.com/ridefinder/images/mm_20_shadow.png'
       }
     };
@@ -27,7 +27,7 @@ Script de recherche et affichage des gardes d'enfants sur carte
       var bounds = new google.maps.LatLngBounds();
 
       // Change this depending on the name of your PHP file
-      downloadUrl("squelettes/gestionphp/phpsqlajax_genxml.php", function(data) {
+      downloadUrl("squelettes/gestionphp/phpsqlajax_genxmlSante.php", function(data) {
         var xml = data.responseXML;
         var markers = xml.documentElement.getElementsByTagName("marker");
         for (var i = 0; i < markers.length; i++) {
@@ -36,14 +36,15 @@ Script de recherche et affichage des gardes d'enfants sur carte
           var nom = markers[i].getAttribute("nom");
           var cp = markers[i].getAttribute("cp");
           var commune = markers[i].getAttribute("commune");
-//          var address = markers[i].getAttribute("address");
-          var type = markers[i].getAttribute("type");
+          var profpost = markers[i].getAttribute("profpost");
           var point = new google.maps.LatLng(
               parseFloat(markers[i].getAttribute("lat")),
               parseFloat(markers[i].getAttribute("lng")));
-          var html = "<b>" + prenom + "  " + nom + "</b> <br/>" + cp + "  " + commune + "<br/>" + 
-				      "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
-          var icon = customIcons[type] || {};
+          var html = "<b>" + prenom + "  " + nom + "</b> <br/>" + cp + "  " + commune + "<br/>";
+          if (profpost.length) 
+          	html += "Profil: " + profpost + "<br/>";
+          html += "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
+          var icon = customIcons["sante"] || {};
           var marker = new google.maps.Marker({
             map: map,
             position: point,
