@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: 'Roboto';
     src: url('polices/roboto-regular-webfont.eot');
@@ -45,7 +46,6 @@
     font-style: italic;
 
 }
-*/
 
 @font-face {
     font-family: 'Roboto Condensed';
@@ -258,7 +258,8 @@ form#modif ul li textarea,
 .formulaire_spip input,
 .formulaire_spip textarea,
 .derniers_articles ul li,
-.derniers_articles ul li h3 {font-family: "Roboto", helvetica, sans-serif; font-weight: 300;}
+.derniers_articles ul li h3,
+label small						 {font-family: "Roboto", helvetica, sans-serif; font-weight: 300;}
 
 /* Autres enrichissements typo */
 strong,
@@ -472,7 +473,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 #principal .petite_enfance {margin-top: 30px; float: none; width: 100%; margin-right: 0;}
 #principal .petite_enfance li {width:260px; margin-right: 5px; float: left}
 
-#principal .liste h2 {margin-bottom: 10px; padding: 0 10px; color: }
+#principal .liste h2 {margin-bottom: 10px; padding: 0 10px; }
 
 
 #principal .liste ul li a 
@@ -480,7 +481,6 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 	background: transparent url(./img/item-deco.gif) no-repeat right top;
 	display: block;
 	padding: 8px;
-	xpadding: 10px 10px 50px 50px;
 	color: #666;
 	border-width: 0 0 1px 1px;
 	border-style: solid;
@@ -883,6 +883,7 @@ background-repeat: no-repeat;
 
 /* form#modif label {float: left; width: 100px; text-align: right; padding-right: 5px;} */
 
+label small {font-size: 0.7em}
 
 .formulaire_spip .boutons {padding: 5px 0;}
 .formulaire_spip .boutons input 
@@ -900,7 +901,6 @@ background-repeat: no-repeat;
 
 .formulaire_spip fieldset legend
 {
-	xfont-family: "Georgia",serif;
 	font-weight: 300;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -940,6 +940,8 @@ form#modif ul li textarea,
 	color: #333; 
 	border: 1px solid #333;	
 	border-style: inset;
+	font-size: 1.1em;
+	font-weight: 400;
 }
 
 
@@ -1038,14 +1040,15 @@ form#modif ul li textarea,
 	.sommaire {width: 740px;}
 	#contenu {width: 925px} 
 	
-	.page_fiche #principal,
-	.page_rubrique #principal {width: 640px}
+	#principal,
+	#principal,
+	#principal {width: 640px}
 	
-	.page_fiche #sidebar,
-	.page_rubrique #sidebar {width: 250px}
+	#sidebar,
+	#sidebar {width: 250px}
 	
-	.page_fiche #principal ul li small,
-	.page_rubrique #principal ul li small {font-size: 1.1em;}
+	#principal ul li small,
+	#principal ul li small {font-size: 1.1em;}
 	
 	#sidebar .rubriques li {font-size: 1.1em}
 	
@@ -1064,6 +1067,7 @@ form#modif ul li textarea,
 	#sidebar {width: 180px;margin-right:20px}
 	.contact-mentions, .rss-plan, .acces-admin {width: 160px}
 	.entrees li {width: 350px}
+	#map_canvas {width: 630px; height: 310px}
 }
 
 
