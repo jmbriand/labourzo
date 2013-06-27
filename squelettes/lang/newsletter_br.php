@@ -10,6 +10,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ajouter_lien_newsletter' => 'Ajouter cette infolettre',
 
 
+	// B
+	'bouton_subscribe' => 'M\'inscrire à la Newsletter(bz)',
+	'bouton_unsubscribe' => 'Me désinscrire de la Newsletter(bz)',
+
 	// E
 	'explication_html_page_vide' => 'Permet d\'afficher dans le navigateur une version différente de celle envoyée par email (pour des raisons techniques ou éditoriales). Laissez le vide si vous voulez afficher la même version dans l\'email et dans le navigateur.',
 	'explication_baked' => 'Édition avancée&nbsp;: vous pouvez modifier directement le HTML et le texte de l\'infolettre. Elle ne sera plus générée automatiquement. Si vous repassez en édition normale vos modifications seront perdues.',
@@ -57,12 +61,18 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_selection_articles' => 'Selection d\'articles',
 	'label_selection_rubriques' => 'Selection de rubriques',
 	'label_selection_edito' => 'Selection éditoriale (articles&rubriques)',
-	'label_link_unsubscribe' => 'Me désinscrire de cette Infolettre(bz)',
+	'label_email_subscribe' => 'Email(bz)',
+	'label_email_unsubscribe' => 'Email(bz)',
+	'label_link_unsubscribe' => 'Me désinscrire de cette Newsletter(bz)',
   'lien_lire_en_ligne' => 'Lire en ligne',
 
 	// R
 	'retirer_lien_newsletter' => 'Retirer cette infolettre',
 	'retirer_tous_liens_newsletters' => 'Retirer toutes les infolettres',
+
+	// S
+	'subscribe_message_ok' => 'Votre inscription avec l\'adresse @email@ a bien été prise en compte(bz)',
+	'unsubscribe_message_ok' => 'L\'adresse @email@ a été désinscrite de la Newsletter(bz)',
 
 	// T
 	'texte_ajouter_newsletter' => 'Ajouter une infolettre',
