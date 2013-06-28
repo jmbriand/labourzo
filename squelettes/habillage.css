@@ -471,14 +471,20 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 /* PAGE RUBRIQUE
 /* ------------------------------------------ */
 
+#principal .liste {
+	width:48%;
+	margin-right: 2%;
+	float: left;
+	margin-top: 20px; 
+}
 
-#principal .liste 
-{
+#principal .liste.carte {
 	width:100%;
 /* 	margin-right: 1%; */
 /* 	float: left; */
-	margin-top: 20px; 
 }
+
+
 
 /* #principal .demande {margin-right: 0;} /* Deuxieme colonne des listes*/ */
 /*
@@ -492,7 +498,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 #principal .liste ul li a 
 {
-	background: transparent url(./img/item-deco.gif) no-repeat right top;
+	background: transparent url(./img/item-deco.png) no-repeat right top;
 	display: block;
 	padding: 8px;
 	color: #666;
@@ -1056,7 +1062,7 @@ form#modif ul li textarea,
 	#contenu {width: 990px} 
 	
 	#principal {width: 720px}
-	
+	#principal .liste {width: 48%; margin-right: 2%; float: left}
 	#sidebar,
 	#sidebar {width: 250px}
 	
@@ -1064,6 +1070,9 @@ form#modif ul li textarea,
 	#principal ul li small {font-size: 1.1em;}
 	
 	#sidebar .rubriques li {font-size: 1.1em}
+	
+	
+	
 	
 }
 
