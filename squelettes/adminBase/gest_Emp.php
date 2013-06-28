@@ -171,7 +171,7 @@ $ligne = mysql_fetch_object ($resultat);
 	echo "<label for=\"emp_mission\">" . _T('mission') . "</label>";
 	echo "<textarea rows=\"3\" cols=\"40\" name=\"emp_mission\" id=\"emp_mission\">" . $ligne->emp_mission . "</textarea>"; 
 	echo "&nbsp;&nbsp;&nbsp;";
-	echo "<label for=\"emp_profil\">" . _T('profil') . "</label>";
+	echo "<label for=\"emp_profil\">" . _T('profil') . "<small>" . _T('profil_info') . "</small></label>";
 	echo "<textarea rows=\"3\" cols=\"40\" name=\"emp_profil\" id=\"emp_profil\">" . $ligne->emp_profil . "</textarea>"; 
 	echo "</li><li>";
 	echo "<label>" . _T('type') . "</label>";
