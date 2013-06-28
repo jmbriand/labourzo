@@ -496,8 +496,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 
 #principal .liste ul {margin-left: -5px}
 
-#principal .liste ul li a 
-{
+#principal .liste ul li a {
 	background: transparent url(./img/item-deco.png) no-repeat right top;
 	display: block;
 	padding: 8px;
@@ -507,6 +506,7 @@ a:focus,a:hover,a:active { color: #000; text-decoration: underline; }
 	border-color: #ccc;
 	margin-bottom: 5px;
 	text-decoration: none;
+	min-height: 60px;
 	
 }
 
@@ -896,6 +896,25 @@ background-repeat: no-repeat;
 .page_fiche #principal ul#suivprec .suivant {float: right; text-align: right}
 .page_fiche #principal ul#suivprec li {text-transform: uppercase; width: 50%; clear: none}	
 
+.page_fiche #principal ul#suivprec li a {
+	 background: transparent url(./img/prev-next.png) no-repeat scroll 0 0 ;
+    color: #444;
+    padding: 4px 10px 5px 35px;
+    text-decoration: none;
+    height: 35px;
+    overflow: hidden;
+}
+.page_fiche #principal ul#suivprec li a:hover {color: #000}
+.page_fiche #principal ul#suivprec li.precedent a {
+	 background-position: left top;
+}
+
+.page_fiche #principal ul#suivprec li.suivant a {
+	 background-position: right bottom;
+	 padding-right: 35px;
+	 padding-left: 5px;
+}
+
 
 
 
@@ -946,10 +965,11 @@ form#modif li ul {padding-left: 15px}
 form#modif li li label 
 {
 	display: inline;
-	font: 300 12px "Helvetica Neue", Helvetica, sans-serif;	
+	font: 300 1.1em "Helvetica Neue", Helvetica, sans-serif;	
 }
 
 form#modif li li {margin-bottom: 0;margin-top: 2px}
+form#modif li li label small {font-size: 0.75em; display: block}
 
 form#modif ul li input,
 form#modif ul li textarea,
@@ -1066,8 +1086,8 @@ form#modif ul li textarea,
 	#sidebar,
 	#sidebar {width: 250px}
 	
-	#principal ul li small,
 	#principal ul li small {font-size: 1.1em;}
+	#principal ul li label small {font-size: 0.75em;display: block}
 	
 	#sidebar .rubriques li {font-size: 1.1em}
 	

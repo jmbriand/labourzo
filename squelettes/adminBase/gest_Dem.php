@@ -324,7 +324,7 @@ if ($fiche == 0)  {
 			<ul><?php formCheckboxEnum ('dem_diplomes', $listediplm, $ligne, $labelsdiplm); ?></ul>
 			</li>
 		<li><?php formInputText ('dem_diplodivers', 40, $ligne, _T('diplodivers')); ?></li> 
-		<li><label for="dem_profpost"><?php echo _T('profil') ;?><span class="notes">(optionnel)</span></label>
+		<li><label for="dem_profpost"><?php echo _T('profil') . "<small>" . _T('profil_info') . "</small>"; ?><span class="notes">(optionnel)</span></label>
 				 <textarea rows="3" cols="30" name="dem_profpost" id="dem_profpost"><?php echo "$ligne->dem_profpost" ;?></textarea>
 			  &nbsp;&nbsp;&nbsp;<label for="dem_dispo"><?php echo _T('disponibilite') ;?></label>
         <textarea rows="3" cols="30" name="dem_dispo" id="dem_dispo"><?php echo "$ligne->dem_dispo" ;?></textarea>
