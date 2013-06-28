@@ -23,7 +23,9 @@ Script de recherche et affichage des gardes d'enfants sur carte
         zoom: 10,
         mapTypeId: 'roadmap'
       });
-      var infoWindow = new google.maps.InfoWindow;
+      var infoWindow = new google.maps.InfoWindow({
+      	maxWidth: 500
+      });
       var bounds = new google.maps.LatLngBounds();
 
       // Change this depending on the name of your PHP file
