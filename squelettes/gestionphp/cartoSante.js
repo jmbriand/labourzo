@@ -42,7 +42,7 @@ Script de recherche et affichage métiers de la santé sur carte
               parseFloat(markers[i].getAttribute("lng")));
           var html = "<b>" + prenom + "  " + nom + "</b> <br/>" + cp + "  " + commune + "<br/>";
           if (profpost.length) 
-          	html += "Profil: " + profpost + "<br/>";
+          	html += "Profil&nbsp;: " + profpost + "<br/>";
           html += "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
           var icon = customIcons["sante"] || {};
           var marker = new google.maps.Marker({

@@ -50,9 +50,9 @@ Script de recherche et affichage des gardes d'enfants sur carte
           else
           	html += "<h3>Accueil collectif de jeunes enfants</h3><br/>"; 
           if (diplomes.length) 
-          	html += "Diplômes: " + diplomes + "<br/>"; 
+          	html += "Diplômes&nbsp;: " + diplomes + "<br/>"; 
           if (profpost.length) 
-          	html += "Profil: " + profpost + "<br/>";
+          	html += "Profil&nbsp;: " + profpost + "<br/>";
           html += "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
           var icon = customIcons[type] || {};
           var marker = new google.maps.Marker({
