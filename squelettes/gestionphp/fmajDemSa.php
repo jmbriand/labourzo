@@ -144,7 +144,7 @@ $(document).ready(function(){
 
 <style type="text/css">
 #map_canvas {
-	width:390px; height:206px;
+	width:100%; height:400px;
 	padding:1px;
 	background-color:#FFE4B3;
 	border: solid 1px grey
@@ -442,7 +442,7 @@ if (isset($requete)) {
 			?>
 			</ul>
 		  </li>
-		<li class='obligatoire'><label for="dem_profpost"><?php echo _T('profil') ;?></label>
+		<li class='obligatoire'><label for="dem_profpost"><?php echo _T('profil') . "<small>" . _T('profil_info') . "</small>" ;?></label>
 				 <textarea rows="3" cols="40" name="dem_profpost" id="dem_profpost"><?php echo "$ligne->dem_profpost" ;?></textarea>
 			  </li>
 		<li><label><?php echo _T('diplomes') ;?></label>
