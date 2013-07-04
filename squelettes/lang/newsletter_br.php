@@ -11,12 +11,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 
 	// B
-	'bouton_subscribe' => 'M\'inscrire à la Newsletter(bz)',
-	'bouton_unsubscribe' => 'Me désinscrire de la Newsletter(bz)',
+	'bouton_subscribe' => 'Koumanantiñ d’an newsletter',
+	'bouton_unsubscribe' => 'Digoumanantiñ diouzh an newsletter',
 
 	// E
-	'explication_html_page_vide' => 'Permet d\'afficher dans le navigateur une version différente de celle envoyée par email (pour des raisons techniques ou éditoriales). Laissez le vide si vous voulez afficher la même version dans l\'email et dans le navigateur.',
-	'explication_baked' => 'Édition avancée&nbsp;: vous pouvez modifier directement le HTML et le texte de l\'infolettre. Elle ne sera plus générée automatiquement. Si vous repassez en édition normale vos modifications seront perdues.',
+	'explication_html_page_vide' => 'Permet d’afficher dans le navigateur une version différente de celle envoyée par email (pour des raisons techniques ou éditoriales). Laissez le vide si vous voulez afficher la même version dans l’email et dans le navigateur.',
+	'explication_baked' => 'Édition avancée&nbsp;: vous pouvez modifier directement le HTML et le texte de l’infolettre. Elle ne sera plus générée automatiquement. Si vous repassez en édition normale vos modifications seront perdues.',
 	'explication_baked_publie' => 'Cette infolettre est figée&nbsp;: vous pouvez corriger son HTML ou son texte mais vous ne pouvez plus modifier son éditorial ni la regénérer à partir de son modèle.',
 
 	// I
@@ -31,8 +31,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_newsletters_prog' => '@nb@ infolettres programmées',
 	'info_newsletters_auteur' => 'Les infolettres de cet auteur',
 	'info_newsletter_generer' => 'Générer l\'infolettre (Version HTML et version texte)',
-	'info_email_not_displaying' => 'Cet email ne s\'affiche pas correctement&nbsp;?(bz)',
-	'info_email_voir_en_ligne' => 'Voir cette Infolettre dans votre navigateur(bz)',
+	'info_email_not_displaying' => 'Ne vez ket gwelet brav ar gemennadenn-se ?',
+	'info_email_voir_en_ligne' => 'Gwelet al lizher-se en ho merdeer web',
 	'info_test_sujet' => 'TEST',
 	'info_publier_pour_envoyer' => 'Publiez cette infolettre pour l’envoyer à une liste',
 
@@ -48,11 +48,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_a_lire_sur' => 'A lire sur(bz) @site@',
 	'label_chapo' => 'Chapeau',
 	'label_date_redac' => 'Date de rédaction',
-	'label_inscrit_newsletter' => 'Vous êtes inscrit pour recevoir des nouvelles par mail de @site@(bz)',	
+	'label_inscrit_newsletter' => 'Koumanantet oc’h evit reseviñ kinnigoù-labour diwezhañ @site@',	
 	'label_texte' => 'Texte',
 	'label_titre' => 'Titre',
 	'label_patron' => 'Modèle',
-	'label_publie' => 'Publié le(bz) :',	
+	'label_publie' => 'Embannet d’an :',	
 	'label_html_email' => 'Version HTML',
 	'label_texte_email' => 'Version Texte',
 	'label_html_page' => 'Version HTML affichée dans le navigateur',
@@ -61,9 +61,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_selection_articles' => 'Selection d\'articles',
 	'label_selection_rubriques' => 'Selection de rubriques',
 	'label_selection_edito' => 'Selection éditoriale (articles&rubriques)',
-	'label_email_subscribe' => 'Email(bz)',
-	'label_email_unsubscribe' => 'Email(bz)',
-	'label_link_unsubscribe' => 'Me désinscrire de cette Newsletter(bz)',
+	'label_email_subscribe' => 'Postel',
+	'label_email_unsubscribe' => 'Postel',
+	'label_link_unsubscribe' => 'Digoumanantiñ diouzh an newsletter',
   'lien_lire_en_ligne' => 'Lire en ligne',
 
 	// R
@@ -71,8 +71,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'retirer_tous_liens_newsletters' => 'Retirer toutes les infolettres',
 
 	// S
-	'subscribe_message_ok' => 'Votre inscription avec l\'adresse @email@ a bien été prise en compte(bz)',
-	'unsubscribe_message_ok' => 'L\'adresse @email@ a été désinscrite de la Newsletter(bz)',
+	'subscribe_message_ok' => 'Degemeret eo bet ganeomp ho koumanant dre ar postel @email@.',
+	'unsubscribe_message_ok' => 'Digoumanantet eo bet ar postel @email@ diouzh an newsletter',
 
 	// T
 	'texte_ajouter_newsletter' => 'Ajouter une infolettre',

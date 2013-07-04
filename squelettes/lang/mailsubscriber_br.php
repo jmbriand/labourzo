@@ -11,13 +11,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_previsu_importer' => 'Prévisualiser',
 
 	// C
-	'confirmsubscribe_sujet_email' => '[@nom_site_spip@] Confirmation d\'inscription à la Newsletter(bz)',
-	'confirmsubscribe_titre_email' => 'Confirmation d\'inscription à la Newsletter(bz)',
-	'confirmsubscribe_texte_email_1' => 'Vous avez demandé à vous inscrire à la Newsletter de @nom_site_spip@ avec l\'adresse email @email@.(bz)',
-	'confirmsubscribe_texte_email_2' => 'Pour confirmer votre inscription, merci de cliquer sur le lien suivant :(bz)
+	'confirmsubscribe_sujet_email' => '[@nom_site_spip@] Kadarnaat ho koumanant d’an newsletter',
+	'confirmsubscribe_titre_email' => 'Kadarnaat ho koumanant d’an newsletter',
+	'confirmsubscribe_texte_email_1' => 'Goulennet ho peus koumanantiñ da newsletter Labourzo dre ar bostel @email@.',
+	'confirmsubscribe_texte_email_2' => 'Klikañ war al liamm da heul evit kadarnaat ho koumanant :
 @url_confirmsubscribe@',
-	'confirmsubscribe_texte_email_3' => 'Si il s\'agit d\'une erreur de notre part ou si vous avez changé d\'avis, vous pouvez ignorer ce mail&nbsp;: cette demande sera automatiquement annulée.(bz)',
-	'confirmsubscribe_texte_email_envoye' => 'Un email a été envoyé à cette adresse pour confirmation.(bz)',
+	'confirmsubscribe_texte_email_3' => 'Ma’z omp faziet, pe ma’z eo troet ho meno, ne dennit ket splet ouzh ar mail-se. Nullet e vo ar goulenn koumanant.',
+	'confirmsubscribe_texte_email_envoye' => 'Kaset zo bet ur gemennadenn d’ar postel-se, deoc’h da gadarnaat ho c’hoant da goumanantiñ',
 
 	// E
 	'erreur_adresse_existante' => 'Cette adresse email est déjà dans la liste',
@@ -42,7 +42,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_nom' => 'Nom',
 	'label_optin' => 'Opt-in',
 	'label_statut' => 'Statut',
-	'label_mailsubscriber_optin' => 'Je veux recevoir la Newsletter(bz)',
+	'label_mailsubscriber_optin' => 'Fellout a ra din reseviñ an newsletter',
 	'label_file_import' => 'Fichier à importer',
 	'label_toutes_les_listes' => 'Toutes',
 	'label_desactiver_notif_1' => 'Desactiver la notification des inscriptions pour cet import',
@@ -57,22 +57,22 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'mailsubscribers_poubelle' => 'Supprimés',
 
 	// S
-	'subscribe_sujet_email' => '[@nom_site_spip@] Inscription à la Newsletter(bz)',
-	'subscribe_titre_email' => 'Inscription à la Newsletter(bz)',
-	'subscribe_texte_email_1' => 'Nous avons bien pris en compte votre inscription à notre Newsletter avec l\'adresse email @email@.(bz)',
-	'subscribe_deja_texte' => 'L\'adresse email @email@ est déjà dans notre liste de diffusion(bz)',
-	'subscribe_texte_email_2' => 'Nous vous remercions de l\'intérêt que vous portez à @nom_site_spip@.(bz)',
-	'subscribe_texte_email_3' => 'En cas d\'erreur de notre part, ou si vous changez d\'avis, vous pouvez vous désinscrire à tout moment au moyen du lien suivant :(bz)
+	'subscribe_sujet_email' => '[@nom_site_spip@] Koumanant d’an newsletter',
+	'subscribe_titre_email' => 'Koumanant d’an newsletter',
+	'subscribe_texte_email_1' => 'Degemeret eo bet ganeomp ho koumanant da newsletter Labourzo dre ar postel @email@.',
+	'subscribe_deja_texte' => 'E-barzh hor roll-skignañ emañ ar postel @email@ c’hoazh',
+	'subscribe_texte_email_2' => 'Trugarez vras deoc’h evit ho perzh el lec’hienn @nom_site_spip@.',
+	'subscribe_texte_email_3' => 'Ma’z omp faziet pe ma’z eo troet ho meno e c’hellit digoumanantiñ pa garit dre al liamm : 
 @url_unsubscribe@',
 
 	// U
-	'unsubscribe_sujet_email' => '[@nom_site_spip@] Désinscription de la Newsletter(bz)',
-	'unsubscribe_titre_email' => 'Désinscription de la Newsletter(bz)',
-	'unsubscribe_texte_confirmer_email_1' => 'Veuillez confirmer la désinscription de l\'adresse email @email@ en cliquant sur le bouton : (bz)',
-	'unsubscribe_texte_email_1' => 'L\'adresse email @email@ a bien été retiré de notre liste de diffusion.(bz)',
-	'unsubscribe_deja_texte' => 'L\'adresse email @email@ n\'est pas dans notre liste de diffusion.(bz)',
-	'unsubscribe_texte_email_2' => 'Nous espérons vous revoir bientôt sur @nom_site_spip@.(bz)',
-	'unsubscribe_texte_email_3' => 'En cas d\'erreur de notre part, ou si vous changez d\'avis, vous pouvez vous réinscrire à tout moment au moyen du lien suivant :(bz)
+	'unsubscribe_sujet_email' => '[@nom_site_spip@] Digoumanantiñ',
+	'unsubscribe_titre_email' => 'Digoumanantiñ',
+	'unsubscribe_texte_confirmer_email_1' => 'Kadarnaat ho c’hoant da zigoumanantiñ o klikañ war an nozelenn',
+	'unsubscribe_texte_email_1' => 'Tennet eo bet ar postel @email@ diwar hor roll-skignañ',
+	'unsubscribe_deja_texte' => 'N’emañ ket ken ar postel @email@ e-barzh hor roll-skignañ',
+	'unsubscribe_texte_email_2' => 'Spi hon eus ho po tro da dennañ splet eus al lec’hienn @nom_site_spip@ en-dro',
+	'unsubscribe_texte_email_3' => 'Ma’z omp faziet pe ma’z eo troet ho meno e c’hellit koumanantiñ en-dro pa garit dre al liamm :
 @url_subscribe@',
 
 	// T

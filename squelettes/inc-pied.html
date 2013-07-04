@@ -29,7 +29,8 @@
 	</li>
 	
 	<li class="acces-admin">
-	[(#SESSION{id_auteur}|?{' '})<a href="#URL_LOGOUT{spip.php?page=sommaire}" rel="nofollow"><:icone_deconnecter:></a>]
+	[(#SESSION{id_auteur}|?{' '})<a href="#URL_LOGOUT{spip.php?page=sommaire}" rel="nofollow"><:icone_deconnecter:></a>
+	<br><a href="[(#URL_PAGE{login}|parametre_url{url,spip.php?rubrique30&lang=fr})]" rel="nofollow" class='login_modal'>ADMIN</a>]
 	[(#SESSION{id_auteur}|?{'',' '}) <a href="[(#URL_PAGE{login}|parametre_url{url,#SELF})]" rel="nofollow" class='login_modal'><:lien_connecter:></a>
 	<br><a href="[(#URL_PAGE{login}|parametre_url{url,spip.php?rubrique30&lang=fr})]" rel="nofollow" class='login_modal'>ADMIN</a>]
 	</li>
