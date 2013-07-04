@@ -45,7 +45,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_mailsubscribers' => '@nb@ inscrits',
 
 	// L
-	'label_a_lire_sur' => 'A lire sur(bz) @site@',
+	'label_a_lire_sur' => 'Lenn war @site@',
 	'label_chapo' => 'Chapeau',
 	'label_date_redac' => 'Date de rédaction',
 	'label_inscrit_newsletter' => 'Koumanantet oc’h evit reseviñ kinnigoù-labour diwezhañ @site@',	
