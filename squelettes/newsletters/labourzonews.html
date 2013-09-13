@@ -13,132 +13,101 @@
 	<title>#TITRE</title>
 </head>
 <body>
-<style type="text/css">
-	h1 a:hover {background-color: #888;color: #fff ! important;}
-	div#emailbody table#itemcontentlist tr td div ul {list-style-type: square;padding-left: 1em;}
-	div#emailbody table#itemcontentlist tr td div blockquote {padding-left: 6px;border-left: 6px solid #dadada;margin-left: 1em;}
-	div#emailbody table#itemcontentlist tr td div li {margin-bottom: 1em;margin-left: 1em;}
-	table#itemcontentlist tr td a:link, table#itemcontentlist tr td a:visited, table#itemcontentlist tr td a:active, ul#summarylist li a {color: #CC3300;font-weight: bold;text-decoration: none;}
-	img {border: none;}
-	div.chapo,div.texte,div.ps,div.notes {margin-bottom: 2em;}
-	div.notes {font-size: 11px;}
-	#emailbody {max-width: 800px;text-align: left;}
-	@media only screen and (max-width: 640px) {
-		#emailbody {width: auto !important;margin:0 1em !important;}
-		img {max-width: 100% !important;}
-	}
-</style>
+
 <center>
 <div xmlns="http://www.w3.org/1999/xhtml" id="emailbody"
-     style="margin:0 2em;font-family:Georgia,Helvetica,Arial,Sans-Serif;line-height:140%;font-size:14px;color:#000000;">
-	<table style="border:0;padding:0;margin:0;width:100%">
-		<tr>
-			<td style="vertical-align:top" width="100%">
-				<h1 style="margin:0;padding-bottom:6px;">
-					<a
-						style="color:#888;font-size:22px;font-family:Verdana, Arial, Helvetica, sans-serif;font-weight:normal;text-decoration:none;"
-						href="#URL_SITE_SPIP" title="(#URL_SITE_SPIP)">
-						[(#LOGO_SITE_SPIP|image_reduire{100,200}
-										|inserer_attribut{id,feedimage}
-										|inserer_attribut{style,float:right;padding:0 0 10px 3px;border:0;})]
-						<:newsletter:label_a_lire_sur{site=#NOM_SITE_SPIP}:></a>
-				</h1>
-				<p
-					style="font-size:14px;color:#555;margin:9px 0 3px 0;font-family:Georgia,Helvetica,Arial,Sans-Serif;line-height:140%;font-size:14px;">
-					<:newsletter:info_email_not_displaying:><br><a href="#URL_NEWSLETTER" target="_blank"><:newsletter:info_email_voir_en_ligne:></a>.
-				</p>
-			</td>
-		</tr>
-	</table>
-	<hr style="border:1px solid #ccc;padding:0;margin:0"/>
-	<table id="itemcontentlist">
-		[(#CHAPO**|concat{#TEXTE**}|trim|strlen|oui)
-		<tr xmlns="">
-			<td style="margin-bottom:0;line-height:1.4em;">
-				<h1 style="margin:1em 0 3px 0;">
-					<a name="1" style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:18px;"
-					   href="#URL_NEWSLETTER">#TITRE</a>
-				</h1>
-				<div
-					style="margin:0;font-family:Georgia,Helvetica,Arial,Sans-Serif;line-height:140%;font-size:14px;color:#000000;">
-					[(#LOGO_NEWSLETTER|image_reduire{100,200}
-					|inserer_attribut{alt,''}
-					|inserer_attribut{border,'0'}
-					|inserer_attribut{style,'margin: 0;margin-left: 1em;margin-bottom: 1em;float:right;padding: 0;max-width:
-					100%;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;'}
-					|inserer_attribut{class,logo})]
+     style="margin:0;font-family:Helvetica,Arial,Sans-Serif;line-height:110%;font-size:14px;color:#666666;">
+	<table style="border:0;padding:0;margin:0;width:640px">
+ <tbody style="color: #666666;">
+        <tr>
+          <td style="text-align: center;"> <a href="#URL_SITE_SPIP"
+              title="#NOM_SITE_SPIP">
+              <img src="#SQUELETTE{img/newsletter-tetiere.jpg}"
+                alt="#NOM_SITE_SPIP"
+                width="640"></a>
+            <p style="text-transform: uppercase;"><:newsletter:offres_de_la_semaine:></p>
+            <p style="font-size: 0.85em;"><a href="#URL_NEWSLETTER" target="_blank"><:newsletter:info_email_voir_en_ligne:></a></p>
+          </td>
+        </tr>
 
-					[
-					<div class='chapo' style="margin-bottom: 2em;">(#CHAPO)</div>
-					]
-					[
-					<div class='texte' style="margin-bottom: 2em;">(#TEXTE)</div>
-					]
-					[<br/>
-					<hr/>
-					<div class="notes" style="margin-bottom: 2em;font-size: 11px">(#NOTES)</div>
-					]
-				</div>
+		[(#CHAPO**|concat{#TEXTE**}|trim|strlen|oui)
+		<tr>
+			<td style="padding: 25px 25px 0px;">
+					[<p>(#CHAPO)</p>]
+					#TEXTE
 			</td>
 		</tr>
 		]
-		<BOUCLE_nouveautes(xx_employr){emp_datmodif<=#DATE}{emp_datmodif>#DATE_REDAC}{par emp_domaines}{!par emp_datmodif}>
-		<tr xmlns="">
-			<td style="margin-bottom:0;line-height:1.4em;">
-				[<h1>(#EMP_DOMAINES|unique|replace{'anim','Buhezi&ntilde;'}
-													|replace{'gardenf','Diwall bugale'}
-													|replace{'enseignmt','Kelenn'}
-													|replace{'accompscol','Skoazellerien er skolioù'}
-													|replace{'commarti','Kenwerzh'}
-													|replace{'sante','Yec’hed'}
-													|replace{'commedia','Kehentiñ'}
-													|replace{'linguis','Yezhourien'}
-													|replace{'admin','Melestradur'}
-													|replace{'arts','Arzoù'}
-													|replace{'divers','A bep seurt'})</h1>]
-				<h2 style="margin:1em 0 3px 0;"><small><:poste:>&nbsp;</small>
-	          <a style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:16px;"
-					   href="#URL_SITE_SPIP/spip.php?page=voirFiche&id_article=8&emp_id=#EMP_ID" 
-					   title="Consulter cette offre">
-	          		#EMP_POSTE</a></h2>
-				<p
-					style="font-size:14px;color:#555;margin:9px 0 3px 0;font-family:Georgia,Helvetica,Arial,Sans-Serif;line-height:140%;font-size:14px;">
-					<span><:newsletter:label_publie:></span> [(#EMP_DATMODIF|affdate)]</p>
-				[
-				<div class='chapo' style="margin-bottom: 2em;"><small><:duree_dates:>&nbsp;</small>:&nbsp;<strong>(#EMP_DURDATES)</strong></div>
-				]
-				[
-				<div class='texte' style="margin-bottom: 2em;"><small><:lieu:>&nbsp;</small>:&nbsp;<strong>(#EMP_LIEU)</strong></div>
-				]
-				[
-				<div class='ps' style="margin-bottom: 2em;"><small><:nom_emp:>&nbsp;</small>:&nbsp;<strong>(#EMP_NOM)</strong></div>
-				]
-				<hr/>
-			</td>
-		</tr>
-		</BOUCLE_nouveautes>
+		
+        <tr>
+          <td>
+          
+          
+          
+          
+          [(#REM)
+          BOUCLE RUBRIQUE
+		  ---------------
+          ]
+            <h2 style="font-weight: lighter; text-transform: uppercase; border-bottom: 2px solid #cccccc; padding-top: 25px; margin: 10px;">
+            <img
+                style="width: 50px; height: 46px; vertical-align: text-bottom; margin-right: 10px;"
+                src="URL_DU_LOGO"
+                alt="TITRE_DU_THEME">TITRE_DU_THEME</h2>
+            
+  
+            <table style="width: 620px; margin: auto;" cellpadding="0" cellspacing="0"
+              border="0">
+              <tbody style="vertical-align: middle;">
+              	
+              	[(#REM)
+              	BOUCLE NOUVEAUTÉS DE LA RUBRIQUE
+              	--------------------------------
+              	Ne pas oublier le filtre «|alterner» sur le <tr>
+              	]
+                <tr style="vertical-align: top;[background-color:(#COMPTEUR_BOUCLE|alterner{'#ffffff','#ebebeb'});]">
+                  <td style="padding: 10px 5px; text-transform: uppercase; width: 35%;">
+                  	<a
+                      style="color: #006600; text-decoration: none;"
+                      href="LIEN_VERS_L_ANNONCE"
+                      title="TITRE_DE_L_ANNONCE">TITRE_DE_L_ANNONCE
+                    </a>
+                 </td>
+                  <td style="padding: 10px 5px 10px 0px; text-align: center; font-size: 0.9em; width: 25%;">DATE</td>
+                  <td style="padding-top: 10px; padding-right: 5px; padding-bottom: 10px; text-align: center; font-size: 0.9em; width: 20%;">LIEU</td>
+                  <td style="padding-top: 10px; padding-right: 5px; padding-bottom: 10px; text-align: center; font-size: 0.9em;">EMPLOYEUR</td>
+                </tr>
+                [(#REM)
+              	FIN BOUCLE NOUVEAUTÉS DE LA RUBRIQUE
+              	------------------------------------
+              	]
+              </tbody>
+            </table>
+            [(#REM)
+          	FIN BOUCLE RUBRIQUE
+		  	-------------------
+		  	]
+		  	
+		  	
+		  	
+		  	
+		  	
+          </td>
+        </tr>
+      </tbody>	
 	</table>
-	<table style="border-top:1px solid #999;padding-top:4px;margin-top:1.5em;width:100%" id="footer">
+
+	<table style="border-top:1px solid #999;padding-top:4px;margin-top:1.5em;width:100%">
 		<tr>
 			<td
-				style="text-align:left;font-family:Helvetica,Arial,Sans-Serif;font-size:11px;margin:0 6px 1.2em 0;color:#333;">
+				style="text-align:left;font-size:0.8em;color:#333;">
 				<!-- <:newsletter:label_inscrit_newsletter{site=[<a href="#URL_SITE_SPIP">(#NOM_SITE_SPIP)</a>]}:> --> 
-				<:newsletter:label_inscrit_newsletter{site= }:> <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>
+				<:newsletter:label_inscrit_newsletter{site= }:> <a style="color: #006600; text-decoration: none;" href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>
 				<span class="unsubscribe_link">
-				<br/><a href="@url_unsubscribe@">
+				<a href="@url_unsubscribe@" style="color: #006600; text-decoration: none;">
 				<:newsletter:label_link_unsubscribe:>
 				</span>
 			</a>
-			</td>
-			<td
-				style="font-family:Helvetica,Arial,Sans-Serif;font-size:11px;margin:0 6px 1.2em 0;color:#333;text-align:right;vertical-align:top">
-
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2"
-			    style="text-align:left;font-family:Helvetica,Arial,Sans-Serif;font-size:11px;margin:0 6px 1.2em 0;color:#333;">
-
 			</td>
 		</tr>
 	</table>
