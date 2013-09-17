@@ -27,7 +27,12 @@ Script de recherche et affichage métiers de la santé sur carte
       	maxWidth: 500
       });
       var bounds = new google.maps.LatLngBounds();
+      var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+      
+      var nomPrf = (lang == 'fr' ? "Profil" : "Doare den");
+      var nomEnv = (lang == 'fr' ? "Envoyer un mail" : "Kas ur gemennadenn");
 
+ 
       // Change this depending on the name of your PHP file
       downloadUrl("squelettes/gestionphp/phpsqlajax_genxmlSante.php", function(data) {
         var xml = data.responseXML;
@@ -44,8 +49,8 @@ Script de recherche et affichage métiers de la santé sur carte
               parseFloat(markers[i].getAttribute("lng")));
           var html = "<b>" + prenom + "  " + nom + "</b> <br/>" + cp + "  " + commune + "<br/>";
           if (profpost.length) 
-          	html += "Profil&nbsp;: " + profpost + "<br/>";
-          html += "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
+          	html += nomPrf+"&nbsp;: " + profpost + "<br/>";
+          html += "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=" + lang + "'>"+nomEnv+"</a>";
           var icon = customIcons["sante"] || {};
           var marker = new google.maps.Marker({
             map: map,

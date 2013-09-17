@@ -17,6 +17,14 @@ Script de recherche et affichage des gardes d'enfants sur carte
       }
     };
 
+   function getQueryString(key, default_) {
+       if (default_==null) default_="";
+       key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+       var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
+       var qs = regex.exec(window.location.href);
+       if(qs == null) return default_; else return qs[1];
+   }
+
     function load() {
       var map = new google.maps.Map(document.getElementById("map_canvas"), {
         center: new google.maps.LatLng(0, 0),
@@ -27,6 +35,13 @@ Script de recherche et affichage des gardes d'enfants sur carte
       	maxWidth: 500
       });
       var bounds = new google.maps.LatLngBounds();
+      var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+      
+      var nomAss = (lang == 'fr' ? "Assistant(e) maternelle agréé(e)" : "Skoazellerez-vamm grataet");
+      var nomAcc = (lang == 'fr' ? "Accueil collectif de jeunes enfants" : "Magouri");
+      var nomDip = (lang == 'fr' ? "Diplômes" : "Diplomoù");
+      var nomPrf = (lang == 'fr' ? "Profil" : "Doare den");
+      var nomEnv = (lang == 'fr' ? "Envoyer un mail" : "Kas ur gemennadenn");
 
       // Change this depending on the name of your PHP file
       downloadUrl("squelettes/gestionphp/phpsqlajax_genxmlGarde.php", function(data) {
@@ -48,14 +63,14 @@ Script de recherche et affichage des gardes d'enfants sur carte
           if (type == "gardenf1") 
           	html += "<h3>Baby-Sitter</h3><br/>"; 
           else if (type == "gardenf2") 
-          	html += "<h3>Assistant(e) maternelle agréé(e)</h3><br/>"; 
+          	html += "<h3>" + nomAss + "</h3><br/>"; 
           else
-          	html += "<h3>Accueil collectif de jeunes enfants</h3><br/>"; 
+          	html += "<h3>"+nomAcc+"</h3><br/>"; 
           if (diplomes.length) 
-          	html += "Diplômes&nbsp;: " + diplomes + "<br/>"; 
+          	html += nomDip+"&nbsp;: " + diplomes + "<br/>"; 
           if (profpost.length) 
-          	html += "Profil&nbsp;: " + profpost + "<br/>";
-          html += "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=#LANG'>Envoyer un mail</a>";
+          	html += nomPrf+"&nbsp;: " + profpost + "<br/>";
+          html += "<a href='spip.php?page=contactVisit&id_auteur=" + idaut + "&lang=" + lang + "'>"+nomEnv+"</a>";
           var icon = customIcons[type] || {};
           var marker = new google.maps.Marker({
             map: map,

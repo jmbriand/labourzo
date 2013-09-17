@@ -47,8 +47,8 @@ $(document).ready(function(){
             return false; // The form will *not* submit
         }
 
-		profil = $("#dem_profpost").val();
-		if(profil.length<2) {alert('Veuillez préciser votre profil S.V.P. !');return false ;} ;
+//		profil = $("#dem_profpost").val();
+//		if(profil.length<2) {alert('Veuillez préciser votre profil S.V.P. !');return false ;} ;
 		
 		lat = $("#dem_lat").val();
 		nbgeo = $('input[name="dem_domaines[1]"]:checked').length + 	// garde enfants
