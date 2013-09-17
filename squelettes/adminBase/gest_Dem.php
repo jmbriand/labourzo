@@ -152,12 +152,13 @@ if ($dem_id != '') {
 			}
 	 $fiche = mysql_num_rows($resultat) ;
 	} else {
-		$resultat = execRequete ($mareq." ORDER BY dem_datmodif", $connexion); 
+		$resultat = execRequete ("SELECT d.*,a.nom,a.email FROM ".TABLE_DEM." d JOIN lbz_auteurs a ON d.dem_idauteur=a.id_auteur ORDER BY dem_datmodif", $connexion); 
 	echo "<table cellpadding=\"1\" cellspacing=\"1\" border=\"1\" width=\"100%\">
 		<tr align='center'>
 			<td><big>id</big></td>
 			<td><big>Nom</big></td>
 			<td><big>Prénom</big></td>
+			<td><big>Mail Auteur</big></td>
 			<td><big>domaine</big></td>
 			<td><big>Date modif</big></td>
 			<td> </td>
@@ -167,6 +168,7 @@ if ($dem_id != '') {
 					 <tr><td>$ligne->dem_id </td> 
 					 <td>$ligne->dem_nom</td> 
 					 <td >$ligne->dem_prenom</td>
+					 <td >$ligne->email</td>
 					 <td>$ligne->dem_domaines</td> 
 					 <td >$ligne->dem_datmodif</td>
 					 <td ><form action='' method='post' class='ajax'>

@@ -87,11 +87,12 @@ if ($emp_id != '') {
 			}
 	 $fiche = mysql_num_rows($resultat) ;
 	} else {
-		$resultat = execRequete ("SELECT * FROM ".TABLE_EMP." ORDER BY emp_datmodif", $connexion); 
+		$resultat = execRequete ("SELECT e.*,a.nom,a.email FROM ".TABLE_EMP." e JOIN lbz_auteurs a ON e.emp_idauteur=a.id_auteur ORDER BY emp_datmodif", $connexion); 
 	echo "<table cellpadding=\"1\" cellspacing=\"1\" border=\"1\" width=\"100%\">
 		<tr align='center'>
 			<td><big>id</big></td>
 			<td><big>Employeur</big></td>
+			<td><big>Mail Auteur</big></td>
 			<td><big>Poste</big></td>
 			<td><big>domaine</big></td>
 			<td><big>Date modif</big></td>
@@ -101,6 +102,7 @@ if ($emp_id != '') {
 			echo " 
 					 <tr><td>$ligne->emp_id </td> 
 					 <td>$ligne->emp_nom</td> 
+					 <td>$ligne->email</td> 
 					 <td >$ligne->emp_poste</td>
 					 <td>$ligne->emp_domaines</td> 
 					 <td >$ligne->emp_datmodif</td>

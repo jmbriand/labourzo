@@ -49,12 +49,6 @@
           BOUCLE RUBRIQUE
 		  ---------------
           ]
-            <h2 style="font-weight: lighter; text-transform: uppercase; border-bottom: 2px solid #cccccc; padding-top: 25px; margin: 10px;">
-            <img
-                style="width: 50px; height: 46px; vertical-align: text-bottom; margin-right: 10px;"
-                src="URL_DU_LOGO"
-                alt="TITRE_DU_THEME">TITRE_DU_THEME</h2>
-            
   
             <table style="width: 620px; margin: auto;" cellpadding="0" cellspacing="0"
               border="0">
@@ -65,18 +59,58 @@
               	--------------------------------
               	Ne pas oublier le filtre «|alterner» sur le <tr>
               	]
+		<BOUCLE_nouveautes(xx_employr){emp_datmodif<=#DATE}{emp_datmodif>#DATE_REDAC}{par emp_domaines}{!par emp_datmodif}>
+				[<tr><td colspan="4"><h2 style="font-weight: lighter; text-transform: uppercase; border-bottom: 2px solid #cccccc; padding-top: 25px; margin: 10px;">
+            <img
+                style="width: 50px; height: 46px; vertical-align: text-bottom; margin-right: 10px;"
+				(#EMP_DOMAINES|unique|replace{"anim","src='../IMG/rubon7.png'
+                												alt='Buhezi&ntilde;'>
+																	Buhezi&ntilde;"}
+													|replace{"gardenf","src='../IMG/rubon10.png'
+                												alt='Diwall bugale'>
+																	Diwall bugale"}
+													|replace{"enseignmt","src='../IMG/rubon11.png'
+                												alt='Kelenn'>
+																	Kelenn"}
+													|replace{"accompscol","src='../IMG/rubon31.png'
+                												alt='Skoazellerien er skolioù'>
+																	Skoazellerien er skolioù"}
+													|replace{"commarti","src='../IMG/rubon33.png'
+                												alt='Kenwerzh'>
+																	Kenwerzh"}
+													|replace{"sante","src='../IMG/rubon35.png'
+                												alt='Yec’hed'>
+																	Yec’hed"}
+													|replace{"commedia","src='../IMG/rubon37.png'
+                												alt='Kehentiñ'>
+																	Kehentiñ"}
+													|replace{"linguis","src='../IMG/rubon39.png'
+                												alt='Yezhourien'>
+																	Yezhourien"}
+													|replace{"admin","src='../IMG/rubon41.png'
+                												alt='Melestradur'>
+																	Melestradur"}
+													|replace{"arts","src='../IMG/rubon43.png'
+                												alt='Arzoù'>
+																	Arzoù"}
+													|replace{"divers","src='../IMG/rubon45.png'
+                												alt='A bep seurt'>
+																	A bep seurt"})
+													</h2></td></tr>]
+
                 <tr style="vertical-align: top;[background-color:(#COMPTEUR_BOUCLE|alterner{'#ffffff','#ebebeb'});]">
                   <td style="padding: 10px 5px; text-transform: uppercase; width: 35%;">
                   	<a
                       style="color: #006600; text-decoration: none;"
-                      href="LIEN_VERS_L_ANNONCE"
-                      title="TITRE_DE_L_ANNONCE">TITRE_DE_L_ANNONCE
+                      href="#URL_SITE_SPIP/spip.php?page=voirFiche&id_article=8&emp_id=#EMP_ID"
+                      title="#EMP_POSTE">#EMP_POSTE
                     </a>
                  </td>
-                  <td style="padding: 10px 5px 10px 0px; text-align: center; font-size: 0.9em; width: 25%;">DATE</td>
-                  <td style="padding-top: 10px; padding-right: 5px; padding-bottom: 10px; text-align: center; font-size: 0.9em; width: 20%;">LIEU</td>
-                  <td style="padding-top: 10px; padding-right: 5px; padding-bottom: 10px; text-align: center; font-size: 0.9em;">EMPLOYEUR</td>
+                  <td style="padding: 10px 5px 10px 0px; text-align: center; font-size: 0.9em; width: 25%;">[(#EMP_DATMODIF|affdate)]</td>
+                  <td style="padding-top: 10px; padding-right: 5px; padding-bottom: 10px; text-align: center; font-size: 0.9em; width: 20%;">#EMP_LIEU</td>
+                  <td style="padding-top: 10px; padding-right: 5px; padding-bottom: 10px; text-align: center; font-size: 0.9em;">#EMP_NOM</td>
                 </tr>
+		</BOUCLE_nouveautes>
                 [(#REM)
               	FIN BOUCLE NOUVEAUTÉS DE LA RUBRIQUE
               	------------------------------------

@@ -1,2 +1,7 @@
-tmp
-config
+tmp/
+config/
+ecrire/
+prive/
+squelettes-dist/
+plugins/
+plugins-dist/

@@ -40,7 +40,7 @@
 					<BOUCLE_offre(xx_employr) {emp_id}{emp_id>0}>
 						<B_traductionsA>
 							<BOUCLE_traductionsA(ARTICLES) {traduction} {par lang}>[(#TOTAL_BOUCLE|>{1}|?{' '})
-							<li lang="#LANG" xml:lang="#LANG" dir="#LANG_DIR"[ class="(#EXPOSE{'off',''})"]>[(#EXPOSE{'',<a href="spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID" rel="alternate"  class="#LANG" hreflang="#LANG"[ title="(#TITRE|attribut_html|couper{80})"]><em>})][(#LANG|traduire_nom_langue)]#EXPOSE{'',</em></a>}</li>
+							<li lang="#LANG" dir="#LANG_DIR"[ class="(#EXPOSE{'off',''})"]>[(#EXPOSE{'',<a href="spip.php?page=voirFiche&id_article=#ID_ARTICLE&emp_id=#EMP_ID" rel="alternate"  class="#LANG" xml:lang="#LANG"[ title="(#TITRE|attribut_html|couper{80})"]><em>})][(#LANG|traduire_nom_langue)]#EXPOSE{'',</em></a>}</li>
 							]</BOUCLE_traductionsA>
 						</B_traductionsA>
 					</BOUCLE_offre>
@@ -48,7 +48,7 @@
 					<BOUCLE_dem(xx_demandr) {dem_id}{dem_id>0}>
 						<B_traductionsB>
 							<BOUCLE_traductionsB(ARTICLES) {traduction} {par lang}>[(#TOTAL_BOUCLE|>{1}|?{' '})
-							<li lang="#LANG" xml:lang="#LANG" dir="#LANG_DIR"[ class="(#EXPOSE{'off',''})"]>[(#EXPOSE{'',<a href="spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID" rel="alternate" class="#LANG" hreflang="#LANG"[ title="(#TITRE|attribut_html|couper{80})"]><em>})][(#LANG|traduire_nom_langue)]#EXPOSE{'',</em></a>}</li>
+							<li lang="#LANG" dir="#LANG_DIR"[ class="(#EXPOSE{'off',''})"]>[(#EXPOSE{'',<a href="spip.php?page=voirFiche&id_article=#ID_ARTICLE&dem_id=#DEM_ID" rel="alternate" class="#LANG" xml:lang="#LANG"[ title="(#TITRE|attribut_html|couper{80})"]><em>})][(#LANG|traduire_nom_langue)]#EXPOSE{'',</em></a>}</li>
 							]</BOUCLE_traductionsB>
 						</B_traductionsB>
 					</BOUCLE_dem>
