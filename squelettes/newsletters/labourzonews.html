@@ -42,8 +42,18 @@
         <tr>
           <td>
           
-          
-          
+          [(#REM) Correspondance domaine -> article dédié pour voirFiche.html ]
+					#SET{anim,8}
+					#SET{gardenf,32}
+					#SET{enseignmt,22}
+					#SET{accompscol,44}
+					#SET{commarti,48}
+					#SET{sante,53}
+					#SET{commedia,55}
+					#SET{linguis,58}
+					#SET{admin,62}
+					#SET{arts,66}
+					#SET{divers,70}
           
           [(#REM)
           BOUCLE RUBRIQUE
@@ -102,7 +112,7 @@
                   <td style="padding: 10px 5px; text-transform: uppercase; width: 35%;">
                   	<a
                       style="color: #006600; text-decoration: none;"
-                      href="#URL_SITE_SPIP/spip.php?page=voirFiche&id_article=8&emp_id=#EMP_ID"
+                      href="#URL_SITE_SPIP/spip.php?page=voirFiche&id_article=#GET{#EMP_DOMAINES}&emp_id=#EMP_ID"
                       title="#EMP_POSTE">#EMP_POSTE
                     </a>
                  </td>
