@@ -17,14 +17,6 @@ Script de recherche et affichage des gardes d'enfants sur carte
       }
     };
 
-   function getQueryString(key, default_) {
-       if (default_==null) default_="";
-       key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-       var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
-       var qs = regex.exec(window.location.href);
-       if(qs == null) return default_; else return qs[1];
-   }
-
     function load() {
       var map = new google.maps.Map(document.getElementById("map_canvas"), {
         center: new google.maps.LatLng(0, 0),
