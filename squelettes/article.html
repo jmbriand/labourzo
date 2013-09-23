@@ -74,6 +74,11 @@
 
     [(#REM) Menu de navigation laterale ]
     <div id="sidebar">
+
+			[(#REM) Affiche le formulaire d'abo à la NL labourzo ]
+			[<div class="labourzonews">
+				(#FORMULAIRE_NEWSLETTER_SUBSCRIBE{labourzonews})
+			</div>]
     
         [(#REM) Menu de navigation par rubriques ]
         <INCLURE{fond=inc-rubriques}{id_rubrique}>

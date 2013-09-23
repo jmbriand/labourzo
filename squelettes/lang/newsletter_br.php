@@ -11,7 +11,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 
 	// B
-	'bouton_subscribe' => 'Koumanantiñ d’an newsletter',
+	'bouton_subscribe' => 'Ok',
 	'bouton_unsubscribe' => 'Digoumanantiñ diouzh an newsletter',
 
 	// E
@@ -61,11 +61,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_selection_articles' => 'Selection d\'articles',
 	'label_selection_rubriques' => 'Selection de rubriques',
 	'label_selection_edito' => 'Selection éditoriale (articles&rubriques)',
-	'label_email_subscribe' => 'Postel',
+	'label_email_subscribe' => 'Resev ar c’hinnigoù-labour diwezhañ en ho boest posteloù',
 	'label_email_unsubscribe' => 'Postel',
 	'label_link_unsubscribe' => 'Digoumanantiñ diouzh an newsletter',
   'lien_lire_en_ligne' => 'Lire en ligne',
 
+
+  	// O
+  	'offres_de_la_semaine' => 'Kinnigoù-labour diwezhañ',
+  	
 	// R
 	'retirer_lien_newsletter' => 'Retirer cette infolettre',
 	'retirer_tous_liens_newsletters' => 'Retirer toutes les infolettres',

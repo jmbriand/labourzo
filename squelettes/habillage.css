@@ -793,8 +793,9 @@ background-repeat: no-repeat;
 ---------------------------------------------- */
 .page_sommaire #sidebar {margin-top: 40px;}
 
-#sidebar h2 
-{
+#sidebar h2,
+.labourzonews form#modif li.obligatoire label, 
+.labourzonews .formulaire_spip li.obligatoire label {
 	background: transparent url(./img/fond-dernieres-entrees-h2.gif) repeat-x center center;
 	margin: 0;
 	font: 14px/14px "Helvetica Neue", sans-serif;
@@ -831,10 +832,37 @@ background-repeat: no-repeat;
 
 
 
+/*	LABOURZONEWZ
+	------------ */
+/*	titre/label cf. #sidebar h2 */
 
+.labourzonews {position: relative}
+.labourzonews .email.text,
+.labourzonews .formulaire_spip .boutons input {
+	border: 1px outset rgba(0,0,0,0.5);
+    bottom: -7px;
+    height: 30px;
+    padding: 0 5px;
+    font-size: 1em;
+    margin: 0;
+	border-radius: 10px 10px 10px 10px;
+    position: absolute;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.25), 0 0 50px rgba(0,0,0,0.1) inset;    
+}
 
+.labourzonews .email.text {
+    width: 70%;
+}
+.labourzonews .formulaire_spip .boutons input {
+    right: 0;
+    width: 20%;	
+}
 
+.labourzonews .erreur_message,
+.labourzonews .reponse_formulaire_ok {padding: 10px; display: block; color: #FFFFFF; font-weight: bold;}
 
+.labourzonews .erreur_message {background: rgba(255,0,0,0.5)}
+.labourzonews .reponse_formulaire_ok {background: rgba(0,128,0,0.5)}
 
 
 /* LES FICHES

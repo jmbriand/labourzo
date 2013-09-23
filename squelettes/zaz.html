@@ -21,7 +21,9 @@
 	
 	[(#REM) Entete de la page + titre du site ]
 	<INCLURE{fond=inc-menu-lang}{skel=#SQUELETTE}>
-	
+
+
+
 
 		<div class="sommaire">
 		
@@ -29,7 +31,7 @@
 		<B_rubriques>
 		<div class="themes">
 			<ul>
-			<BOUCLE_article(ARTICLES) {id_article IN 20,21} {lang}>
+			<BOUCLE_article(ARTICLES){id_article IN 20,21}{lang}>
 				<li class="presentation">#INTRODUCTION</li>
 			</BOUCLE_article>
 			
@@ -68,11 +70,11 @@
 		[(#REM) BARRE LATÉRALE ]
 		<div id="sidebar">
 
-			[(#REM) Affiche le formulaire d'abo à la NL labourzo ]
-			[<div class="labourzonews">
-				(#FORMULAIRE_NEWSLETTER_SUBSCRIBE{labourzonews})
-			</div>]
-		
+
+	[(#REM) Affiche le formulaire d'abo à la NL labourzo ]
+	[<div class="labourzonews">
+		(#FORMULAIRE_NEWSLETTER_SUBSCRIBE{labourzonews})
+	</div>]
 		
 			[(#REM) DERNIERS ARTICLES OFFRES ET DEMANDES]
 			<INCLURE{fond=inc-derniers-articles}{skel=#SQUELETTE}>
