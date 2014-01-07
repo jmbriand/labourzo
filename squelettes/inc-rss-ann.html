@@ -1,0 +1,17 @@
+<BOUCLE_annonce(xx_employr){emp_id}>
+	<item[ xml:lang="(#LANG)"]>
+		<title>[(#EMP_POSTE|supprimer_tags|texte_backend)]</title>
+		<link>[(#URL_SITE_SPIP|url_absolue)]</link>
+		[<guid isPermaLink="false">(#EMP_ID)</guid>]
+		[<dc:date>(#EMP_DATMODIF|date_iso)</dc:date>]
+		<dc:format>text/html</dc:format>
+		[<dc:language>(#LANG)</dc:language>]
+
+		<description>
+			[(#EMP_DATMODIF|texte_backend)] || 
+			[(#EMP_LIEU|texte_backend)] || 
+			[(#EMP_NOM|texte_backend)]
+		</description>
+</item>
+	
+</BOUCLE_annonce>
